@@ -1,0 +1,101 @@
+groups:
+- name: exporter-absent
+  rules:
+  - alert: GlusterExporterDown
+    annotations:
+      message: GlusterExporter has disappeared from Prometheus target discovery.
+    expr: |
+      absent(up{job="glusterd2-client"}==1)
+    for: 15m
+    labels:
+      severity: critical
+- name: status-alert.rules
+  rules:
+  - alert: GlusterBrickStatus
+    annotations:
+      message: Gluster Brick {{$labels.hostname}}:{{$labels.brick_path}} is down.
+    expr: |
+      gluster_brick_up{job="glusterd2-client"} == 0
+    for: 1m
+    labels:
+      severity: critical
+  - alert: GlusterVolumeStatus
+    annotations:
+      message: Gluster Volume {{$labels.volume}} is down.
+    expr: |
+      gluster_volume_up{job="glusterd2-client"} == 0
+    for: 1m
+    labels:
+      severity: critical
+- name: gluster-utilization
+  rules:
+  - alert: GlusterVolumeUtilization
+    annotations:
+      message: Gluster Volume {{$labels.volume}} Utilization more than 80%
+    expr: |
+      100 * gluster:volume_capacity_used_bytes_total:sum
+          / gluster:volume_capacity_total_bytes:sum > 80
+    for: 5m
+    labels:
+      severity: warning
+  - alert: GlusterVolumeUtilization
+    annotations:
+      message: Gluster Volume {{$labels.volume}} Utilization more than 90%
+    expr: |
+      100 * gluster:volume_capacity_used_bytes_total:sum
+          / gluster:volume_capacity_total_bytes:sum > 90
+    for: 5m
+    labels:
+      severity: critical
+  - alert: GlusterBrickUtilization
+    annotations:
+      message: Gluster Brick {{$labels.host}}:{{$labels.brick_path}} Utilization more than 80%
+    expr: |
+      100 * gluster_brick_capacity_used_bytes{job="glusterd2-client"}
+          / gluster_brick_capacity_bytes_total{job="glusterd2-client"} > 80
+    for: 5m
+    labels:
+      severity: warning
+  - alert: GlusterBrickUtilization
+    annotations:
+      message: Gluster Brick {{$labels.host}}:{{$labels.brick_path}} Utilization more than 90%
+    expr: |
+      100 * gluster_brick_capacity_used_bytes{job="glusterd2-client"}
+          / gluster_brick_capacity_bytes_total{job="glusterd2-client"} > 90
+    for: 5m
+    labels:
+      severity: critical
+- name: thinpool-utilization
+  rules:
+  - alert: GlusterThinpoolDataUtilization
+    annotations:
+      message: Gluster Thinpool {{ $labels.thinpool_name }} Data Utilization more than 80%
+    expr: |
+      gluster_thinpool_data_used_bytes{job="glusterd2-client"} / gluster_thinpool_data_total_bytes{job="glusterd2-client"} > 0.8
+    for: 5m
+    labels:
+      severity: warning
+  - alert: GlusterThinpoolDataUtilization
+    annotations:
+      message: Gluster Thinpool {{ $labels.thinpool_name }} Data Utilization more than 90%
+    expr: |
+      gluster_thinpool_data_used_bytes{job="glusterd2-client"} / gluster_thinpool_data_total_bytes{job="glusterd2-client"} > 0.9
+    for: 5m
+    labels:
+      severity: critical
+  - alert: GlusterThinpoolMetadataUtilization
+    annotations:
+      message: Gluster Thinpool {{ $labels.thinpool_name }} Metadata Utilization more than 80%
+    expr: |
+      gluster_thinpool_metadata_used_bytes{job="glusterd2-client"} / gluster_thinpool_metadata_total_bytes{job="glusterd2-client"} > 0.8
+    for: 5m
+    labels:
+      severity: warning
+  - alert: GlusterThinpoolMetadataUtilization
+    annotations:
+      message: Gluster Thinpool {{ $labels.thinpool_name }} Metadata Utilization more than 90%
+    expr: |
+      gluster_thinpool_metadata_used_bytes{job="glusterd2-client"} / gluster_thinpool_metadata_total_bytes{job="glusterd2-client"} > 0.9
+    for: 5m
+    labels:
+      severity: critical

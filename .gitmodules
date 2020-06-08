@@ -1,0 +1,3 @@
+[submodule "site/themes/ace-documentation"]
+	path = site/themes/ace-documentation
+	url = https://github.com/vantagedesign/ace-documentation.git

@@ -1,0 +1,38 @@
+---
+baseURL: "https://monitoring.mixins.dev/"
+# baseURL: ""
+languageCode: "en-us"
+title: "Monitoring Mixins"
+
+theme: 'ace-documentation'
+
+# Google analytics
+# googleAnalytics: UA-123456789-1
+
+permalinks:
+  post: /:filename/
+
+params:
+  project_name: Monitoring Mixins
+
+  project_tagline: Combination of alerts, recording rules, and dashboards for prometheus exporters
+
+  disableSearch: true
+  disableReadmoreNav: true
+
+markup:
+  highlight:
+    style: monokailight
+
+menu:
+  shortcuts:
+    - name: Homepage
+      url: /
+      weight: 1
+    - name: About mixins
+      url: "https://github.com/monitoring-mixins/docs"
+      weight: 2
+    - name: "GitHub"
+      url: "https://github.com/monitoring-mixins/website"
+      weight: 3
+
