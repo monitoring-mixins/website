@@ -143,16 +143,22 @@ annotations:
   message: StatefulSet {{ $labels.namespace }}/{{ $labels.statefulset }} update has not been rolled out.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubestatefulsetupdatenotrolledout
 expr: |
-  max without (revision) (
-    kube_statefulset_status_current_revision{job="kube-state-metrics"}
-      unless
-    kube_statefulset_status_update_revision{job="kube-state-metrics"}
-  )
-    *
   (
-    kube_statefulset_replicas{job="kube-state-metrics"}
-      !=
-    kube_statefulset_status_replicas_updated{job="kube-state-metrics"}
+    max without (revision) (
+      kube_statefulset_status_current_revision{job="kube-state-metrics"}
+        unless
+      kube_statefulset_status_update_revision{job="kube-state-metrics"}
+    )
+      *
+    (
+      kube_statefulset_replicas{job="kube-state-metrics"}
+        !=
+      kube_statefulset_status_replicas_updated{job="kube-state-metrics"}
+    )
+  )  and (
+    changes(kube_statefulset_status_replicas_updated{job="kube-state-metrics"}[5m])
+      ==
+    0
   )
 for: 15m
 labels:
@@ -219,21 +225,6 @@ annotations:
 expr: |
   kube_daemonset_status_number_misscheduled{job="kube-state-metrics"} > 0
 for: 15m
-labels:
-  severity: warning
-{{< /code >}}
- 
-##### KubeCronJobRunning
-https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecronjobrunning
-
-{{< code lang="yaml" >}}
-alert: KubeCronJobRunning
-annotations:
-  message: CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is taking more than 1h to complete.
-  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecronjobrunning
-expr: |
-  time() - kube_cronjob_next_schedule_time{job="kube-state-metrics"} > 3600
-for: 1h
 labels:
   severity: warning
 {{< /code >}}
@@ -589,52 +580,6 @@ labels:
  
 ### kubernetes-system-apiserver
 
-##### KubeAPILatencyHigh
-https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapilatencyhigh
-
-{{< code lang="yaml" >}}
-alert: KubeAPILatencyHigh
-annotations:
-  message: The API server has an abnormal latency of {{ $value }} seconds for {{ $labels.verb }} {{ $labels.resource }}.
-  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapilatencyhigh
-expr: |
-  cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{job="kube-apiserver",quantile="0.99"}
-  >
-  1
-  and on (verb,resource)
-  (
-    cluster:apiserver_request_duration_seconds:mean5m{job="kube-apiserver"}
-    >
-    on (verb) group_left()
-    (
-      avg by (verb) (cluster:apiserver_request_duration_seconds:mean5m{job="kube-apiserver"} >= 0)
-      +
-      2*stddev by (verb) (cluster:apiserver_request_duration_seconds:mean5m{job="kube-apiserver"} >= 0)
-    )
-  ) > on (verb) group_left()
-  1.2 * avg by (verb) (cluster:apiserver_request_duration_seconds:mean5m{job="kube-apiserver"} >= 0)
-for: 5m
-labels:
-  severity: warning
-{{< /code >}}
- 
-##### KubeAPIErrorsHigh
-https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh
-
-{{< code lang="yaml" >}}
-alert: KubeAPIErrorsHigh
-annotations:
-  message: API server is returning errors for {{ $value | humanizePercentage }} of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.
-  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh
-expr: |
-  sum(rate(apiserver_request_total{job="kube-apiserver",code=~"5.."}[5m])) by (resource,subresource,verb)
-    /
-  sum(rate(apiserver_request_total{job="kube-apiserver"}[5m])) by (resource,subresource,verb) > 0.05
-for: 10m
-labels:
-  severity: warning
-{{< /code >}}
- 
 ##### KubeClientCertificateExpiration
 https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclientcertificateexpiration
 

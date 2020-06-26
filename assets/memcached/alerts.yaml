@@ -1,1 +1,12 @@
-null
+groups:
+- name: memcached
+  rules:
+  - alert: MemcachedDown
+    annotations:
+      message: |
+        Memcached Instance {{ $labels.job }} / {{ $labels.instance }} is down for more than 15mins.
+    expr: |
+      memcached_up == 0
+    for: 15m
+    labels:
+      severity: critical
