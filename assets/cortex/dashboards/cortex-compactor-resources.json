@@ -6,7 +6,20 @@
    "gnetId": null,
    "graphTooltip": 0,
    "hideControls": false,
-   "links": [ ],
+   "links": [
+      {
+         "asDropdown": true,
+         "icon": "external link",
+         "includeVars": true,
+         "keepTime": true,
+         "tags": [
+            "cortex"
+         ],
+         "targetBlank": false,
+         "title": "Cortex Dashboards",
+         "type": "dashboards"
+      }
+   ],
    "refresh": "10s",
    "rows": [
       {
@@ -38,136 +51,47 @@
                "pointradius": 5,
                "points": false,
                "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 12,
-               "stack": false,
-               "steppedLine": false,
-               "styles": [
+               "seriesOverrides": [
                   {
-                     "alias": "Time",
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "pattern": "Time",
-                     "type": "hidden"
-                  },
-                  {
-                     "alias": "Count",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value #A",
-                     "thresholds": [ ],
-                     "type": "hidden",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Uptime",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value #B",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Instance",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "instance",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Job",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "job",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Version",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "version",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "pattern": "/.*/",
-                     "thresholds": [ ],
-                     "type": "string",
-                     "unit": "short"
+                     "alias": "limit",
+                     "color": "#E02F44",
+                     "fill": 0
                   }
                ],
+               "spaceLength": 10,
+               "span": 4,
+               "stack": false,
+               "steppedLine": false,
                "targets": [
                   {
-                     "expr": "count by (job, instance, version) (prometheus_build_info{job=~\"$job\", instance=~\"$instance\"})",
-                     "format": "table",
-                     "instant": true,
+                     "expr": "sum by(pod_name) (rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container_name=\"compactor\"}[$__interval]))",
+                     "format": "time_series",
+                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "A",
+                     "legendFormat": "{{pod_name}}",
+                     "legendLink": null,
                      "step": 10
                   },
                   {
-                     "expr": "max by (job, instance) (time() - process_start_time_seconds{job=~\"$job\", instance=~\"$instance\"})",
-                     "format": "table",
-                     "instant": true,
+                     "expr": "min(container_spec_cpu_quota{cluster=~\"$cluster\", namespace=~\"$namespace\",container_name=\"compactor\"} / container_spec_cpu_period{cluster=~\"$cluster\", namespace=~\"$namespace\",container_name=\"compactor\"})",
+                     "format": "time_series",
+                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "B",
+                     "legendFormat": "limit",
+                     "legendLink": null,
                      "step": 10
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Prometheus Stats",
+               "title": "CPU",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
                   "value_type": "individual"
                },
-               "transform": "table",
-               "type": "table",
+               "type": "graph",
                "xaxis": {
                   "buckets": null,
                   "mode": "time",
@@ -193,19 +117,7 @@
                      "show": false
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Prometheus Stats",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -231,17 +143,33 @@
                "pointradius": 5,
                "points": false,
                "renderer": "flot",
-               "seriesOverrides": [ ],
+               "seriesOverrides": [
+                  {
+                     "alias": "limit",
+                     "color": "#E02F44",
+                     "fill": 0
+                  }
+               ],
                "spaceLength": 10,
-               "span": 6,
+               "span": 4,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(prometheus_target_sync_length_seconds_sum{job=~\"$job\",instance=~\"$instance\"}[5m])) by (scrape_job) * 1e3",
+                     "expr": "sum by(pod_name) (container_memory_working_set_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container_name=\"compactor\"})",
                      "format": "time_series",
+                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{scrape_job}}",
+                     "legendFormat": "{{pod_name}}",
+                     "legendLink": null,
+                     "step": 10
+                  },
+                  {
+                     "expr": "min(container_spec_memory_limit_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container_name=\"compactor\"} > 0)",
+                     "format": "time_series",
+                     "interval": "1m",
+                     "intervalFactor": 2,
+                     "legendFormat": "limit",
                      "legendLink": null,
                      "step": 10
                   }
@@ -249,7 +177,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Target Sync",
+               "title": "Memory (workingset)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -265,7 +193,7 @@
                },
                "yaxes": [
                   {
-                     "format": "ms",
+                     "format": "bytes",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -288,96 +216,8 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "fill": 10,
-               "id": 3,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(prometheus_sd_discovered_targets{job=~\"$job\",instance=~\"$instance\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Targets",
-                     "legendLink": null,
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Targets",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Discovery",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
                "fill": 1,
-               "id": 4,
+               "id": 3,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -402,10 +242,11 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(prometheus_target_interval_length_seconds_sum{job=~\"$job\",instance=~\"$instance\"}[5m]) / rate(prometheus_target_interval_length_seconds_count{job=~\"$job\",instance=~\"$instance\"}[5m]) * 1e3",
+                     "expr": "sum by(instance) (go_memstats_heap_inuse_bytes{cluster=~\"$cluster\", job=~\"($namespace)/compactor\"})",
                      "format": "time_series",
+                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{interval}} configured",
+                     "legendFormat": "{{instance}}",
                      "legendLink": null,
                      "step": 10
                   }
@@ -413,7 +254,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Average Scrape Interval Duration",
+               "title": "Memory (go heap inuse)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -429,7 +270,96 @@
                },
                "yaxes": [
                   {
-                     "format": "ms",
+                     "format": "bytes",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "CPU and Memory",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 10,
+               "id": 4,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 0,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 6,
+               "stack": true,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum by(pod_name) (rate(container_network_receive_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",pod_name=~\"compactor.*\"}[$__interval]))",
+                     "format": "time_series",
+                     "interval": "1m",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{pod_name}}",
+                     "legendLink": null,
+                     "step": 10
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Receive Bandwidth",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "Bps",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -473,39 +403,16 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 6,
                "stack": true,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (job) (rate(prometheus_target_scrapes_exceeded_sample_limit_total[1m]))",
+                     "expr": "sum by(pod_name) (rate(container_network_transmit_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",pod_name=~\"compactor.*\"}[$__interval]))",
                      "format": "time_series",
+                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "exceeded sample limit: {{job}}",
-                     "legendLink": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "sum by (job) (rate(prometheus_target_scrapes_sample_duplicate_timestamp_total[1m]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "duplicate timestamp: {{job}}",
-                     "legendLink": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "sum by (job) (rate(prometheus_target_scrapes_sample_out_of_bounds_total[1m]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "out of bounds: {{job}}",
-                     "legendLink": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "sum by (job) (rate(prometheus_target_scrapes_sample_out_of_order_total[1m]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "out of order: {{job}}",
+                     "legendFormat": "{{pod_name}}",
                      "legendLink": null,
                      "step": 10
                   }
@@ -513,7 +420,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Scrape failures",
+               "title": "Transmit Bandwidth",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -529,7 +436,7 @@
                },
                "yaxes": [
                   {
-                     "format": "short",
+                     "format": "Bps",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -545,7 +452,19 @@
                      "show": false
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Network",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
@@ -573,15 +492,16 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 6,
                "stack": true,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(prometheus_tsdb_head_samples_appended_total{job=~\"$job\",instance=~\"$instance\"}[5m])",
+                     "expr": "sum by(instance, device) (rate(node_disk_written_bytes_total[$__interval])) + ignoring(pod_name) group_right() (label_replace(count by(pod_name, instance, device) (container_fs_writes_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\",device!~\".*sda.*\"}), \"device\", \"$1\", \"device\", \"/dev/(.*)\") * 0)\n",
                      "format": "time_series",
+                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{job}} {{instance}}",
+                     "legendFormat": "{{pod_name}} - {{device}}",
                      "legendLink": null,
                      "step": 10
                   }
@@ -589,7 +509,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Appended Samples",
+               "title": "Writes",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -605,7 +525,7 @@
                },
                "yaxes": [
                   {
-                     "format": "short",
+                     "format": "Bps",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -621,19 +541,7 @@
                      "show": false
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Retrieval",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -666,10 +574,11 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "prometheus_tsdb_head_series{job=~\"$job\",instance=~\"$instance\"}",
+                     "expr": "sum by(instance, device) (rate(node_disk_read_bytes_total[$__interval])) + ignoring(pod_name) group_right() (label_replace(count by(pod_name, instance, device) (container_fs_writes_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\",device!~\".*sda.*\"}), \"device\", \"$1\", \"device\", \"/dev/(.*)\") * 0)\n",
                      "format": "time_series",
+                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{job}} {{instance}} head series",
+                     "legendFormat": "{{pod_name}} - {{device}}",
                      "legendLink": null,
                      "step": 10
                   }
@@ -677,7 +586,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Head Series",
+               "title": "Reads",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -693,83 +602,7 @@
                },
                "yaxes": [
                   {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 10,
-               "id": 8,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "prometheus_tsdb_head_chunks{job=~\"$job\",instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{job}} {{instance}} head chunks",
-                     "legendLink": null,
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Head Chunks",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
+                     "format": "Bps",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -791,7 +624,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Storage",
+         "title": "Disk",
          "titleSize": "h6"
       },
       {
@@ -804,8 +637,8 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "fill": 10,
-               "id": 9,
+               "fill": 1,
+               "id": 8,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -816,7 +649,7 @@
                   "values": false
                },
                "lines": true,
-               "linewidth": 0,
+               "linewidth": 1,
                "links": [ ],
                "nullPointMode": "null as zero",
                "percentage": false,
@@ -825,15 +658,16 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 6,
-               "stack": true,
+               "span": 12,
+               "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(prometheus_engine_query_duration_seconds_count{job=~\"$job\",instance=~\"$instance\",slice=\"inner_eval\"}[5m])",
+                     "expr": "max by(persistentvolumeclaim) (kubelet_volume_stats_used_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\"} / kubelet_volume_stats_capacity_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\"}) and count by(persistentvolumeclaim) (kube_persistentvolumeclaim_labels{cluster=~\"$cluster\", namespace=~\"$namespace\",label_name=\"compactor\"})",
                      "format": "time_series",
+                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{job}} {{instance}}",
+                     "legendFormat": "{{persistentvolumeclaim}}",
                      "legendLink": null,
                      "step": 10
                   }
@@ -841,7 +675,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Query Rate",
+               "title": "Disk Space Utilization",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -857,83 +691,7 @@
                },
                "yaxes": [
                   {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 10,
-               "id": 10,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "max by (slice) (prometheus_engine_query_duration_seconds{quantile=\"0.9\",job=~\"$job\",instance=~\"$instance\"}) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{slice}}",
-                     "legendLink": null,
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Stage Duration",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ms",
+                     "format": "percentunit",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -955,19 +713,21 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Query",
+         "title": "",
          "titleSize": "h6"
       }
    ],
    "schemaVersion": 14,
    "style": "dark",
-   "tags": [ ],
+   "tags": [
+      "cortex"
+   ],
    "templating": {
       "list": [
          {
             "current": {
-               "text": "default",
-               "value": "default"
+               "text": "Prometheus",
+               "value": "Prometheus"
             },
             "hide": 0,
             "label": null,
@@ -987,12 +747,12 @@
             },
             "datasource": "$datasource",
             "hide": 0,
-            "includeAll": true,
-            "label": "job",
+            "includeAll": false,
+            "label": "cluster",
             "multi": true,
-            "name": "job",
+            "name": "cluster",
             "options": [ ],
-            "query": "label_values(prometheus_build_info, job)",
+            "query": "label_values(cortex_build_info, cluster)",
             "refresh": 1,
             "regex": "",
             "sort": 2,
@@ -1011,12 +771,12 @@
             },
             "datasource": "$datasource",
             "hide": 0,
-            "includeAll": true,
-            "label": "instance",
+            "includeAll": false,
+            "label": "namespace",
             "multi": true,
-            "name": "instance",
+            "name": "namespace",
             "options": [ ],
-            "query": "label_values(prometheus_build_info, instance)",
+            "query": "label_values(cortex_build_info, namespace)",
             "refresh": 1,
             "regex": "",
             "sort": 2,
@@ -1058,7 +818,7 @@
       ]
    },
    "timezone": "utc",
-   "title": "Prometheus Overview",
+   "title": "Cortex / Compactor Resources",
    "uid": "",
    "version": 0
 }

@@ -50,3 +50,6 @@ mixins:
 - name: thanos
   source: "https://github.com/thanos-io/thanos"
   subdir: "mixin"
+- name: cortex
+  source: "https://github.com/grafana/cortex-jsonnet"
+  subdir: "cortex-mixin"
