@@ -1,0 +1,24 @@
+groups:
+- name: cockroachdb.rules
+  rules:
+  - expr: |
+      sum without(store) (cockroachdb_capacity{job="cockroachdb-public"})
+    record: node:cockroachdb_capacity:sum
+  - expr: |
+      sum without(instance) (node:cockroachdb_capacity:sum{job="cockroachdb-public"})
+    record: cluster:cockroachdb_capacity:sum
+  - expr: |
+      sum without(store) (cockroachdb_capacity_available{job="cockroachdb-public"})
+    record: node:cockroachdb_capacity_available:sum
+  - expr: |
+      sum without(instance) (node:cockroachdb_capacity_available:sum{job="cockroachdb-public"})
+    record: cluster:cockroachdb_capacity_available:sum
+  - expr: |
+      cockroachdb_capacity_available{job="cockroachdb-public"} / cockroachdb_capacity{job="cockroachdb-public"}
+    record: :cockroachdb_capacity_available:ratio
+  - expr: |
+      node:cockroachdb_capacity_available:sum{job="cockroachdb-public"} / node:cockroachdb_capacity:sum{job="cockroachdb-public"}
+    record: node:cockroachdb_capacity_available:ratio
+  - expr: |
+      cluster:cockroachdb_capacity_available:sum{job="cockroachdb-public"} / cluster:cockroachdb_capacity:sum{job="cockroachdb-public"}
+    record: cluster:cockroachdb_capacity_available:ratio

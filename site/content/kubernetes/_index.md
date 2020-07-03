@@ -692,7 +692,13 @@ annotations:
   message: Kubelet '{{ $labels.node }}' is running at {{ $value | humanizePercentage }} of its Pod capacity.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubelettoomanypods
 expr: |
-  max(max(kubelet_running_pod_count{job="kubelet"}) by(instance) * on(instance) group_left(node) kubelet_node_name{job="kubelet"}) by(node) / max(kube_node_status_capacity_pods{job="kube-state-metrics"} != 1) by(node) > 0.95
+  count by(node) (
+    (kube_pod_status_phase{job="kube-state-metrics",phase="Running"} == 1) * on(instance,pod,namespace,cluster) group_left(node) topk by(instance,pod,namespace,cluster) (1, kube_pod_info{job="kube-state-metrics"})
+  )
+  /
+  max by(node) (
+    kube_node_status_capacity_pods{job="kube-state-metrics"} != 1
+  ) > 0.95
 for: 15m
 labels:
   severity: warning
@@ -810,8 +816,14 @@ expr: |
       sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[1d]))
       -
       (
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[1d])) +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[1d])) +
+        (
+          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[1d]))
+          or
+          vector(0)
+        )
+        +
+        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[1d]))
+        +
         sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[1d]))
       )
     )
@@ -836,8 +848,14 @@ expr: |
       sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[1h]))
       -
       (
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[1h])) +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[1h])) +
+        (
+          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[1h]))
+          or
+          vector(0)
+        )
+        +
+        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[1h]))
+        +
         sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[1h]))
       )
     )
@@ -862,8 +880,14 @@ expr: |
       sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[2h]))
       -
       (
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[2h])) +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[2h])) +
+        (
+          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[2h]))
+          or
+          vector(0)
+        )
+        +
+        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[2h]))
+        +
         sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[2h]))
       )
     )
@@ -888,8 +912,14 @@ expr: |
       sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[30m]))
       -
       (
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30m])) +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[30m])) +
+        (
+          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30m]))
+          or
+          vector(0)
+        )
+        +
+        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[30m]))
+        +
         sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[30m]))
       )
     )
@@ -914,8 +944,14 @@ expr: |
       sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[3d]))
       -
       (
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[3d])) +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[3d])) +
+        (
+          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[3d]))
+          or
+          vector(0)
+        )
+        +
+        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[3d]))
+        +
         sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[3d]))
       )
     )
@@ -940,8 +976,14 @@ expr: |
       sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[5m]))
       -
       (
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[5m])) +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[5m])) +
+        (
+          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[5m]))
+          or
+          vector(0)
+        )
+        +
+        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[5m]))
+        +
         sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[5m]))
       )
     )
@@ -966,8 +1008,14 @@ expr: |
       sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[6h]))
       -
       (
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[6h])) +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[6h])) +
+        (
+          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[6h]))
+          or
+          vector(0)
+        )
+        +
+        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[6h]))
+        +
         sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[6h]))
       )
     )
@@ -1229,8 +1277,14 @@ expr: |
       sum(increase(apiserver_request_duration_seconds_count{verb=~"LIST|GET"}[30d]))
       -
       (
-        sum(increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30d])) +
-        sum(increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope="namespace",le="0.5"}[30d])) +
+        (
+          sum(increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30d]))
+          or
+          vector(0)
+        )
+        +
+        sum(increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope="namespace",le="0.5"}[30d]))
+        +
         sum(increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope="cluster",le="5"}[30d]))
       )
     ) +
@@ -1253,8 +1307,14 @@ expr: |
     -
     (
       # too slow
-      sum(increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30d])) +
-      sum(increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[30d])) +
+      (
+        sum(increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30d]))
+        or
+        vector(0)
+      )
+      +
+      sum(increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[30d]))
+      +
       sum(increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[30d]))
     )
     +

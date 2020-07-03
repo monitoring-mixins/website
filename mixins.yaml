@@ -53,3 +53,6 @@ mixins:
 - name: cortex
   source: "https://github.com/grafana/cortex-jsonnet"
   subdir: "cortex-mixin"
+- name: kube-cockroachdb
+  source: "https://github.com/metalmatze/kube-cockroachdb"
+  subdir: "monitoring"
