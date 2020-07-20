@@ -750,7 +750,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "count(avg(mixin_pod_workload{cluster=\"$cluster\"}) by (workload, namespace)) by (namespace)",
+                     "expr": "count(avg(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\"}) by (workload, namespace)) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -1121,7 +1121,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "count(avg(mixin_pod_workload{cluster=\"$cluster\"}) by (workload, namespace)) by (namespace)",
+                     "expr": "count(avg(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\"}) by (workload, namespace)) by (namespace)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,

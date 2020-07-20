@@ -476,7 +476,7 @@ annotations:
   message: There are {{ $value }} different semantic versions of Kubernetes components running.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeversionmismatch
 expr: |
-  count(count by (gitVersion) (label_replace(kubernetes_build_info{job!~"kube-dns|coredns"},"gitVersion","$1","gitVersion","(v[0-9]*.[0-9]*.[0-9]*).*"))) > 1
+  count(count by (gitVersion) (label_replace(kubernetes_build_info{job!~"kube-dns|coredns"},"gitVersion","$1","gitVersion","(v[0-9]*.[0-9]*).*"))) > 1
 for: 15m
 labels:
   severity: warning
@@ -628,10 +628,10 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: AggregatedAPIDown
 annotations:
-  message: An aggregated API {{ $labels.name }}/{{ $labels.namespace }} is down. It has not been available at least for the past five minutes.
+  message: An aggregated API {{ $labels.name }}/{{ $labels.namespace }} has been only {{ $value | humanize }}% available over the last 5m.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-aggregatedapidown
 expr: |
-  sum by(name, namespace)(sum_over_time(aggregator_unavailable_apiservice[5m])) > 0
+  (1 - max by(name, namespace)(avg_over_time(aggregator_unavailable_apiservice[5m]))) * 100 < 90
 for: 5m
 labels:
   severity: warning
@@ -678,7 +678,7 @@ annotations:
   message: '{{ $labels.node }} is unreachable and some workloads may be rescheduled.'
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodeunreachable
 expr: |
-  (kube_node_spec_taint{job="kube-state-metrics",key="node.kubernetes.io/unreachable",effect="NoSchedule"} unless ignoring(key,value) kube_node_spec_taint{job="kube-state-metrics",key="ToBeDeletedByClusterAutoscaler"}) == 1
+  (kube_node_spec_taint{job="kube-state-metrics",key="node.kubernetes.io/unreachable",effect="NoSchedule"} unless ignoring(key,value) kube_node_spec_taint{job="kube-state-metrics",key=~"ToBeDeletedByClusterAutoscaler|cloud.google.com/impending-node-termination|aws-node-termination-handler/spot-itn"}) == 1
 labels:
   severity: warning
 {{< /code >}}
@@ -1668,7 +1668,7 @@ expr: |
 record: namespace:kube_pod_container_resource_requests_cpu_cores:sum
 {{< /code >}}
  
-##### mixin_pod_workload
+##### namespace_workload_pod:kube_pod_owner:relabel
 
 {{< code lang="yaml" >}}
 expr: |
@@ -1687,10 +1687,10 @@ expr: |
   )
 labels:
   workload_type: deployment
-record: mixin_pod_workload
+record: namespace_workload_pod:kube_pod_owner:relabel
 {{< /code >}}
  
-##### mixin_pod_workload
+##### namespace_workload_pod:kube_pod_owner:relabel
 
 {{< code lang="yaml" >}}
 expr: |
@@ -1702,10 +1702,10 @@ expr: |
   )
 labels:
   workload_type: daemonset
-record: mixin_pod_workload
+record: namespace_workload_pod:kube_pod_owner:relabel
 {{< /code >}}
  
-##### mixin_pod_workload
+##### namespace_workload_pod:kube_pod_owner:relabel
 
 {{< code lang="yaml" >}}
 expr: |
@@ -1717,7 +1717,7 @@ expr: |
   )
 labels:
   workload_type: statefulset
-record: mixin_pod_workload
+record: namespace_workload_pod:kube_pod_owner:relabel
 {{< /code >}}
  
 ### kube-scheduler.rules

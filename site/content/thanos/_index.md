@@ -84,7 +84,7 @@ labels:
 alert: ThanosCompactHasNotRun
 annotations:
   message: Thanos Compact {{$labels.job}} has not uploaded anything for 24 hours.
-expr: (time() - max(thanos_objstore_bucket_last_successful_upload_time{job=~"thanos-compact.*"})) / 60 / 60 > 24
+expr: (time() - max(max_over_time(thanos_objstore_bucket_last_successful_upload_time{job=~"thanos-compact.*"}[24h]))) / 60 / 60 > 24
 labels:
   severity: warning
 {{< /code >}}
@@ -247,18 +247,20 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### ThanosReceiveHighForwardRequestFailures
+##### ThanosReceiveHighReplicationFailures
 
 {{< code lang="yaml" >}}
-alert: ThanosReceiveHighForwardRequestFailures
+alert: ThanosReceiveHighReplicationFailures
 annotations:
-  message: Thanos Receive {{$labels.job}} is failing to forward {{ $value | humanize }}% of requests.
+  message: Thanos Receive {{$labels.job}} is failing to replicate {{ $value | humanize }}% of requests.
 expr: |
+  thanos_receive_replication_factor > 1
+    and
   (
     (
-      sum by (job) (rate(thanos_receive_forward_requests_total{result="error", job=~"thanos-receive.*"}[5m]))
+      sum by (job) (rate(thanos_receive_replications_total{result="error", job=~"thanos-receive.*"}[5m]))
     /
-      sum by (job) (rate(thanos_receive_forward_requests_total{job=~"thanos-receive.*"}[5m]))
+      sum by (job) (rate(thanos_receive_replications_total{job=~"thanos-receive.*"}[5m]))
     )
     >
     (
@@ -267,6 +269,23 @@ expr: |
       max by (job) (thanos_receive_hashring_nodes{job=~"thanos-receive.*"})
     )
   ) * 100
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ThanosReceiveHighForwardRequestFailures
+
+{{< code lang="yaml" >}}
+alert: ThanosReceiveHighForwardRequestFailures
+annotations:
+  message: Thanos Receive {{$labels.job}} is failing to forward {{ $value | humanize }}% of requests.
+expr: |
+  (
+    sum by (job) (rate(thanos_receive_forward_requests_total{result="error", job=~"thanos-receive.*"}[5m]))
+  /
+    sum by (job) (rate(thanos_receive_forward_requests_total{job=~"thanos-receive.*"}[5m]))
+  ) * 100 > 20
 for: 5m
 labels:
   severity: warning
@@ -736,7 +755,6 @@ expr: |
   /
     sum(rate(grpc_client_started_total{job=~"thanos-query.*", grpc_type="unary"}[5m]))
   )
-labels: {}
 record: :grpc_client_failures_per_unary:sum_rate
 {{< /code >}}
  
@@ -749,7 +767,6 @@ expr: |
   /
     sum(rate(grpc_client_started_total{job=~"thanos-query.*", grpc_type="server_stream"}[5m]))
   )
-labels: {}
 record: :grpc_client_failures_per_stream:sum_rate
 {{< /code >}}
  
@@ -762,7 +779,6 @@ expr: |
   /
     sum(rate(thanos_querier_store_apis_dns_lookups_total{job=~"thanos-query.*"}[5m]))
   )
-labels: {}
 record: :thanos_querier_store_apis_dns_failures_per_lookup:sum_rate
 {{< /code >}}
  
@@ -801,7 +817,6 @@ expr: |
   /
     rate(grpc_server_started_total{job=~"thanos-receive.*", grpc_type="unary"}[5m])
   )
-labels: {}
 record: :grpc_server_failures_per_unary:sum_rate
 {{< /code >}}
  
@@ -814,7 +829,6 @@ expr: |
   /
     rate(grpc_server_started_total{job=~"thanos-receive.*", grpc_type="server_stream"}[5m])
   )
-labels: {}
 record: :grpc_server_failures_per_stream:sum_rate
 {{< /code >}}
  
@@ -827,7 +841,6 @@ expr: |
   /
     rate(http_requests_total{handler="receive", job=~"thanos-receive.*"}[5m])
   )
-labels: {}
 record: :http_failure_per_request:sum_rate
 {{< /code >}}
  
@@ -843,6 +856,18 @@ labels:
 record: :http_request_duration_seconds:histogram_quantile
 {{< /code >}}
  
+##### :thanos_receive_replication_failure_per_requests:sum_rate
+
+{{< code lang="yaml" >}}
+expr: |
+  (
+    sum(rate(thanos_receive_replications_total{result="error", job=~"thanos-receive.*"}[5m]))
+  /
+    sum(rate(thanos_receive_replications_total{job=~"thanos-receive.*"}[5m]))
+  )
+record: :thanos_receive_replication_failure_per_requests:sum_rate
+{{< /code >}}
+ 
 ##### :thanos_receive_forward_failure_per_requests:sum_rate
 
 {{< code lang="yaml" >}}
@@ -852,7 +877,6 @@ expr: |
   /
     sum(rate(thanos_receive_forward_requests_total{job=~"thanos-receive.*"}[5m]))
   )
-labels: {}
 record: :thanos_receive_forward_failure_per_requests:sum_rate
 {{< /code >}}
  
@@ -865,7 +889,6 @@ expr: |
   /
     sum(rate(thanos_receive_hashrings_file_refreshes_total{job=~"thanos-receive.*"}[5m]))
   )
-labels: {}
 record: :thanos_receive_hashring_file_failure_per_refresh:sum_rate
 {{< /code >}}
  
@@ -880,7 +903,6 @@ expr: |
   /
     sum(rate(grpc_server_started_total{job=~"thanos-store.*", grpc_type="unary"}[5m]))
   )
-labels: {}
 record: :grpc_server_failures_per_unary:sum_rate
 {{< /code >}}
  
@@ -893,7 +915,6 @@ expr: |
   /
     sum(rate(grpc_server_started_total{job=~"thanos-store.*", grpc_type="server_stream"}[5m]))
   )
-labels: {}
 record: :grpc_server_failures_per_stream:sum_rate
 {{< /code >}}
  
@@ -906,7 +927,6 @@ expr: |
   /
     sum(rate(thanos_objstore_bucket_operations_total{job=~"thanos-store.*"}[5m]))
   )
-labels: {}
 record: :thanos_objstore_bucket_failures_per_operation:sum_rate
 {{< /code >}}
  
