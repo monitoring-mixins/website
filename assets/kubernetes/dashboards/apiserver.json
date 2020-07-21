@@ -93,7 +93,7 @@
                "tableColumn": "",
                "targets": [
                   {
-                     "expr": "apiserver_request:availability30d{verb=\"all\"}",
+                     "expr": "apiserver_request:availability30d{verb=\"all\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "",
@@ -155,7 +155,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "100 * (apiserver_request:availability30d{verb=\"all\"} - 0.990000)",
+                     "expr": "100 * (apiserver_request:availability30d{verb=\"all\", cluster=\"$cluster\"} - 0.990000)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "errorbudget",
@@ -272,7 +272,7 @@
                "tableColumn": "",
                "targets": [
                   {
-                     "expr": "apiserver_request:availability30d{verb=\"read\"}",
+                     "expr": "apiserver_request:availability30d{verb=\"read\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "",
@@ -350,7 +350,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (code) (code_resource:apiserver_request_total:rate5m{verb=\"read\"})",
+                     "expr": "sum by (code) (code_resource:apiserver_request_total:rate5m{verb=\"read\", cluster=\"$cluster\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{ code }}",
@@ -431,7 +431,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"read\",code=~\"5..\"}) / sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"read\"})",
+                     "expr": "sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"read\",code=~\"5..\", cluster=\"$cluster\"}) / sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"read\", cluster=\"$cluster\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{ resource }}",
@@ -512,7 +512,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{verb=\"read\"}",
+                     "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{verb=\"read\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{ resource }}",
@@ -627,7 +627,7 @@
                "tableColumn": "",
                "targets": [
                   {
-                     "expr": "apiserver_request:availability30d{verb=\"write\"}",
+                     "expr": "apiserver_request:availability30d{verb=\"write\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "",
@@ -705,7 +705,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (code) (code_resource:apiserver_request_total:rate5m{verb=\"write\"})",
+                     "expr": "sum by (code) (code_resource:apiserver_request_total:rate5m{verb=\"write\", cluster=\"$cluster\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{ code }}",
@@ -786,7 +786,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"write\",code=~\"5..\"}) / sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"write\"})",
+                     "expr": "sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"write\",code=~\"5..\", cluster=\"$cluster\"}) / sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"write\", cluster=\"$cluster\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{ resource }}",
@@ -867,7 +867,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{verb=\"write\"}",
+                     "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{verb=\"write\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{ resource }}",
@@ -955,7 +955,7 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 6,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -1035,7 +1035,7 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 6,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -1115,7 +1115,7 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 12,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -1213,273 +1213,6 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "etcd_helper_cache_entry_total{job=\"kube-apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}}",
-                     "refId": "A"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "ETCD Cache Entry Total",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "gridPos": { },
-               "id": 17,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 4,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(rate(etcd_helper_cache_hit_total{job=\"kube-apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}[5m])) by (instance)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} hit",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "sum(rate(etcd_helper_cache_miss_total{job=\"kube-apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}[5m])) by (instance)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} miss",
-                     "refId": "B"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "ETCD Cache Hit/Miss Rate",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ops",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "ops",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "gridPos": { },
-               "id": 18,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 4,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "histogram_quantile(0.99,sum(rate(etcd_request_cache_get_duration_seconds_bucket{job=\"kube-apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}[5m])) by (instance, le))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} get",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "histogram_quantile(0.99,sum(rate(etcd_request_cache_add_duration_seconds_bucket{job=\"kube-apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}[5m])) by (instance, le))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} miss",
-                     "refId": "B"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "ETCD Cache Duration 99th Quantile",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "s",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "s",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": false,
-         "title": "Dashboard Row",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "gridPos": { },
-               "id": 19,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 4,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
                      "expr": "process_resident_memory_bytes{job=\"kube-apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
@@ -1531,7 +1264,7 @@
                "datasource": "$datasource",
                "fill": 1,
                "gridPos": { },
-               "id": 20,
+               "id": 17,
                "legend": {
                   "alignAsTable": false,
                   "avg": false,
@@ -1611,7 +1344,7 @@
                "datasource": "$datasource",
                "fill": 1,
                "gridPos": { },
-               "id": 21,
+               "id": 18,
                "legend": {
                   "alignAsTable": false,
                   "avg": false,
@@ -1716,19 +1449,16 @@
          },
          {
             "allValue": null,
-            "current": {
-               "text": "prod",
-               "value": "prod"
-            },
+            "current": { },
             "datasource": "$datasource",
             "hide": 2,
             "includeAll": false,
-            "label": null,
+            "label": "cluster",
             "multi": false,
             "name": "cluster",
             "options": [ ],
             "query": "label_values(apiserver_request_total, cluster)",
-            "refresh": 1,
+            "refresh": 2,
             "regex": "",
             "sort": 1,
             "tagValuesQuery": "",

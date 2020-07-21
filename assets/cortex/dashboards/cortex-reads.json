@@ -255,7 +255,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/query-frontend\", route=~\"api_prom_api_v1_.+\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"api_prom_api_v1_.+\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -332,7 +332,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/query-frontend\", route=~\"api_prom_api_v1_.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"api_prom_api_v1_.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -340,7 +340,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/query-frontend\", route=~\"api_prom_api_v1_.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"api_prom_api_v1_.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -348,7 +348,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/query-frontend\", route=~\"api_prom_api_v1_.+\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/query-frontend\", route=~\"api_prom_api_v1_.+\"})",
+                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"api_prom_api_v1_.+\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"api_prom_api_v1_.+\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -444,7 +444,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{method=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/query-frontend\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{method=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -521,7 +521,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/query-frontend\", method=~\"frontend.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", method=~\"frontend.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -529,7 +529,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/query-frontend\", method=~\"frontend.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", method=~\"frontend.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -537,7 +537,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_method:cortex_cache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/query-frontend\", method=~\"frontend.+\"}) / sum(cluster_job_method:cortex_cache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/query-frontend\", method=~\"frontend.+\"})",
+                     "expr": "1e3 * sum(cluster_job_method:cortex_cache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", method=~\"frontend.+\"}) / sum(cluster_job_method:cortex_cache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", method=~\"frontend.+\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -633,7 +633,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/querier\", route=~\"api_prom_api_v1_.+\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"api_prom_api_v1_.+\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -710,7 +710,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", route=~\"api_prom_api_v1_.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"api_prom_api_v1_.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -718,7 +718,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", route=~\"api_prom_api_v1_.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"api_prom_api_v1_.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -726,7 +726,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", route=~\"api_prom_api_v1_.+\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", route=~\"api_prom_api_v1_.+\"})",
+                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"api_prom_api_v1_.+\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"api_prom_api_v1_.+\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -822,7 +822,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ingester\",route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\",route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -899,7 +899,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/ingester\", route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -907,7 +907,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/ingester\", route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -915,7 +915,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/ingester\", route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/ingester\", route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"})",
+                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1011,7 +1011,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",route=~\"/gatewaypb.StoreGateway/.*\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",route=~\"/gatewaypb.StoreGateway/.*\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1088,7 +1088,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\", route=~\"/gatewaypb.StoreGateway/.*\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\", route=~\"/gatewaypb.StoreGateway/.*\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1096,7 +1096,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\", route=~\"/gatewaypb.StoreGateway/.*\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\", route=~\"/gatewaypb.StoreGateway/.*\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1104,7 +1104,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\", route=~\"/gatewaypb.StoreGateway/.*\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\", route=~\"/gatewaypb.StoreGateway/.*\"})",
+                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\", route=~\"/gatewaypb.StoreGateway/.*\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\", route=~\"/gatewaypb.StoreGateway/.*\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1200,7 +1200,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/querier\",method=\"store.index-cache-read.memcache.fetch\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",method=\"store.index-cache-read.memcache.fetch\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1277,7 +1277,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", method=\"store.index-cache-read.memcache.fetch\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"store.index-cache-read.memcache.fetch\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1285,7 +1285,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", method=\"store.index-cache-read.memcache.fetch\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"store.index-cache-read.memcache.fetch\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1293,7 +1293,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_method:cortex_cache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", method=\"store.index-cache-read.memcache.fetch\"}) / sum(cluster_job_method:cortex_cache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", method=\"store.index-cache-read.memcache.fetch\"})",
+                     "expr": "1e3 * sum(cluster_job_method:cortex_cache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"store.index-cache-read.memcache.fetch\"}) / sum(cluster_job_method:cortex_cache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"store.index-cache-read.memcache.fetch\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1389,7 +1389,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/querier\",method=\"chunksmemcache.fetch\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",method=\"chunksmemcache.fetch\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1466,7 +1466,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", method=\"chunksmemcache.fetch\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"chunksmemcache.fetch\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1474,7 +1474,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", method=\"chunksmemcache.fetch\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"chunksmemcache.fetch\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1482,7 +1482,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_method:cortex_cache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", method=\"chunksmemcache.fetch\"}) / sum(cluster_job_method:cortex_cache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", method=\"chunksmemcache.fetch\"})",
+                     "expr": "1e3 * sum(cluster_job_method:cortex_cache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"chunksmemcache.fetch\"}) / sum(cluster_job_method:cortex_cache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"chunksmemcache.fetch\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1570,7 +1570,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{component=\"store-gateway\",name=\"index-cache\", cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{component=\"store-gateway\",name=\"index-cache\", cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1647,7 +1647,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"index-cache\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"index-cache\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1656,7 +1656,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"index-cache\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"index-cache\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1665,7 +1665,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_memcached_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"index-cache\"}[$__interval])) * 1e3 / sum(rate(thanos_memcached_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"index-cache\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_memcached_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"index-cache\"}[$__interval])) * 1e3 / sum(rate(thanos_memcached_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"index-cache\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1742,7 +1742,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(item_type) (rate(thanos_store_index_cache_hits_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\"}[$__interval])) / sum by(item_type) (rate(thanos_store_index_cache_requests_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\"}[$__interval]))",
+                     "expr": "sum by(item_type) (rate(thanos_store_index_cache_hits_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) / sum by(item_type) (rate(thanos_store_index_cache_requests_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1831,7 +1831,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1908,7 +1908,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1917,7 +1917,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1926,7 +1926,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_memcached_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval])) * 1e3 / sum(rate(thanos_memcached_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_memcached_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval])) * 1e3 / sum(rate(thanos_memcached_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2003,7 +2003,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2092,7 +2092,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2169,7 +2169,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2178,7 +2178,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2187,7 +2187,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_memcached_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval])) * 1e3 / sum(rate(thanos_memcached_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",operation=\"getmulti\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_memcached_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval])) * 1e3 / sum(rate(thanos_memcached_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",operation=\"getmulti\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2264,7 +2264,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/store-gateway\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2353,7 +2353,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/querier\",component=\"querier\",name=\"metadata-cache\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",component=\"querier\",name=\"metadata-cache\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2430,7 +2430,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/querier\",operation=\"getmulti\",component=\"querier\",name=\"metadata-cache\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",operation=\"getmulti\",component=\"querier\",name=\"metadata-cache\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2439,7 +2439,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/querier\",operation=\"getmulti\",component=\"querier\",name=\"metadata-cache\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_memcached_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",operation=\"getmulti\",component=\"querier\",name=\"metadata-cache\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2448,7 +2448,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_memcached_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/querier\",operation=\"getmulti\",component=\"querier\",name=\"metadata-cache\"}[$__interval])) * 1e3 / sum(rate(thanos_memcached_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/querier\",operation=\"getmulti\",component=\"querier\",name=\"metadata-cache\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_memcached_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",operation=\"getmulti\",component=\"querier\",name=\"metadata-cache\"}[$__interval])) * 1e3 / sum(rate(thanos_memcached_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",operation=\"getmulti\",component=\"querier\",name=\"metadata-cache\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2525,7 +2525,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/querier\",component=\"querier\",name=\"metadata-cache\"}[$__interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/querier\",component=\"querier\",name=\"metadata-cache\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",component=\"querier\",name=\"metadata-cache\"}[$__interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",component=\"querier\",name=\"metadata-cache\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2622,7 +2622,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_bigtable_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/querier\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_bigtable_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2699,7 +2699,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_bigtable_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_bigtable_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -2707,7 +2707,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_bigtable_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_bigtable_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -2715,7 +2715,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_operation:cortex_bigtable_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}) / sum(cluster_job_operation:cortex_bigtable_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"})",
+                     "expr": "1e3 * sum(cluster_job_operation:cortex_bigtable_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}) / sum(cluster_job_operation:cortex_bigtable_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -2811,7 +2811,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_dynamo_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/querier\", operation=\"DynamoDB.QueryPages\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_dynamo_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"DynamoDB.QueryPages\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2888,7 +2888,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_dynamo_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", operation=\"DynamoDB.QueryPages\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_dynamo_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"DynamoDB.QueryPages\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -2896,7 +2896,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_dynamo_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", operation=\"DynamoDB.QueryPages\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_dynamo_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"DynamoDB.QueryPages\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -2904,7 +2904,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_operation:cortex_dynamo_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", operation=\"DynamoDB.QueryPages\"}) / sum(cluster_job_operation:cortex_dynamo_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/querier\", operation=\"DynamoDB.QueryPages\"})",
+                     "expr": "1e3 * sum(cluster_job_operation:cortex_dynamo_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"DynamoDB.QueryPages\"}) / sum(cluster_job_operation:cortex_dynamo_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"DynamoDB.QueryPages\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",

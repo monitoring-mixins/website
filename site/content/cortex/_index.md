@@ -97,14 +97,16 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### CortexBadOverrides
+##### CortexBadRuntimeConfig
 
 {{< code lang="yaml" >}}
-alert: CortexBadOverrides
+alert: CortexBadRuntimeConfig
 annotations:
   message: |
-    {{ $labels.job }} failed to reload overrides.
+    {{ $labels.job }} failed to reload runtime config.
 expr: |
+  cortex_runtime_config_last_reload_successful == 0
+    or
   cortex_overrides_last_reload_successful == 0
 for: 15m
 labels:
@@ -344,11 +346,11 @@ labels:
 alert: CortexRulerFailedEvaluations
 annotations:
   message: |
-    {{ $labels.job }} is experiencing {{ printf "%.2f" $value }}% errors.
+    Cortex Ruler {{ $labels.instance }} is experiencing {{ printf "%.2f" $value }}% errors for the rule group {{ $labels.rule_group }}.
 expr: |
-  sum by (cluster, namespace) (rate(cortex_prometheus_rule_evaluation_failures_total[1m]))
+  sum by (cluster, namespace, instance, rule_group) (rate(cortex_prometheus_rule_evaluation_failures_total[1m]))
     /
-  sum by (cluster, namespace) (rate(cortex_prometheus_rule_evaluations_total[1m]))
+  sum by (cluster, namespace, instance, rule_group) (rate(cortex_prometheus_rule_evaluations_total[1m]))
     > 0.01
 for: 5m
 labels:
@@ -361,11 +363,11 @@ labels:
 alert: CortexRulerMissedEvaluations
 annotations:
   message: |
-    {{ $labels.job }} is experiencing {{ printf "%.2f" $value }}% missed iterations.
+    Cortex Ruler {{ $labels.instance }} is experiencing {{ printf "%.2f" $value }}% missed iterations for the rule group {{ $labels.rule_group }}.
 expr: |
-  sum by (cluster, namespace) (rate(cortex_prometheus_rule_group_iterations_missed_total[1m]))
+  sum by (cluster, namespace, instance, rule_group) (rate(cortex_prometheus_rule_group_iterations_missed_total[1m]))
     /
-  sum by (cluster, namespace) (rate(cortex_prometheus_rule_group_iterations_total[1m]))
+  sum by (cluster, namespace, instance, rule_group) (rate(cortex_prometheus_rule_group_iterations_total[1m]))
     > 0.01
 for: 5m
 labels:
