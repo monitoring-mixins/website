@@ -56,3 +56,8 @@ mixins:
 - name: kube-cockroachdb
   source: "https://github.com/metalmatze/kube-cockroachdb"
   subdir: "monitoring"
+- name: coredns
+  source: "https://github.com/povilasv/coredns-mixin"
+  subdir: ""
+  description: |
+    CoreDNS mixin provides Grafana dashboard and Prometheus Alerts to monitor CoreDNS. The mixin was introduced in [Kubernetes Node Local DNS Cache blogpost](https://povilasv.me/kubernetes-node-local-dns-cache/) to better help users monitor CoreDNS in Kubernetes. Mixin can also be used to monitor standalone CoreDNS instance without any orchestrators.
