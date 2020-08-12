@@ -97,6 +97,20 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### CortexInconsistentConfig
+
+{{< code lang="yaml" >}}
+alert: CortexInconsistentConfig
+annotations:
+  message: |
+    An inconsistent config file hash is used across cluster {{ $labels.job }}.
+expr: |
+  count(count by(cluster, namespace, job, sha256) (cortex_config_hash)) without(sha256) > 1
+for: 1h
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### CortexBadRuntimeConfig
 
 {{< code lang="yaml" >}}
@@ -298,7 +312,7 @@ annotations:
   message: |
     Too many active series for ingesters, add more ingesters.
 expr: |
-  avg by (cluster, namespace) (cortex_ingester_memory_series) > 1.1e6
+  avg by (cluster, namespace) (cortex_ingester_memory_series) > 1.6e6
     and
   sum by (cluster, namespace) (rate(cortex_ingester_received_chunks[1h])) == 0
 for: 1h
@@ -320,19 +334,37 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### CortexProvisioningTooMuchMemory
+##### CortexAllocatingTooMuchMemory
 
 {{< code lang="yaml" >}}
-alert: CortexProvisioningTooMuchMemory
+alert: CortexAllocatingTooMuchMemory
 annotations:
   message: |
-    Too much memory being used by ingesters - add more ingesters.
+    Too much memory being used by {{ $labels.instance }} - add more ingesters.
 expr: |
-  avg by (cluster, namespace) (
+  (
     container_memory_working_set_bytes{container_name="ingester"}
       /
     container_spec_memory_limit_bytes{container_name="ingester"}
-  ) > 0.7
+  ) > 0.5
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### CortexAllocatingTooMuchMemory
+
+{{< code lang="yaml" >}}
+alert: CortexAllocatingTooMuchMemory
+annotations:
+  message: |
+    Too much memory being used by {{ $labels.instance }} - add more ingesters.
+expr: |
+  (
+    container_memory_working_set_bytes{container_name="ingester"}
+      /
+    container_spec_memory_limit_bytes{container_name="ingester"}
+  ) > 0.8
 for: 15m
 labels:
   severity: critical
@@ -415,9 +447,11 @@ alert: CortexIngesterHasNotShippedBlocks
 annotations:
   message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has not shipped any block in the last 4 hours.
 expr: |
-  (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"} > 60 * 60 * 4)
+  (min by(namespace, instance) (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"}) > 60 * 60 * 4)
   and
-  (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"} > 0)
+  (max by(namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"}) > 0)
+  and
+  (max by(namespace, instance) (rate(cortex_ingester_ingested_samples_total[4h])) > 0)
 for: 15m
 labels:
   severity: critical
@@ -430,8 +464,23 @@ alert: CortexIngesterHasNotShippedBlocksSinceStart
 annotations:
   message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has not shipped any block in the last 4 hours.
 expr: |
-  thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"} == 0
+  (max by(namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"}) == 0)
+  and
+  (max by(namespace, instance) (rate(cortex_ingester_ingested_samples_total[4h])) > 0)
 for: 4h
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexIngesterTSDBHeadCompactionFailed
+
+{{< code lang="yaml" >}}
+alert: CortexIngesterTSDBHeadCompactionFailed
+annotations:
+  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing to compact TSDB head.
+expr: |
+  rate(cortex_ingester_tsdb_compactions_failed_total[5m]) > 0
+for: 15m
 labels:
   severity: critical
 {{< /code >}}
@@ -1460,6 +1509,7 @@ Following dashboards are generated from mixins and hosted on github:
 - [cortex-chunks](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-chunks.json)
 - [cortex-compactor-resources](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-compactor-resources.json)
 - [cortex-compactor](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-compactor.json)
+- [cortex-config](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-config.json)
 - [cortex-object-store](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-object-store.json)
 - [cortex-queries](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-queries.json)
 - [cortex-reads](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-reads.json)
