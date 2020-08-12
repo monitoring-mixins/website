@@ -25,15 +25,15 @@ alert: etcdMembersDown
 annotations:
   message: 'etcd cluster "{{ $labels.job }}": members are down ({{ $value }}).'
 expr: |
-  max by (job) (
-    sum by (job) (up{job=~".*etcd.*"} == bool 0)
+  max without (endpoint) (
+    sum without (instance) (up{job=~".*etcd.*"} == bool 0)
   or
-    count by (job,endpoint) (
-      sum by (job,endpoint,To) (rate(etcd_network_peer_sent_failures_total{job=~".*etcd.*"}[1m])) > 0.01
+    count without (To) (
+      sum without (instance) (rate(etcd_network_peer_sent_failures_total{job=~".*etcd.*"}[120s])) > 0.01
     )
   )
   > 0
-for: 3m
+for: 10m
 labels:
   severity: critical
 {{< /code >}}
@@ -45,7 +45,7 @@ alert: etcdInsufficientMembers
 annotations:
   message: 'etcd cluster "{{ $labels.job }}": insufficient members ({{ $value }}).'
 expr: |
-  sum(up{job=~".*etcd.*"} == bool 1) by (job) < ((count(up{job=~".*etcd.*"}) by (job) + 1) / 2)
+  sum(up{job=~".*etcd.*"} == bool 1) without (instance) < ((count(up{job=~".*etcd.*"}) without (instance) + 1) / 2)
 for: 3m
 labels:
   severity: critical
@@ -71,7 +71,7 @@ alert: etcdHighNumberOfLeaderChanges
 annotations:
   message: 'etcd cluster "{{ $labels.job }}": {{ $value }} leader changes within the last 15 minutes. Frequent elections may be a sign of insufficient resources, high network latency, or disruptions by other components and should be investigated.'
 expr: |
-  increase((max by (job) (etcd_server_leader_changes_seen_total{job=~".*etcd.*"}) or 0*absent(etcd_server_leader_changes_seen_total{job=~".*etcd.*"}))[15m:1m]) >= 4
+  increase((max without (instance) (etcd_server_leader_changes_seen_total{job=~".*etcd.*"}) or 0*absent(etcd_server_leader_changes_seen_total{job=~".*etcd.*"}))[15m:1m]) >= 4
 for: 5m
 labels:
   severity: warning
@@ -84,9 +84,9 @@ alert: etcdHighNumberOfFailedGRPCRequests
 annotations:
   message: 'etcd cluster "{{ $labels.job }}": {{ $value }}% of requests for {{ $labels.grpc_method }} failed on etcd instance {{ $labels.instance }}.'
 expr: |
-  100 * sum(rate(grpc_server_handled_total{job=~".*etcd.*", grpc_code!="OK"}[5m])) BY (job, instance, grpc_service, grpc_method)
+  100 * sum(rate(grpc_server_handled_total{job=~".*etcd.*", grpc_code!="OK"}[5m])) without (grpc_type, grpc_code)
     /
-  sum(rate(grpc_server_handled_total{job=~".*etcd.*"}[5m])) BY (job, instance, grpc_service, grpc_method)
+  sum(rate(grpc_server_handled_total{job=~".*etcd.*"}[5m])) without (grpc_type, grpc_code)
     > 1
 for: 10m
 labels:
@@ -100,9 +100,9 @@ alert: etcdHighNumberOfFailedGRPCRequests
 annotations:
   message: 'etcd cluster "{{ $labels.job }}": {{ $value }}% of requests for {{ $labels.grpc_method }} failed on etcd instance {{ $labels.instance }}.'
 expr: |
-  100 * sum(rate(grpc_server_handled_total{job=~".*etcd.*", grpc_code!="OK"}[5m])) BY (job, instance, grpc_service, grpc_method)
+  100 * sum(rate(grpc_server_handled_total{job=~".*etcd.*", grpc_code!="OK"}[5m])) without (grpc_type, grpc_code)
     /
-  sum(rate(grpc_server_handled_total{job=~".*etcd.*"}[5m])) BY (job, instance, grpc_service, grpc_method)
+  sum(rate(grpc_server_handled_total{job=~".*etcd.*"}[5m])) without (grpc_type, grpc_code)
     > 5
 for: 5m
 labels:
@@ -116,7 +116,7 @@ alert: etcdGRPCRequestsSlow
 annotations:
   message: 'etcd cluster "{{ $labels.job }}": gRPC requests to {{ $labels.grpc_method }} are taking {{ $value }}s on etcd instance {{ $labels.instance }}.'
 expr: |
-  histogram_quantile(0.99, sum(rate(grpc_server_handling_seconds_bucket{job=~".*etcd.*", grpc_type="unary"}[5m])) by (job, instance, grpc_service, grpc_method, le))
+  histogram_quantile(0.99, sum(rate(grpc_server_handling_seconds_bucket{job=~".*etcd.*", grpc_type="unary"}[5m])) without(grpc_type))
   > 0.15
 for: 10m
 labels:
@@ -185,8 +185,8 @@ alert: etcdHighNumberOfFailedHTTPRequests
 annotations:
   message: '{{ $value }}% of requests for {{ $labels.method }} failed on etcd instance {{ $labels.instance }}'
 expr: |
-  sum(rate(etcd_http_failed_total{job=~".*etcd.*", code!="404"}[5m])) BY (method) / sum(rate(etcd_http_received_total{job=~".*etcd.*"}[5m]))
-  BY (method) > 0.01
+  sum(rate(etcd_http_failed_total{job=~".*etcd.*", code!="404"}[5m])) without (code) / sum(rate(etcd_http_received_total{job=~".*etcd.*"}[5m]))
+  without (code) > 0.01
 for: 10m
 labels:
   severity: warning
@@ -199,8 +199,8 @@ alert: etcdHighNumberOfFailedHTTPRequests
 annotations:
   message: '{{ $value }}% of requests for {{ $labels.method }} failed on etcd instance {{ $labels.instance }}.'
 expr: |
-  sum(rate(etcd_http_failed_total{job=~".*etcd.*", code!="404"}[5m])) BY (method) / sum(rate(etcd_http_received_total{job=~".*etcd.*"}[5m]))
-  BY (method) > 0.05
+  sum(rate(etcd_http_failed_total{job=~".*etcd.*", code!="404"}[5m])) without (code) / sum(rate(etcd_http_received_total{job=~".*etcd.*"}[5m]))
+  without (code) > 0.05
 for: 10m
 labels:
   severity: critical

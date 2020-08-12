@@ -278,6 +278,20 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### PrometheusTargetLimitHit
+
+{{< code lang="yaml" >}}
+alert: PrometheusTargetLimitHit
+annotations:
+  description: Prometheus {{$labels.instance}} has dropped {{ printf "%.0f" $value }} targets because the number of targets exceeded the configured target_limit.
+  summary: Prometheus has dropped targets because some scrape configs have exceeded the targets limit.
+expr: |
+  increase(prometheus_target_scrape_pool_exceeded_target_limit_total{job="prometheus"}[5m]) > 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 

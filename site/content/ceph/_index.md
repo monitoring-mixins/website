@@ -220,6 +220,40 @@ labels:
   severity: warning
 {{< /code >}}
  
+### persistent-volume-alert.rules
+
+##### PersistentVolumeUsageNearFull
+
+{{< code lang="yaml" >}}
+alert: PersistentVolumeUsageNearFull
+annotations:
+  description: PVC {{ $labels.persistentvolumeclaim }} utilization has crossed 75%. Free up some space or expand the PVC.
+  message: PVC {{ $labels.persistentvolumeclaim }} is nearing full. Data deletion or PVC expansion is required.
+  severity_level: warning
+  storage_type: ceph
+expr: |
+  (kubelet_volume_stats_used_bytes * on (namespace,persistentvolumeclaim) group_left(storageclass, provisioner) (kube_persistentvolumeclaim_info * on (storageclass)  group_left(provisioner) kube_storageclass_info {provisioner=~"(.*rbd.csi.ceph.com)|(.*cephfs.csi.ceph.com)"})) / (kubelet_volume_stats_capacity_bytes * on (namespace,persistentvolumeclaim) group_left(storageclass, provisioner) (kube_persistentvolumeclaim_info * on (storageclass)  group_left(provisioner) kube_storageclass_info {provisioner=~"(.*rbd.csi.ceph.com)|(.*cephfs.csi.ceph.com)"})) > 0.75
+for: 5s
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### PersistentVolumeUsageCritical
+
+{{< code lang="yaml" >}}
+alert: PersistentVolumeUsageCritical
+annotations:
+  description: PVC {{ $labels.persistentvolumeclaim }} utilization has crossed 85%. Free up some space or expand the PVC immediately.
+  message: PVC {{ $labels.persistentvolumeclaim }} is critically full. Data deletion or PVC expansion is required.
+  severity_level: error
+  storage_type: ceph
+expr: |
+  (kubelet_volume_stats_used_bytes * on (namespace,persistentvolumeclaim) group_left(storageclass, provisioner) (kube_persistentvolumeclaim_info * on (storageclass)  group_left(provisioner) kube_storageclass_info {provisioner=~"(.*rbd.csi.ceph.com)|(.*cephfs.csi.ceph.com)"})) / (kubelet_volume_stats_capacity_bytes * on (namespace,persistentvolumeclaim) group_left(storageclass, provisioner) (kube_persistentvolumeclaim_info * on (storageclass)  group_left(provisioner) kube_storageclass_info {provisioner=~"(.*rbd.csi.ceph.com)|(.*cephfs.csi.ceph.com)"})) > 0.85
+for: 5s
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ### cluster-state-alert.rules
 
 ##### CephClusterErrorState
@@ -293,13 +327,13 @@ labels:
 {{< code lang="yaml" >}}
 alert: CephClusterNearFull
 annotations:
-  description: Storage cluster utilization has crossed 75%. Free up some space or expand the storage cluster.
+  description: Storage cluster utilization has crossed 75% and will become read-only at 85%. Free up some space or expand the storage cluster.
   message: Storage cluster is nearing full. Data deletion or cluster expansion is required.
   severity_level: warning
   storage_type: ceph
 expr: |
-  sum(ceph_osd_stat_bytes_used) / sum(ceph_osd_stat_bytes) > 0.75
-for: 30s
+  ceph_cluster_total_used_raw_bytes / ceph_cluster_total_bytes > 0.75
+for: 5s
 labels:
   severity: warning
 {{< /code >}}
@@ -309,13 +343,29 @@ labels:
 {{< code lang="yaml" >}}
 alert: CephClusterCriticallyFull
 annotations:
-  description: Storage cluster utilization has crossed 85%. Free up some space or expand the storage cluster immediately.
+  description: Storage cluster utilization has crossed 80% and will become read-only at 85%. Free up some space or expand the storage cluster immediately.
   message: Storage cluster is critically full and needs immediate data deletion or cluster expansion.
   severity_level: error
   storage_type: ceph
 expr: |
-  sum(ceph_osd_stat_bytes_used) / sum(ceph_osd_stat_bytes) > 0.85
-for: 30s
+  ceph_cluster_total_used_raw_bytes / ceph_cluster_total_bytes > 0.80
+for: 5s
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CephClusterReadOnly
+
+{{< code lang="yaml" >}}
+alert: CephClusterReadOnly
+annotations:
+  description: Storage cluster utilization has crossed 85% and will become read-only now. Free up some space or expand the storage cluster immediately.
+  message: Storage cluster is read-only now and needs immediate data deletion or cluster expansion.
+  severity_level: error
+  storage_type: ceph
+expr: |
+  ceph_cluster_total_used_raw_bytes / ceph_cluster_total_bytes >= 0.85
+for: 0s
 labels:
   severity: critical
 {{< /code >}}
