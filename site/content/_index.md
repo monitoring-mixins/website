@@ -151,3 +151,58 @@ $ jsonnet -J vendor -S -e 'std.manifestYamlDoc((import "mixin.libsonnet").promet
 $ jsonnet -J vendor -S -e 'std.manifestYamlDoc((import "mixin.libsonnet").prometheusRules)' >files/rules.yml
 $ jsonnet -J vendor -m files/dashboards -e '(import "mixin.libsonnet").grafanaDashboards'
 ```
+
+## Guidelines for alert names, labels, and annotations
+
+Prometheus alerts deliberately allow users to define their own schema for
+names, labels, and annotations. The following is a style guide recommended for
+alerts in monitoring mixins. Following this guide helps creating useful
+notification templates for all mixins and customizing mixin alerts in a unified
+fashion.
+
+The alert **name** is a terse description of the alerting condition, using
+camel case, without whitespace, starting with a capital letter. The first
+component of the name should be shared between all alerts of a mixin (or
+between a group of related alerts within a larger mixin). Examples:
+`NodeFilesystemAlmostOutOfFiles` (from the [node-exporter
+mixin](https://github.com/prometheus/node_exporter/tree/master/docs/node-mixin),
+`PrometheusNotificationQueueRunningFull` (from the [Prometheus
+mixin](https://github.com/prometheus/prometheus/blob/master/documentation/prometheus-mixin)).
+
+To mark the severity of an alert, use a **label** called `severity` with one of
+the following label values:
+- `critical` for alerts that require immediate action. For a production system,
+  those alerts will usually hit a pager.
+- `warning` for alerts that require action eventually but not urgently enough
+  to wake someone up or require them to immediately interrupt what they are
+  working on. A typical routing target for those alerts is some kind of ticket
+  queueing or bug tracking system.
+- `info` for alerts that do not require any action by itself but mark something
+  as “out of the ordinary”. Those alerts aren't usually routed anywhere, but
+  can be inspected during troubleshooting.
+
+An alert can have the following **annotations**:
+- `summary` (mandatory): Essentially a more comprehensive and readable version
+  of the alert name. Use a human-readable sentence, starting with a capital
+  letter and ending with a period. Use a static string or, if dynamic expansion
+  is needed, aim for expanding into the same string for alerts that are
+  typically grouped together into one notification. In that way, it can be used
+  as a common “headline” for all alerts in the notification template. Examples:
+  `Filesystem has less than 3% inodes left.` (for the
+  `NodeFilesystemAlmostOutOfFiles` alert mentioned above), `Prometheus alert
+  notification queue predicted to run full in less than 30m.` (for the
+  `PrometheusNotificationQueueRunningFull` alert mentioned above).
+- `description` (mandatory): A detailed description of a single alert, with
+  most of the important information templated in. The description usually
+  expands into a different string for every individual alert within a
+  notification. A notification template can iterate through all the
+  descriptions and format them into a list. Examples (again corresponding to
+  the examples above): `Filesystem on {{ $labels.device }} at {{
+  $labels.instance }} has only {{ printf "%.2f" $value }}% available inodes
+  left.`, `Alert notification queue of Prometheus %(prometheusName)s is running
+  full.`.
+
+Note that we plan to add recommended optional annotations for a runbook link
+(presumably called `runbook_url`) and a dashboard link
+(`dashboard_url`). However, we still need to work out how to configure patterns
+for those URLs across mixins in a useful way.
