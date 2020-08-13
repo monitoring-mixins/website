@@ -107,7 +107,8 @@ groups:
       severity: warning
   - alert: CortexIngesterRestarts
     annotations:
-      message: '{{ $labels.job }}/{{ $labels.instance }} has restarted {{ printf "%.2f" $value }} times in the last 30 mins.'
+      message: '{{ $labels.job }}/{{ $labels.instance }} has restarted {{ printf "%.2f"
+        $value }} times in the last 30 mins.'
     expr: |
       changes(process_start_time_seconds{job=~".+(cortex|ingester)"}[30m]) > 1
     labels:
@@ -278,7 +279,8 @@ groups:
   rules:
   - alert: CortexGossipMembersMismatch
     annotations:
-      message: '{{ $labels.job }}/{{ $labels.instance }} sees incorrect number of gossip members.'
+      message: '{{ $labels.job }}/{{ $labels.instance }} sees incorrect number of
+        gossip members.'
     expr: |
       memberlist_client_cluster_members_count
         != on (cluster, namespace) group_left
@@ -290,7 +292,8 @@ groups:
   rules:
   - alert: CortexIngesterHasNotShippedBlocks
     annotations:
-      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has not shipped any block in the last 4 hours.
+      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has
+        not shipped any block in the last 4 hours.
     expr: |
       (min by(namespace, instance) (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"}) > 60 * 60 * 4)
       and
@@ -302,7 +305,8 @@ groups:
       severity: critical
   - alert: CortexIngesterHasNotShippedBlocksSinceStart
     annotations:
-      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has not shipped any block in the last 4 hours.
+      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has
+        not shipped any block in the last 4 hours.
     expr: |
       (max by(namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"}) == 0)
       and
@@ -312,7 +316,8 @@ groups:
       severity: critical
   - alert: CortexIngesterTSDBHeadCompactionFailed
     annotations:
-      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing to compact TSDB head.
+      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+        to compact TSDB head.
     expr: |
       rate(cortex_ingester_tsdb_compactions_failed_total[5m]) > 0
     for: 15m
@@ -320,7 +325,8 @@ groups:
       severity: critical
   - alert: CortexQuerierHasNotScanTheBucket
     annotations:
-      message: Cortex Querier {{ $labels.namespace }}/{{ $labels.instance }} has not successfully scanned the bucket since {{ $value | humanizeDuration }}.
+      message: Cortex Querier {{ $labels.namespace }}/{{ $labels.instance }} has not
+        successfully scanned the bucket since {{ $value | humanizeDuration }}.
     expr: |
       (time() - cortex_querier_blocks_last_successful_scan_timestamp_seconds > 60 * 30)
       and
@@ -330,7 +336,9 @@ groups:
       severity: critical
   - alert: CortexQuerierHighRefetchRate
     annotations:
-      message: Cortex Queries in {{ $labels.namespace }} are refetching series from different store-gateways (because of missing blocks) for the {{ printf "%.0f" $value }}% of queries.
+      message: Cortex Queries in {{ $labels.namespace }} are refetching series from
+        different store-gateways (because of missing blocks) for the {{ printf "%.0f"
+        $value }}% of queries.
     expr: |
       100 * (
         (
@@ -347,7 +355,9 @@ groups:
       severity: warning
   - alert: CortexStoreGatewayHasNotSyncTheBucket
     annotations:
-      message: Cortex Store Gateway {{ $labels.namespace }}/{{ $labels.instance }} has not successfully synched the bucket since {{ $value | humanizeDuration }}.
+      message: Cortex Store Gateway {{ $labels.namespace }}/{{ $labels.instance }}
+        has not successfully synched the bucket since {{ $value | humanizeDuration
+        }}.
     expr: |
       (time() - cortex_bucket_stores_blocks_last_successful_sync_timestamp_seconds{component="store-gateway"} > 60 * 30)
       and
@@ -359,7 +369,8 @@ groups:
   rules:
   - alert: CortexCompactorHasNotSuccessfullyCleanedUpBlocks
     annotations:
-      message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not successfully cleaned up blocks in the last 24 hours.
+      message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has
+        not successfully cleaned up blocks in the last 24 hours.
     expr: |
       (time() - cortex_compactor_block_cleanup_last_successful_run_timestamp_seconds > 60 * 60 * 24)
       and
@@ -369,7 +380,8 @@ groups:
       severity: critical
   - alert: CortexCompactorHasNotSuccessfullyCleanedUpBlocksSinceStart
     annotations:
-      message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not successfully cleaned up blocks in the last 24 hours.
+      message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has
+        not successfully cleaned up blocks in the last 24 hours.
     expr: |
       cortex_compactor_block_cleanup_last_successful_run_timestamp_seconds == 0
     for: 24h
@@ -377,7 +389,8 @@ groups:
       severity: critical
   - alert: CortexCompactorHasNotUploadedBlocks
     annotations:
-      message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not uploaded any block in the last 24 hours.
+      message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has
+        not uploaded any block in the last 24 hours.
     expr: |
       (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor"} > 60 * 60 * 24)
       and
@@ -387,7 +400,8 @@ groups:
       severity: critical
   - alert: CortexCompactorHasNotUploadedBlocksSinceStart
     annotations:
-      message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not uploaded any block in the last 24 hours.
+      message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has
+        not uploaded any block in the last 24 hours.
     expr: |
       thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor"} == 0
     for: 24h

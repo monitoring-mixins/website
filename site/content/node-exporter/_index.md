@@ -23,7 +23,8 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 {{< code lang="yaml" >}}
 alert: NodeFilesystemSpaceFillingUp
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available space left and is filling up.
+  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
+    {{ printf "%.2f" $value }}% available space left and is filling up.
   summary: Filesystem is predicted to run out of space within the next 24 hours.
 expr: |
   (
@@ -43,7 +44,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemSpaceFillingUp
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available space left and is filling up fast.
+  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
+    {{ printf "%.2f" $value }}% available space left and is filling up fast.
   summary: Filesystem is predicted to run out of space within the next 4 hours.
 expr: |
   (
@@ -63,7 +65,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemAlmostOutOfSpace
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available space left.
+  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
+    {{ printf "%.2f" $value }}% available space left.
   summary: Filesystem has less than 5% space left.
 expr: |
   (
@@ -81,7 +84,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemAlmostOutOfSpace
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available space left.
+  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
+    {{ printf "%.2f" $value }}% available space left.
   summary: Filesystem has less than 3% space left.
 expr: |
   (
@@ -99,7 +103,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemFilesFillingUp
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available inodes left and is filling up.
+  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
+    {{ printf "%.2f" $value }}% available inodes left and is filling up.
   summary: Filesystem is predicted to run out of inodes within the next 24 hours.
 expr: |
   (
@@ -119,7 +124,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemFilesFillingUp
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available inodes left and is filling up fast.
+  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
+    {{ printf "%.2f" $value }}% available inodes left and is filling up fast.
   summary: Filesystem is predicted to run out of inodes within the next 4 hours.
 expr: |
   (
@@ -139,7 +145,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemAlmostOutOfFiles
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available inodes left.
+  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
+    {{ printf "%.2f" $value }}% available inodes left.
   summary: Filesystem has less than 5% inodes left.
 expr: |
   (
@@ -157,7 +164,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemAlmostOutOfFiles
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available inodes left.
+  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
+    {{ printf "%.2f" $value }}% available inodes left.
   summary: Filesystem has less than 3% inodes left.
 expr: |
   (
@@ -175,7 +183,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeNetworkReceiveErrs
 annotations:
-  description: '{{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf "%.0f" $value }} receive errors in the last two minutes.'
+  description: '{{ $labels.instance }} interface {{ $labels.device }} has encountered
+    {{ printf "%.0f" $value }} receive errors in the last two minutes.'
   summary: Network interface is reporting many receive errors.
 expr: |
   increase(node_network_receive_errs_total[2m]) > 10
@@ -189,7 +198,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeNetworkTransmitErrs
 annotations:
-  description: '{{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf "%.0f" $value }} transmit errors in the last two minutes.'
+  description: '{{ $labels.instance }} interface {{ $labels.device }} has encountered
+    {{ printf "%.0f" $value }} transmit errors in the last two minutes.'
   summary: Network interface is reporting many transmit errors.
 expr: |
   increase(node_network_transmit_errs_total[2m]) > 10
@@ -229,7 +239,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeClockSkewDetected
 annotations:
-  message: Clock on {{ $labels.instance }} is out of sync by more than 300s. Ensure NTP is configured correctly on this host.
+  message: Clock on {{ $labels.instance }} is out of sync by more than 300s. Ensure
+    NTP is configured correctly on this host.
   summary: Clock skew detected.
 expr: |
   (
@@ -253,7 +264,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeClockNotSynchronising
 annotations:
-  message: Clock on {{ $labels.instance }} is not synchronising. Ensure NTP is configured on this host.
+  message: Clock on {{ $labels.instance }} is not synchronising. Ensure NTP is configured
+    on this host.
   summary: Clock not synchronising.
 expr: |
   min_over_time(node_timex_sync_status[5m]) == 0
