@@ -1,0 +1,28 @@
+---
+name: Daily content regeneration
+
+on:
+  schedule:
+    - cron:  '3 3 * * *'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-go@v2
+      with:
+        go-version: '^1.14'
+    - run: make generate
+    - uses: EndBug/add-and-commit@v4
+      with:
+        add: 'assets/ site/content/'
+        author_name: "github-actions[bot]"
+        author_email: "github-actions@users.noreply.github.com"
+        message: 'assets,site/content: daily assets regeneration'
+      env:
+        # This is necessary in order to push a commit to the repo
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
