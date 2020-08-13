@@ -7,8 +7,4 @@ steps:
   image: golang:1.14
   commands:
   - apt update && apt install jq -y
-  - GO111MODULE=off go get -u github.com/myitcv/gobin
-  - gobin github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@efe0c9e864431e93d5c3376bd5931d0fb9b2a296
-  - gobin github.com/brancz/gojsontoyaml
-  - gobin github.com/google/go-jsonnet/cmd/jsonnet
-  - ./generate.sh && git diff --exit-code
+  - make && git diff --exit-code

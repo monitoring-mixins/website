@@ -4,14 +4,17 @@
 
 MANIFESTS="assets"
 TOP=$(git rev-parse --show-toplevel)
-TMPDIR="${TOP}/tmp"
+TMPDIR="${TOP}/tmp/repos"
+
+# Make sure to use project tooling
+PATH="${TOP}/tmp/bin:${PATH}"
 
 download_mixin() {
 	local mixin="$1"
 	local repo="$2"
 	local subdir="$3"
 
-	git clone --depth 1 --filter=blob:none "$repo" "${TMPDIR}/$mixin"
+	git clone --depth 1 "$repo" "${TMPDIR}/$mixin"
 	mkdir -p "${TOP}/${MANIFESTS}/${mixin}/dashboards"
 	(
 		cd "${TMPDIR}/${mixin}/${subdir}"
