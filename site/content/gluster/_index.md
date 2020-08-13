@@ -96,7 +96,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: GlusterBrickUtilization
 annotations:
-  message: Gluster Brick {{$labels.host}}:{{$labels.brick_path}} Utilization more than 80%
+  message: Gluster Brick {{$labels.host}}:{{$labels.brick_path}} Utilization more
+    than 80%
 expr: |
   100 * gluster_brick_capacity_used_bytes{job="glusterd2-client"}
       / gluster_brick_capacity_bytes_total{job="glusterd2-client"} > 80
@@ -110,7 +111,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: GlusterBrickUtilization
 annotations:
-  message: Gluster Brick {{$labels.host}}:{{$labels.brick_path}} Utilization more than 90%
+  message: Gluster Brick {{$labels.host}}:{{$labels.brick_path}} Utilization more
+    than 90%
 expr: |
   100 * gluster_brick_capacity_used_bytes{job="glusterd2-client"}
       / gluster_brick_capacity_bytes_total{job="glusterd2-client"} > 90
@@ -126,7 +128,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: GlusterThinpoolDataUtilization
 annotations:
-  message: Gluster Thinpool {{ $labels.thinpool_name }} Data Utilization more than 80%
+  message: Gluster Thinpool {{ $labels.thinpool_name }} Data Utilization more than
+    80%
 expr: |
   gluster_thinpool_data_used_bytes{job="glusterd2-client"} / gluster_thinpool_data_total_bytes{job="glusterd2-client"} > 0.8
 for: 5m
@@ -139,7 +142,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: GlusterThinpoolDataUtilization
 annotations:
-  message: Gluster Thinpool {{ $labels.thinpool_name }} Data Utilization more than 90%
+  message: Gluster Thinpool {{ $labels.thinpool_name }} Data Utilization more than
+    90%
 expr: |
   gluster_thinpool_data_used_bytes{job="glusterd2-client"} / gluster_thinpool_data_total_bytes{job="glusterd2-client"} > 0.9
 for: 5m
@@ -152,7 +156,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: GlusterThinpoolMetadataUtilization
 annotations:
-  message: Gluster Thinpool {{ $labels.thinpool_name }} Metadata Utilization more than 80%
+  message: Gluster Thinpool {{ $labels.thinpool_name }} Metadata Utilization more
+    than 80%
 expr: |
   gluster_thinpool_metadata_used_bytes{job="glusterd2-client"} / gluster_thinpool_metadata_total_bytes{job="glusterd2-client"} > 0.8
 for: 5m
@@ -165,7 +170,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: GlusterThinpoolMetadataUtilization
 annotations:
-  message: Gluster Thinpool {{ $labels.thinpool_name }} Metadata Utilization more than 90%
+  message: Gluster Thinpool {{ $labels.thinpool_name }} Metadata Utilization more
+    than 90%
 expr: |
   gluster_thinpool_metadata_used_bytes{job="glusterd2-client"} / gluster_thinpool_metadata_total_bytes{job="glusterd2-client"} > 0.9
 for: 5m

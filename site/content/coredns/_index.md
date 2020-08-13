@@ -39,7 +39,8 @@ https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-core
 {{< code lang="yaml" >}}
 alert: CoreDNSLatencyHigh
 annotations:
-  message: CoreDNS has 99th percentile latency of {{ $value }} seconds for server {{ $labels.server }} zone {{ $labels.zone }} .
+  message: CoreDNS has 99th percentile latency of {{ $value }} seconds for server
+    {{ $labels.server }} zone {{ $labels.zone }} .
   runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednslatencyhigh
 expr: |
   histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket{job="kube-dns"}[5m])) by(server, zone, le)) > 4
@@ -54,7 +55,8 @@ https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-core
 {{< code lang="yaml" >}}
 alert: CoreDNSErrorsHigh
 annotations:
-  message: CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of requests.
+  message: CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of
+    requests.
   runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednserrorshigh
 expr: |
   sum(rate(coredns_dns_response_rcode_count_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
@@ -71,7 +73,8 @@ https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-core
 {{< code lang="yaml" >}}
 alert: CoreDNSErrorsHigh
 annotations:
-  message: CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of requests.
+  message: CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of
+    requests.
   runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednserrorshigh
 expr: |
   sum(rate(coredns_dns_response_rcode_count_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
@@ -90,7 +93,8 @@ https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-core
 {{< code lang="yaml" >}}
 alert: CoreDNSForwardLatencyHigh
 annotations:
-  message: CoreDNS has 99th percentile latency of {{ $value }} seconds forwarding requests to {{ $labels.to }}.
+  message: CoreDNS has 99th percentile latency of {{ $value }} seconds forwarding
+    requests to {{ $labels.to }}.
   runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednsforwardlatencyhigh
 expr: |
   histogram_quantile(0.99, sum(rate(coredns_forward_request_duration_seconds_bucket{job="kube-dns"}[5m])) by(to, le)) > 4
@@ -105,7 +109,8 @@ https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-core
 {{< code lang="yaml" >}}
 alert: CoreDNSForwardErrorsHigh
 annotations:
-  message: CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of forward requests to {{ $labels.to }}.
+  message: CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of
+    forward requests to {{ $labels.to }}.
   runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednsforwarderrorshigh
 expr: |
   sum(rate(coredns_forward_response_rcode_count_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
@@ -122,7 +127,8 @@ https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-core
 {{< code lang="yaml" >}}
 alert: CoreDNSForwardErrorsHigh
 annotations:
-  message: CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of forward requests to {{ $labels.to }}.
+  message: CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of
+    forward requests to {{ $labels.to }}.
   runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednsforwarderrorshigh
 expr: |
   sum(rate(coredns_dns_response_rcode_count_total{job="kube-dns",rcode="SERVFAIL"}[5m]))

@@ -23,7 +23,8 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 {{< code lang="yaml" >}}
 alert: CockroachInstanceFlapping
 annotations:
-  message: '{{ $labels.instance }} for cluster {{ $labels.cluster }} restarted {{ $value }} time(s) in 10m'
+  message: '{{ $labels.instance }} for cluster {{ $labels.cluster }} restarted {{
+    $value }} time(s) in 10m'
 expr: |
   resets(cockroachdb_sys_uptime{job="cockroachdb-public"}[10m]) > 5
 for: 1m
@@ -64,7 +65,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CockroachStoreDiskLow
 annotations:
-  message: Store {{ $labels.store }} on node {{ $labels.instance }} at {{ $value }} available disk fraction
+  message: Store {{ $labels.store }} on node {{ $labels.instance }} at {{ $value }}
+    available disk fraction
 expr: |
   :cockroachdb_capacity_available:ratio{job="cockroachdb-public"} < 0.15
 for: 30m
@@ -116,7 +118,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CockroachHighOpenFDCount
 annotations:
-  message: 'Too many open file descriptors on {{ $labels.instance }}: {{ $value }} fraction used'
+  message: 'Too many open file descriptors on {{ $labels.instance }}: {{ $value }}
+    fraction used'
 expr: |
   cockroachdb_sys_fd_open{job="cockroachdb-public"} / cockroachdb_sys_fd_softlimit{job="cockroachdb-public"} > 0.8
 for: 10m
