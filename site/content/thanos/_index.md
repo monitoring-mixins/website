@@ -23,8 +23,9 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 {{< code lang="yaml" >}}
 alert: ThanosCompactMultipleRunning
 annotations:
-  message: No more than one Thanos Compact instance should be running at once. There
-    are {{ $value }}
+  description: No more than one Thanos Compact instance should be running at once.
+    There are {{ $value }}
+  summary: Thanos Compact has multiple instances running.
 expr: sum(up{job=~"thanos-compact.*"}) > 1
 for: 5m
 labels:
@@ -36,7 +37,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosCompactHalted
 annotations:
-  message: Thanos Compact {{$labels.job}} has failed to run and now is halted.
+  description: Thanos Compact {{$labels.job}} has failed to run and now is halted.
+  summary: Thanos Compact has failed to run ans is now halted.
 expr: thanos_compactor_halted{job=~"thanos-compact.*"} == 1
 for: 5m
 labels:
@@ -48,8 +50,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosCompactHighCompactionFailures
 annotations:
-  message: Thanos Compact {{$labels.job}} is failing to execute {{ $value | humanize
+  description: Thanos Compact {{$labels.job}} is failing to execute {{ $value | humanize
     }}% of compactions.
+  summary: Thanos Compact is failing to execute compactions.
 expr: |
   (
     sum by (job) (rate(thanos_compact_group_compactions_failures_total{job=~"thanos-compact.*"}[5m]))
@@ -67,8 +70,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosCompactBucketHighOperationFailures
 annotations:
-  message: Thanos Compact {{$labels.job}} Bucket is failing to execute {{ $value |
-    humanize }}% of operations.
+  description: Thanos Compact {{$labels.job}} Bucket is failing to execute {{ $value
+    | humanize }}% of operations.
+  summary: Thanos Compact Bucket is having a high number of operation failures.
 expr: |
   (
     sum by (job) (rate(thanos_objstore_bucket_operation_failures_total{job=~"thanos-compact.*"}[5m]))
@@ -86,7 +90,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosCompactHasNotRun
 annotations:
-  message: Thanos Compact {{$labels.job}} has not uploaded anything for 24 hours.
+  description: Thanos Compact {{$labels.job}} has not uploaded anything for 24 hours.
+  summary: Thanos Compact has not uploaded anything for last 24 hours.
 expr: (time() - max(max_over_time(thanos_objstore_bucket_last_successful_upload_time{job=~"thanos-compact.*"}[24h])))
   / 60 / 60 > 24
 labels:
@@ -100,8 +105,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosQueryHttpRequestQueryErrorRateHigh
 annotations:
-  message: Thanos Query {{$labels.job}} is failing to handle {{ $value | humanize
+  description: Thanos Query {{$labels.job}} is failing to handle {{ $value | humanize
     }}% of "query" requests.
+  summary: Thanos Query is failing to handle requests.
 expr: |
   (
     sum(rate(http_requests_total{code=~"5..", job=~"thanos-query.*", handler="query"}[5m]))
@@ -118,8 +124,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosQueryHttpRequestQueryRangeErrorRateHigh
 annotations:
-  message: Thanos Query {{$labels.job}} is failing to handle {{ $value | humanize
+  description: Thanos Query {{$labels.job}} is failing to handle {{ $value | humanize
     }}% of "query_range" requests.
+  summary: Thanos Query is failing to handle requests.
 expr: |
   (
     sum(rate(http_requests_total{code=~"5..", job=~"thanos-query.*", handler="query_range"}[5m]))
@@ -136,8 +143,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosQueryGrpcServerErrorRate
 annotations:
-  message: Thanos Query {{$labels.job}} is failing to handle {{ $value | humanize
+  description: Thanos Query {{$labels.job}} is failing to handle {{ $value | humanize
     }}% of requests.
+  summary: Thanos Query is failing to handle requests.
 expr: |
   (
     sum by (job) (rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable|DataLoss|DeadlineExceeded", job=~"thanos-query.*"}[5m]))
@@ -155,8 +163,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosQueryGrpcClientErrorRate
 annotations:
-  message: Thanos Query {{$labels.job}} is failing to send {{ $value | humanize }}%
-    of requests.
+  description: Thanos Query {{$labels.job}} is failing to send {{ $value | humanize
+    }}% of requests.
+  summary: Thanos Query is failing to send requests.
 expr: |
   (
     sum by (job) (rate(grpc_client_handled_total{grpc_code!="OK", job=~"thanos-query.*"}[5m]))
@@ -173,8 +182,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosQueryHighDNSFailures
 annotations:
-  message: Thanos Query {{$labels.job}} have {{ $value | humanize }}% of failing DNS
-    queries for store endpoints.
+  description: Thanos Query {{$labels.job}} have {{ $value | humanize }}% of failing
+    DNS queries for store endpoints.
+  summary: Thanos Query is having high number of DNS failures.
 expr: |
   (
     sum by (job) (rate(thanos_querier_store_apis_dns_failures_total{job=~"thanos-query.*"}[5m]))
@@ -191,8 +201,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosQueryInstantLatencyHigh
 annotations:
-  message: Thanos Query {{$labels.job}} has a 99th percentile latency of {{ $value
+  description: Thanos Query {{$labels.job}} has a 99th percentile latency of {{ $value
     }} seconds for instant queries.
+  summary: Thanos Query has high latency for queries.
 expr: |
   (
     histogram_quantile(0.99, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~"thanos-query.*", handler="query"}[5m]))) > 40
@@ -209,8 +220,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosQueryRangeLatencyHigh
 annotations:
-  message: Thanos Query {{$labels.job}} has a 99th percentile latency of {{ $value
+  description: Thanos Query {{$labels.job}} has a 99th percentile latency of {{ $value
     }} seconds for range queries.
+  summary: Thanos Query has high latency for queries.
 expr: |
   (
     histogram_quantile(0.99, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~"thanos-query.*", handler="query_range"}[5m]))) > 90
@@ -229,8 +241,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosReceiveHttpRequestErrorRateHigh
 annotations:
-  message: Thanos Receive {{$labels.job}} is failing to handle {{ $value | humanize
+  description: Thanos Receive {{$labels.job}} is failing to handle {{ $value | humanize
     }}% of requests.
+  summary: Thanos Receive is failing to handle requests.
 expr: |
   (
     sum(rate(http_requests_total{code=~"5..", job=~"thanos-receive.*", handler="receive"}[5m]))
@@ -247,8 +260,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosReceiveHttpRequestLatencyHigh
 annotations:
-  message: Thanos Receive {{$labels.job}} has a 99th percentile latency of {{ $value
-    }} seconds for requests.
+  description: Thanos Receive {{$labels.job}} has a 99th percentile latency of {{
+    $value }} seconds for requests.
+  summary: Thanos Receive has high HTTP requests latency.
 expr: |
   (
     histogram_quantile(0.99, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~"thanos-receive.*", handler="receive"}[5m]))) > 10
@@ -265,8 +279,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosReceiveHighReplicationFailures
 annotations:
-  message: Thanos Receive {{$labels.job}} is failing to replicate {{ $value | humanize
-    }}% of requests.
+  description: Thanos Receive {{$labels.job}} is failing to replicate {{ $value |
+    humanize }}% of requests.
+  summary: Thanos Receive is having high number of replication failures.
 expr: |
   thanos_receive_replication_factor > 1
     and
@@ -293,8 +308,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosReceiveHighForwardRequestFailures
 annotations:
-  message: Thanos Receive {{$labels.job}} is failing to forward {{ $value | humanize
+  description: Thanos Receive {{$labels.job}} is failing to forward {{ $value | humanize
     }}% of requests.
+  summary: Thanos Receive is failing to forward requests.
 expr: |
   (
     sum by (job) (rate(thanos_receive_forward_requests_total{result="error", job=~"thanos-receive.*"}[5m]))
@@ -311,8 +327,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosReceiveHighHashringFileRefreshFailures
 annotations:
-  message: Thanos Receive {{$labels.job}} is failing to refresh hashring file, {{
-    $value | humanize }} of attempts failed.
+  description: Thanos Receive {{$labels.job}} is failing to refresh hashring file,
+    {{ $value | humanize }} of attempts failed.
+  summary: Thanos Receive is failing to refresh hasring file.
 expr: |
   (
     sum by (job) (rate(thanos_receive_hashrings_file_errors_total{job=~"thanos-receive.*"}[5m]))
@@ -330,7 +347,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosReceiveConfigReloadFailure
 annotations:
-  message: Thanos Receive {{$labels.job}} has not been able to reload hashring configurations.
+  description: Thanos Receive {{$labels.job}} has not been able to reload hashring
+    configurations.
+  summary: Thanos Receive has not been able to reload configuration.
 expr: avg(thanos_receive_config_last_reload_successful{job=~"thanos-receive.*"}) by
   (job) != 1
 for: 5m
@@ -343,8 +362,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosReceiveNoUpload
 annotations:
-  message: Thanos Receive {{ $labels.instance }} of {{$labels.job}} has not uploaded
+  description: Thanos Receive {{ $labels.instance }} of {{$labels.job}} has not uploaded
     latest data to object storage.
+  summary: Thanos Receive has not uploaded latest data to object storage.
 expr: |
   (up{job=~"thanos-receive.*"} - 1)
   + on (instance) # filters to only alert on current instance last 3h
@@ -361,7 +381,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosSidecarPrometheusDown
 annotations:
-  message: Thanos Sidecar {{$labels.job}} {{$labels.pod}} cannot connect to Prometheus.
+  description: Thanos Sidecar {{$labels.job}} {{$labels.pod}} cannot connect to Prometheus.
+  summary: Thanos Sidecar cannot connect to Prometheus
 expr: |
   sum by (job, pod) (thanos_sidecar_prometheus_up{job=~"thanos-sidecar.*"} == 0)
 for: 5m
@@ -374,8 +395,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosSidecarUnhealthy
 annotations:
-  message: Thanos Sidecar {{$labels.job}} {{$labels.pod}} is unhealthy for {{ $value
-    }} seconds.
+  description: Thanos Sidecar {{$labels.job}} {{$labels.pod}} is unhealthy for {{
+    $value }} seconds.
+  summary: Thanos Sidecar is unhealthy.
 expr: |
   time() - max(thanos_sidecar_last_heartbeat_success_time_seconds{job=~"thanos-sidecar.*"}) by (job, pod) >= 600
 labels:
@@ -389,8 +411,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosStoreGrpcErrorRate
 annotations:
-  message: Thanos Store {{$labels.job}} is failing to handle {{ $value | humanize
+  description: Thanos Store {{$labels.job}} is failing to handle {{ $value | humanize
     }}% of requests.
+  summary: Thanos Store is failing to handle qrpcd requests.
 expr: |
   (
     sum by (job) (rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable|DataLoss|DeadlineExceeded", job=~"thanos-store.*"}[5m]))
@@ -408,8 +431,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosStoreSeriesGateLatencyHigh
 annotations:
-  message: Thanos Store {{$labels.job}} has a 99th percentile latency of {{ $value
+  description: Thanos Store {{$labels.job}} has a 99th percentile latency of {{ $value
     }} seconds for store series gate requests.
+  summary: Thanos Store has high latency for store series gate requests.
 expr: |
   (
     histogram_quantile(0.9, sum by (job, le) (rate(thanos_bucket_store_series_gate_duration_seconds_bucket{job=~"thanos-store.*"}[5m]))) > 2
@@ -426,8 +450,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosStoreBucketHighOperationFailures
 annotations:
-  message: Thanos Store {{$labels.job}} Bucket is failing to execute {{ $value | humanize
-    }}% of operations.
+  description: Thanos Store {{$labels.job}} Bucket is failing to execute {{ $value
+    | humanize }}% of operations.
+  summary: Thanos Store Bucket is failing to execute operations.
 expr: |
   (
     sum by (job) (rate(thanos_objstore_bucket_operation_failures_total{job=~"thanos-store.*"}[5m]))
@@ -445,8 +470,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosStoreObjstoreOperationLatencyHigh
 annotations:
-  message: Thanos Store {{$labels.job}} Bucket has a 99th percentile latency of {{
-    $value }} seconds for the bucket operations.
+  description: Thanos Store {{$labels.job}} Bucket has a 99th percentile latency of
+    {{ $value }} seconds for the bucket operations.
+  summary: Thanos Store is having high latency for bucket operations.
 expr: |
   (
     histogram_quantile(0.9, sum by (job, le) (rate(thanos_objstore_bucket_operation_duration_seconds_bucket{job=~"thanos-store.*"}[5m]))) > 2
@@ -462,11 +488,13 @@ labels:
 
 ##### ThanosRuleQueueIsDroppingAlerts
 Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to queue alerts.
+Thanos Rule is failing to queue alerts.
 
 {{< code lang="yaml" >}}
 alert: ThanosRuleQueueIsDroppingAlerts
 annotations:
-  message: Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to queue alerts.
+  description: Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to queue alerts.
+  summary: Thanos Rule is failing to queue alerts.
 expr: |
   sum by (job) (rate(thanos_alert_queue_alerts_dropped_total{job=~"thanos-rule.*"}[5m])) > 0
 for: 5m
@@ -475,13 +503,16 @@ labels:
 {{< /code >}}
  
 ##### ThanosRuleSenderIsFailingAlerts
-Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to send alerts to
+Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to send alerts
+
+Thanos Rule is failing to send alerts to alertmanager.
 
 {{< code lang="yaml" >}}
 alert: ThanosRuleSenderIsFailingAlerts
 annotations:
-  message: Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to send alerts to
-    alertmanager.
+  description: Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to send alerts
+    to alertmanager.
+  summary: Thanos Rule is failing to send alerts to alertmanager.
 expr: |
   sum by (job) (rate(thanos_alert_sender_alerts_dropped_total{job=~"thanos-rule.*"}[5m])) > 0
 for: 5m
@@ -494,7 +525,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosRuleHighRuleEvaluationFailures
 annotations:
-  message: Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to evaluate rules.
+  description: Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to evaluate
+    rules.
+  summary: Thanos Rule is failing to evaluate rules.
 expr: |
   (
     sum by (job) (rate(prometheus_rule_evaluation_failures_total{job=~"thanos-rule.*"}[5m]))
@@ -512,8 +545,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosRuleHighRuleEvaluationWarnings
 annotations:
-  message: Thanos Rule {{$labels.job}} {{$labels.pod}} has high number of evaluation
+  description: Thanos Rule {{$labels.job}} {{$labels.pod}} has high number of evaluation
     warnings.
+  summary: Thanos Rule has high number of evaluation warnings.
 expr: |
   sum by (job) (rate(thanos_rule_evaluation_with_warnings_total{job=~"thanos-rule.*"}[5m])) > 0
 for: 15m
@@ -526,8 +560,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosRuleRuleEvaluationLatencyHigh
 annotations:
-  message: Thanos Rule {{$labels.job}}/{{$labels.pod}} has higher evaluation latency
+  description: Thanos Rule {{$labels.job}}/{{$labels.pod}} has higher evaluation latency
     than interval for {{$labels.rule_group}}.
+  summary: Thanos Rule has high rule evaluation latency.
 expr: |
   (
     sum by (job, pod, rule_group) (prometheus_rule_group_last_duration_seconds{job=~"thanos-rule.*"})
@@ -544,8 +579,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosRuleGrpcErrorRate
 annotations:
-  message: Thanos Rule {{$labels.job}} is failing to handle {{ $value | humanize }}%
-    of requests.
+  description: Thanos Rule {{$labels.job}} is failing to handle {{ $value | humanize
+    }}% of requests.
+  summary: Thanos Rule is failing to handle grpc requests.
 expr: |
   (
     sum by (job) (rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable|DataLoss|DeadlineExceeded", job=~"thanos-rule.*"}[5m]))
@@ -563,7 +599,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosRuleConfigReloadFailure
 annotations:
-  message: Thanos Rule {{$labels.job}} has not been able to reload its configuration.
+  description: Thanos Rule {{$labels.job}} has not been able to reload its configuration.
+  summary: Thanos Rule has not been able to reload configuration.
 expr: avg(thanos_rule_config_last_reload_successful{job=~"thanos-rule.*"}) by (job)
   != 1
 for: 5m
@@ -576,8 +613,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosRuleQueryHighDNSFailures
 annotations:
-  message: Thanos Rule {{$labels.job}} has {{ $value | humanize }}% of failing DNS
-    queries for query endpoints.
+  description: Thanos Rule {{$labels.job}} has {{ $value | humanize }}% of failing
+    DNS queries for query endpoints.
+  summary: Thanos Rule is having high number of DNS failures.
 expr: |
   (
     sum by (job) (rate(thanos_ruler_query_apis_dns_failures_total{job=~"thanos-rule.*"}[5m]))
@@ -595,8 +633,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosRuleAlertmanagerHighDNSFailures
 annotations:
-  message: Thanos Rule {{$labels.job}} has {{ $value | humanize }}% of failing DNS
-    queries for Alertmanager endpoints.
+  description: Thanos Rule {{$labels.job}} has {{ $value | humanize }}% of failing
+    DNS queries for Alertmanager endpoints.
+  summary: Thanos Rule is having high number of DNS failures.
 expr: |
   (
     sum by (job) (rate(thanos_ruler_alertmanagers_dns_failures_total{job=~"thanos-rule.*"}[5m]))
@@ -614,8 +653,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosRuleNoEvaluationFor10Intervals
 annotations:
-  message: Thanos Rule {{$labels.job}} has {{ $value | humanize }}% rule groups that
-    did not evaluate for at least 10x of their expected interval.
+  description: Thanos Rule {{$labels.job}} has {{ $value | humanize }}% rule groups
+    that did not evaluate for at least 10x of their expected interval.
+  summary: Thanos Rule has rule groups that did not evaluate for 10 intervals.
 expr: |
   time() -  max by (job, group) (prometheus_rule_group_last_evaluation_timestamp_seconds{job=~"thanos-rule.*"})
   >
@@ -630,8 +670,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosNoRuleEvaluations
 annotations:
-  message: Thanos Rule {{$labels.job}} did not perform any rule evaluations in the
-    past 2 minutes.
+  description: Thanos Rule {{$labels.job}} did not perform any rule evaluations in
+    the past 2 minutes.
+  summary: Thanos Rule did not perform any rule evaluations.
 expr: |
   sum(rate(prometheus_rule_evaluations_total{job=~"thanos-rule.*"}[2m])) <= 0
     and
@@ -648,7 +689,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosCompactIsDown
 annotations:
-  message: ThanosCompact has disappeared from Prometheus target discovery.
+  description: ThanosCompact has disappeared from Prometheus target discovery.
+  summary: thanos component has disappeared from Prometheus target discovery.
 expr: |
   absent(up{job=~"thanos-compact.*"} == 1)
 for: 5m
@@ -661,7 +703,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosQueryIsDown
 annotations:
-  message: ThanosQuery has disappeared from Prometheus target discovery.
+  description: ThanosQuery has disappeared from Prometheus target discovery.
+  summary: thanos component has disappeared from Prometheus target discovery.
 expr: |
   absent(up{job=~"thanos-query.*"} == 1)
 for: 5m
@@ -674,7 +717,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosReceiveIsDown
 annotations:
-  message: ThanosReceive has disappeared from Prometheus target discovery.
+  description: ThanosReceive has disappeared from Prometheus target discovery.
+  summary: thanos component has disappeared from Prometheus target discovery.
 expr: |
   absent(up{job=~"thanos-receive.*"} == 1)
 for: 5m
@@ -687,7 +731,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosRuleIsDown
 annotations:
-  message: ThanosRule has disappeared from Prometheus target discovery.
+  description: ThanosRule has disappeared from Prometheus target discovery.
+  summary: thanos component has disappeared from Prometheus target discovery.
 expr: |
   absent(up{job=~"thanos-rule.*"} == 1)
 for: 5m
@@ -700,7 +745,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosSidecarIsDown
 annotations:
-  message: ThanosSidecar has disappeared from Prometheus target discovery.
+  description: ThanosSidecar has disappeared from Prometheus target discovery.
+  summary: thanos component has disappeared from Prometheus target discovery.
 expr: |
   absent(up{job=~"thanos-sidecar.*"} == 1)
 for: 5m
@@ -713,7 +759,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosStoreIsDown
 annotations:
-  message: ThanosStore has disappeared from Prometheus target discovery.
+  description: ThanosStore has disappeared from Prometheus target discovery.
+  summary: thanos component has disappeared from Prometheus target discovery.
 expr: |
   absent(up{job=~"thanos-store.*"} == 1)
 for: 5m
@@ -728,7 +775,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosBucketReplicateIsDown
 annotations:
-  message: Thanos Replicate has disappeared from Prometheus target discovery.
+  description: Thanos Replicate has disappeared from Prometheus target discovery.
+  summary: Thanos Replicate has disappeared from Prometheus target discovery.
 expr: |
   absent(up{job=~"thanos-bucket-replicate.*"})
 for: 5m
@@ -741,7 +789,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosBucketReplicateErrorRate
 annotations:
-  message: Thanos Replicate failing to run, {{ $value | humanize }}% of attempts failed.
+  description: Thanos Replicate failing to run, {{ $value | humanize }}% of attempts
+    failed.
+  summary: Thanose Replicate is failing to run.
 expr: |
   (
     sum(rate(thanos_replicate_replication_runs_total{result="error", job=~"thanos-bucket-replicate.*"}[5m]))
@@ -758,8 +808,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: ThanosBucketReplicateRunLatency
 annotations:
-  message: Thanos Replicate {{$labels.job}} has a 99th percentile latency of {{ $value
-    }} seconds for the replicate operations.
+  description: Thanos Replicate {{$labels.job}} has a 99th percentile latency of {{
+    $value }} seconds for the replicate operations.
+  summary: Thanos Replicate has a high latency for replicate operations.
 expr: |
   (
     histogram_quantile(0.9, sum by (job, le) (rate(thanos_replicate_replication_run_duration_seconds_bucket{job=~"thanos-bucket-replicate.*"}[5m]))) > 20
