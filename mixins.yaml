@@ -61,3 +61,7 @@ mixins:
   subdir: ""
   description: |
     CoreDNS mixin provides Grafana dashboard and Prometheus Alerts to monitor CoreDNS. The mixin was introduced in [Kubernetes Node Local DNS Cache blogpost](https://povilasv.me/kubernetes-node-local-dns-cache/) to better help users monitor CoreDNS in Kubernetes. Mixin can also be used to monitor standalone CoreDNS instance without any orchestrators.
+- name: prometheus-operator
+  source: "https://github.com/prometheus-operator/prometheus-operator"
+  subdir: "jsonnet/mixin"
+
