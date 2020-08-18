@@ -282,7 +282,7 @@ annotations:
   description: Job {{ $labels.namespace }}/{{ $labels.job_name }} is taking more than
     12 hours to complete.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubejobcompletion
-  sumary: Job did not complete in time
+  summary: Job did not complete in time
 expr: |
   kube_job_spec_completions{job="kube-state-metrics"} - kube_job_status_succeeded{job="kube-state-metrics"}  > 0
 for: 12h
