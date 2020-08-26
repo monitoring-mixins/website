@@ -496,11 +496,11 @@ groups:
   - alert: AggregatedAPIDown
     annotations:
       description: An aggregated API {{ $labels.name }}/{{ $labels.namespace }} has
-        been only {{ $value | humanize }}% available over the last 5m.
+        been only {{ $value | humanize }}% available over the last 10m.
       runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-aggregatedapidown
       summary: An aggregated API is down.
     expr: |
-      (1 - max by(name, namespace)(avg_over_time(aggregator_unavailable_apiservice[5m]))) * 100 < 90
+      (1 - max by(name, namespace)(avg_over_time(aggregator_unavailable_apiservice[10m]))) * 100 < 85
     for: 5m
     labels:
       severity: warning
@@ -533,6 +533,7 @@ groups:
       summary: Node is unreachable.
     expr: |
       (kube_node_spec_taint{job="kube-state-metrics",key="node.kubernetes.io/unreachable",effect="NoSchedule"} unless ignoring(key,value) kube_node_spec_taint{job="kube-state-metrics",key=~"ToBeDeletedByClusterAutoscaler|cloud.google.com/impending-node-termination|aws-node-termination-handler/spot-itn"}) == 1
+    for: 15m
     labels:
       severity: warning
   - alert: KubeletTooManyPods
