@@ -848,6 +848,104 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### KubeletClientCertificateExpiration
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletclientcertificateexpiration
+
+{{< code lang="yaml" >}}
+alert: KubeletClientCertificateExpiration
+annotations:
+  description: Client certificate for Kubelet on node {{ $labels.node }} expires in
+    {{ $value | humanizeDuration }}.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletclientcertificateexpiration
+  summary: Kubelet client certificate is about to expire.
+expr: |
+  kubelet_certificate_manager_client_ttl_seconds < 604800
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### KubeletClientCertificateExpiration
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletclientcertificateexpiration
+
+{{< code lang="yaml" >}}
+alert: KubeletClientCertificateExpiration
+annotations:
+  description: Client certificate for Kubelet on node {{ $labels.node }} expires in
+    {{ $value | humanizeDuration }}.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletclientcertificateexpiration
+  summary: Kubelet client certificate is about to expire.
+expr: |
+  kubelet_certificate_manager_client_ttl_seconds < 86400
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### KubeletServerCertificateExpiration
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletservercertificateexpiration
+
+{{< code lang="yaml" >}}
+alert: KubeletServerCertificateExpiration
+annotations:
+  description: Server certificate for Kubelet on node {{ $labels.node }} expires in
+    {{ $value | humanizeDuration }}.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletservercertificateexpiration
+  summary: Kubelet server certificate is about to expire.
+expr: |
+  kubelet_certificate_manager_server_ttl_seconds < 604800
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### KubeletServerCertificateExpiration
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletservercertificateexpiration
+
+{{< code lang="yaml" >}}
+alert: KubeletServerCertificateExpiration
+annotations:
+  description: Server certificate for Kubelet on node {{ $labels.node }} expires in
+    {{ $value | humanizeDuration }}.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletservercertificateexpiration
+  summary: Kubelet server certificate is about to expire.
+expr: |
+  kubelet_certificate_manager_server_ttl_seconds < 86400
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### KubeletClientCertificateRenewalErrors
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletclientcertificaterenewalerrors
+
+{{< code lang="yaml" >}}
+alert: KubeletClientCertificateRenewalErrors
+annotations:
+  description: Kubelet on node {{ $labels.node }} has failed to renew its client certificate
+    ({{ $value | humanize }} errors in the last 5 minutes).
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletclientcertificaterenewalerrors
+  summary: Kubelet has failed to renew its client certificate.
+expr: |
+  increase(kubelet_certificate_manager_client_expiration_renew_errors[5m]) > 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### KubeletServerCertificateRenewalErrors
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletservercertificaterenewalerrors
+
+{{< code lang="yaml" >}}
+alert: KubeletServerCertificateRenewalErrors
+annotations:
+  description: Kubelet on node {{ $labels.node }} has failed to renew its server certificate
+    ({{ $value | humanize }} errors in the last 5 minutes).
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletservercertificaterenewalerrors
+  summary: Kubelet has failed to renew its server certificate.
+expr: |
+  increase(kubelet_server_expiration_renew_errors[5m]) > 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### KubeletDown
 https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletdown
 
