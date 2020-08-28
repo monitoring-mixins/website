@@ -341,7 +341,7 @@ labels:
 alert: CortexAllocatingTooMuchMemory
 annotations:
   message: |
-    Too much memory being used by {{ $labels.instance }} - add more ingesters.
+    Too much memory being used by {{ $labels.namespace }}/{{ $labels.pod }} - add more ingesters.
 expr: |
   (
     container_memory_working_set_bytes{container_name="ingester"}
@@ -359,7 +359,7 @@ labels:
 alert: CortexAllocatingTooMuchMemory
 annotations:
   message: |
-    Too much memory being used by {{ $labels.instance }} - add more ingesters.
+    Too much memory being used by {{ $labels.namespace }}/{{ $labels.pod }} - add more ingesters.
 expr: |
   (
     container_memory_working_set_bytes{container_name="ingester"}
