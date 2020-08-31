@@ -194,7 +194,7 @@ groups:
         is insufficient to fix issue automatically.
       summary: RAID Array is degraded
     expr: |
-      'node_md_disks_required - ignoring (state) (node_md_disks{state="active"}) > 0'
+      node_md_disks_required - ignoring (state) (node_md_disks{state="active"}) > 0
     for: 15m
     labels:
       severity: critical
