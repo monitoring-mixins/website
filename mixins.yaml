@@ -64,4 +64,7 @@ mixins:
 - name: prometheus-operator
   source: "https://github.com/prometheus-operator/prometheus-operator"
   subdir: "jsonnet/mixin"
+- name: cert-manager
+  source: "https://gitlab.com/uneeq-oss/cert-manager-mixin.git"
+  subdir: ""
 
