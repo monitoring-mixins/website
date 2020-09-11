@@ -430,6 +430,26 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### KubeQuotaAlmostFull
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotaalmostfull
+
+{{< code lang="yaml" >}}
+alert: KubeQuotaAlmostFull
+annotations:
+  description: Namespace {{ $labels.namespace }} is using {{ $value | humanizePercentage
+    }} of its {{ $labels.resource }} quota.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotaalmostfull
+  summary: Namespace quota is going to be full.
+expr: |
+  kube_resourcequota{job="kube-state-metrics", type="used"}
+    / ignoring(instance, job, type)
+  (kube_resourcequota{job="kube-state-metrics", type="hard"} > 0)
+    > 0.9 < 1
+for: 15m
+labels:
+  severity: info
+{{< /code >}}
+ 
 ##### KubeQuotaFullyUsed
 https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotafullyused
 
@@ -444,10 +464,30 @@ expr: |
   kube_resourcequota{job="kube-state-metrics", type="used"}
     / ignoring(instance, job, type)
   (kube_resourcequota{job="kube-state-metrics", type="hard"} > 0)
-    >= 1
+    == 1
 for: 15m
 labels:
   severity: info
+{{< /code >}}
+ 
+##### KubeQuotaExceeded
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotaexceeded
+
+{{< code lang="yaml" >}}
+alert: KubeQuotaExceeded
+annotations:
+  description: Namespace {{ $labels.namespace }} is using {{ $value | humanizePercentage
+    }} of its {{ $labels.resource }} quota.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotaexceeded
+  summary: Namespace quota has exceeded the limits.
+expr: |
+  kube_resourcequota{job="kube-state-metrics", type="used"}
+    / ignoring(instance, job, type)
+  (kube_resourcequota{job="kube-state-metrics", type="hard"} > 0)
+    > 1
+for: 15m
+labels:
+  severity: warning
 {{< /code >}}
  
 ##### CPUThrottlingHigh
