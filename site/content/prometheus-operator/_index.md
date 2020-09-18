@@ -18,6 +18,21 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 
 ### prometheus-operator
 
+##### PrometheusOperatorListErrors
+
+{{< code lang="yaml" >}}
+alert: PrometheusOperatorListErrors
+annotations:
+  description: Errors while performing List operations in controller {{$labels.controller}}
+    in {{$labels.namespace}} namespace.
+  summary: Errors while performing list operations in controller.
+expr: |
+  (sum by (controller,namespace) (rate(prometheus_operator_list_operations_failed_total{job="prometheus-operator"}[10m])) / sum by (controller,namespace) (rate(prometheus_operator_list_operations_total{job="prometheus-operator"}[10m]))) > 0.4
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### PrometheusOperatorWatchErrors
 
 {{< code lang="yaml" >}}
@@ -27,7 +42,7 @@ annotations:
     in {{$labels.namespace}} namespace.
   summary: Errors while performing watch operations in controller.
 expr: |
-  (sum by (controller,namespace) (rate(prometheus_operator_watch_operations_failed_total{job="prometheus-operator"}[1h])) / sum by (controller,namespace) (rate(prometheus_operator_watch_operations_total{job="prometheus-operator"}[1h]))) > 0.1
+  (sum by (controller,namespace) (rate(prometheus_operator_watch_operations_failed_total{job="prometheus-operator"}[10m])) / sum by (controller,namespace) (rate(prometheus_operator_watch_operations_total{job="prometheus-operator"}[10m]))) > 0.4
 for: 15m
 labels:
   severity: warning
@@ -42,7 +57,7 @@ annotations:
     for {{ $labels.controller }} controller in {{ $labels.namespace }} namespace.'
   summary: Errors while reconciling controller.
 expr: |
-  (sum by (controller,namespace) (rate(prometheus_operator_reconcile_errors_total{job="prometheus-operator"}[5m])) / (sum by (controller,namespace) (rate(prometheus_operator_reconcile_operations_total{job="prometheus-operator"}[5m])) > 0.1
+  (sum by (controller,namespace) (rate(prometheus_operator_reconcile_errors_total{job="prometheus-operator"}[5m]))) / (sum by (controller,namespace) (rate(prometheus_operator_reconcile_operations_total{job="prometheus-operator"}[5m]))) > 0.1
 for: 10m
 labels:
   severity: warning
