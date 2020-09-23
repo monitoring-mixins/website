@@ -339,7 +339,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container_name=\"ingester\"}[$__interval])) / sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=\"$blocks_namespace/ingester\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"ingester\"}[$__interval])) / sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=\"$blocks_namespace/ingester\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -348,7 +348,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container_name=\"ingester\"}[$__interval])) / sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=\"$chunks_namespace/ingester\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"ingester\"}[$__interval])) / sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=\"$chunks_namespace/ingester\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -425,7 +425,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container_name=\"ingester\"}) / sum(cortex_ingester_memory_series{cluster=~\"$cluster\",job=~\"$blocks_namespace/ingester\"})",
+                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"ingester\"}) / sum(cortex_ingester_memory_series{cluster=~\"$cluster\",job=~\"$blocks_namespace/ingester\"})",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -434,7 +434,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container_name=\"ingester\"}) / sum(cortex_ingester_memory_series{cluster=~\"$cluster\",job=~\"$chunks_namespace/ingester\"})",
+                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"ingester\"}) / sum(cortex_ingester_memory_series{cluster=~\"$cluster\",job=~\"$chunks_namespace/ingester\"})",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -541,7 +541,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container_name=\"ingester\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"ingester\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -550,7 +550,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container_name=\"ingester\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"ingester\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -627,7 +627,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container_name=\"ingester\"})",
+                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"ingester\"})",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -636,7 +636,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container_name=\"ingester\"})",
+                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"ingester\"})",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1111,7 +1111,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container_name=\"querier\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"querier\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1120,7 +1120,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container_name=\"querier\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"querier\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1197,7 +1197,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container_name=\"querier\"})",
+                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"querier\"})",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1206,7 +1206,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container_name=\"querier\"})",
+                     "expr": "sum(container_memory_working_set_bytes{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"querier\"})",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,

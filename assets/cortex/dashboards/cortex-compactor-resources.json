@@ -64,16 +64,16 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod_name) (rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container_name=\"compactor\"}[$__interval]))",
+                     "expr": "sum by(pod) (rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{pod_name}}",
+                     "legendFormat": "{{pod}}",
                      "legendLink": null,
                      "step": 10
                   },
                   {
-                     "expr": "min(container_spec_cpu_quota{cluster=~\"$cluster\", namespace=~\"$namespace\",container_name=\"compactor\"} / container_spec_cpu_period{cluster=~\"$cluster\", namespace=~\"$namespace\",container_name=\"compactor\"})",
+                     "expr": "min(container_spec_cpu_quota{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"} / container_spec_cpu_period{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"})",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -156,16 +156,16 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod_name) (container_memory_working_set_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container_name=\"compactor\"})",
+                     "expr": "sum by(pod) (container_memory_working_set_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"})",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{pod_name}}",
+                     "legendFormat": "{{pod}}",
                      "legendLink": null,
                      "step": 10
                   },
                   {
-                     "expr": "min(container_spec_memory_limit_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container_name=\"compactor\"} > 0)",
+                     "expr": "min(container_spec_memory_limit_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"} > 0)",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -331,11 +331,11 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod_name) (rate(container_network_receive_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",pod_name=~\"compactor.*\"}[$__interval]))",
+                     "expr": "sum by(pod) (rate(container_network_receive_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",pod=~\"compactor.*\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{pod_name}}",
+                     "legendFormat": "{{pod}}",
                      "legendLink": null,
                      "step": 10
                   }
@@ -408,11 +408,11 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod_name) (rate(container_network_transmit_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",pod_name=~\"compactor.*\"}[$__interval]))",
+                     "expr": "sum by(pod) (rate(container_network_transmit_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",pod=~\"compactor.*\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{pod_name}}",
+                     "legendFormat": "{{pod}}",
                      "legendLink": null,
                      "step": 10
                   }
@@ -497,11 +497,11 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(instance, device) (rate(node_disk_written_bytes_total[$__interval])) + ignoring(pod_name) group_right() (label_replace(count by(pod_name, instance, device) (container_fs_writes_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\",device!~\".*sda.*\"}), \"device\", \"$1\", \"device\", \"/dev/(.*)\") * 0)\n",
+                     "expr": "sum by(instance, device) (rate(node_disk_written_bytes_total[$__interval])) + ignoring(pod) group_right() (label_replace(count by(pod, instance, device) (container_fs_writes_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\",device!~\".*sda.*\"}), \"device\", \"$1\", \"device\", \"/dev/(.*)\") * 0)\n",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{pod_name}} - {{device}}",
+                     "legendFormat": "{{pod}} - {{device}}",
                      "legendLink": null,
                      "step": 10
                   }
@@ -574,11 +574,11 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(instance, device) (rate(node_disk_read_bytes_total[$__interval])) + ignoring(pod_name) group_right() (label_replace(count by(pod_name, instance, device) (container_fs_writes_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\",device!~\".*sda.*\"}), \"device\", \"$1\", \"device\", \"/dev/(.*)\") * 0)\n",
+                     "expr": "sum by(instance, device) (rate(node_disk_read_bytes_total[$__interval])) + ignoring(pod) group_right() (label_replace(count by(pod, instance, device) (container_fs_writes_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\",device!~\".*sda.*\"}), \"device\", \"$1\", \"device\", \"/dev/(.*)\") * 0)\n",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{pod_name}} - {{device}}",
+                     "legendFormat": "{{pod}} - {{device}}",
                      "legendLink": null,
                      "step": 10
                   }

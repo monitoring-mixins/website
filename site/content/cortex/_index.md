@@ -344,9 +344,9 @@ annotations:
     Too much memory being used by {{ $labels.namespace }}/{{ $labels.pod }} - add more ingesters.
 expr: |
   (
-    container_memory_working_set_bytes{container_name="ingester"}
+    container_memory_working_set_bytes{container="ingester"}
       /
-    container_spec_memory_limit_bytes{container_name="ingester"}
+    container_spec_memory_limit_bytes{container="ingester"}
   ) > 0.5
 for: 15m
 labels:
@@ -362,9 +362,9 @@ annotations:
     Too much memory being used by {{ $labels.namespace }}/{{ $labels.pod }} - add more ingesters.
 expr: |
   (
-    container_memory_working_set_bytes{container_name="ingester"}
+    container_memory_working_set_bytes{container="ingester"}
       /
-    container_spec_memory_limit_bytes{container_name="ingester"}
+    container_spec_memory_limit_bytes{container="ingester"}
   ) > 0.8
 for: 15m
 labels:
