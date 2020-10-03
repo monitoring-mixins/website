@@ -23,8 +23,9 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 {{< code lang="yaml" >}}
 alert: SealedSecretsUnsealErrorRateHigh
 annotations:
-  message: High rate of errors unsealing Sealed Secrets
-  runbook: https://github.com/bitnami-labs/sealed-secrets
+  description: High rate of errors unsealing Sealed Secrets
+  runbook_url: https://github.com/bitnami-labs/sealed-secrets
+  summary: Sealed Secrets Unseal Error Rate High
 expr: |
   sum(rate(sealed_secrets_controller_unseal_errors_total{}[5m])) > 0
 labels:
