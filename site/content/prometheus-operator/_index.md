@@ -48,6 +48,21 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### PrometheusOperatorSyncFailed
+
+{{< code lang="yaml" >}}
+alert: PrometheusOperatorSyncFailed
+annotations:
+  description: Controller {{ $labels.controller }} in {{ $labels.namespace }} namespace
+    fails to reconcile {{ $value }} objects.
+  summary: Last controller reconciliation failed
+expr: |
+  min_over_time(prometheus_operator_syncs{status="failed",job="prometheus-operator"}[5m]) > 0
+for: 10m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### PrometheusOperatorReconcileErrors
 
 {{< code lang="yaml" >}}
