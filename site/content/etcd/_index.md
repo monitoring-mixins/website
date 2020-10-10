@@ -184,6 +184,21 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### etcdHighFsyncDurations
+
+{{< code lang="yaml" >}}
+alert: etcdHighFsyncDurations
+annotations:
+  message: 'etcd cluster "{{ $labels.job }}": 99th percentile fync durations are {{
+    $value }}s on etcd instance {{ $labels.instance }}.'
+expr: |
+  histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket{job=~".*etcd.*"}[5m]))
+  > 1
+for: 10m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ##### etcdHighCommitDurations
 
 {{< code lang="yaml" >}}

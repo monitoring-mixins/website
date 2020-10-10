@@ -291,12 +291,14 @@ labels:
 {{< /code >}}
  
 ##### KubeJobFailed
+
 https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubejobfailed
 
 {{< code lang="yaml" >}}
 alert: KubeJobFailed
 annotations:
   description: Job {{ $labels.namespace }}/{{ $labels.job_name }} failed to complete.
+    Removing failed job after investigation should clear this alert.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubejobfailed
   summary: Job failed to complete.
 expr: |
