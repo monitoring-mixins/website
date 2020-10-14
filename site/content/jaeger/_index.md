@@ -193,3 +193,9 @@ labels:
   severity: warning
 {{< /code >}}
  
+## Dashboards
+Following dashboards are generated from mixins and hosted on github:
+
+
+- [jaeger-read](https://github.com/monitoring-mixins/website/blob/master/assets/jaeger/dashboards/jaeger-read.json)
+- [jaeger-write](https://github.com/monitoring-mixins/website/blob/master/assets/jaeger/dashboards/jaeger-write.json)

@@ -756,6 +756,152 @@ expr: sum(rate(cortex_request_duration_seconds_count[1m])) by (cluster, namespac
 record: cluster_namespace_job_route:cortex_request_duration_seconds_count:sum_rate
 {{< /code >}}
  
+### cortex_querier_api
+
+##### cluster_job:cortex_querier_request_duration_seconds:99quantile
+
+{{< code lang="yaml" >}}
+expr: histogram_quantile(0.99, sum(rate(cortex_querier_request_duration_seconds_bucket[1m]))
+  by (le, cluster, job))
+record: cluster_job:cortex_querier_request_duration_seconds:99quantile
+{{< /code >}}
+ 
+##### cluster_job:cortex_querier_request_duration_seconds:50quantile
+
+{{< code lang="yaml" >}}
+expr: histogram_quantile(0.50, sum(rate(cortex_querier_request_duration_seconds_bucket[1m]))
+  by (le, cluster, job))
+record: cluster_job:cortex_querier_request_duration_seconds:50quantile
+{{< /code >}}
+ 
+##### cluster_job:cortex_querier_request_duration_seconds:avg
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_sum[1m])) by (cluster, job)
+  / sum(rate(cortex_querier_request_duration_seconds_count[1m])) by (cluster, job)
+record: cluster_job:cortex_querier_request_duration_seconds:avg
+{{< /code >}}
+ 
+##### cluster_job:cortex_querier_request_duration_seconds_bucket:sum_rate
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_bucket[1m])) by (le, cluster,
+  job)
+record: cluster_job:cortex_querier_request_duration_seconds_bucket:sum_rate
+{{< /code >}}
+ 
+##### cluster_job:cortex_querier_request_duration_seconds_sum:sum_rate
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_sum[1m])) by (cluster, job)
+record: cluster_job:cortex_querier_request_duration_seconds_sum:sum_rate
+{{< /code >}}
+ 
+##### cluster_job:cortex_querier_request_duration_seconds_count:sum_rate
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_count[1m])) by (cluster, job)
+record: cluster_job:cortex_querier_request_duration_seconds_count:sum_rate
+{{< /code >}}
+ 
+##### cluster_job_route:cortex_querier_request_duration_seconds:99quantile
+
+{{< code lang="yaml" >}}
+expr: histogram_quantile(0.99, sum(rate(cortex_querier_request_duration_seconds_bucket[1m]))
+  by (le, cluster, job, route))
+record: cluster_job_route:cortex_querier_request_duration_seconds:99quantile
+{{< /code >}}
+ 
+##### cluster_job_route:cortex_querier_request_duration_seconds:50quantile
+
+{{< code lang="yaml" >}}
+expr: histogram_quantile(0.50, sum(rate(cortex_querier_request_duration_seconds_bucket[1m]))
+  by (le, cluster, job, route))
+record: cluster_job_route:cortex_querier_request_duration_seconds:50quantile
+{{< /code >}}
+ 
+##### cluster_job_route:cortex_querier_request_duration_seconds:avg
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_sum[1m])) by (cluster, job,
+  route) / sum(rate(cortex_querier_request_duration_seconds_count[1m])) by (cluster,
+  job, route)
+record: cluster_job_route:cortex_querier_request_duration_seconds:avg
+{{< /code >}}
+ 
+##### cluster_job_route:cortex_querier_request_duration_seconds_bucket:sum_rate
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_bucket[1m])) by (le, cluster,
+  job, route)
+record: cluster_job_route:cortex_querier_request_duration_seconds_bucket:sum_rate
+{{< /code >}}
+ 
+##### cluster_job_route:cortex_querier_request_duration_seconds_sum:sum_rate
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_sum[1m])) by (cluster, job,
+  route)
+record: cluster_job_route:cortex_querier_request_duration_seconds_sum:sum_rate
+{{< /code >}}
+ 
+##### cluster_job_route:cortex_querier_request_duration_seconds_count:sum_rate
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_count[1m])) by (cluster, job,
+  route)
+record: cluster_job_route:cortex_querier_request_duration_seconds_count:sum_rate
+{{< /code >}}
+ 
+##### cluster_namespace_job_route:cortex_querier_request_duration_seconds:99quantile
+
+{{< code lang="yaml" >}}
+expr: histogram_quantile(0.99, sum(rate(cortex_querier_request_duration_seconds_bucket[1m]))
+  by (le, cluster, namespace, job, route))
+record: cluster_namespace_job_route:cortex_querier_request_duration_seconds:99quantile
+{{< /code >}}
+ 
+##### cluster_namespace_job_route:cortex_querier_request_duration_seconds:50quantile
+
+{{< code lang="yaml" >}}
+expr: histogram_quantile(0.50, sum(rate(cortex_querier_request_duration_seconds_bucket[1m]))
+  by (le, cluster, namespace, job, route))
+record: cluster_namespace_job_route:cortex_querier_request_duration_seconds:50quantile
+{{< /code >}}
+ 
+##### cluster_namespace_job_route:cortex_querier_request_duration_seconds:avg
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_sum[1m])) by (cluster, namespace,
+  job, route) / sum(rate(cortex_querier_request_duration_seconds_count[1m])) by (cluster,
+  namespace, job, route)
+record: cluster_namespace_job_route:cortex_querier_request_duration_seconds:avg
+{{< /code >}}
+ 
+##### cluster_namespace_job_route:cortex_querier_request_duration_seconds_bucket:sum_rate
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_bucket[1m])) by (le, cluster,
+  namespace, job, route)
+record: cluster_namespace_job_route:cortex_querier_request_duration_seconds_bucket:sum_rate
+{{< /code >}}
+ 
+##### cluster_namespace_job_route:cortex_querier_request_duration_seconds_sum:sum_rate
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_sum[1m])) by (cluster, namespace,
+  job, route)
+record: cluster_namespace_job_route:cortex_querier_request_duration_seconds_sum:sum_rate
+{{< /code >}}
+ 
+##### cluster_namespace_job_route:cortex_querier_request_duration_seconds_count:sum_rate
+
+{{< code lang="yaml" >}}
+expr: sum(rate(cortex_querier_request_duration_seconds_count[1m])) by (cluster, namespace,
+  job, route)
+record: cluster_namespace_job_route:cortex_querier_request_duration_seconds_count:sum_rate
+{{< /code >}}
+ 
 ### cortex_cache
 
 ##### cluster_job_method:cortex_memcache_request_duration_seconds:99quantile
