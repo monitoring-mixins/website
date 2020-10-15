@@ -125,6 +125,7 @@
                "decimals": 3,
                "description": "How much error budget is left looking at our 0.990% availability gurantees?",
                "fill": 10,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 4,
                "legend": {
@@ -303,6 +304,7 @@
                "datasource": "$datasource",
                "description": "How many read requests (LIST,GET) per second do the apiservers get by code?",
                "fill": 10,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 6,
                "legend": {
@@ -401,6 +403,7 @@
                "datasource": "$datasource",
                "description": "How many percent of read requests (LIST,GET) per second are returned with errors (5xx)?",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 7,
                "legend": {
@@ -482,6 +485,7 @@
                "datasource": "$datasource",
                "description": "How many seconds is the 99th percentile for reading (LIST|GET) a given resource?",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 8,
                "legend": {
@@ -658,6 +662,7 @@
                "datasource": "$datasource",
                "description": "How many write requests (POST|PUT|PATCH|DELETE) per second do the apiservers get by code?",
                "fill": 10,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 10,
                "legend": {
@@ -756,6 +761,7 @@
                "datasource": "$datasource",
                "description": "How many percent of write requests (POST|PUT|PATCH|DELETE) per second are returned with errors (5xx)?",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 11,
                "legend": {
@@ -837,6 +843,7 @@
                "datasource": "$datasource",
                "description": "How many seconds is the 99th percentile for writing (POST|PUT|PATCH|DELETE) a given resource?",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 12,
                "legend": {
@@ -930,6 +937,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 13,
                "legend": {
@@ -1010,6 +1018,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 14,
                "legend": {
@@ -1090,6 +1099,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 15,
                "legend": {
@@ -1183,6 +1193,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 16,
                "legend": {
@@ -1263,6 +1274,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 17,
                "legend": {
@@ -1343,6 +1355,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 18,
                "legend": {

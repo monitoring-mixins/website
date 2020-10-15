@@ -47,6 +47,7 @@
          "dashes": false,
          "datasource": "$datasource",
          "fill": 2,
+         "fillGradient": 0,
          "gridPos": {
             "h": 9,
             "w": 12,
@@ -141,6 +142,7 @@
          "dashes": false,
          "datasource": "$datasource",
          "fill": 2,
+         "fillGradient": 0,
          "gridPos": {
             "h": 9,
             "w": 12,
@@ -246,6 +248,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 2,
+               "fillGradient": 0,
                "gridPos": {
                   "h": 9,
                   "w": 12,
@@ -340,6 +343,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 2,
+               "fillGradient": 0,
                "gridPos": {
                   "h": 9,
                   "w": 12,
@@ -462,6 +466,7 @@
          "dashes": false,
          "datasource": "$datasource",
          "fill": 2,
+         "fillGradient": 0,
          "gridPos": {
             "h": 9,
             "w": 12,
@@ -552,6 +557,7 @@
          "dashes": false,
          "datasource": "$datasource",
          "fill": 2,
+         "fillGradient": 0,
          "gridPos": {
             "h": 9,
             "w": 12,
@@ -653,6 +659,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 2,
+               "fillGradient": 0,
                "gridPos": {
                   "h": 9,
                   "w": 12,
@@ -743,6 +750,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 2,
+               "fillGradient": 0,
                "gridPos": {
                   "h": 9,
                   "w": 12,
@@ -853,6 +861,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 2,
+               "fillGradient": 0,
                "gridPos": {
                   "h": 9,
                   "w": 12,
@@ -943,6 +952,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 2,
+               "fillGradient": 0,
                "gridPos": {
                   "h": 9,
                   "w": 12,

@@ -23,6 +23,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 2,
                "legend": {
@@ -104,6 +105,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 0,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 3,
                "legend": {
@@ -218,6 +220,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 4,
                "legend": {
@@ -409,6 +412,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 0,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 6,
                "legend": {
@@ -515,6 +519,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 7,
                "legend": {
@@ -624,6 +629,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 0,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 8,
                "legend": {
@@ -705,6 +711,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 0,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 9,
                "legend": {
