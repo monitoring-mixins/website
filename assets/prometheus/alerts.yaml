@@ -98,7 +98,15 @@ groups:
       description: Prometheus {{$labels.instance}} is not ingesting samples.
       summary: Prometheus is not ingesting samples.
     expr: |
-      rate(prometheus_tsdb_head_samples_appended_total{job="prometheus"}[5m]) <= 0
+      (
+        rate(prometheus_tsdb_head_samples_appended_total{job="prometheus"}[5m]) <= 0
+      and
+        (
+          sum without(scrape_job) (prometheus_target_metadata_cache_entries{job="prometheus"}) > 0
+        or
+          sum without(rule_group) (prometheus_rule_group_rules{job="prometheus"}) > 0
+        )
+      )
     for: 10m
     labels:
       severity: warning
