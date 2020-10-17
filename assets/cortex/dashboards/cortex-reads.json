@@ -2659,7 +2659,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Memcached – Blocks Storage – Metadada (Store-gateway)",
+         "title": "Memcached – Blocks Storage – Metadata (Store-gateway)",
          "titleSize": "h6"
       },
       {
@@ -2920,7 +2920,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Memcached – Blocks Storage – Metadada (Querier)",
+         "title": "Memcached – Blocks Storage – Metadata (Querier)",
          "titleSize": "h6"
       },
       {
