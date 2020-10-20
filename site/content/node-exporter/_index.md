@@ -187,7 +187,7 @@ annotations:
     {{ printf "%.0f" $value }} receive errors in the last two minutes.'
   summary: Network interface is reporting many receive errors.
 expr: |
-  increase(node_network_receive_errs_total[2m]) > 10
+  rate(node_network_receive_errs_total[2m]) / rate(node_network_receive_packets_total[2m]) > 0.01
 for: 1h
 labels:
   severity: warning
@@ -202,7 +202,7 @@ annotations:
     {{ printf "%.0f" $value }} transmit errors in the last two minutes.'
   summary: Network interface is reporting many transmit errors.
 expr: |
-  increase(node_network_transmit_errs_total[2m]) > 10
+  rate(node_network_transmit_errs_total[2m]) / rate(node_network_transmit_packets_total[2m]) > 0.01
 for: 1h
 labels:
   severity: warning
