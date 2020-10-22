@@ -1,0 +1,98 @@
+{
+    "mixins": [
+        {
+            "name": "prometheus",
+            "source": "https://github.com/prometheus/prometheus",
+            "subdir": "documentation/prometheus-mixin",
+            "description": "The Prometheus Mixin is a set of configurable, reusable, and extensible alerts and dashboards for Prometheus."
+        },
+        {
+            "name": "node-exporter",
+            "source": "https://github.com/prometheus/node_exporter",
+            "subdir": "docs/node-mixin",
+            "description": "The Node Mixin is a set of configurable, reusable, and extensible alerts and dashboards based on the metrics exported by the Node Exporter. The mixin creates recording and alerting rules for Prometheus and suitable dashboard descriptions for Grafana."
+        },
+        {
+            "name": "kubernetes",
+            "source": "https://github.com/kubernetes-monitoring/kubernetes-mixin",
+            "subdir": "",
+            "description": "A set of Grafana dashboards and Prometheus alerts for Kubernetes."
+        },
+        {
+            "name": "kube-state-metrics",
+            "source": "https://github.com/kubernetes/kube-state-metrics",
+            "subdir": "jsonnet/kube-state-metrics-mixin"
+        },
+        {
+            "name": "etcd",
+            "source": "https://github.com/etcd-io/etcd",
+            "subdir": "Documentation/etcd-mixin",
+            "description": "A set of customisable Prometheus alerts for etcd."
+        },
+        {
+            "name": "ceph",
+            "source": "https://github.com/ceph/ceph-mixins",
+            "subdir": "",
+            "description": "A set of Prometheus alerts for Ceph.\n\nThe scope of this project is to provide Ceph specific Prometheus rule files using Prometheus Mixins.\n"
+        },
+        {
+            "name": "gluster",
+            "source": "https://github.com/gluster/gluster-mixins",
+            "subdir": "",
+            "description": "A set of Grafana dashboards and Prometheus alerts for Gluster.\n\nThe scope of this project is to provide Gluster specific Grafana dashboard configs and Prometheus rule files using Prometheus Mixins.\n"
+        },
+        {
+            "name": "consul",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "consul-mixin",
+            "description": "Grafana dashboards and Prometheus alerts for operating Consul, in the form of a monitoring mixin."
+        },
+        {
+            "name": "jaeger",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "jaeger-mixin"
+        },
+        {
+            "name": "memcached",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "memcached-mixin",
+            "description": "Grafana dashboard for operating Memcached, in the form of a monitoring mixin."
+        },
+        {
+            "name": "sealed-secrets",
+            "source": "https://github.com/bitnami-labs/sealed-secrets",
+            "subdir": "contrib/prometheus-mixin"
+        },
+        {
+            "name": "thanos",
+            "source": "https://github.com/thanos-io/thanos",
+            "subdir": "mixin"
+        },
+        {
+            "name": "cortex",
+            "source": "https://github.com/grafana/cortex-jsonnet",
+            "subdir": "cortex-mixin"
+        },
+        {
+            "name": "kube-cockroachdb",
+            "source": "https://github.com/metalmatze/kube-cockroachdb",
+            "subdir": "monitoring"
+        },
+        {
+            "name": "coredns",
+            "source": "https://github.com/povilasv/coredns-mixin",
+            "subdir": "",
+            "description": "CoreDNS mixin provides Grafana dashboard and Prometheus Alerts to monitor CoreDNS. The mixin was introduced in [Kubernetes Node Local DNS Cache blogpost](https://povilasv.me/kubernetes-node-local-dns-cache/) to better help users monitor CoreDNS in Kubernetes. Mixin can also be used to monitor standalone CoreDNS instance without any orchestrators.\n"
+        },
+        {
+            "name": "prometheus-operator",
+            "source": "https://github.com/prometheus-operator/prometheus-operator",
+            "subdir": "jsonnet/mixin"
+        },
+        {
+            "name": "cert-manager",
+            "source": "https://gitlab.com/uneeq-oss/cert-manager-mixin.git",
+            "subdir": ""
+        }
+    ]
+}

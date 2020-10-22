@@ -3,7 +3,7 @@
 ## Adding new mixin
 
 0. Install [required software](#requirements)
-1. Add new mixin to [mixins.yaml](mixins.yaml) file
+1. Add new mixin to [mixins.json](mixins.json) file
 2. Run `make`
 
 ## Requirements
