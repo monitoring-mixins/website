@@ -9,6 +9,7 @@ TMPDIR="${TOP}/tmp/repos"
 # Make sure to use project tooling
 PATH="${TOP}/tmp/bin:${PATH}"
 
+
 download_mixin() {
 	local mixin="$1"
 	local repo="$2"
@@ -79,12 +80,12 @@ find site/content/ ! -name '_index.md' -type f -exec rm -rf {} +
 mkdir -p "${TMPDIR}"
 
 # Generate mixins 
-CONFIG=$(gojsontoyaml -yamltojson < mixins.yaml)
+CONFIG="mixins.json"
 
-for mixin in $(echo "$CONFIG" | jq -r '.mixins[].name'); do
-	repo="$(echo "$CONFIG" | jq -r ".mixins[] | select(.name == \"$mixin\") | .source")"
-	subdir="$(echo "$CONFIG" | jq -r ".mixins[] | select(.name == \"$mixin\") | .subdir")"
-	text="$(echo "$CONFIG" | jq -r ".mixins[] | select(.name == \"$mixin\") | .description")"
+for mixin in $(cat "$CONFIG" | jq -r '.mixins[].name'); do
+	repo="$(cat "$CONFIG" | jq -r ".mixins[] | select(.name == \"$mixin\") | .source")"
+	subdir="$(cat "$CONFIG" | jq -r ".mixins[] | select(.name == \"$mixin\") | .subdir")"
+	text="$(cat "$CONFIG" | jq -r ".mixins[] | select(.name == \"$mixin\") | .description")"
 	if [ "$text" == "null" ]; then text=""; fi
 	set +u
 	download_mixin "$mixin" "$repo" "$subdir"
@@ -124,3 +125,7 @@ for mixin in $(echo "$CONFIG" | jq -r '.mixins[].name'); do
 		done
 	fi
 done
+
+cd "${TOP}" || exit 1
+mkdir -p "site/static"
+cp -f "${CONFIG}" "site/static/"
