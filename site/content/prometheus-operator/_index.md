@@ -107,3 +107,18 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### PrometheusOperatorRejectedResources
+
+{{< code lang="yaml" >}}
+alert: PrometheusOperatorRejectedResources
+annotations:
+  description: Prometheus operator in {{ $labels.namespace }} namespace rejected {{
+    printf "%0.0f" $value }} {{ $labels.controller }}/{{ $labels.resource }} resources.
+  summary: Resources rejected by Prometheus operator
+expr: |
+  min_over_time(prometheus_operator_managed_resources{state="rejected",job="prometheus-operator"}[5m]) > 0
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
