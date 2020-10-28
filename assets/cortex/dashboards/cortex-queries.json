@@ -1232,7 +1232,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job:cortex_ingester_queried_series_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})) * 1",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job:cortex_ingester_queried_series_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})) * 1",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1240,7 +1240,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job:cortex_ingester_queried_series_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})) * 1",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job:cortex_ingester_queried_series_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})) * 1",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1248,7 +1248,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1 * sum(cluster_job:cortex_ingester_queried_series_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}) / sum(cluster_job:cortex_ingester_queried_series_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})",
+                     "expr": "1 * sum(cluster_job:cortex_ingester_queried_series_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}) / sum(cluster_job:cortex_ingester_queried_series_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1324,7 +1324,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job:cortex_ingester_queried_chunks_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})) * 1",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job:cortex_ingester_queried_chunks_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})) * 1",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1332,7 +1332,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job:cortex_ingester_queried_chunks_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})) * 1",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job:cortex_ingester_queried_chunks_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})) * 1",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1340,7 +1340,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1 * sum(cluster_job:cortex_ingester_queried_chunks_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}) / sum(cluster_job:cortex_ingester_queried_chunks_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})",
+                     "expr": "1 * sum(cluster_job:cortex_ingester_queried_chunks_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}) / sum(cluster_job:cortex_ingester_queried_chunks_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1416,7 +1416,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job:cortex_ingester_queried_samples_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})) * 1",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job:cortex_ingester_queried_samples_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})) * 1",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1424,7 +1424,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job:cortex_ingester_queried_samples_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})) * 1",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job:cortex_ingester_queried_samples_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})) * 1",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1432,7 +1432,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1 * sum(cluster_job:cortex_ingester_queried_samples_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}) / sum(cluster_job:cortex_ingester_queried_samples_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})",
+                     "expr": "1 * sum(cluster_job:cortex_ingester_queried_samples_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}) / sum(cluster_job:cortex_ingester_queried_samples_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",

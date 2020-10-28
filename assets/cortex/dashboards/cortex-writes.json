@@ -135,7 +135,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(cortex_ingester_memory_series{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}\n/ on(namespace) group_left\nmax by (namespace) (cortex_distributor_replication_factor{cluster=~\"$cluster\", job=~\"($namespace)/(distributor|cortex$)\"}))\n",
+                     "expr": "sum(cortex_ingester_memory_series{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}\n/ on(namespace) group_left\nmax by (namespace) (cortex_distributor_replication_factor{cluster=~\"$cluster\", job=~\"($namespace)/(distributor|cortex$)\"}))\n",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,
@@ -1011,7 +1011,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\",route=\"/cortex.Ingester/Push\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",route=\"/cortex.Ingester/Push\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1088,7 +1088,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", route=\"/cortex.Ingester/Push\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", route=\"/cortex.Ingester/Push\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1096,7 +1096,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", route=\"/cortex.Ingester/Push\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", route=\"/cortex.Ingester/Push\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1104,7 +1104,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", route=\"/cortex.Ingester/Push\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", route=\"/cortex.Ingester/Push\"})",
+                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", route=\"/cortex.Ingester/Push\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", route=\"/cortex.Ingester/Push\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1174,7 +1174,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", route=\"/cortex.Ingester/Push\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", route=\"/cortex.Ingester/Push\"}[$__interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1269,7 +1269,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_kv_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_kv_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1346,7 +1346,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job:cortex_kv_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job:cortex_kv_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1354,7 +1354,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job:cortex_kv_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job:cortex_kv_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1362,7 +1362,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job:cortex_kv_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}) / sum(cluster_job:cortex_kv_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"})",
+                     "expr": "1e3 * sum(cluster_job:cortex_kv_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}) / sum(cluster_job:cortex_kv_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1458,7 +1458,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_memcache_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\",method=\"Memcache.Put\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_memcache_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",method=\"Memcache.Put\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1535,7 +1535,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_memcache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", method=\"Memcache.Put\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_memcache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", method=\"Memcache.Put\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1543,7 +1543,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_memcache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", method=\"Memcache.Put\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_memcache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", method=\"Memcache.Put\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1551,7 +1551,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_method:cortex_memcache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", method=\"Memcache.Put\"}) / sum(cluster_job_method:cortex_memcache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", method=\"Memcache.Put\"})",
+                     "expr": "1e3 * sum(cluster_job_method:cortex_memcache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", method=\"Memcache.Put\"}) / sum(cluster_job_method:cortex_memcache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", method=\"Memcache.Put\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1647,7 +1647,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cassandra_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"INSERT\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cassandra_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"INSERT\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1724,7 +1724,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_cassandra_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"INSERT\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_cassandra_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"INSERT\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1732,7 +1732,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_cassandra_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"INSERT\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_cassandra_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"INSERT\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1740,7 +1740,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_operation:cortex_cassandra_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"INSERT\"}) / sum(cluster_job_operation:cortex_cassandra_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"INSERT\"})",
+                     "expr": "1e3 * sum(cluster_job_operation:cortex_cassandra_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"INSERT\"}) / sum(cluster_job_operation:cortex_cassandra_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"INSERT\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1836,7 +1836,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_bigtable_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_bigtable_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1913,7 +1913,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_bigtable_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_bigtable_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1921,7 +1921,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_bigtable_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_bigtable_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1929,7 +1929,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_operation:cortex_bigtable_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}) / sum(cluster_job_operation:cortex_bigtable_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"})",
+                     "expr": "1e3 * sum(cluster_job_operation:cortex_bigtable_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}) / sum(cluster_job_operation:cortex_bigtable_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -2025,7 +2025,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_dynamo_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"DynamoDB.BatchWriteItem\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_dynamo_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"DynamoDB.BatchWriteItem\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2102,7 +2102,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_dynamo_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"DynamoDB.BatchWriteItem\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_dynamo_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"DynamoDB.BatchWriteItem\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -2110,7 +2110,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_dynamo_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"DynamoDB.BatchWriteItem\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_dynamo_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"DynamoDB.BatchWriteItem\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -2118,7 +2118,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_operation:cortex_dynamo_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"DynamoDB.BatchWriteItem\"}) / sum(cluster_job_operation:cortex_dynamo_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"DynamoDB.BatchWriteItem\"})",
+                     "expr": "1e3 * sum(cluster_job_operation:cortex_dynamo_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"DynamoDB.BatchWriteItem\"}) / sum(cluster_job_operation:cortex_dynamo_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"DynamoDB.BatchWriteItem\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -2214,7 +2214,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_gcs_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"POST\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_gcs_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"POST\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2291,7 +2291,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_gcs_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"POST\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_gcs_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"POST\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -2299,7 +2299,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_gcs_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"POST\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_gcs_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"POST\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -2307,7 +2307,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_operation:cortex_gcs_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"POST\"}) / sum(cluster_job_operation:cortex_gcs_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\", operation=\"POST\"})",
+                     "expr": "1e3 * sum(cluster_job_operation:cortex_gcs_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"POST\"}) / sum(cluster_job_operation:cortex_gcs_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", operation=\"POST\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -2398,7 +2398,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_shipper_uploads_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])) - sum(rate(cortex_ingester_shipper_upload_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_shipper_uploads_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) - sum(rate(cortex_ingester_shipper_upload_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2407,7 +2407,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_shipper_upload_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_shipper_upload_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2484,7 +2484,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2493,7 +2493,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2502,7 +2502,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2594,7 +2594,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_compactions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_compactions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2603,7 +2603,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_compactions_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_compactions_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2680,7 +2680,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2689,7 +2689,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2698,7 +2698,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2790,7 +2790,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncations_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])) - sum(rate(cortex_ingester_tsdb_wal_truncations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncations_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) - sum(rate(cortex_ingester_tsdb_wal_truncations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2799,7 +2799,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2879,7 +2879,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_checkpoint_creations_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])) - sum(rate(cortex_ingester_tsdb_checkpoint_creations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_checkpoint_creations_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) - sum(rate(cortex_ingester_tsdb_checkpoint_creations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2888,7 +2888,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_checkpoint_creations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_checkpoint_creations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2965,7 +2965,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncate_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])) / sum(rate(cortex_ingester_tsdb_wal_truncate_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncate_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) / sum(rate(cortex_ingester_tsdb_wal_truncate_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -3045,7 +3045,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_wal_corruptions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_wal_corruptions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -3054,7 +3054,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_mmap_chunk_corruptions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_mmap_chunk_corruptions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,

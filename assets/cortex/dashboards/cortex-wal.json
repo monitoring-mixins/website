@@ -58,7 +58,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(rate(cortex_ingester_wal_logged_bytes_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])) + avg(rate(cortex_ingester_checkpoint_logged_bytes_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "avg(rate(cortex_ingester_wal_logged_bytes_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) + avg(rate(cortex_ingester_checkpoint_logged_bytes_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -147,7 +147,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(rate(cortex_ingester_wal_records_logged_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "avg(rate(cortex_ingester_wal_records_logged_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -224,7 +224,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(rate(cortex_ingester_wal_logged_bytes_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]) / rate(cortex_ingester_wal_records_logged_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "avg(rate(cortex_ingester_wal_logged_bytes_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]) / rate(cortex_ingester_wal_records_logged_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -301,7 +301,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(rate(cortex_ingester_wal_logged_bytes_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]) / rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval]))",
+                     "expr": "avg(rate(cortex_ingester_wal_logged_bytes_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]) / rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -467,7 +467,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(cortex_ingester_checkpoint_creations_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])",
+                     "expr": "rate(cortex_ingester_checkpoint_creations_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -476,7 +476,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "rate(cortex_ingester_checkpoint_deletions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])",
+                     "expr": "rate(cortex_ingester_checkpoint_deletions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -553,7 +553,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(cortex_ingester_checkpoint_creations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])",
+                     "expr": "rate(cortex_ingester_checkpoint_creations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -562,7 +562,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "rate(cortex_ingester_checkpoint_deletions_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester|cortex$)\"}[$__interval])",
+                     "expr": "rate(cortex_ingester_checkpoint_deletions_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
