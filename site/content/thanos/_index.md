@@ -436,7 +436,7 @@ annotations:
   summary: Thanos Store has high latency for store series gate requests.
 expr: |
   (
-    histogram_quantile(0.9, sum by (job, le) (rate(thanos_bucket_store_series_gate_duration_seconds_bucket{job=~"thanos-store.*"}[5m]))) > 2
+    histogram_quantile(0.99, sum by (job, le) (rate(thanos_bucket_store_series_gate_duration_seconds_bucket{job=~"thanos-store.*"}[5m]))) > 2
   and
     sum by (job) (rate(thanos_bucket_store_series_gate_duration_seconds_count{job=~"thanos-store.*"}[5m])) > 0
   )
@@ -475,7 +475,7 @@ annotations:
   summary: Thanos Store is having high latency for bucket operations.
 expr: |
   (
-    histogram_quantile(0.9, sum by (job, le) (rate(thanos_objstore_bucket_operation_duration_seconds_bucket{job=~"thanos-store.*"}[5m]))) > 2
+    histogram_quantile(0.99, sum by (job, le) (rate(thanos_objstore_bucket_operation_duration_seconds_bucket{job=~"thanos-store.*"}[5m]))) > 2
   and
     sum by (job) (rate(thanos_objstore_bucket_operation_duration_seconds_count{job=~"thanos-store.*"}[5m])) > 0
   )
@@ -682,8 +682,76 @@ labels:
   severity: critical
 {{< /code >}}
  
+### thanos-bucket-replicate.rules
+
+##### ThanosBucketReplicateIsDown
+
+{{< code lang="yaml" >}}
+alert: ThanosBucketReplicateIsDown
+annotations:
+  description: Thanos Replicate has disappeared from Prometheus target discovery.
+  summary: Thanos Replicate has disappeared from Prometheus target discovery.
+expr: |
+  absent(up{job=~"thanos-bucket-replicate.*"})
+for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### ThanosBucketReplicateErrorRate
+
+{{< code lang="yaml" >}}
+alert: ThanosBucketReplicateErrorRate
+annotations:
+  description: Thanos Replicate failing to run, {{ $value | humanize }}% of attempts
+    failed.
+  summary: Thanose Replicate is failing to run.
+expr: |
+  (
+    sum(rate(thanos_replicate_replication_runs_total{result="error", job=~"thanos-bucket-replicate.*"}[5m]))
+  / on (namespace) group_left
+    sum(rate(thanos_replicate_replication_runs_total{job=~"thanos-bucket-replicate.*"}[5m]))
+  ) * 100 >= 10
+for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### ThanosBucketReplicateRunLatency
+
+{{< code lang="yaml" >}}
+alert: ThanosBucketReplicateRunLatency
+annotations:
+  description: Thanos Replicate {{$labels.job}} has a 99th percentile latency of {{
+    $value }} seconds for the replicate operations.
+  summary: Thanos Replicate has a high latency for replicate operations.
+expr: |
+  (
+    histogram_quantile(0.99, sum by (job, le) (rate(thanos_replicate_replication_run_duration_seconds_bucket{job=~"thanos-bucket-replicate.*"}[5m]))) > 20
+  and
+    sum by (job) (rate(thanos_replicate_replication_run_duration_seconds_bucket{job=~"thanos-bucket-replicate.*"}[5m])) > 0
+  )
+for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ### thanos-component-absent.rules
 
+##### ThanosBucketReplicateIsDown
+
+{{< code lang="yaml" >}}
+alert: ThanosBucketReplicateIsDown
+annotations:
+  description: ThanosBucketReplicate has disappeared from Prometheus target discovery.
+  summary: thanos component has disappeared from Prometheus target discovery.
+expr: |
+  absent(up{job=~"thanos-bucket-replicate.*"} == 1)
+for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ##### ThanosCompactIsDown
 
 {{< code lang="yaml" >}}
@@ -763,60 +831,6 @@ annotations:
   summary: thanos component has disappeared from Prometheus target discovery.
 expr: |
   absent(up{job=~"thanos-store.*"} == 1)
-for: 5m
-labels:
-  severity: critical
-{{< /code >}}
- 
-### thanos-bucket-replicate.rules
-
-##### ThanosBucketReplicateIsDown
-
-{{< code lang="yaml" >}}
-alert: ThanosBucketReplicateIsDown
-annotations:
-  description: Thanos Replicate has disappeared from Prometheus target discovery.
-  summary: Thanos Replicate has disappeared from Prometheus target discovery.
-expr: |
-  absent(up{job=~"thanos-bucket-replicate.*"})
-for: 5m
-labels:
-  severity: critical
-{{< /code >}}
- 
-##### ThanosBucketReplicateErrorRate
-
-{{< code lang="yaml" >}}
-alert: ThanosBucketReplicateErrorRate
-annotations:
-  description: Thanos Replicate failing to run, {{ $value | humanize }}% of attempts
-    failed.
-  summary: Thanose Replicate is failing to run.
-expr: |
-  (
-    sum(rate(thanos_replicate_replication_runs_total{result="error", job=~"thanos-bucket-replicate.*"}[5m]))
-  / on (namespace) group_left
-    sum(rate(thanos_replicate_replication_runs_total{job=~"thanos-bucket-replicate.*"}[5m]))
-  ) * 100 >= 10
-for: 5m
-labels:
-  severity: critical
-{{< /code >}}
- 
-##### ThanosBucketReplicateRunLatency
-
-{{< code lang="yaml" >}}
-alert: ThanosBucketReplicateRunLatency
-annotations:
-  description: Thanos Replicate {{$labels.job}} has a 99th percentile latency of {{
-    $value }} seconds for the replicate operations.
-  summary: Thanos Replicate has a high latency for replicate operations.
-expr: |
-  (
-    histogram_quantile(0.9, sum by (job, le) (rate(thanos_replicate_replication_run_duration_seconds_bucket{job=~"thanos-bucket-replicate.*"}[5m]))) > 20
-  and
-    sum by (job) (rate(thanos_replicate_replication_run_duration_seconds_bucket{job=~"thanos-bucket-replicate.*"}[5m])) > 0
-  )
 for: 5m
 labels:
   severity: critical
