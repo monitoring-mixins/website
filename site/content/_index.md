@@ -65,15 +65,14 @@ Alternatively you can also use the mixin with
 a [ksonnet](https://github.com/ksonnet/ksonnet) module to deploy a fully-fledged
 Prometheus-based monitoring system for Kubernetes:
 
-Make sure you have the ksonnet v0.8.0:
+Make sure you have at least ksonnet v0.8.0:
 
 ```bash
-$ brew install https://raw.githubusercontent.com/ksonnet/homebrew-tap/82ef24cb7b454d1857db40e38671426c18cd8820/ks.rb
-$ brew pin ks
+$ brew install ksonnet/tap/ks
 $ ks version
-ksonnet version: v0.8.0
-jsonnet version: v0.9.5
-client-go version: v1.6.8-beta.0+$Format:%h$
+ksonnet version: 0.13.1
+jsonnet version: v0.11.2
+client-go version: kubernetes-1.10.4
 ```
 
 In your config repo, if you don't have a ksonnet application, make a new one (will copy credentials from current context):
