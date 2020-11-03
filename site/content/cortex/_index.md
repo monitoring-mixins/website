@@ -1770,6 +1770,7 @@ record: cluster_namespace_job:cortex_distributor_received_samples:rate5m
 Following dashboards are generated from mixins and hosted on github:
 
 
+- [alertmanager](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/alertmanager.json)
 - [cortex-blocks-vs-chunks](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-blocks-vs-chunks.json)
 - [cortex-chunks](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-chunks.json)
 - [cortex-compactor-resources](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-compactor-resources.json)
