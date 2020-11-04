@@ -20,7 +20,7 @@
    "links": [ ],
    "panels": [
       {
-         "datasource": "prometheus",
+         "datasource": "$datasource",
          "description": "The number of certificates in the ready state.",
          "fieldConfig": {
             "defaults": {
@@ -753,7 +753,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "prometheus",
+         "datasource": "$datasource",
          "description": "Percent of the time that the CPU is being throttled. Higher is badderer. ",
          "fieldConfig": {
             "defaults": {
@@ -862,7 +862,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "prometheus",
+         "datasource": "$datasource",
          "description": "Memory utilisation and limits.",
          "fieldConfig": {
             "defaults": {
@@ -996,7 +996,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "prometheus",
+         "datasource": "$datasource",
          "description": "Network ingress/egress.",
          "fieldConfig": {
             "defaults": {
