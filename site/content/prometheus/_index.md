@@ -324,5 +324,5 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
-- [prometheus-remote-write](https://github.com/monitoring-mixins/website/blob/master/assets/prometheus/dashboards/prometheus-remote-write.json)
 - [prometheus](https://github.com/monitoring-mixins/website/blob/master/assets/prometheus/dashboards/prometheus.json)
+- [prometheus-remote-write](https://github.com/monitoring-mixins/website/blob/master/assets/prometheus/dashboards/prometheus-remote-write.json)
