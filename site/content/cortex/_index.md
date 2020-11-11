@@ -490,6 +490,85 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### CortexIngesterTSDBHeadTruncationFailed
+
+{{< code lang="yaml" >}}
+alert: CortexIngesterTSDBHeadTruncationFailed
+annotations:
+  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+    to truncate TSDB head.
+expr: |
+  rate(cortex_ingester_tsdb_head_truncations_failed_total[5m]) > 0
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexIngesterTSDBCheckpointCreationFailed
+
+{{< code lang="yaml" >}}
+alert: CortexIngesterTSDBCheckpointCreationFailed
+annotations:
+  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+    to create TSDB checkpoint.
+expr: |
+  rate(cortex_ingester_tsdb_checkpoint_creations_failed_total[5m]) > 0
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexIngesterTSDBCheckpointDeletionFailed
+
+{{< code lang="yaml" >}}
+alert: CortexIngesterTSDBCheckpointDeletionFailed
+annotations:
+  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+    to delete TSDB checkpoint.
+expr: |
+  rate(cortex_ingester_tsdb_checkpoint_deletions_failed_total[5m]) > 0
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexIngesterTSDBWALTruncationFailed
+
+{{< code lang="yaml" >}}
+alert: CortexIngesterTSDBWALTruncationFailed
+annotations:
+  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+    to truncate TSDB WAL.
+expr: |
+  rate(cortex_ingester_tsdb_wal_truncations_failed_total[5m]) > 0
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### CortexIngesterTSDBWALCorrupted
+
+{{< code lang="yaml" >}}
+alert: CortexIngesterTSDBWALCorrupted
+annotations:
+  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} got a corrupted
+    TSDB WAL.
+expr: |
+  rate(cortex_ingester_tsdb_wal_corruptions_total[5m]) > 0
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexIngesterTSDBWALWritesFailed
+
+{{< code lang="yaml" >}}
+alert: CortexIngesterTSDBWALWritesFailed
+annotations:
+  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+    to write to TSDB WAL.
+expr: |
+  rate(cortex_ingester_tsdb_wal_writes_failed_total[1m]) > 0
+for: 3m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ##### CortexQuerierHasNotScanTheBucket
 
 {{< code lang="yaml" >}}
@@ -604,6 +683,19 @@ annotations:
 expr: |
   thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor"} == 0
 for: 24h
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexCompactorRunFailed
+
+{{< code lang="yaml" >}}
+alert: CortexCompactorRunFailed
+annotations:
+  message: |
+    {{ $labels.job }}/{{ $labels.instance }} failed to run compaction.
+expr: |
+  increase(cortex_compactor_runs_failed_total[2h]) > 1
 labels:
   severity: critical
 {{< /code >}}

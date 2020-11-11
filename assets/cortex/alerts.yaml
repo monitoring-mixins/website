@@ -323,6 +323,55 @@ groups:
     for: 15m
     labels:
       severity: critical
+  - alert: CortexIngesterTSDBHeadTruncationFailed
+    annotations:
+      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+        to truncate TSDB head.
+    expr: |
+      rate(cortex_ingester_tsdb_head_truncations_failed_total[5m]) > 0
+    labels:
+      severity: critical
+  - alert: CortexIngesterTSDBCheckpointCreationFailed
+    annotations:
+      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+        to create TSDB checkpoint.
+    expr: |
+      rate(cortex_ingester_tsdb_checkpoint_creations_failed_total[5m]) > 0
+    labels:
+      severity: critical
+  - alert: CortexIngesterTSDBCheckpointDeletionFailed
+    annotations:
+      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+        to delete TSDB checkpoint.
+    expr: |
+      rate(cortex_ingester_tsdb_checkpoint_deletions_failed_total[5m]) > 0
+    labels:
+      severity: critical
+  - alert: CortexIngesterTSDBWALTruncationFailed
+    annotations:
+      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+        to truncate TSDB WAL.
+    expr: |
+      rate(cortex_ingester_tsdb_wal_truncations_failed_total[5m]) > 0
+    labels:
+      severity: warning
+  - alert: CortexIngesterTSDBWALCorrupted
+    annotations:
+      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} got
+        a corrupted TSDB WAL.
+    expr: |
+      rate(cortex_ingester_tsdb_wal_corruptions_total[5m]) > 0
+    labels:
+      severity: critical
+  - alert: CortexIngesterTSDBWALWritesFailed
+    annotations:
+      message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
+        to write to TSDB WAL.
+    expr: |
+      rate(cortex_ingester_tsdb_wal_writes_failed_total[1m]) > 0
+    for: 3m
+    labels:
+      severity: critical
   - alert: CortexQuerierHasNotScanTheBucket
     annotations:
       message: Cortex Querier {{ $labels.namespace }}/{{ $labels.instance }} has not
@@ -405,5 +454,13 @@ groups:
     expr: |
       thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor"} == 0
     for: 24h
+    labels:
+      severity: critical
+  - alert: CortexCompactorRunFailed
+    annotations:
+      message: |
+        {{ $labels.job }}/{{ $labels.instance }} failed to run compaction.
+    expr: |
+      increase(cortex_compactor_runs_failed_total[2h]) > 1
     labels:
       severity: critical
