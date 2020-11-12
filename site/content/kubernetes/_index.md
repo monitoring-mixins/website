@@ -433,7 +433,7 @@ annotations:
 expr: |
   sum(kube_resourcequota{job="kube-state-metrics", type="hard", resource="memory"})
     /
-  sum(kube_node_status_allocatable_memory_bytes{job="node-exporter"})
+  sum(kube_node_status_allocatable_memory_bytes{job="kube-state-metrics"})
     > 1.5
 for: 5m
 labels:
