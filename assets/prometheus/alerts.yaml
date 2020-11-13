@@ -46,22 +46,6 @@ groups:
     for: 15m
     labels:
       severity: warning
-  - alert: PrometheusErrorSendingAlertsToAnyAlertmanager
-    annotations:
-      description: '{{ printf "%.1f" $value }}% minimum errors while sending alerts
-        from Prometheus {{$labels.instance}} to any Alertmanager.'
-      summary: Prometheus encounters more than 3% errors sending alerts to any Alertmanager.
-    expr: |
-      min without(alertmanager) (
-        rate(prometheus_notifications_errors_total{job="prometheus"}[5m])
-      /
-        rate(prometheus_notifications_sent_total{job="prometheus"}[5m])
-      )
-      * 100
-      > 3
-    for: 15m
-    labels:
-      severity: critical
   - alert: PrometheusNotConnectedToAlertmanagers
     annotations:
       description: Prometheus {{$labels.instance}} is not connected to any Alertmanagers.
@@ -217,3 +201,19 @@ groups:
     for: 15m
     labels:
       severity: warning
+  - alert: PrometheusErrorSendingAlertsToAnyAlertmanager
+    annotations:
+      description: '{{ printf "%.1f" $value }}% minimum errors while sending alerts
+        from Prometheus {{$labels.instance}} to any Alertmanager.'
+      summary: Prometheus encounters more than 3% errors sending alerts to any Alertmanager.
+    expr: |
+      min without (alertmanager) (
+        rate(prometheus_notifications_errors_total{job="prometheus"}[5m])
+      /
+        rate(prometheus_notifications_sent_total{job="prometheus"}[5m])
+      )
+      * 100
+      > 3
+    for: 15m
+    labels:
+      severity: critical

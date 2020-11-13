@@ -82,29 +82,6 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### PrometheusErrorSendingAlertsToAnyAlertmanager
-'{{ printf "%.1f" $value }}% minimum errors while sending alerts from
-Prometheus encounters more than 3% errors sending alerts to any Alertmanager.
-
-{{< code lang="yaml" >}}
-alert: PrometheusErrorSendingAlertsToAnyAlertmanager
-annotations:
-  description: '{{ printf "%.1f" $value }}% minimum errors while sending alerts from
-    Prometheus {{$labels.instance}} to any Alertmanager.'
-  summary: Prometheus encounters more than 3% errors sending alerts to any Alertmanager.
-expr: |
-  min without(alertmanager) (
-    rate(prometheus_notifications_errors_total{job="prometheus"}[5m])
-  /
-    rate(prometheus_notifications_sent_total{job="prometheus"}[5m])
-  )
-  * 100
-  > 3
-for: 15m
-labels:
-  severity: critical
-{{< /code >}}
- 
 ##### PrometheusNotConnectedToAlertmanagers
 
 {{< code lang="yaml" >}}
@@ -318,6 +295,29 @@ expr: |
 for: 15m
 labels:
   severity: warning
+{{< /code >}}
+ 
+##### PrometheusErrorSendingAlertsToAnyAlertmanager
+'{{ printf "%.1f" $value }}% minimum errors while sending alerts from
+Prometheus encounters more than 3% errors sending alerts to any Alertmanager.
+
+{{< code lang="yaml" >}}
+alert: PrometheusErrorSendingAlertsToAnyAlertmanager
+annotations:
+  description: '{{ printf "%.1f" $value }}% minimum errors while sending alerts from
+    Prometheus {{$labels.instance}} to any Alertmanager.'
+  summary: Prometheus encounters more than 3% errors sending alerts to any Alertmanager.
+expr: |
+  min without (alertmanager) (
+    rate(prometheus_notifications_errors_total{job="prometheus"}[5m])
+  /
+    rate(prometheus_notifications_sent_total{job="prometheus"}[5m])
+  )
+  * 100
+  > 3
+for: 15m
+labels:
+  severity: critical
 {{< /code >}}
  
 ## Dashboards

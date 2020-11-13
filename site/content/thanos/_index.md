@@ -39,7 +39,7 @@ alert: ThanosCompactHalted
 annotations:
   description: Thanos Compact {{$labels.job}} has failed to run and now is halted.
   summary: Thanos Compact has failed to run ans is now halted.
-expr: thanos_compactor_halted{job=~"thanos-compact.*"} == 1
+expr: thanos_compact_halted{job=~"thanos-compact.*"} == 1
 for: 5m
 labels:
   severity: warning
@@ -187,9 +187,9 @@ annotations:
   summary: Thanos Query is having high number of DNS failures.
 expr: |
   (
-    sum by (job) (rate(thanos_querier_store_apis_dns_failures_total{job=~"thanos-query.*"}[5m]))
+    sum by (job) (rate(thanos_query_store_apis_dns_failures_total{job=~"thanos-query.*"}[5m]))
   /
-    sum by (job) (rate(thanos_querier_store_apis_dns_lookups_total{job=~"thanos-query.*"}[5m]))
+    sum by (job) (rate(thanos_query_store_apis_dns_lookups_total{job=~"thanos-query.*"}[5m]))
   ) * 100 > 1
 for: 15m
 labels:
@@ -618,9 +618,9 @@ annotations:
   summary: Thanos Rule is having high number of DNS failures.
 expr: |
   (
-    sum by (job) (rate(thanos_ruler_query_apis_dns_failures_total{job=~"thanos-rule.*"}[5m]))
+    sum by (job) (rate(thanos_rule_query_apis_dns_failures_total{job=~"thanos-rule.*"}[5m]))
   /
-    sum by (job) (rate(thanos_ruler_query_apis_dns_lookups_total{job=~"thanos-rule.*"}[5m]))
+    sum by (job) (rate(thanos_rule_query_apis_dns_lookups_total{job=~"thanos-rule.*"}[5m]))
   * 100 > 1
   )
 for: 15m
@@ -638,9 +638,9 @@ annotations:
   summary: Thanos Rule is having high number of DNS failures.
 expr: |
   (
-    sum by (job) (rate(thanos_ruler_alertmanagers_dns_failures_total{job=~"thanos-rule.*"}[5m]))
+    sum by (job) (rate(thanos_rule_alertmanagers_dns_failures_total{job=~"thanos-rule.*"}[5m]))
   /
-    sum by (job) (rate(thanos_ruler_alertmanagers_dns_lookups_total{job=~"thanos-rule.*"}[5m]))
+    sum by (job) (rate(thanos_rule_alertmanagers_dns_lookups_total{job=~"thanos-rule.*"}[5m]))
   * 100 > 1
   )
 for: 15m
@@ -868,16 +868,16 @@ expr: |
 record: :grpc_client_failures_per_stream:sum_rate
 {{< /code >}}
  
-##### :thanos_querier_store_apis_dns_failures_per_lookup:sum_rate
+##### :thanos_query_store_apis_dns_failures_per_lookup:sum_rate
 
 {{< code lang="yaml" >}}
 expr: |
   (
-    sum(rate(thanos_querier_store_apis_dns_failures_total{job=~"thanos-query.*"}[5m]))
+    sum(rate(thanos_query_store_apis_dns_failures_total{job=~"thanos-query.*"}[5m]))
   /
-    sum(rate(thanos_querier_store_apis_dns_lookups_total{job=~"thanos-query.*"}[5m]))
+    sum(rate(thanos_query_store_apis_dns_lookups_total{job=~"thanos-query.*"}[5m]))
   )
-record: :thanos_querier_store_apis_dns_failures_per_lookup:sum_rate
+record: :thanos_query_store_apis_dns_failures_per_lookup:sum_rate
 {{< /code >}}
  
 ##### :query_duration_seconds:histogram_quantile
