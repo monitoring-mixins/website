@@ -93,6 +93,11 @@
             "name": "cert-manager",
             "source": "https://gitlab.com/uneeq-oss/cert-manager-mixin.git",
             "subdir": ""
+        },
+        {
+            "name": "spinnaker",
+            "source": "https://gitlab.com/uneeq-oss/spinnaker-mixin.git",
+            "subdir": ""
         }
     ]
 }

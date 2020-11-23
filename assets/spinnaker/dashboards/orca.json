@@ -1,0 +1,1903 @@
+{
+   "annotations": {
+      "list": [
+         {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+         }
+      ]
+   },
+   "editable": true,
+   "gnetId": null,
+   "graphTooltip": 0,
+   "id": 54,
+   "iteration": 1600124896105,
+   "links": [
+      {
+         "icon": "info",
+         "tags": [ ],
+         "title": "GitHub",
+         "tooltip": "",
+         "type": "link",
+         "url": "https://github.com/spinnaker/orca"
+      }
+   ],
+   "panels": [
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 0
+         },
+         "hiddenSeries": false,
+         "id": 63,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\", status=\"5xx\"}[$__interval])) by (controller, method, status)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{statusCode}}/{{controller}}/{{method}}",
+               "refId": "A",
+               "step": 30
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "5xx Invocation Errors (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:1458",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            },
+            {
+               "$$hashKey": "object:1459",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 0
+         },
+         "hiddenSeries": false,
+         "id": 64,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(stage_invocations_duration_total{job=~\"$job\", instance=~\"$Instance\", bucket!=\"lt5m\"}[$__interval])) by (stageType, cloudProvider, bucket)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{bucket}}/{{cloudProvider}}/{{stageType}}",
+               "metric": "",
+               "refId": "A",
+               "step": 30
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Stage Durations > 5m per Time-Bucket/Platform (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 5
+         },
+         "hiddenSeries": false,
+         "id": 73,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": false,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(okhttp_requests_seconds_count{job=~\"$job\",instance=~\"$Instance\"}[$__interval])) by (statusCode)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "{{statusCode}}",
+               "refId": "A"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Ok Http Calls by Status Code (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 5
+         },
+         "hiddenSeries": false,
+         "id": 74,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(okhttp_requests_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (requestHost)\n/\nsum(rate(okhttp_requests_seconds_count{job=\"$job\", instance=~\"$Instance\"}[$__interval])) by (requestHost)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "{{requestHost}}",
+               "refId": "A"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Ok Http Calls Latency by Request Host (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "s",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 10
+         },
+         "hiddenSeries": false,
+         "id": 6,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": false,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (controller, method)",
+               "format": "time_series",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{controller}}/{{method}}",
+               "refId": "A",
+               "step": 30
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Controller Invocations by Method (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 10
+         },
+         "hiddenSeries": false,
+         "id": 26,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(controller_invocations_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (controller, method)\n/\nsum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (controller, method)",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{controller}}/{{method}}",
+               "refId": "A",
+               "step": 30
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Controller Invocation Latency by Method (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "s",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "s",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": false
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 16
+         },
+         "hiddenSeries": false,
+         "id": 55,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": false,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(stage_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (cloudProvider, type)",
+               "format": "time_series",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{type}}/{{cloudProvider}}",
+               "metric": "",
+               "refId": "B",
+               "step": 30
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Active Stages per Type/Platform (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 16
+         },
+         "hiddenSeries": false,
+         "id": 56,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": false,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(stage_invocations_duration_total{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (cloudProvider, stageType)",
+               "format": "time_series",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{stageType}}/{{cloudProvider}}",
+               "metric": "",
+               "refId": "C",
+               "step": 30
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Stages Completed per Type/Platform (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 22
+         },
+         "hiddenSeries": false,
+         "id": 62,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": false,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(threadpool_blockingQueueSize{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (id)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "{{id}}",
+               "refId": "A"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Blocked Queues (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 22
+         },
+         "hiddenSeries": false,
+         "id": 78,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "hideEmpty": false,
+            "hideZero": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": false,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum by (application) (queue_zombies_total{job=~\"$job\", instance=~\"$Instance\"})",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "{{ application }}",
+               "refId": "A"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Zombie Queues (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "decimals": 0,
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 22
+         },
+         "hiddenSeries": false,
+         "id": 18,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": false,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(threadpool_activeCount{job=~\"$job\", instance=~\"$Instance\"}) by (id)",
+               "format": "time_series",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{id}}",
+               "metric": "",
+               "refId": "A",
+               "step": 30
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Active Threads (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 22
+         },
+         "hiddenSeries": false,
+         "id": 71,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": false,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(threadpool_poolSize{job=~\"$job\", instance=~\"$Instance\"}) by (id)",
+               "format": "time_series",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{id}}",
+               "metric": "",
+               "refId": "A",
+               "step": 30
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "ThreadPool Size (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 27
+         },
+         "hiddenSeries": false,
+         "id": 68,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [
+            {
+               "alias": "In-Process",
+               "yaxis": 1
+            },
+            {
+               "alias": "Ready",
+               "yaxis": 1
+            },
+            {
+               "alias": "Queued",
+               "yaxis": 2
+            }
+         ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(queue_depth{job=~\"$job\", instance=~\"$Instance\"}) by (instance)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "Queued",
+               "refId": "A"
+            },
+            {
+               "expr": "sum(queue_ready_depth{job=~\"$job\", instance=~\"$Instance\"}) by (instance)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "Ready",
+               "refId": "B"
+            },
+            {
+               "expr": "sum(queue_unacked_depth{job=~\"$job\", instance=~\"$Instance\"}) by (instance)\n",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "In-Process",
+               "refId": "C"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Queue Depth (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 27
+         },
+         "hiddenSeries": false,
+         "id": 69,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [
+            {
+               "alias": "In-Process",
+               "yaxis": 1
+            },
+            {
+               "alias": "Ready",
+               "yaxis": 1
+            },
+            {
+               "alias": "Queued",
+               "yaxis": 2
+            }
+         ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(queue_retried_messages_total{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (job)",
+               "format": "time_series",
+               "hide": true,
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "Retried",
+               "refId": "A"
+            },
+            {
+               "expr": "sum(rate(queue_dead_messages_total{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (job)",
+               "format": "time_series",
+               "hide": true,
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "Dead",
+               "refId": "B"
+            },
+            {
+               "expr": "sum(rate(queue_orphaned_messages{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (job)\n",
+               "format": "time_series",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "Orphaned",
+               "refId": "C"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Queue Errors (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 33
+         },
+         "hiddenSeries": false,
+         "id": 77,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [
+            {
+               "alias": "messages",
+               "yaxis": 2
+            }
+         ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "rate(queue_message_lag_seconds_count{job=~\"$job\", instance=~\"$Instance\"}[$__interval])",
+               "format": "time_series",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "messages {{ instance }}",
+               "refId": "A"
+            },
+            {
+               "expr": "rate(queue_message_lag_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__interval])\n/\nrate(queue_message_lag_seconds_count{job=~\"$job\", instance=~\"$Instance\"}[$__interval])",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 1,
+               "legendFormat": "lag time {{ instance }}",
+               "refId": "B"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Message Lag Time (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "s",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": {
+            "Acknowledged": "#508642",
+            "Pushed": "#cffaff",
+            "Ratio": "#f29191"
+         },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 33
+         },
+         "hiddenSeries": false,
+         "id": 70,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [
+            {
+               "alias": "Acknowledged",
+               "yaxis": 2
+            },
+            {
+               "alias": "Pushed",
+               "yaxis": 2
+            }
+         ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(queue_pushed_messages_total{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (instance)",
+               "format": "time_series",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "Pushed/{{ instance }}",
+               "metric": "",
+               "refId": "A",
+               "step": 30
+            },
+            {
+               "expr": "sum(rate(queue_acknowledged_messages_total{instance=~\"$Instance\"}[$__interval])) by (instance)",
+               "format": "time_series",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "Acknowledged/{{ instance }}",
+               "metric": "",
+               "refId": "B",
+               "step": 30
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Pushed Message Summary (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": false
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "description": "TODO: Check source code for why this metric isn't published for Orca",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 38
+         },
+         "hiddenSeries": false,
+         "id": 21,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.0",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(jvm_memory_used_bytes{job=~\"$job\", instance=~\"$Instance\", area=\"heap\"}) by (id)",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{id}}",
+               "metric": "",
+               "refId": "G",
+               "step": 10
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "JVM Memory Usage (orca, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "decbytes",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "decbytes",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      }
+   ],
+   "refresh": "1m",
+   "schemaVersion": 26,
+   "style": "dark",
+   "tags": [
+      "spinnaker"
+   ],
+   "templating": {
+      "list": [
+         {
+            "current": {
+               "selected": true,
+               "text": "orca",
+               "value": "orca"
+            },
+            "hide": 2,
+            "label": null,
+            "name": "spinSvc",
+            "options": [
+               {
+                  "selected": true,
+                  "text": "orca",
+                  "value": "orca"
+               }
+            ],
+            "query": "orca",
+            "skipUrlSync": false,
+            "type": "constant"
+         },
+         {
+            "allValue": "",
+            "current": {
+               "selected": true,
+               "text": "All",
+               "value": "$__all"
+            },
+            "datasource": "prometheus",
+            "definition": "label_values(up{job=~\".*$spinSvc.*\"}, job)",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": false,
+            "name": "job",
+            "options": [ ],
+            "query": "label_values(up{job=~\".*$spinSvc.*\"}, job)",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": ".*",
+            "current": {
+               "selected": true,
+               "text": "All",
+               "value": [
+                  "$__all"
+               ]
+            },
+            "datasource": "prometheus",
+            "definition": "label_values(up{job=~\"$job\"}, instance)",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": false,
+            "name": "Instance",
+            "options": [ ],
+            "query": "label_values(up{job=~\"$job\"}, instance)",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         }
+      ]
+   },
+   "time": {
+      "from": "now-3h",
+      "to": "now"
+   },
+   "timepicker": {
+      "refresh_intervals": [
+         "10s",
+         "30s",
+         "1m",
+         "5m",
+         "15m",
+         "30m",
+         "1h",
+         "2h",
+         "1d"
+      ],
+      "time_options": [
+         "5m",
+         "15m",
+         "1h",
+         "6h",
+         "12h",
+         "24h",
+         "2d",
+         "7d",
+         "30d"
+      ]
+   },
+   "timezone": "browser",
+   "title": "Orca Microservice",
+   "uid": "ZAneq72mz",
+   "version": 3
+}

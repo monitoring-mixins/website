@@ -1,0 +1,1583 @@
+{
+   "annotations": {
+      "list": [
+         {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+         }
+      ]
+   },
+   "editable": true,
+   "gnetId": null,
+   "graphTooltip": 0,
+   "iteration": 1597289690114,
+   "links": [
+      {
+         "icon": "info",
+         "tags": [ ],
+         "title": "GitHub",
+         "tooltip": "",
+         "type": "link",
+         "url": "https://github.com/spinnaker/front50"
+      }
+   ],
+   "panels": [
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 0,
+            "y": 0
+         },
+         "hiddenSeries": false,
+         "id": 11,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(resilience4j_circuitbreaker_state{job=~\"$job\", state=~\".*open\", instance=~\"$Instance\"}) by (name)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{name}}",
+               "metric": "",
+               "refId": "A",
+               "step": 40
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Resilience4J Open (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "cumulative"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:1495",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            },
+            {
+               "$$hashKey": "object:1496",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": false
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 8,
+            "y": 0
+         },
+         "hiddenSeries": false,
+         "id": 37,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(resilience4j_circuitbreaker_failure_rate{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (name)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{ name }}",
+               "metric": "",
+               "refId": "A",
+               "step": 40
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Resilience4J Failure Rate (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:1575",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            },
+            {
+               "$$hashKey": "object:1576",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": false
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 16,
+            "y": 0
+         },
+         "hiddenSeries": false,
+         "id": 12,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(resilience4j_circuitbreaker_state{job=~\"$job\", state=\"half_open\", instance=~\"$Instance\"}) by (name)",
+               "format": "time_series",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{name}}",
+               "metric": "",
+               "refId": "A",
+               "step": 40
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Resilience4J Half-Open (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "cumulative"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:1889",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            },
+            {
+               "$$hashKey": "object:1890",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": false
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 6
+         },
+         "hiddenSeries": false,
+         "id": 16,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\", status=\"5xx\"}[$__interval])) by (controller, method, statusCode)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{statusCode}}/{{controller}}/{{method}}",
+               "refId": "A",
+               "step": 20
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "5xx Invocation Errors by Method (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:134",
+               "format": "s",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "$$hashKey": "object:135",
+               "format": "s",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": {
+            "APPLICATION": "#7EB26D",
+            "APPLICATION_PERMISSION": "#EAB839",
+            "NOTIFICATION": "#6ED0E0",
+            "PIPELINE": "#EF843C",
+            "PROJECT": "#E24D42",
+            "SERVICE_ACCOUNT": "#1F78C1",
+            "SNAPSHOT": "#BA43A9",
+            "STRATEGY": "#705DA0"
+         },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 6
+         },
+         "hiddenSeries": false,
+         "id": 17,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": false,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(storageServiceSupport_autoRefreshTime_seconds_sum{instance=~\"$Instance\"}[$__interval])) by (objectType)",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "force/{{objectType}}",
+               "metric": "",
+               "refId": "A",
+               "step": 40
+            },
+            {
+               "expr": "-1 * (sum(rate(storageServiceSupport_scheduledRefreshTime_seconds_sum{instance=~\"$Instance\"}[$__interval])) by (objectType))",
+               "hide": false,
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{objectType}}",
+               "refId": "B",
+               "step": 40
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Cache Refreshes / Minute  (negative are scheduled) (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:534",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "$$hashKey": "object:535",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 12
+         },
+         "hiddenSeries": false,
+         "id": 3,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (controller, method)",
+               "format": "time_series",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{controller}}/{{method}}",
+               "refId": "A",
+               "step": 20
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Controller Invocation by Method (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:218",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            },
+            {
+               "$$hashKey": "object:219",
+               "format": "short",
+               "label": "",
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "decimals": null,
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 12
+         },
+         "hiddenSeries": false,
+         "id": 20,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(storageServiceSupport_cacheSize{instance=~\"$Instance\"}) by (objectType)",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{objectType}}",
+               "metric": "",
+               "refId": "A",
+               "step": 40
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Item Cache Size (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:620",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "$$hashKey": "object:621",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 18
+         },
+         "hiddenSeries": false,
+         "id": 28,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(controller_invocations_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (controller, method)\n/ \nsum(rate(controller_invocations_seconds_count{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (controller, method)",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{controller}}/{{method}}",
+               "refId": "A",
+               "step": 20
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Controller Invocation Latency by Method (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:299",
+               "format": "s",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "$$hashKey": "object:300",
+               "format": "ns",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": {
+            "del APPLICATION": "#7EB26D",
+            "del APPLICATION_PERMISSION": "#EAB839",
+            "del NOTIFICATION": "#6ED0E0",
+            "del PIPELINE": "#EF843C",
+            "del PROJECT": "#E24D42",
+            "del SERVICE_ACCOUNT": "#1F78C1",
+            "del SNAPSHOT": "#BA43A9",
+            "del STRATEGY": "#705DA0"
+         },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 18
+         },
+         "hiddenSeries": false,
+         "id": 15,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(storageServiceSupport_numAdded_total{instance=~\"$Instance\"}[$__interval])) by (objectType)",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "add {{objectType}}",
+               "metric": "",
+               "refId": "A",
+               "step": 40
+            },
+            {
+               "expr": "-1 * sum(rate(storageServiceSupport_numRemoved_total{instance=~\"$Instance\"}[$__interval])) by (objectType)",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "del {{objectType}}",
+               "refId": "B",
+               "step": 40
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Item Cache Adds (+) and Removes (-) (front50, $Instance)",
+         "tooltip": {
+            "shared": false,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [
+               "total"
+            ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:700",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "$$hashKey": "object:701",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": true,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "description": "TODO: Swap for relevant SQL metrics?",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 24
+         },
+         "hiddenSeries": false,
+         "id": 9,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": true,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(front50:google:storage:invocation__count_total{instance=~\"$Instance\"}[$__interval])) by (method)",
+               "format": "time_series",
+               "hide": false,
+               "intervalFactor": 2,
+               "legendFormat": "{{method}}",
+               "refId": "A",
+               "step": 20
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Google Storage Service Invocations (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:457",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            },
+            {
+               "$$hashKey": "object:458",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 24
+         },
+         "hiddenSeries": false,
+         "id": 19,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(storageServiceSupport_numUpdated_total{instance=~\"$Instance\"}[$__interval])) by (objectType)",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{objectType}}",
+               "metric": "",
+               "refId": "A",
+               "step": 40
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Item Cache Updates (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:780",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            },
+            {
+               "$$hashKey": "object:781",
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": "0",
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "description": "TODO: Swap for relevant SQL metrics?",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 30
+         },
+         "hiddenSeries": false,
+         "id": 10,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum(rate(front50:google:storage:invocation__totalTime_total{instance=~\"$Instance\"}[$__interval])) by (method) / sum(rate(front50:google:storage:invocation__count_total{instance=~\"$Instance\"}[$__interval])) by (method)",
+               "intervalFactor": 2,
+               "legendFormat": "{{method}}",
+               "refId": "A",
+               "step": 20
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Google Storage Service Invocation Latency (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:1098",
+               "format": "ns",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "$$hashKey": "object:1099",
+               "format": "ns",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 30
+         },
+         "hiddenSeries": false,
+         "id": 38,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "avg by (objectType) (storageServiceSupport_cacheAge{instance=~\"$Instance\"})",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{objectType}}",
+               "refId": "A",
+               "step": 40
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "Item Cache Age (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:860",
+               "format": "ms",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "$$hashKey": "object:861",
+               "format": "s",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "prometheus",
+         "fieldConfig": {
+            "defaults": {
+               "custom": { }
+            },
+            "overrides": [ ]
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 36
+         },
+         "hiddenSeries": false,
+         "id": 21,
+         "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "percentage": false,
+         "pluginVersion": "7.1.3",
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "avg(jvm_memory_used_bytes{job=~\"$job\", instance=~\"$Instance\",area=\"heap\"}) by (id)",
+               "interval": "30s",
+               "intervalFactor": 2,
+               "legendFormat": "{{id}}",
+               "metric": "",
+               "refId": "D",
+               "step": 10
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeRegions": [ ],
+         "timeShift": null,
+         "title": "JVM Memory Usage (front50, $Instance)",
+         "tooltip": {
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+         },
+         "type": "graph",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "$$hashKey": "object:1018",
+               "format": "decbytes",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "$$hashKey": "object:1019",
+               "format": "decbytes",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ],
+         "yaxis": {
+            "align": false,
+            "alignLevel": null
+         }
+      }
+   ],
+   "refresh": "1m",
+   "schemaVersion": 26,
+   "style": "dark",
+   "tags": [
+      "spinnaker"
+   ],
+   "templating": {
+      "list": [
+         {
+            "current": {
+               "selected": true,
+               "text": "front50",
+               "value": "front50"
+            },
+            "hide": 2,
+            "label": null,
+            "name": "spinSvc",
+            "options": [
+               {
+                  "selected": true,
+                  "text": "front50",
+                  "value": "front50"
+               }
+            ],
+            "query": "front50",
+            "skipUrlSync": false,
+            "type": "constant"
+         },
+         {
+            "allValue": "",
+            "current": {
+               "selected": true,
+               "text": "All",
+               "value": "$__all"
+            },
+            "datasource": "prometheus",
+            "definition": "label_values(up{job=~\".*$spinSvc.*\"}, job)",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": false,
+            "name": "job",
+            "options": [ ],
+            "query": "label_values(up{job=~\".*$spinSvc.*\"}, job)",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": ".*",
+            "current": {
+               "selected": true,
+               "text": "All",
+               "value": [
+                  "$__all"
+               ]
+            },
+            "datasource": "prometheus",
+            "definition": "label_values(up{job=~\"$job\"}, instance)",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": false,
+            "name": "Instance",
+            "options": [ ],
+            "query": "label_values(up{job=~\"$job\"}, instance)",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         }
+      ]
+   },
+   "time": {
+      "from": "now-1h",
+      "to": "now"
+   },
+   "timepicker": {
+      "refresh_intervals": [
+         "10s",
+         "30s",
+         "1m",
+         "5m",
+         "15m",
+         "30m",
+         "1h",
+         "2h",
+         "1d"
+      ],
+      "time_options": [
+         "5m",
+         "15m",
+         "1h",
+         "6h",
+         "12h",
+         "24h",
+         "2d",
+         "7d",
+         "30d"
+      ]
+   },
+   "timezone": "browser",
+   "title": "Front50 Microservice",
+   "uid": "ieqwB54Mz",
+   "version": 2
+}
