@@ -7,6 +7,12 @@
             "description": "The Prometheus Mixin is a set of configurable, reusable, and extensible alerts and dashboards for Prometheus."
         },
         {
+            "name": "alertmanager",
+            "source": "https://github.com/prometheus/alertmanager",
+            "subdir": "doc/alertmanager-mixin",
+            "description": "The Alertmanager Mixin is a set of configurable, reusable, and extensible alerts (and eventually dashboards) for Alertmanager."
+        },
+        {
             "name": "node-exporter",
             "source": "https://github.com/prometheus/node_exporter",
             "subdir": "docs/node-mixin",
