@@ -104,6 +104,16 @@
             "name": "spinnaker",
             "source": "https://gitlab.com/uneeq-oss/spinnaker-mixin.git",
             "subdir": ""
+        },
+        {
+            "name": "loki",
+            "source": "https://github.com/grafana/loki",
+            "subdir": "production/loki-mixin"
+        },
+        {
+            "name": "promtail",
+            "source": "https://github.com/grafana/loki",
+            "subdir": "production/promtail-mixin"
         }
     ]
 }
