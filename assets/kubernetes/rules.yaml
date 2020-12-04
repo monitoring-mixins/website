@@ -325,11 +325,6 @@ groups:
       verb: write
     record: cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
   - expr: |
-      sum(rate(apiserver_request_duration_seconds_sum{subresource!="log",verb!~"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT"}[5m])) without(instance, pod)
-      /
-      sum(rate(apiserver_request_duration_seconds_count{subresource!="log",verb!~"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT"}[5m])) without(instance, pod)
-    record: cluster:apiserver_request_duration_seconds:mean5m
-  - expr: |
       histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",subresource!="log",verb!~"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT"}[5m])) without(instance, pod))
     labels:
       quantile: "0.99"
@@ -506,9 +501,6 @@ groups:
 - name: k8s.rules
   rules:
   - expr: |
-      sum(rate(container_cpu_usage_seconds_total{job="cadvisor", image!="", container!="POD"}[5m])) by (namespace)
-    record: namespace:container_cpu_usage_seconds_total:sum_rate
-  - expr: |
       sum by (cluster, namespace, pod, container) (
         rate(container_cpu_usage_seconds_total{job="cadvisor", image!="", container!="POD"}[5m])
       ) * on (cluster, namespace, pod) group_left(node) topk by (cluster, namespace, pod) (
@@ -539,9 +531,6 @@ groups:
         max by(namespace, pod, node) (kube_pod_info{node!=""})
       )
     record: node_namespace_pod_container:container_memory_swap
-  - expr: |
-      sum(container_memory_usage_bytes{job="cadvisor", image!="", container!="POD"}) by (namespace)
-    record: namespace:container_memory_usage_bytes:sum
   - expr: |
       sum by (namespace) (
           sum by (namespace, pod) (
@@ -650,9 +639,6 @@ groups:
     record: cluster_quantile:scheduler_binding_duration_seconds:histogram_quantile
 - name: node.rules
   rules:
-  - expr: |
-      sum(min(kube_pod_info{node!=""}) by (cluster, node))
-    record: ':kube_pod_info_node_count:'
   - expr: |
       topk by(namespace, pod) (1,
         max by (node, namespace, pod) (

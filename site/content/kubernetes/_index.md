@@ -1469,16 +1469,6 @@ labels:
 record: cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
 {{< /code >}}
  
-##### cluster:apiserver_request_duration_seconds:mean5m
-
-{{< code lang="yaml" >}}
-expr: |
-  sum(rate(apiserver_request_duration_seconds_sum{subresource!="log",verb!~"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT"}[5m])) without(instance, pod)
-  /
-  sum(rate(apiserver_request_duration_seconds_count{subresource!="log",verb!~"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT"}[5m])) without(instance, pod)
-record: cluster:apiserver_request_duration_seconds:mean5m
-{{< /code >}}
- 
 ##### cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
 
 {{< code lang="yaml" >}}
@@ -1814,14 +1804,6 @@ record: code:apiserver_request_total:increase30d
  
 ### k8s.rules
 
-##### namespace:container_cpu_usage_seconds_total:sum_rate
-
-{{< code lang="yaml" >}}
-expr: |
-  sum(rate(container_cpu_usage_seconds_total{job="cadvisor", image!="", container!="POD"}[5m])) by (namespace)
-record: namespace:container_cpu_usage_seconds_total:sum_rate
-{{< /code >}}
- 
 ##### node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
 
 {{< code lang="yaml" >}}
@@ -1876,14 +1858,6 @@ expr: |
     max by(namespace, pod, node) (kube_pod_info{node!=""})
   )
 record: node_namespace_pod_container:container_memory_swap
-{{< /code >}}
- 
-##### namespace:container_memory_usage_bytes:sum
-
-{{< code lang="yaml" >}}
-expr: |
-  sum(container_memory_usage_bytes{job="cadvisor", image!="", container!="POD"}) by (namespace)
-record: namespace:container_memory_usage_bytes:sum
 {{< /code >}}
  
 ##### namespace:kube_pod_container_resource_requests_memory_bytes:sum
@@ -2064,14 +2038,6 @@ record: cluster_quantile:scheduler_binding_duration_seconds:histogram_quantile
  
 ### node.rules
 
-##### ':kube_pod_info_node_count:'
-
-{{< code lang="yaml" >}}
-expr: |
-  sum(min(kube_pod_info{node!=""}) by (cluster, node))
-record: ':kube_pod_info_node_count:'
-{{< /code >}}
- 
 ##### 'node_namespace_pod:kube_pod_info:'
 
 {{< code lang="yaml" >}}
