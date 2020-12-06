@@ -16,7 +16,7 @@ Jsonnet source code is available at [github.com/thanos-io/thanos](https://github
 Complete list of pregenerated alerts is available [here](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/alerts.yaml).
 {{< /panel >}}
 
-### thanos-compact.rules
+### thanos-compact
 
 ##### ThanosCompactMultipleRunning
 https://github.com/thanos-io/thanos/tree/master/mixin/runbook.md#alert-name-thanoscompactmultiplerunning
@@ -108,7 +108,7 @@ labels:
   severity: warning
 {{< /code >}}
  
-### thanos-query.rules
+### thanos-query
 
 ##### ThanosQueryHttpRequestQueryErrorRateHigh
 https://github.com/thanos-io/thanos/tree/master/mixin/runbook.md#alert-name-thanosqueryhttprequestqueryerrorratehigh
@@ -258,7 +258,7 @@ labels:
   severity: critical
 {{< /code >}}
  
-### thanos-receive.rules
+### thanos-receive
 
 ##### ThanosReceiveHttpRequestErrorRateHigh
 https://github.com/thanos-io/thanos/tree/master/mixin/runbook.md#alert-name-thanosreceivehttprequesterrorratehigh
@@ -412,7 +412,7 @@ labels:
   severity: critical
 {{< /code >}}
  
-### thanos-sidecar.rules
+### thanos-sidecar
 
 ##### ThanosSidecarPrometheusDown
 https://github.com/thanos-io/thanos/tree/master/mixin/runbook.md#alert-name-thanossidecarprometheusdown
@@ -446,7 +446,7 @@ labels:
   severity: critical
 {{< /code >}}
  
-### thanos-store.rules
+### thanos-store
 
 ##### ThanosStoreGrpcErrorRate
 https://github.com/thanos-io/thanos/tree/master/mixin/runbook.md#alert-name-thanosstoregrpcerrorrate
@@ -534,7 +534,7 @@ labels:
   severity: warning
 {{< /code >}}
  
-### thanos-rule.rules
+### thanos-rule
 
 ##### ThanosRuleQueueIsDroppingAlerts
 Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to queue alerts.
@@ -754,7 +754,7 @@ labels:
   severity: critical
 {{< /code >}}
  
-### thanos-bucket-replicate.rules
+### thanos-bucket-replicate
 
 ##### ThanosBucketReplicateIsDown
 https://github.com/thanos-io/thanos/tree/master/mixin/runbook.md#alert-name-thanosbucketreplicateisdown
@@ -814,7 +814,7 @@ labels:
   severity: critical
 {{< /code >}}
  
-### thanos-component-absent.rules
+### thanos-component-absent
 
 ##### ThanosBucketReplicateIsDown
 https://github.com/thanos-io/thanos/tree/master/mixin/runbook.md#alert-name-thanosbucketreplicateisdown
