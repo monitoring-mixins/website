@@ -426,7 +426,7 @@ record: job:ceph_osd_metadata:count
 
 {{< code lang="yaml" >}}
 expr: |
-  count(kube_persistentvolume_info)
+  count(kube_persistentvolume_info * on (storageclass)  group_left(provisioner) kube_storageclass_info {provisioner=~"(.*rbd.csi.ceph.com)|(.*cephfs.csi.ceph.com)"})
 record: job:kube_pv:count
 {{< /code >}}
  
