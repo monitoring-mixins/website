@@ -45,7 +45,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=~\"($blocks_namespace)/ingester\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=~\"($blocks_namespace)/ingester\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -54,7 +54,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=~\"($chunks_namespace)/ingester\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=~\"($chunks_namespace)/ingester\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -339,7 +339,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"ingester\"}[$__interval])) / sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=\"$blocks_namespace/ingester\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"ingester\"}[$__rate_interval])) / sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=\"$blocks_namespace/ingester\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -348,7 +348,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"ingester\"}[$__interval])) / sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=\"$chunks_namespace/ingester\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"ingester\"}[$__rate_interval])) / sum(rate(cortex_ingester_ingested_samples_total{cluster=~\"$cluster\",job=\"$chunks_namespace/ingester\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -541,7 +541,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"ingester\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"ingester\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -550,7 +550,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"ingester\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"ingester\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -743,7 +743,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\",job=\"$blocks_namespace/query-frontend\",route!=\"metrics\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\",job=\"$blocks_namespace/query-frontend\",route!=\"metrics\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -752,7 +752,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\",job=\"$chunks_namespace/query-frontend\",route!=\"metrics\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\",job=\"$chunks_namespace/query-frontend\",route!=\"metrics\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -829,7 +829,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_querytee_request_duration_seconds_count{cluster=~\"$cluster\",backend=~\".*\\\\.$blocks_namespace\\\\..*\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_querytee_request_duration_seconds_count{cluster=~\"$cluster\",backend=~\".*\\\\.$blocks_namespace\\\\..*\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -838,7 +838,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_querytee_request_duration_seconds_count{cluster=~\"$cluster\",backend=~\".*\\\\.$chunks_namespace\\\\..*\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_querytee_request_duration_seconds_count{cluster=~\"$cluster\",backend=~\".*\\\\.$chunks_namespace\\\\..*\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -927,7 +927,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(backend, le) (rate(cortex_querytee_request_duration_seconds_bucket{cluster=~\"$cluster\",backend=~\".*\\\\.$blocks_namespace\\\\..*\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(backend, le) (rate(cortex_querytee_request_duration_seconds_bucket{cluster=~\"$cluster\",backend=~\".*\\\\.$blocks_namespace\\\\..*\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -936,7 +936,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.99, sum by(backend, le) (rate(cortex_querytee_request_duration_seconds_bucket{cluster=~\"$cluster\",backend=~\".*\\\\.$chunks_namespace\\\\..*\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(backend, le) (rate(cortex_querytee_request_duration_seconds_bucket{cluster=~\"$cluster\",backend=~\".*\\\\.$chunks_namespace\\\\..*\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1013,7 +1013,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(backend) (rate(cortex_querytee_request_duration_seconds_sum{cluster=~\"$cluster\",backend=~\".*\\\\.$blocks_namespace\\\\..*\"}[$__interval])) / sum by(backend) (rate(cortex_querytee_request_duration_seconds_count{cluster=~\"$cluster\",backend=~\".*\\\\.$blocks_namespace\\\\..*\"}[$__interval]))",
+                     "expr": "sum by(backend) (rate(cortex_querytee_request_duration_seconds_sum{cluster=~\"$cluster\",backend=~\".*\\\\.$blocks_namespace\\\\..*\"}[$__rate_interval])) / sum by(backend) (rate(cortex_querytee_request_duration_seconds_count{cluster=~\"$cluster\",backend=~\".*\\\\.$blocks_namespace\\\\..*\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1022,7 +1022,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(backend) (rate(cortex_querytee_request_duration_seconds_sum{cluster=~\"$cluster\",backend=~\".*\\\\.$chunks_namespace\\\\..*\"}[$__interval])) / sum by(backend) (rate(cortex_querytee_request_duration_seconds_count{cluster=~\"$cluster\",backend=~\".*\\\\.$chunks_namespace\\\\..*\"}[$__interval]))",
+                     "expr": "sum by(backend) (rate(cortex_querytee_request_duration_seconds_sum{cluster=~\"$cluster\",backend=~\".*\\\\.$chunks_namespace\\\\..*\"}[$__rate_interval])) / sum by(backend) (rate(cortex_querytee_request_duration_seconds_count{cluster=~\"$cluster\",backend=~\".*\\\\.$chunks_namespace\\\\..*\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1111,7 +1111,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"querier\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$blocks_namespace\",container=\"querier\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1120,7 +1120,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"querier\"}[$__interval]))",
+                     "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=\"$chunks_namespace\",container=\"querier\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,

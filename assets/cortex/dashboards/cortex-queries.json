@@ -2179,7 +2179,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_bucket_store_series_blocks_queried_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_bucket_store_series_blocks_queried_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2256,7 +2256,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(data_type) (rate(cortex_bucket_store_series_data_fetched_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum by(data_type) (rate(cortex_bucket_store_series_data_fetched_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2333,7 +2333,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(data_type) (rate(cortex_bucket_store_series_data_touched_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum by(data_type) (rate(cortex_bucket_store_series_data_touched_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2612,7 +2612,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_bucket_store_series_result_series_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) / sum(rate(cortex_bucket_store_series_result_series_count{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_bucket_store_series_result_series_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) / sum(rate(cortex_bucket_store_series_result_series_count{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2781,7 +2781,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_bucket_store_block_loads_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) - sum(rate(cortex_bucket_store_block_load_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_bucket_store_block_loads_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) - sum(rate(cortex_bucket_store_block_load_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2790,7 +2790,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_bucket_store_block_load_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_bucket_store_block_load_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2870,7 +2870,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_bucket_store_block_drops_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) - sum(rate(cortex_bucket_store_block_drop_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_bucket_store_block_drops_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) - sum(rate(cortex_bucket_store_block_drop_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2879,7 +2879,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_bucket_store_block_drop_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_bucket_store_block_drop_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,

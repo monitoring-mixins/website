@@ -469,7 +469,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/cortex-gw\", route=~\"api_(v1|prom)_push\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/cortex-gw\", route=~\"api_(v1|prom)_push\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -727,7 +727,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(distributor|cortex$)\", route=~\"/httpgrpc.*|api_(v1|prom)_push\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(distributor|cortex$)\", route=~\"/httpgrpc.*|api_(v1|prom)_push\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1174,7 +1174,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", route=\"/cortex.Ingester/Push\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", route=\"/cortex.Ingester/Push\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2398,7 +2398,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_shipper_uploads_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) - sum(rate(cortex_ingester_shipper_upload_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_shipper_uploads_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval])) - sum(rate(cortex_ingester_shipper_upload_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2407,7 +2407,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_shipper_upload_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_shipper_upload_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2594,7 +2594,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_compactions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_compactions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2603,7 +2603,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_compactions_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_compactions_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2790,7 +2790,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncations_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) - sum(rate(cortex_ingester_tsdb_wal_truncations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncations_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval])) - sum(rate(cortex_ingester_tsdb_wal_truncations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2799,7 +2799,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2879,7 +2879,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_checkpoint_creations_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) - sum(rate(cortex_ingester_tsdb_checkpoint_creations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_checkpoint_creations_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval])) - sum(rate(cortex_ingester_tsdb_checkpoint_creations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2888,7 +2888,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_checkpoint_creations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_checkpoint_creations_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2965,7 +2965,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncate_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) / sum(rate(cortex_ingester_tsdb_wal_truncate_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_wal_truncate_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval])) / sum(rate(cortex_ingester_tsdb_wal_truncate_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -3045,7 +3045,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_ingester_wal_corruptions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_wal_corruptions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -3054,7 +3054,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_mmap_chunk_corruptions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_mmap_chunk_corruptions_total{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,

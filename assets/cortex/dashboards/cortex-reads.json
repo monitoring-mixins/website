@@ -229,7 +229,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/cortex-gw\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/cortex-gw\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -487,7 +487,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -934,7 +934,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_querier_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_querier_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1192,7 +1192,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\", route=~\"/cortex.Ingester/Query(Stream)?|/cortex.Ingester/MetricsForLabelMatchers|/cortex.Ingester/LabelValues|/cortex.Ingester/MetricsMetadata\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1450,7 +1450,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\", route=~\"/gatewaypb.StoreGateway/.*\"}[$__interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\", route=~\"/gatewaypb.StoreGateway/.*\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -1915,7 +1915,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{component=\"store-gateway\",name=\"index-cache\", cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{component=\"store-gateway\",name=\"index-cache\", cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2087,7 +2087,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(item_type) (rate(thanos_store_index_cache_hits_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) / sum by(item_type) (rate(thanos_store_index_cache_requests_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum by(item_type) (rate(thanos_store_index_cache_hits_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) / sum by(item_type) (rate(thanos_store_index_cache_requests_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2176,7 +2176,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"chunks-cache\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2348,7 +2348,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"chunks-cache\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"chunks-cache\"}[$__rate_interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"chunks-cache\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2437,7 +2437,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"metadata-cache\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2609,7 +2609,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"metadata-cache\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"metadata-cache\"}[$__rate_interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\",component=\"store-gateway\",name=\"metadata-cache\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2698,7 +2698,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",component=\"querier\",name=\"metadata-cache\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_memcached_operations_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",component=\"querier\",name=\"metadata-cache\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -2870,7 +2870,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",component=\"querier\",name=\"metadata-cache\"}[$__interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",component=\"querier\",name=\"metadata-cache\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_cache_memcached_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",component=\"querier\",name=\"metadata-cache\"}[$__rate_interval])) / sum(rate(thanos_cache_memcached_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",component=\"querier\",name=\"metadata-cache\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -3715,7 +3715,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_objstore_bucket_operations_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"store-gateway\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_objstore_bucket_operations_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"store-gateway\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -3792,7 +3792,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_objstore_bucket_operation_failures_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"store-gateway\"}[$__interval])) / sum by(operation) (rate(thanos_objstore_bucket_operations_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"store-gateway\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_objstore_bucket_operation_failures_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"store-gateway\"}[$__rate_interval])) / sum by(operation) (rate(thanos_objstore_bucket_operations_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"store-gateway\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -4463,7 +4463,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_objstore_bucket_operations_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"querier\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_objstore_bucket_operations_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"querier\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -4540,7 +4540,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (rate(thanos_objstore_bucket_operation_failures_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"querier\"}[$__interval])) / sum by(operation) (rate(thanos_objstore_bucket_operations_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"querier\"}[$__interval]))",
+                     "expr": "sum by(operation) (rate(thanos_objstore_bucket_operation_failures_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"querier\"}[$__rate_interval])) / sum by(operation) (rate(thanos_objstore_bucket_operations_total{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"querier\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
