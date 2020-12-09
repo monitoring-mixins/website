@@ -309,9 +309,9 @@ annotations:
   summary: Prometheus encounters more than 3% errors sending alerts to any Alertmanager.
 expr: |
   min without (alertmanager) (
-    rate(prometheus_notifications_errors_total{job="prometheus"}[5m])
+    rate(prometheus_notifications_errors_total{job="prometheus",alertmanager!~``}[5m])
   /
-    rate(prometheus_notifications_sent_total{job="prometheus"}[5m])
+    rate(prometheus_notifications_sent_total{job="prometheus",alertmanager!~``}[5m])
   )
   * 100
   > 3

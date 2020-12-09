@@ -229,7 +229,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(\n  prometheus_remote_storage_samples_in_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m])\n- \n  ignoring(remote_name, url) group_right(instance) rate(prometheus_remote_storage_succeeded_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m])\n- \n  rate(prometheus_remote_storage_dropped_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m])\n",
+                     "expr": "rate(\n  prometheus_remote_storage_samples_in_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m])\n- \n  ignoring(remote_name, url) group_right(instance) (rate(prometheus_remote_storage_succeeded_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m]) or rate(prometheus_remote_storage_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m]))\n- \n  (rate(prometheus_remote_storage_dropped_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m]) or rate(prometheus_remote_storage_samples_dropped_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m]))\n",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{cluster}}:{{instance}} {{remote_name}}:{{url}}",
@@ -742,7 +742,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "prometheus_remote_storage_pending_samples{cluster=~\"$cluster\", instance=~\"$instance\"}",
+                     "expr": "prometheus_remote_storage_pending_samples{cluster=~\"$cluster\", instance=~\"$instance\"} or prometheus_remote_storage_samples_pending{cluster=~\"$cluster\", instance=~\"$instance\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{cluster}}:{{instance}} {{remote_name}}:{{url}}",
@@ -1011,7 +1011,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(prometheus_remote_storage_dropped_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m])",
+                     "expr": "rate(prometheus_remote_storage_dropped_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m]) or rate(prometheus_remote_storage_samples_dropped_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m])",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{cluster}}:{{instance}} {{remote_name}}:{{url}}",
@@ -1092,7 +1092,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(prometheus_remote_storage_failed_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m])",
+                     "expr": "rate(prometheus_remote_storage_failed_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m]) or rate(prometheus_remote_storage_samples_failed_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m])",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{cluster}}:{{instance}} {{remote_name}}:{{url}}",
@@ -1173,7 +1173,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(prometheus_remote_storage_retried_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m])",
+                     "expr": "rate(prometheus_remote_storage_retried_samples_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m]) or rate(prometheus_remote_storage_samples_retried_total{cluster=~\"$cluster\", instance=~\"$instance\"}[5m])",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{cluster}}:{{instance}} {{remote_name}}:{{url}}",
