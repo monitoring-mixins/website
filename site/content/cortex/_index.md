@@ -39,9 +39,9 @@ annotations:
   message: |
     {{ $labels.job }} {{ $labels.route }} is experiencing {{ printf "%.2f" $value }}% errors.
 expr: |
-  100 * sum by (cluster, namespace, job, route) (rate(cortex_request_duration_seconds_count{status_code=~"5.."}[1m]))
+  100 * sum by (cluster, namespace, job, route) (rate(cortex_request_duration_seconds_count{status_code=~"5..",route!~"ready"}[1m]))
     /
-  sum by (cluster, namespace, job, route) (rate(cortex_request_duration_seconds_count[1m]))
+  sum by (cluster, namespace, job, route) (rate(cortex_request_duration_seconds_count{route!~"ready"}[1m]))
     > 1
 for: 15m
 labels:
@@ -56,7 +56,7 @@ annotations:
   message: |
     {{ $labels.job }} {{ $labels.route }} is experiencing {{ printf "%.2f" $value }}s 99th percentile latency.
 expr: |
-  cluster_namespace_job_route:cortex_request_duration_seconds:99quantile{route!~"metrics|/frontend.Frontend/Process"}
+  cluster_namespace_job_route:cortex_request_duration_seconds:99quantile{route!~"metrics|/frontend.Frontend/Process|ready"}
      >
   2.5
 for: 15m
@@ -147,9 +147,23 @@ labels:
 alert: CortexFrontendQueriesStuck
 annotations:
   message: |
-    There are {{ $value }} queued up queries.
+    There are {{ $value }} queued up queries in query-frontend.
 expr: |
   sum by (cluster, namespace) (cortex_query_frontend_queue_length) > 1
+for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexSchedulerQueriesStuck
+
+{{< code lang="yaml" >}}
+alert: CortexSchedulerQueriesStuck
+annotations:
+  message: |
+    There are {{ $value }} queued up queries in query-scheduler.
+expr: |
+  sum by (cluster, namespace) (cortex_query_scheduler_queue_length) > 1
 for: 5m
 labels:
   severity: critical
@@ -212,6 +226,20 @@ expr: |
 for: 5m
 labels:
   severity: warning
+{{< /code >}}
+ 
+##### CortexMemoryMapAreasTooHigh
+
+{{< code lang="yaml" >}}
+alert: CortexMemoryMapAreasTooHigh
+annotations:
+  message: '{{ $labels.job }}/{{ $labels.instance }} has a number of mmap-ed areas
+    close to the limit.'
+expr: |
+  process_memory_map_areas{job=~".+(cortex|ingester|store-gateway)"} / process_memory_map_areas_limit{job=~".+(cortex|ingester|store-gateway)"} > 0.8
+for: 5m
+labels:
+  severity: critical
 {{< /code >}}
  
 ### cortex_wal_alerts

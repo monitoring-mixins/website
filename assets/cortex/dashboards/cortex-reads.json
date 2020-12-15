@@ -582,7 +582,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{method=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_query_scheduler_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
@@ -635,6 +635,198 @@
                "datasource": "$datasource",
                "fill": 1,
                "id": 8,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 6,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval])) by (le)) * 1e3",
+                     "format": "time_series",
+                     "interval": "1m",
+                     "intervalFactor": 2,
+                     "legendFormat": "99th Percentile",
+                     "refId": "A",
+                     "step": 10
+                  },
+                  {
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval])) by (le)) * 1e3",
+                     "format": "time_series",
+                     "interval": "1m",
+                     "intervalFactor": 2,
+                     "legendFormat": "50th Percentile",
+                     "refId": "B",
+                     "step": 10
+                  },
+                  {
+                     "expr": "sum(rate(cortex_query_scheduler_queue_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval])) * 1e3 / sum(rate(cortex_query_scheduler_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval]))",
+                     "format": "time_series",
+                     "interval": "1m",
+                     "intervalFactor": 2,
+                     "legendFormat": "Average",
+                     "refId": "C",
+                     "step": 10
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Latency (Time in Queue)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "ms",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Query Scheduler",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
+            {
+               "aliasColors": {
+                  "1xx": "#EAB839",
+                  "2xx": "#7EB26D",
+                  "3xx": "#6ED0E0",
+                  "4xx": "#EF843C",
+                  "5xx": "#E24D42",
+                  "error": "#E24D42",
+                  "success": "#7EB26D"
+               },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 10,
+               "id": 9,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 0,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 6,
+               "stack": true,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{method=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "format": "time_series",
+                     "interval": "1m",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{status}}",
+                     "refId": "A",
+                     "step": 10
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "QPS",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "id": 10,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -746,7 +938,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 9,
+               "id": 11,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -823,7 +1015,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 10,
+               "id": 12,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -915,7 +1107,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 0,
-               "id": 11,
+               "id": 13,
                "legend": {
                   "show": false
                },
@@ -1004,7 +1196,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 12,
+               "id": 14,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1081,7 +1273,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 13,
+               "id": 15,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1173,7 +1365,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 0,
-               "id": 14,
+               "id": 16,
                "legend": {
                   "show": false
                },
@@ -1262,7 +1454,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 15,
+               "id": 17,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1339,7 +1531,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 16,
+               "id": 18,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1431,7 +1623,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 0,
-               "id": 17,
+               "id": 19,
                "legend": {
                   "show": false
                },
@@ -1520,7 +1712,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 18,
+               "id": 20,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1597,7 +1789,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 19,
+               "id": 21,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1709,7 +1901,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 20,
+               "id": 22,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1786,7 +1978,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 21,
+               "id": 23,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1890,7 +2082,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 22,
+               "id": 24,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1967,7 +2159,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 23,
+               "id": 25,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2062,7 +2254,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 24,
+               "id": 26,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2151,7 +2343,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 25,
+               "id": 27,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2228,7 +2420,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 26,
+               "id": 28,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2323,7 +2515,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 27,
+               "id": 29,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2412,7 +2604,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 28,
+               "id": 30,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2489,7 +2681,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 29,
+               "id": 31,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2584,7 +2776,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 30,
+               "id": 32,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2673,7 +2865,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 31,
+               "id": 33,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2750,7 +2942,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 32,
+               "id": 34,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2845,7 +3037,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 33,
+               "id": 35,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2942,7 +3134,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 34,
+               "id": 36,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3019,7 +3211,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 35,
+               "id": 37,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3131,7 +3323,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 36,
+               "id": 38,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3208,7 +3400,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 37,
+               "id": 39,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3320,7 +3512,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 38,
+               "id": 40,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3397,7 +3589,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 39,
+               "id": 41,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3509,7 +3701,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 40,
+               "id": 42,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3586,7 +3778,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 41,
+               "id": 43,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3690,7 +3882,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 42,
+               "id": 44,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3767,7 +3959,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 43,
+               "id": 45,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3844,7 +4036,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 44,
+               "id": 46,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3939,7 +4131,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 45,
+               "id": 47,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4046,7 +4238,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 46,
+               "id": 48,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4141,7 +4333,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 47,
+               "id": 49,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4236,7 +4428,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 48,
+               "id": 50,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4331,7 +4523,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 49,
+               "id": 51,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4438,7 +4630,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 50,
+               "id": 52,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4515,7 +4707,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 51,
+               "id": 53,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4592,7 +4784,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 52,
+               "id": 54,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4687,7 +4879,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 53,
+               "id": 55,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4794,7 +4986,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 54,
+               "id": 56,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4889,7 +5081,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 55,
+               "id": 57,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4984,7 +5176,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 56,
+               "id": 58,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -5079,7 +5271,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 57,
+               "id": 59,
                "legend": {
                   "avg": false,
                   "current": false,
