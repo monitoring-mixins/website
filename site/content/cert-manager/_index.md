@@ -33,6 +33,8 @@ labels:
   severity: critical
 {{< /code >}}
  
+### certificates
+
 ##### CertManagerCertExpirySoon
 
 {{< code lang="yaml" >}}
@@ -42,7 +44,7 @@ annotations:
   description: The domain that this cert covers will be unavailable after {{ $value
     | humanizeDuration }}. Clients using endpoints that this cert protects will start
     to fail in {{ $value | humanizeDuration }}.
-  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#CertManagerCertExpirySoon
+  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagercertexpirysoon
   summary: The cert `{{ $labels.name }}` is {{ $value | humanizeDuration }} from expiry,
     it should have renewed over a week ago.
 expr: |
@@ -63,7 +65,7 @@ annotations:
   description: This certificate has not been ready to serve traffic for at least 10m.
     If the cert is being renewed or there is another valid cert, the ingress controller
     _may_ be able to serve that instead.
-  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#CertManagerCertNotReady
+  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagercertnotready
   summary: The cert `{{ $labels.name }}` is not ready to serve traffic.
 expr: |
   max by (name, exported_namespace, namespace, condition) (
@@ -83,7 +85,7 @@ annotations:
   dashboard_url: https://grafana.example.com/d/TvuRo2iMk/cert-manager
   description: We are blind as to whether or not we can alert on certificates expiring.
     It could also be the case that there have not had any Certificate CRDs created.
-  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#CertManagerCertExpiryMetricMissing
+  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagercertexpirymetricmissing
   summary: The metric used to observe cert-manager cert expiry is missing.
 expr: absent(certmanager_certificate_expiration_timestamp_seconds)
 for: 10m
@@ -99,7 +101,7 @@ annotations:
   dashboard_url: https://grafana.example.com/d/TvuRo2iMk/cert-manager
   description: Depending on the rate limit, cert-manager may be unable to generate
     certificates for up to a week.
-  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#CertManagerHittingRateLimits
+  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagerhittingratelimits
   summary: Cert manager hitting LetsEncrypt rate limits.
 expr: |
   sum by (host) (
