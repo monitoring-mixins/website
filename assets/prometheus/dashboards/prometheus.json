@@ -7,7 +7,7 @@
    "graphTooltip": 0,
    "hideControls": false,
    "links": [ ],
-   "refresh": "10s",
+   "refresh": "60s",
    "rows": [
       {
          "collapse": false,
@@ -961,7 +961,9 @@
    ],
    "schemaVersion": 14,
    "style": "dark",
-   "tags": [ ],
+   "tags": [
+      "prometheus-mixin"
+   ],
    "templating": {
       "list": [
          {
@@ -1058,7 +1060,7 @@
       ]
    },
    "timezone": "utc",
-   "title": "Prometheus Overview",
+   "title": "Prometheus / Overview",
    "uid": "",
    "version": 0
 }
