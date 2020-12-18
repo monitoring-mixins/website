@@ -430,6 +430,23 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### ThanosSidecarBucketOperationsFailed
+https://github.com/thanos-io/thanos/tree/master/mixin/runbook.md#alert-name-thanossidecarbucketoperationsfailed
+
+{{< code lang="yaml" >}}
+alert: ThanosSidecarBucketOperationsFailed
+annotations:
+  description: Thanos Sidecar {{$labels.job}} {{$labels.pod}} bucket operations are
+    failing
+  runbook_url: https://github.com/thanos-io/thanos/tree/master/mixin/runbook.md#alert-name-thanossidecarbucketoperationsfailed
+  summary: Thanos Sidecar bucket operations are failing
+expr: |
+  rate(thanos_objstore_bucket_operation_failures_total{job=~"thanos-sidecar.*"}[5m]) > 0
+for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ##### ThanosSidecarUnhealthy
 https://github.com/thanos-io/thanos/tree/master/mixin/runbook.md#alert-name-thanossidecarunhealthy
 
