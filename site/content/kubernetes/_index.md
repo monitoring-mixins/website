@@ -747,12 +747,12 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 alert: AggregatedAPIErrors
 annotations:
   description: An aggregated API {{ $labels.name }}/{{ $labels.namespace }} has reported
-    errors. The number of errors have increased for it in the past five minutes. High
-    values indicate that the availability of the service changes too often.
+    errors. It has appeared unavailable {{ $value | humanize }} times averaged over
+    the past 10m.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-aggregatedapierrors
   summary: An aggregated API has reported errors.
 expr: |
-  sum by(name, namespace)(increase(aggregator_unavailable_apiservice_count[5m])) > 2
+  sum by(name, namespace)(increase(aggregator_unavailable_apiservice_count[10m])) > 4
 labels:
   severity: warning
 {{< /code >}}
