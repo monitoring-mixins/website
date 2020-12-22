@@ -25,11 +25,11 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 alert: KubePodCrashLooping
 annotations:
   description: Pod {{ $labels.namespace }}/{{ $labels.pod }} ({{ $labels.container
-    }}) is restarting {{ printf "%.2f" $value }} times / 5 minutes.
+    }}) is restarting {{ printf "%.2f" $value }} times / 10 minutes.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodcrashlooping
   summary: Pod is crash looping.
 expr: |
-  rate(kube_pod_container_status_restarts_total{job="kube-state-metrics"}[5m]) * 60 * 5 > 0
+  rate(kube_pod_container_status_restarts_total{job="kube-state-metrics"}[10m]) * 60 * 5 > 0
 for: 15m
 labels:
   severity: warning
