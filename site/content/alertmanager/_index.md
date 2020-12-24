@@ -81,17 +81,40 @@ annotations:
   description: The minimum notification failure rate to {{ $labels.integration }}
     sent from any instance in the {{$labels.job}} cluster is {{ $value | humanizePercentage
     }}.
-  summary: All Alertmanager instances in a cluster failed to send notifications.
+  summary: All Alertmanager instances in a cluster failed to send notifications to
+    a critical integration.
 expr: |
-  min by (job) (
-    rate(alertmanager_notifications_failed_total{job="alertmanager"}[5m])
+  min by (job, integration) (
+    rate(alertmanager_notifications_failed_total{job="alertmanager", integration=~`.*`}[5m])
   /
-    rate(alertmanager_notifications_total{job="alertmanager"}[5m])
+    rate(alertmanager_notifications_total{job="alertmanager", integration=~`.*`}[5m])
   )
   > 0.01
 for: 5m
 labels:
   severity: critical
+{{< /code >}}
+ 
+##### AlertmanagerClusterFailedToSendAlerts
+
+{{< code lang="yaml" >}}
+alert: AlertmanagerClusterFailedToSendAlerts
+annotations:
+  description: The minimum notification failure rate to {{ $labels.integration }}
+    sent from any instance in the {{$labels.job}} cluster is {{ $value | humanizePercentage
+    }}.
+  summary: All Alertmanager instances in a cluster failed to send notifications to
+    a non-critical integration.
+expr: |
+  min by (job, integration) (
+    rate(alertmanager_notifications_failed_total{job="alertmanager", integration!~`.*`}[5m])
+  /
+    rate(alertmanager_notifications_total{job="alertmanager", integration!~`.*`}[5m])
+  )
+  > 0.01
+for: 5m
+labels:
+  severity: warning
 {{< /code >}}
  
 ##### AlertmanagerConfigInconsistent
