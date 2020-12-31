@@ -790,6 +790,24 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### KubeAPITerminatedRequests
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapiterminatedrequests
+
+{{< code lang="yaml" >}}
+alert: KubeAPITerminatedRequests
+annotations:
+  description: The apiserver has terminated {{ $value | humanizePercentage }} of its
+    incoming requests.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapiterminatedrequests
+  summary: The apiserver has terminated {{ $value | humanizePercentage }} of its incoming
+    requests.
+expr: |
+  sum(rate(apiserver_request_terminations_total{job="kube-apiserver"}[10m]))  / (  sum(rate(apiserver_request_total{job="kube-apiserver"}[10m])) + sum(rate(apiserver_request_terminations_total{job="kube-apiserver"}[10m])) ) > 0.20
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ### kubernetes-system-kubelet
 
 ##### KubeNodeNotReady
