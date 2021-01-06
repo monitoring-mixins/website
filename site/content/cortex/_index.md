@@ -653,6 +653,33 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### CortexBucketIndexNotUpdated
+
+{{< code lang="yaml" >}}
+alert: CortexBucketIndexNotUpdated
+annotations:
+  message: Cortex bucket index for tenant {{ $labels.user }} in {{ $labels.namespace
+    }} has not been updated since {{ $value | humanizeDuration }}.
+expr: |
+  min by(namespace, user) (time() - cortex_bucket_index_last_successful_update_timestamp_seconds) > 7200
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexTenantHasPartialBlocks
+
+{{< code lang="yaml" >}}
+alert: CortexTenantHasPartialBlocks
+annotations:
+  message: Cortex tenant {{ $labels.user }} in {{ $labels.namespace }} has {{ $value
+    }} partial blocks.
+expr: |
+  max by(namespace, user) (cortex_bucket_blocks_partials_count) > 0
+for: 6h
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ### cortex_compactor_alerts
 
 ##### CortexCompactorHasNotSuccessfullyCleanedUpBlocks

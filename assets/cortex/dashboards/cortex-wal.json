@@ -471,7 +471,7 @@
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{instance}}-creation",
+                     "legendFormat": "{{pod}}-creation",
                      "legendLink": null,
                      "step": 10
                   },
@@ -480,7 +480,7 @@
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{instance}}-deletion",
+                     "legendFormat": "{{pod}}-deletion",
                      "legendLink": null,
                      "step": 10
                   }
@@ -557,7 +557,7 @@
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{instance}}-creation",
+                     "legendFormat": "{{pod}}-creation",
                      "legendLink": null,
                      "step": 10
                   },
@@ -566,7 +566,7 @@
                      "format": "time_series",
                      "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{instance}}-deletion",
+                     "legendFormat": "{{pod}}-deletion",
                      "legendLink": null,
                      "step": 10
                   }
