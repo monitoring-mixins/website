@@ -2329,7 +2329,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Memcached – Blocks Storage – Index header (Store-gateway)",
+         "title": "Memcached – Blocks Storage – Block Index (Store-gateway)",
          "titleSize": "h6"
       },
       {
