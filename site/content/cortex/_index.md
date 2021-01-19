@@ -122,7 +122,7 @@ expr: |
   cortex_runtime_config_last_reload_successful == 0
     or
   cortex_overrides_last_reload_successful == 0
-for: 15m
+for: 5m
 labels:
   severity: warning
 {{< /code >}}
