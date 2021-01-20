@@ -194,7 +194,7 @@ annotations:
   message: '{{ $labels.job }}/{{ $labels.instance }} has restarted {{ printf "%.2f"
     $value }} times in the last 30 mins.'
 expr: |
-  changes(process_start_time_seconds{job=~".+(cortex|ingester)"}[30m]) > 1
+  changes(process_start_time_seconds{job=~".+(cortex|ingester.*)"}[30m]) > 1
 labels:
   severity: critical
 {{< /code >}}
@@ -236,7 +236,7 @@ annotations:
   message: '{{ $labels.job }}/{{ $labels.instance }} has a number of mmap-ed areas
     close to the limit.'
 expr: |
-  process_memory_map_areas{job=~".+(cortex|ingester|store-gateway)"} / process_memory_map_areas_limit{job=~".+(cortex|ingester|store-gateway)"} > 0.8
+  process_memory_map_areas{job=~".+(cortex|ingester.*|store-gateway)"} / process_memory_map_areas_limit{job=~".+(cortex|ingester.*|store-gateway)"} > 0.8
 for: 5m
 labels:
   severity: critical
@@ -462,7 +462,7 @@ annotations:
 expr: |
   memberlist_client_cluster_members_count
     != on (cluster, namespace) group_left
-  sum by (cluster, namespace) (up{job=~".+/(distributor|ingester|querier|cortex|ruler)"})
+  sum by (cluster, namespace) (up{job=~".+/(distributor|ingester.*|querier|cortex|ruler)"})
 for: 5m
 labels:
   severity: warning
@@ -478,9 +478,9 @@ annotations:
   message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has not
     shipped any block in the last 4 hours.
 expr: |
-  (min by(namespace, instance) (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"}) > 60 * 60 * 4)
+  (min by(namespace, instance) (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester.*"}) > 60 * 60 * 4)
   and
-  (max by(namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"}) > 0)
+  (max by(namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester.*"}) > 0)
   and
   (max by(namespace, instance) (rate(cortex_ingester_ingested_samples_total[4h])) > 0)
 for: 15m
@@ -496,7 +496,7 @@ annotations:
   message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has not
     shipped any block in the last 4 hours.
 expr: |
-  (max by(namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester"}) == 0)
+  (max by(namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester.*"}) == 0)
   and
   (max by(namespace, instance) (rate(cortex_ingester_ingested_samples_total[4h])) > 0)
 for: 4h
