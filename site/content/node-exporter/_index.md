@@ -239,7 +239,7 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeClockSkewDetected
 annotations:
-  message: Clock on {{ $labels.instance }} is out of sync by more than 300s. Ensure
+  description: Clock on {{ $labels.instance }} is out of sync by more than 300s. Ensure
     NTP is configured correctly on this host.
   summary: Clock skew detected.
 expr: |
@@ -264,8 +264,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeClockNotSynchronising
 annotations:
-  message: Clock on {{ $labels.instance }} is not synchronising. Ensure NTP is configured
-    on this host.
+  description: Clock on {{ $labels.instance }} is not synchronising. Ensure NTP is
+    configured on this host.
   summary: Clock not synchronising.
 expr: |
   min_over_time(node_timex_sync_status[5m]) == 0
@@ -301,7 +301,7 @@ annotations:
     Array '{{ $labels.device }}' needs attention and possibly a disk swap.
   summary: Failed device in RAID array
 expr: |
-  node_md_disks{state="fail"} > 0
+  node_md_disks{state="failed"} > 0
 labels:
   severity: warning
 {{< /code >}}
