@@ -504,6 +504,23 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### CortexIngesterHasUnshippedBlocks
+
+{{< code lang="yaml" >}}
+alert: CortexIngesterHasUnshippedBlocks
+annotations:
+  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has compacted
+    a block {{ $value | humanizeDuration }} ago but it hasn't been successfully uploaded
+    to the storage yet.
+expr: |
+  (time() - cortex_ingester_oldest_unshipped_block_timestamp_seconds > 3600)
+  and
+  (cortex_ingester_oldest_unshipped_block_timestamp_seconds > 0)
+for: 15m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ##### CortexIngesterTSDBHeadCompactionFailed
 
 {{< code lang="yaml" >}}
