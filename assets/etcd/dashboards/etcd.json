@@ -1014,7 +1014,9 @@
    "schemaVersion": 13,
    "sharedCrosshair": false,
    "style": "dark",
-   "tags": [ ],
+   "tags": [
+      "etcd-mixin"
+   ],
    "templating": {
       "list": [
          {

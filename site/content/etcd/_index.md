@@ -215,54 +215,6 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### etcdHighNumberOfFailedHTTPRequests
-
-{{< code lang="yaml" >}}
-alert: etcdHighNumberOfFailedHTTPRequests
-annotations:
-  description: '{{ $value }}% of requests for {{ $labels.method }} failed on etcd
-    instance {{ $labels.instance }}'
-  summary: etcd has high number of failed HTTP requests.
-expr: |
-  sum(rate(etcd_http_failed_total{job=~".*etcd.*", code!="404"}[5m])) without (code) / sum(rate(etcd_http_received_total{job=~".*etcd.*"}[5m]))
-  without (code) > 0.01
-for: 10m
-labels:
-  severity: warning
-{{< /code >}}
- 
-##### etcdHighNumberOfFailedHTTPRequests
-
-{{< code lang="yaml" >}}
-alert: etcdHighNumberOfFailedHTTPRequests
-annotations:
-  description: '{{ $value }}% of requests for {{ $labels.method }} failed on etcd
-    instance {{ $labels.instance }}.'
-  summary: etcd has high number of failed HTTP requests.
-expr: |
-  sum(rate(etcd_http_failed_total{job=~".*etcd.*", code!="404"}[5m])) without (code) / sum(rate(etcd_http_received_total{job=~".*etcd.*"}[5m]))
-  without (code) > 0.05
-for: 10m
-labels:
-  severity: critical
-{{< /code >}}
- 
-##### etcdHTTPRequestsSlow
-
-{{< code lang="yaml" >}}
-alert: etcdHTTPRequestsSlow
-annotations:
-  description: etcd instance {{ $labels.instance }} HTTP requests to {{ $labels.method
-    }} are slow.
-  summary: etcd instance HTTP requests are slow.
-expr: |
-  histogram_quantile(0.99, rate(etcd_http_successful_duration_seconds_bucket[5m]))
-  > 0.15
-for: 10m
-labels:
-  severity: warning
-{{< /code >}}
- 
 ##### etcdBackendQuotaLowSpace
 
 {{< code lang="yaml" >}}
