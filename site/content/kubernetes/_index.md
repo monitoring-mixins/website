@@ -94,7 +94,7 @@ expr: |
       !=
     kube_deployment_status_replicas_available{job="kube-state-metrics"}
   ) and (
-    changes(kube_deployment_status_replicas_updated{job="kube-state-metrics"}[5m])
+    changes(kube_deployment_status_replicas_updated{job="kube-state-metrics"}[10m])
       ==
     0
   )
@@ -119,7 +119,7 @@ expr: |
       !=
     kube_statefulset_status_replicas{job="kube-state-metrics"}
   ) and (
-    changes(kube_statefulset_status_replicas_updated{job="kube-state-metrics"}[5m])
+    changes(kube_statefulset_status_replicas_updated{job="kube-state-metrics"}[10m])
       ==
     0
   )
