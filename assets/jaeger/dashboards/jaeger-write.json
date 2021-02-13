@@ -69,7 +69,7 @@
                "timeShift": null,
                "title": "span creation rate",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -145,7 +145,7 @@
                "timeShift": null,
                "title": "% spans dropped",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -244,7 +244,7 @@
                "timeShift": null,
                "title": "batch ingest rate",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -320,7 +320,7 @@
                "timeShift": null,
                "title": "% batches dropped",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -419,7 +419,7 @@
                "timeShift": null,
                "title": "span ingest rate",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -495,7 +495,7 @@
                "timeShift": null,
                "title": "% spans dropped",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -583,7 +583,7 @@
                "timeShift": null,
                "title": "Traces by Service",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -659,7 +659,7 @@
                "timeShift": null,
                "title": "Spans by Service",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -747,7 +747,7 @@
                "timeShift": null,
                "title": "Span Queue Length",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -823,7 +823,7 @@
                "timeShift": null,
                "title": "Span Queue Time - P95",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -922,7 +922,7 @@
                "timeShift": null,
                "title": "Collector Save Rate",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -998,7 +998,7 @@
                "timeShift": null,
                "title": "Collector Save Latency - P95 ",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },

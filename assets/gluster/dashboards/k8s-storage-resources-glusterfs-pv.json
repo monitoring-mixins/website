@@ -65,7 +65,7 @@
                "timeShift": null,
                "title": "Status",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -154,7 +154,7 @@
                "timeShift": null,
                "title": "Capacity Utilization",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -231,7 +231,7 @@
                "timeShift": null,
                "title": "Available Capacity",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -308,7 +308,7 @@
                "timeShift": null,
                "title": "IOPS",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -384,7 +384,7 @@
                "timeShift": null,
                "title": "Capacity Utilization",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -460,7 +460,7 @@
                "timeShift": null,
                "title": "IOPS",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -548,7 +548,7 @@
                "timeShift": null,
                "title": "LVM Thin Pool Metadata %",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -624,7 +624,7 @@
                "timeShift": null,
                "title": "LVM Thin Pool Data Usage  %",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -713,7 +713,7 @@
                "timeShift": null,
                "title": "Bricks-Total",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -796,7 +796,7 @@
                "timeShift": null,
                "title": "Bricks-Up",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -879,7 +879,7 @@
                "timeShift": null,
                "title": "Bricks-Down",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -956,7 +956,7 @@
                "timeShift": null,
                "title": "Capacity Utilization-Average",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1033,7 +1033,7 @@
                "timeShift": null,
                "title": "Capacity Utilization-Min",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1110,7 +1110,7 @@
                "timeShift": null,
                "title": "Capacity Utilization-Max",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1187,7 +1187,7 @@
                "timeShift": null,
                "title": "Brick Usage < 80%",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1264,7 +1264,7 @@
                "timeShift": null,
                "title": "Brick Usage > 80% < 90%",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1341,7 +1341,7 @@
                "timeShift": null,
                "title": "Brick Usage > 90%",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1418,7 +1418,7 @@
                "timeShift": null,
                "title": "IOPS - Avg",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1495,7 +1495,7 @@
                "timeShift": null,
                "title": "IOPS - Min",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1572,7 +1572,7 @@
                "timeShift": null,
                "title": "IOPS - Max",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1649,7 +1649,7 @@
                "timeShift": null,
                "title": "Heal Counts-Total Files",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1726,7 +1726,7 @@
                "timeShift": null,
                "title": "Heal Counts-Files in Split-Brain",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1873,7 +1873,7 @@
                "timeShift": null,
                "title": "Top file operation",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1950,7 +1950,7 @@
                "timeShift": null,
                "title": "File Operations For Locks Trends",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2026,7 +2026,7 @@
                "timeShift": null,
                "title": "File Operations for Read/Write",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2102,7 +2102,7 @@
                "timeShift": null,
                "title": "File Operations for Inode Operations",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2178,7 +2178,7 @@
                "timeShift": null,
                "title": "File Operations for Entry Operations",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },

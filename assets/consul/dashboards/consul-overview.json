@@ -65,7 +65,7 @@
                "timeShift": null,
                "title": "$instance",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -172,7 +172,7 @@
                "timeShift": null,
                "title": "$instance",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -279,7 +279,7 @@
                "timeShift": null,
                "title": "$instance",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -386,7 +386,7 @@
                "timeShift": null,
                "title": "$instance",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -474,7 +474,7 @@
                "timeShift": null,
                "title": "QPS",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -566,7 +566,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },

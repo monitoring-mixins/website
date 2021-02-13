@@ -58,7 +58,7 @@
                "timeShift": null,
                "title": "Series",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -134,7 +134,7 @@
                "timeShift": null,
                "title": "Chunks per series",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -238,7 +238,7 @@
                "timeShift": null,
                "title": "Utilization",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -330,7 +330,7 @@
                "timeShift": null,
                "title": "Age",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -434,7 +434,7 @@
                "timeShift": null,
                "title": "Size",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -510,7 +510,7 @@
                "timeShift": null,
                "title": "Entries",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -598,7 +598,7 @@
                "timeShift": null,
                "title": "Queue Length",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -682,7 +682,7 @@
                "timeShift": null,
                "title": "Flush Rate",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -786,7 +786,7 @@
                "timeShift": null,
                "title": "Chunk Duration hours (end-start)",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },

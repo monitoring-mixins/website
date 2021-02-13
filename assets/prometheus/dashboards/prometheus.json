@@ -162,7 +162,7 @@
                "timeShift": null,
                "title": "Prometheus Stats",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -251,7 +251,7 @@
                "timeShift": null,
                "title": "Target Sync",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -327,7 +327,7 @@
                "timeShift": null,
                "title": "Targets",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -415,7 +415,7 @@
                "timeShift": null,
                "title": "Average Scrape Interval Duration",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -515,7 +515,7 @@
                "timeShift": null,
                "title": "Scrape failures",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -591,7 +591,7 @@
                "timeShift": null,
                "title": "Appended Samples",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -679,7 +679,7 @@
                "timeShift": null,
                "title": "Head Series",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -755,7 +755,7 @@
                "timeShift": null,
                "title": "Head Chunks",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -843,7 +843,7 @@
                "timeShift": null,
                "title": "Query Rate",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -919,7 +919,7 @@
                "timeShift": null,
                "title": "Stage Duration",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },

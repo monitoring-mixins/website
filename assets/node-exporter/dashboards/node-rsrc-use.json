@@ -58,7 +58,7 @@
                "timeShift": null,
                "title": "CPU Utilisation",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -134,7 +134,7 @@
                "timeShift": null,
                "title": "CPU Saturation (Load1 per CPU)",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -222,7 +222,7 @@
                "timeShift": null,
                "title": "Memory Utilisation",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -298,7 +298,7 @@
                "timeShift": null,
                "title": "Memory Saturation (Major Page Faults)",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -404,7 +404,7 @@
                "timeShift": null,
                "title": "Net Utilisation (Bytes Receive/Transmit)",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -498,7 +498,7 @@
                "timeShift": null,
                "title": "Net Saturation (Drops Receive/Transmit)",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -586,7 +586,7 @@
                "timeShift": null,
                "title": "Disk IO Utilisation",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -662,7 +662,7 @@
                "timeShift": null,
                "title": "Disk IO Saturation",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -750,7 +750,7 @@
                "timeShift": null,
                "title": "Disk Space Utilisation",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },

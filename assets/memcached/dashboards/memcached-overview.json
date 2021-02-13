@@ -58,7 +58,7 @@
                "timeShift": null,
                "title": "Hit Rate",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -146,7 +146,7 @@
                "timeShift": null,
                "title": "Commands",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -222,7 +222,7 @@
                "timeShift": null,
                "title": "Evictions",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -298,7 +298,7 @@
                "timeShift": null,
                "title": "Stored",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -386,7 +386,7 @@
                "timeShift": null,
                "title": "Memory",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -462,7 +462,7 @@
                "timeShift": null,
                "title": "Items",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -566,7 +566,7 @@
                "timeShift": null,
                "title": "Connections",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -642,7 +642,7 @@
                "timeShift": null,
                "title": "Reads",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -718,7 +718,7 @@
                "timeShift": null,
                "title": "Writes",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -910,7 +910,7 @@
                "timeShift": null,
                "title": "Memcached Info",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },

@@ -58,7 +58,7 @@
                "timeShift": null,
                "title": "Active Targets",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -134,7 +134,7 @@
                "timeShift": null,
                "title": "Active Files",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -222,7 +222,7 @@
                "timeShift": null,
                "title": "Bps",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -298,7 +298,7 @@
                "timeShift": null,
                "title": "Lines",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -394,7 +394,7 @@
                "timeShift": null,
                "title": "QPS",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -486,7 +486,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },

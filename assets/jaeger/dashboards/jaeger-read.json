@@ -69,7 +69,7 @@
                "timeShift": null,
                "title": "qps",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -145,7 +145,7 @@
                "timeShift": null,
                "title": "latency - 99 percentile",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -244,7 +244,7 @@
                "timeShift": null,
                "title": "qps",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -320,7 +320,7 @@
                "timeShift": null,
                "title": "latency - 99 percentile",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
