@@ -351,7 +351,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(kube_pod_container_resource_requests_memory_bytes{cluster=\"$cluster\"}) / sum(kube_node_status_allocatable_memory_bytes{cluster=\"$cluster\"})",
+                     "expr": "sum(namespace:kube_pod_container_resource_requests_memory_bytes:sum{cluster=\"$cluster\"}) / sum(kube_node_status_allocatable_memory_bytes{cluster=\"$cluster\"})",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,
