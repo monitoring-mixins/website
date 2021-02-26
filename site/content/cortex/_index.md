@@ -468,6 +468,45 @@ labels:
   severity: warning
 {{< /code >}}
  
+### etcd_alerts
+
+##### EtcdAllocatingTooMuchMemory
+
+{{< code lang="yaml" >}}
+alert: EtcdAllocatingTooMuchMemory
+annotations:
+  message: |
+    Too much memory being used by {{ $labels.namespace }}/{{ $labels.pod }} - bump memory limit.
+expr: "(
+  container_memory_working_set_bytes{container=\"etcd\"}
+    /
+  container_spec_memory_limit_bytes{container=\"etcd\"}
+)
+  > 0.65 
+"
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### EtcdAllocatingTooMuchMemory
+
+{{< code lang="yaml" >}}
+alert: EtcdAllocatingTooMuchMemory
+annotations:
+  message: |
+    Too much memory being used by {{ $labels.namespace }}/{{ $labels.pod }} - bump memory limit.
+expr: |
+  (
+    container_memory_working_set_bytes{container="etcd"}
+      /
+    container_spec_memory_limit_bytes{container="etcd"}
+  ) > 0.8
+for: 15m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ### cortex_blocks_alerts
 
 ##### CortexIngesterHasNotShippedBlocks
