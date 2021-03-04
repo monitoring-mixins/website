@@ -76,23 +76,6 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### CertManagerCertExpiryMetricMissing
-We are blind as to whether or not we can alert on certificates expiring.
-
-{{< code lang="yaml" >}}
-alert: CertManagerCertExpiryMetricMissing
-annotations:
-  dashboard_url: https://grafana.example.com/d/TvuRo2iMk/cert-manager
-  description: We are blind as to whether or not we can alert on certificates expiring.
-    It could also be the case that there have not had any Certificate CRDs created.
-  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagercertexpirymetricmissing
-  summary: The metric used to observe cert-manager cert expiry is missing.
-expr: absent(certmanager_certificate_expiration_timestamp_seconds)
-for: 10m
-labels:
-  severity: info
-{{< /code >}}
- 
 ##### CertManagerHittingRateLimits
 
 {{< code lang="yaml" >}}

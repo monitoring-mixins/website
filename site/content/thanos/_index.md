@@ -420,11 +420,12 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosSidecarPrometheusDown
 annotations:
-  description: Thanos Sidecar {{$labels.job}} {{$labels.pod}} cannot connect to Prometheus.
+  description: Thanos Sidecar {{$labels.job}} {{$labels.instance}} cannot connect
+    to Prometheus.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanossidecarprometheusdown
   summary: Thanos Sidecar cannot connect to Prometheus
 expr: |
-  sum by (job, pod) (thanos_sidecar_prometheus_up{job=~"thanos-sidecar.*"} == 0)
+  sum by (job, instance) (thanos_sidecar_prometheus_up{job=~"thanos-sidecar.*"} == 0)
 for: 5m
 labels:
   severity: critical
@@ -436,8 +437,8 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosSidecarBucketOperationsFailed
 annotations:
-  description: Thanos Sidecar {{$labels.job}} {{$labels.pod}} bucket operations are
-    failing
+  description: Thanos Sidecar {{$labels.job}} {{$labels.instance}} bucket operations
+    are failing
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanossidecarbucketoperationsfailed
   summary: Thanos Sidecar bucket operations are failing
 expr: |
@@ -453,12 +454,12 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosSidecarUnhealthy
 annotations:
-  description: Thanos Sidecar {{$labels.job}} {{$labels.pod}} is unhealthy for {{
-    $value }} seconds.
+  description: Thanos Sidecar {{$labels.job}} {{$labels.instance}} is unhealthy for
+    {{ $value }} seconds.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanossidecarunhealthy
   summary: Thanos Sidecar is unhealthy.
 expr: |
-  time() - max(thanos_sidecar_last_heartbeat_success_time_seconds{job=~"thanos-sidecar.*"}) by (job, pod) >= 600
+  time() - max(thanos_sidecar_last_heartbeat_success_time_seconds{job=~"thanos-sidecar.*"}) by (job, instance) >= 600
 labels:
   severity: critical
 {{< /code >}}
@@ -554,14 +555,14 @@ labels:
 ### thanos-rule
 
 ##### ThanosRuleQueueIsDroppingAlerts
-Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to queue alerts.
+Thanos Rule {{$labels.job}} is failing to queue alerts.
 https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosrulequeueisdroppingalerts
 Thanos Rule is failing to queue alerts.
 
 {{< code lang="yaml" >}}
 alert: ThanosRuleQueueIsDroppingAlerts
 annotations:
-  description: Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to queue alerts.
+  description: Thanos Rule {{$labels.job}} is failing to queue alerts.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosrulequeueisdroppingalerts
   summary: Thanos Rule is failing to queue alerts.
 expr: |
@@ -572,16 +573,14 @@ labels:
 {{< /code >}}
  
 ##### ThanosRuleSenderIsFailingAlerts
-Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to send alerts
-
+Thanos Rule {{$labels.job}} is failing to send alerts to alertmanager.
 https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosrulesenderisfailingalerts
 Thanos Rule is failing to send alerts to alertmanager.
 
 {{< code lang="yaml" >}}
 alert: ThanosRuleSenderIsFailingAlerts
 annotations:
-  description: Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to send alerts
-    to alertmanager.
+  description: Thanos Rule {{$labels.job}} is failing to send alerts to alertmanager.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosrulesenderisfailingalerts
   summary: Thanos Rule is failing to send alerts to alertmanager.
 expr: |
@@ -597,8 +596,7 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosRuleHighRuleEvaluationFailures
 annotations:
-  description: Thanos Rule {{$labels.job}} {{$labels.pod}} is failing to evaluate
-    rules.
+  description: Thanos Rule {{$labels.job}} is failing to evaluate rules.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosrulehighruleevaluationfailures
   summary: Thanos Rule is failing to evaluate rules.
 expr: |
@@ -619,8 +617,7 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosRuleHighRuleEvaluationWarnings
 annotations:
-  description: Thanos Rule {{$labels.job}} {{$labels.pod}} has high number of evaluation
-    warnings.
+  description: Thanos Rule {{$labels.job}} has high number of evaluation warnings.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosrulehighruleevaluationwarnings
   summary: Thanos Rule has high number of evaluation warnings.
 expr: |
@@ -636,15 +633,15 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosRuleRuleEvaluationLatencyHigh
 annotations:
-  description: Thanos Rule {{$labels.job}}/{{$labels.pod}} has higher evaluation latency
-    than interval for {{$labels.rule_group}}.
+  description: Thanos Rule {{$labels.job}}/{{$labels.instance}} has higher evaluation
+    latency than interval for {{$labels.rule_group}}.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosruleruleevaluationlatencyhigh
   summary: Thanos Rule has high rule evaluation latency.
 expr: |
   (
-    sum by (job, pod, rule_group) (prometheus_rule_group_last_duration_seconds{job=~"thanos-rule.*"})
+    sum by (job, instance, rule_group) (prometheus_rule_group_last_duration_seconds{job=~"thanos-rule.*"})
   >
-    sum by (job, pod, rule_group) (prometheus_rule_group_interval_seconds{job=~"thanos-rule.*"})
+    sum by (job, instance, rule_group) (prometheus_rule_group_interval_seconds{job=~"thanos-rule.*"})
   )
 for: 5m
 labels:
@@ -1155,7 +1152,7 @@ record: :thanos_objstore_bucket_operation_duration_seconds:histogram_quantile
 Following dashboards are generated from mixins and hosted on github:
 
 
-- [bucket-replicate](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/bucket-replicate.json)
+- [bucket_replicate](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/bucket_replicate.json)
 - [compact](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/compact.json)
 - [overview](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/overview.json)
 - [query](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/query.json)
