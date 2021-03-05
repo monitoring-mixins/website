@@ -1890,9 +1890,9 @@ record: node_namespace_pod_container:container_memory_swap
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (namespace) (
-      sum by (namespace, pod) (
-          max by (namespace, pod, container) (
+  sum by (namespace, cluster) (
+      sum by (namespace, pod, cluster) (
+          max by (namespace, pod, container, cluster) (
               kube_pod_container_resource_requests_memory_bytes{job="kube-state-metrics"}
           ) * on(namespace, pod) group_left() max by (namespace, pod) (
               kube_pod_status_phase{phase=~"Pending|Running"} == 1
@@ -1906,9 +1906,9 @@ record: namespace:kube_pod_container_resource_requests_memory_bytes:sum
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (namespace) (
-      sum by (namespace, pod) (
-          max by (namespace, pod, container) (
+  sum by (namespace, cluster) (
+      sum by (namespace, pod, cluster) (
+          max by (namespace, pod, container, cluster) (
               kube_pod_container_resource_requests_cpu_cores{job="kube-state-metrics"}
           ) * on(namespace, pod) group_left() max by (namespace, pod) (
             kube_pod_status_phase{phase=~"Pending|Running"} == 1

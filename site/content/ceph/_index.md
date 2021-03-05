@@ -131,14 +131,14 @@ labels:
 {{< code lang="yaml" >}}
 alert: CephOSDCriticallyFull
 annotations:
-  description: Utilization of back-end storage device {{ $labels.ceph_daemon }} has
-    crossed 85% on host {{ $labels.hostname }}. Immediately free up some space or
-    expand the storage cluster or contact support.
+  description: Utilization of storage device {{ $labels.ceph_daemon }} of device_class
+    type {{$labels.device_class}} has crossed 80% on host {{ $labels.hostname }}.
+    Immediately free up some space or add capacity of type {{$labels.device_class}}.
   message: Back-end storage device is critically full.
   severity_level: error
   storage_type: ceph
 expr: |
-  (ceph_osd_metadata * on (ceph_daemon) group_left() (ceph_osd_stat_bytes_used / ceph_osd_stat_bytes)) >= 0.85
+  (ceph_osd_metadata * on (ceph_daemon) group_right(device_class) (ceph_osd_stat_bytes_used / ceph_osd_stat_bytes)) >= 0.80
 for: 40s
 labels:
   severity: critical
@@ -149,14 +149,14 @@ labels:
 {{< code lang="yaml" >}}
 alert: CephOSDNearFull
 annotations:
-  description: Utilization of back-end storage device {{ $labels.ceph_daemon }} has
-    crossed 75% on host {{ $labels.hostname }}. Free up some space or expand the storage
-    cluster or contact support.
+  description: Utilization of storage device {{ $labels.ceph_daemon }} of device_class
+    type {{$labels.device_class}} has crossed 75% on host {{ $labels.hostname }}.
+    Immediately free up some space or add capacity of type {{$labels.device_class}}.
   message: Back-end storage device is nearing full.
   severity_level: warning
   storage_type: ceph
 expr: |
-  (ceph_osd_metadata * on (ceph_daemon) group_left() (ceph_osd_stat_bytes_used / ceph_osd_stat_bytes)) >= 0.75
+  (ceph_osd_metadata * on (ceph_daemon) group_right(device_class) (ceph_osd_stat_bytes_used / ceph_osd_stat_bytes)) >= 0.75
 for: 40s
 labels:
   severity: warning
@@ -408,7 +408,7 @@ record: cluster:ceph_node_down:join_kube
 
 {{< code lang="yaml" >}}
 expr: |
-  avg(max by(instance) (label_replace(label_replace(ceph_disk_occupation{job="rook-ceph-mgr"}, "instance", "$1", "exported_instance", "(.*)"), "device", "$1", "device", "/dev/(.*)") * on(instance, device) group_right() (irate(node_disk_read_time_seconds_total[1m]) + irate(node_disk_write_time_seconds_total[1m]) / (clamp_min(irate(node_disk_reads_completed_total[1m]), 1) + irate(node_disk_writes_completed_total[1m])))))
+  avg(topk by (ceph_daemon) (1, label_replace(label_replace(ceph_disk_occupation{job="rook-ceph-mgr"}, "instance", "$1", "exported_instance", "(.*)"), "device", "$1", "device", "/dev/(.*)")) * on(instance, device) group_right(ceph_daemon) topk by (instance,device) (1,(irate(node_disk_read_time_seconds_total[1m]) + irate(node_disk_write_time_seconds_total[1m]) / (clamp_min(irate(node_disk_reads_completed_total[1m]), 1) + irate(node_disk_writes_completed_total[1m])))))
 record: cluster:ceph_disk_latency:join_ceph_node_disk_irate1m
 {{< /code >}}
  
