@@ -2045,7 +2045,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "container_memory_usage_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"distributor.*\"}",
+                     "expr": "go_memstats_heap_inuse_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"distributor.*\"}",
                      "instant": false,
                      "intervalFactor": 3,
                      "legendFormat": "{{pod}}",
@@ -2718,7 +2718,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "container_memory_usage_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"ingester.*\"}",
+                     "expr": "go_memstats_heap_inuse_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"ingester.*\"}",
                      "instant": false,
                      "intervalFactor": 3,
                      "legendFormat": "{{pod}}",
@@ -3678,7 +3678,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "container_memory_usage_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"querier.*\"}",
+                     "expr": "go_memstats_heap_inuse_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"querier.*\"}",
                      "instant": false,
                      "intervalFactor": 3,
                      "legendFormat": "{{pod}}",
