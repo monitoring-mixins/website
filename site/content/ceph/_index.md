@@ -144,6 +144,23 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### CephOSDFlapping
+
+{{< code lang="yaml" >}}
+alert: CephOSDFlapping
+annotations:
+  description: Storage daemon {{ $labels.ceph_daemon }} has restarted 5 times in last
+    5 minutes. Please check the pod events or ceph status to find out the cause.
+  message: Ceph storage osd flapping.
+  severity_level: error
+  storage_type: ceph
+expr: |
+  changes(ceph_osd_up[5m]) >= 10
+for: 0s
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ##### CephOSDNearFull
 
 {{< code lang="yaml" >}}

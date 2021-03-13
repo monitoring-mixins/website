@@ -87,9 +87,7 @@
                "timeShift": null,
                "title": "CPU",
                "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
+                  "sort": 2
                },
                "type": "graph",
                "xaxis": {
@@ -179,9 +177,7 @@
                "timeShift": null,
                "title": "Memory (workingset)",
                "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
+                  "sort": 2
                },
                "type": "graph",
                "xaxis": {
@@ -256,9 +252,7 @@
                "timeShift": null,
                "title": "Memory (go heap inuse)",
                "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
+                  "sort": 2
                },
                "type": "graph",
                "xaxis": {
