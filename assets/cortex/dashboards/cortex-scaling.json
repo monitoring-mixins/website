@@ -24,7 +24,29 @@
    "rows": [
       {
          "collapse": false,
-         "height": "250px",
+         "height": "200px",
+         "panels": [
+            {
+               "id": 1,
+               "options": {
+                  "content": "This dashboards shows any services which are not scaled correctly.\nThe table below gives the required number of replicas and the reason why.\nWe only show services without enough replicas.\n\nReasons:\n- **sample_rate**: There are not enough replicas to handle the\n  sample rate.  Applies to distributor and ingesters.\n- **active_series**: There are not enough replicas\n  to handle the number of active series.  Applies to ingesters.\n- **cpu_usage**: There are not enough replicas\n  based on the CPU usage of the jobs vs the resource requests.\n  Applies to all jobs.\n- **memory_usage**: There are not enough replicas based on the memory\n  usage vs the resource requests.  Applies to all jobs.\n- **active_series_limits**: There are not enough replicas to hold 60% of the\n  sum of all the per tenant series limits.\n- **sample_rate_limits**: There are not enough replicas to handle 60% of the\n  sum of all the per tenant rate limits.\n",
+                  "mode": "markdown"
+               },
+               "span": 12,
+               "title": "",
+               "type": "text"
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Cortex Service Scaling",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "400px",
          "panels": [
             {
                "aliasColors": { },
@@ -33,7 +55,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 1,
+               "id": 2,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -53,7 +75,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "sort": {
-                  "col": 1,
+                  "col": 0,
                   "desc": false
                },
                "spaceLength": 10,
@@ -68,7 +90,7 @@
                      "type": "hidden"
                   },
                   {
-                     "alias": "Current Replicas",
+                     "alias": "Required Replicas",
                      "colorMode": null,
                      "colors": [ ],
                      "dateFormat": "YYYY-MM-DD HH:mm:ss",
@@ -76,37 +98,23 @@
                      "link": false,
                      "linkTooltip": "Drill down",
                      "linkUrl": "",
-                     "pattern": "Value #A",
+                     "pattern": "Value",
                      "thresholds": [ ],
                      "type": "number",
                      "unit": "short"
                   },
                   {
-                     "alias": "Required Replicas, by ingestion rate",
+                     "alias": "Cluster",
                      "colorMode": null,
                      "colors": [ ],
                      "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 0,
+                     "decimals": 2,
                      "link": false,
                      "linkTooltip": "Drill down",
                      "linkUrl": "",
-                     "pattern": "Value #B",
+                     "pattern": "__name__",
                      "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Required Replicas, by active series",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 0,
-                     "link": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value #C",
-                     "thresholds": [ ],
-                     "type": "number",
+                     "type": "hidden",
                      "unit": "short"
                   },
                   {
@@ -124,7 +132,7 @@
                      "unit": "short"
                   },
                   {
-                     "alias": "Deployment",
+                     "alias": "Service",
                      "colorMode": null,
                      "colors": [ ],
                      "dateFormat": "YYYY-MM-DD HH:mm:ss",
@@ -152,6 +160,20 @@
                      "unit": "short"
                   },
                   {
+                     "alias": "Reason",
+                     "colorMode": null,
+                     "colors": [ ],
+                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                     "decimals": 2,
+                     "link": false,
+                     "linkTooltip": "Drill down",
+                     "linkUrl": "",
+                     "pattern": "reason",
+                     "thresholds": [ ],
+                     "type": "number",
+                     "unit": "short"
+                  },
+                  {
                      "alias": "",
                      "colorMode": null,
                      "colors": [ ],
@@ -165,30 +187,12 @@
                ],
                "targets": [
                   {
-                     "expr": "sum by (cluster, namespace, deployment) (\n  kube_deployment_spec_replicas{cluster=~\"$cluster\", namespace=~\"$namespace\", deployment=~\"ingester|memcached\"}\n  or\n  label_replace(\n    kube_statefulset_replicas{cluster=~\"$cluster\", namespace=~\"$namespace\", deployment=~\"ingester|memcached\"},\n    \"deployment\", \"$1\", \"statefulset\", \"(.*)\"\n  )\n)\n",
+                     "expr": "sort_desc(\n  cluster_namespace_deployment_reason:required_replicas:count{cluster=~\"$cluster\", namespace=~\"$namespace\"}\n    > ignoring(reason) group_left\n  cluster_namespace_deployment:actual_replicas:count{cluster=~\"$cluster\", namespace=~\"$namespace\"}\n)\n",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
                      "legendFormat": "",
                      "refId": "A",
-                     "step": 10
-                  },
-                  {
-                     "expr": "quantile_over_time(0.99, sum by (cluster, namespace, deployment) (label_replace(rate(cortex_distributor_received_samples_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[1m]), \"deployment\", \"ingester\", \"cluster\", \".*\"))[1h:])\n  * 3 / 80e3\n",
-                     "format": "table",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "B",
-                     "step": 10
-                  },
-                  {
-                     "expr": "label_replace(\n  sum by(cluster, namespace) (\n    cortex_ingester_memory_series{cluster=~\"$cluster\", namespace=~\"$namespace\"}\n  ) / 1e+6,\n  \"deployment\", \"ingester\", \"cluster\", \".*\"\n)\n  or\nlabel_replace(\n  sum by (cluster, namespace) (\n    4 * cortex_ingester_memory_series{cluster=~\"$cluster\", namespace=~\"$namespace\", job=~\".+/ingester\"}\n      *\n    cortex_ingester_chunk_size_bytes_sum{cluster=~\"$cluster\", namespace=~\"$namespace\", job=~\".+/ingester\"}\n      /\n    cortex_ingester_chunk_size_bytes_count{cluster=~\"$cluster\", namespace=~\"$namespace\", job=~\".+/ingester\"}\n  )\n    /\n  avg by (cluster, namespace) (memcached_limit_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\", job=~\".+/memcached\"}),\n  \"deployment\", \"memcached\", \"namespace\", \".*\"\n)\n",
-                     "format": "table",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "C",
                      "step": 10
                   }
                ],
@@ -234,222 +238,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Workload-based scaling",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "500px",
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "id": 2,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "sort": {
-                  "col": 1,
-                  "desc": false
-               },
-               "spaceLength": 10,
-               "span": 12,
-               "stack": false,
-               "steppedLine": false,
-               "styles": [
-                  {
-                     "alias": "Time",
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "pattern": "Time",
-                     "type": "hidden"
-                  },
-                  {
-                     "alias": "Current Replicas",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 0,
-                     "link": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value #A",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Required Replicas, by CPU usage",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 0,
-                     "link": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value #B",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Required Replicas, by Memory usage",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 0,
-                     "link": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value #C",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Cluster",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "cluster",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Deployment",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "deployment",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Namespace",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "namespace",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "pattern": "/.*/",
-                     "thresholds": [ ],
-                     "type": "string",
-                     "unit": "short"
-                  }
-               ],
-               "targets": [
-                  {
-                     "expr": "sum by (cluster, namespace, deployment) (\n  kube_deployment_spec_replicas{cluster=~\"$cluster\", namespace=~\"$namespace\"}\n  or\n  label_replace(\n    kube_statefulset_replicas{cluster=~\"$cluster\", namespace=~\"$namespace\"},\n    \"deployment\", \"$1\", \"statefulset\", \"(.*)\"\n  )\n)\n",
-                     "format": "table",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "A",
-                     "step": 10
-                  },
-                  {
-                     "expr": "sum by (cluster, namespace, deployment) (\n  kube_deployment_spec_replicas{cluster=~\"$cluster\", namespace=~\"$namespace\"}\n  or\n  label_replace(\n    kube_statefulset_replicas{cluster=~\"$cluster\", namespace=~\"$namespace\"},\n    \"deployment\", \"$1\", \"statefulset\", \"(.*)\"\n  )\n)\n  *\nquantile_over_time(0.99, sum by (cluster, namespace, deployment) (label_replace(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[1m]), \"deployment\", \"$1\", \"pod\", \"(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))\"))[24h:])\n  /\nsum by (cluster, namespace, deployment) (label_replace(kube_pod_container_resource_requests_cpu_cores{cluster=~\"$cluster\", namespace=~\"$namespace\"}, \"deployment\", \"$1\", \"pod\", \"(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))\"))\n",
-                     "format": "table",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "B",
-                     "step": 10
-                  },
-                  {
-                     "expr": "sum by (cluster, namespace, deployment) (\n  kube_deployment_spec_replicas{cluster=~\"$cluster\", namespace=~\"$namespace\"}\n  or\n  label_replace(\n    kube_statefulset_replicas{cluster=~\"$cluster\", namespace=~\"$namespace\"},\n    \"deployment\", \"$1\", \"statefulset\", \"(.*)\"\n  )\n)\n  *\nquantile_over_time(0.99, sum by (cluster, namespace, deployment) (label_replace(container_memory_usage_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\"}, \"deployment\", \"$1\", \"pod\", \"(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))\"))[24h:1m])\n  /\nsum by (cluster, namespace, deployment) (label_replace(kube_pod_container_resource_requests_memory_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\"}, \"deployment\", \"$1\", \"pod\", \"(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))\"))\n",
-                     "format": "table",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "C",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Resource-based scaling",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "transform": "table",
-               "type": "table",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Resource-based scaling",
+         "title": "Scaling",
          "titleSize": "h6"
       }
    ],

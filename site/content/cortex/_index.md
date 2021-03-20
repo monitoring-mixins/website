@@ -1969,6 +1969,191 @@ expr: |
 record: cluster_namespace_job:cortex_distributor_received_samples:rate5m
 {{< /code >}}
  
+### cortex_scaling_rules
+
+##### cluster_namespace_deployment:actual_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, namespace, deployment) (kube_deployment_spec_replicas)
+    or
+  sum by (cluster, namespace, deployment) (
+    label_replace(kube_statefulset_replicas, "deployment", "$1", "statefulset", "(.*)")
+  )
+record: cluster_namespace_deployment:actual_replicas:count
+{{< /code >}}
+ 
+##### cluster_namespace_deployment_reason:required_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  ceil(
+    quantile_over_time(0.99,
+      sum by (cluster, namespace) (
+        cluster_namespace_job:cortex_distributor_received_samples:rate5m
+      )[24h:]
+    )
+    / 240000
+  )
+labels:
+  deployment: distributor
+  reason: sample_rate
+record: cluster_namespace_deployment_reason:required_replicas:count
+{{< /code >}}
+ 
+##### cluster_namespace_deployment_reason:required_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  ceil(
+    sum by (cluster, namespace) (cortex_overrides{limit_name="ingestion_rate"})
+    * 0.59999999999999998 / 240000
+  )
+labels:
+  deployment: distributor
+  reason: sample_rate_limits
+record: cluster_namespace_deployment_reason:required_replicas:count
+{{< /code >}}
+ 
+##### cluster_namespace_deployment_reason:required_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  ceil(
+    quantile_over_time(0.99,
+      sum by (cluster, namespace) (
+        cluster_namespace_job:cortex_distributor_received_samples:rate5m
+      )[24h:]
+    )
+    * 3 / 80000
+  )
+labels:
+  deployment: ingester
+  reason: sample_rate
+record: cluster_namespace_deployment_reason:required_replicas:count
+{{< /code >}}
+ 
+##### cluster_namespace_deployment_reason:required_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  ceil(
+    quantile_over_time(0.99,
+      sum by(cluster, namespace) (
+        cortex_ingester_memory_series
+      )[24h:]
+    )
+    / 1500000
+  )
+labels:
+  deployment: ingester
+  reason: active_series
+record: cluster_namespace_deployment_reason:required_replicas:count
+{{< /code >}}
+ 
+##### cluster_namespace_deployment_reason:required_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  ceil(
+    sum by (cluster, namespace) (cortex_overrides{limit_name="max_global_series_per_user"})
+    * 3 * 0.59999999999999998 / 1500000
+  )
+labels:
+  deployment: ingester
+  reason: active_series_limits
+record: cluster_namespace_deployment_reason:required_replicas:count
+{{< /code >}}
+ 
+##### cluster_namespace_deployment_reason:required_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  ceil(
+    sum by (cluster, namespace) (cortex_overrides{limit_name="ingestion_rate"})
+    * 0.59999999999999998 / 80000
+  )
+labels:
+  deployment: ingester
+  reason: sample_rate_limits
+record: cluster_namespace_deployment_reason:required_replicas:count
+{{< /code >}}
+ 
+##### cluster_namespace_deployment_reason:required_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  ceil(
+    (sum by (cluster, namespace) (
+      cortex_ingester_tsdb_storage_blocks_bytes{job=~".+/ingester"}
+    ) / 4)
+      /
+    avg by (cluster, namespace) (
+      memcached_limit_bytes{job=~".+/memcached"}
+    )
+  )
+labels:
+  deployment: memcached
+  reason: active_series
+record: cluster_namespace_deployment_reason:required_replicas:count
+{{< /code >}}
+ 
+##### cluster_namespace_deployment_reason:required_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  ceil(
+    cluster_namespace_deployment:actual_replicas:count
+      *
+    quantile_over_time(0.99,
+      sum by (cluster, namespace, deployment) (
+        label_replace(
+          node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate,
+          "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+        )
+      )[24h:5m]
+    )
+      /
+    sum by (cluster, namespace, deployment) (
+      label_replace(
+        kube_pod_container_resource_requests_cpu_cores,
+        "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+      )
+    )
+  )
+labels:
+  reason: cpu_usage
+record: cluster_namespace_deployment_reason:required_replicas:count
+{{< /code >}}
+ 
+##### cluster_namespace_deployment_reason:required_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  ceil(
+    cluster_namespace_deployment:actual_replicas:count
+      *
+    quantile_over_time(0.99,
+      sum by (cluster, namespace, deployment) (
+        label_replace(
+          container_memory_usage_bytes,
+          "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+        )
+      )[24h:5m]
+    )
+      /
+    sum by (cluster, namespace, deployment) (
+      label_replace(
+        kube_pod_container_resource_requests_memory_bytes,
+        "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+      )
+    )
+  )
+labels:
+  reason: memory_usage
+record: cluster_namespace_deployment_reason:required_replicas:count
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 

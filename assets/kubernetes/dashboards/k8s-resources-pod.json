@@ -64,7 +64,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\", cluster=\"$cluster\"}) by (container)",
+                     "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace=\"$namespace\", pod=\"$pod\", cluster=\"$cluster\"}) by (container)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{container}}",
@@ -168,7 +168,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(increase(container_cpu_cfs_throttled_periods_total{namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\", container!=\"\", cluster=\"$cluster\"}[5m])) by (container) /sum(increase(container_cpu_cfs_periods_total{namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\", container!=\"\", cluster=\"$cluster\"}[5m])) by (container)",
+                     "expr": "sum(increase(container_cpu_cfs_throttled_periods_total{namespace=\"$namespace\", pod=\"$pod\", container!=\"\", cluster=\"$cluster\"}[5m])) by (container) /sum(increase(container_cpu_cfs_periods_total{namespace=\"$namespace\", pod=\"$pod\", container!=\"\", cluster=\"$cluster\"}[5m])) by (container)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{container}}",
@@ -374,7 +374,7 @@
                ],
                "targets": [
                   {
-                     "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\"}) by (container)",
+                     "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -521,7 +521,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\", container!=\"\", image!=\"\"}) by (container)",
+                     "expr": "sum(container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{container}}",
@@ -779,7 +779,7 @@
                ],
                "targets": [
                   {
-                     "expr": "sum(container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\", container!=\"\", image!=\"\"}) by (container)",
+                     "expr": "sum(container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -824,7 +824,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_rss{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
+                     "expr": "sum(container_memory_rss{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -833,7 +833,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_cache{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
+                     "expr": "sum(container_memory_cache{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -842,7 +842,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_swap{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
+                     "expr": "sum(container_memory_swap{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -928,7 +928,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 12,
+               "span": 2,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -976,19 +976,7 @@
                      "show": false
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Network",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -1017,7 +1005,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 12,
+               "span": 2,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1065,19 +1053,7 @@
                      "show": false
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Network",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -1106,7 +1082,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 12,
+               "span": 2,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1154,19 +1130,7 @@
                      "show": false
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Network",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -1195,7 +1159,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 12,
+               "span": 2,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1243,19 +1207,7 @@
                      "show": false
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Network",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -1284,7 +1236,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 12,
+               "span": 2,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1332,19 +1284,7 @@
                      "show": false
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Network",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -1373,7 +1313,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 12,
+               "span": 2,
                "stack": true,
                "steppedLine": false,
                "targets": [
