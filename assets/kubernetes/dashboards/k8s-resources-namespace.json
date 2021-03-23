@@ -360,8 +360,9 @@
                      "color": "#F2495C",
                      "dashes": true,
                      "fill": 0,
+                     "hiddenSeries": true,
                      "hideTooltip": true,
-                     "legend": false,
+                     "legend": true,
                      "linewidth": 2,
                      "stack": false
                   },
@@ -370,8 +371,9 @@
                      "color": "#FF9830",
                      "dashes": true,
                      "fill": 0,
+                     "hiddenSeries": true,
                      "hideTooltip": true,
-                     "legend": false,
+                     "legend": true,
                      "linewidth": 2,
                      "stack": false
                   }
@@ -720,8 +722,9 @@
                      "color": "#F2495C",
                      "dashes": true,
                      "fill": 0,
+                     "hiddenSeries": true,
                      "hideTooltip": true,
-                     "legend": false,
+                     "legend": true,
                      "linewidth": 2,
                      "stack": false
                   },
@@ -730,8 +733,9 @@
                      "color": "#FF9830",
                      "dashes": true,
                      "fill": 0,
+                     "hiddenSeries": true,
                      "hideTooltip": true,
-                     "legend": false,
+                     "legend": true,
                      "linewidth": 2,
                      "stack": false
                   }

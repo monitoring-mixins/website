@@ -16,7 +16,8 @@
    "editable": true,
    "gnetId": null,
    "graphTooltip": 1,
-   "iteration": 1599706243326,
+   "id": 59,
+   "iteration": 1616445892702,
    "links": [ ],
    "panels": [
       {
@@ -82,9 +83,10 @@
                "fields": "",
                "values": false
             },
+            "text": { },
             "textMode": "auto"
          },
-         "pluginVersion": "7.1.3",
+         "pluginVersion": "7.4.5",
          "targets": [
             {
                "expr": "sum by (condition) (certmanager_certificate_ready_status)",
@@ -145,9 +147,10 @@
                "fields": "",
                "values": false
             },
+            "text": { },
             "textMode": "auto"
          },
-         "pluginVersion": "7.1.3",
+         "pluginVersion": "7.4.5",
          "targets": [
             {
                "expr": "min(certmanager_certificate_expiration_timestamp_seconds) - time()",
@@ -177,7 +180,8 @@
          "fieldConfig": {
             "defaults": {
                "custom": {
-                  "align": null
+                  "align": null,
+                  "filterable": false
                },
                "mappings": [
                   {
@@ -203,7 +207,7 @@
                      }
                   ]
                },
-               "unit": "dateTimeAsIso"
+               "unit": "none"
             },
             "overrides": [
                {
@@ -241,6 +245,18 @@
                         "value": 324
                      }
                   ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Valid Until"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "dateTimeAsIso"
+                     }
+                  ]
                }
             ]
          },
@@ -260,7 +276,7 @@
                }
             ]
          },
-         "pluginVersion": "7.1.3",
+         "pluginVersion": "7.4.5",
          "targets": [
             {
                "expr": "avg by (name, condition) (certmanager_certificate_ready_status == 1)",
@@ -294,6 +310,8 @@
                "options": {
                   "excludeByName": {
                      "Time": true,
+                     "Time 1": true,
+                     "Time 2": true,
                      "Value #A": true,
                      "exported_namespace": false
                   },
@@ -356,8 +374,11 @@
          "linewidth": 1,
          "maxDataPoints": 250,
          "nullPointMode": "null",
+         "options": {
+            "alertThreshold": true
+         },
          "percentage": false,
-         "pluginVersion": "7.1.3",
+         "pluginVersion": "7.4.5",
          "pointradius": 2,
          "points": false,
          "renderer": "flot",
@@ -454,8 +475,11 @@
          "linewidth": 1,
          "maxDataPoints": 250,
          "nullPointMode": "null",
+         "options": {
+            "alertThreshold": true
+         },
          "percentage": false,
-         "pluginVersion": "7.1.3",
+         "pluginVersion": "7.4.5",
          "pointradius": 2,
          "points": false,
          "renderer": "flot",
@@ -552,8 +576,11 @@
          "linewidth": 1,
          "maxDataPoints": 250,
          "nullPointMode": "null",
+         "options": {
+            "alertThreshold": true
+         },
          "percentage": false,
-         "pluginVersion": "7.1.3",
+         "pluginVersion": "7.4.5",
          "pointradius": 2,
          "points": false,
          "renderer": "flot",
@@ -651,8 +678,11 @@
          "links": [ ],
          "maxDataPoints": 250,
          "nullPointMode": "null",
+         "options": {
+            "alertThreshold": true
+         },
          "percentage": false,
-         "pluginVersion": "7.1.3",
+         "pluginVersion": "7.4.5",
          "pointradius": 2,
          "points": false,
          "renderer": "flot",
@@ -787,14 +817,16 @@
          "links": [ ],
          "maxDataPoints": 250,
          "nullPointMode": "connected",
+         "options": {
+            "alertThreshold": true
+         },
          "percentage": false,
-         "pluginVersion": "7.1.3",
+         "pluginVersion": "7.4.5",
          "pointradius": 2,
          "points": false,
          "renderer": "flot",
          "seriesOverrides": [
             {
-               "$$hashKey": "object:132",
                "alias": "/external-dns.*/",
                "fill": 1,
                "fillGradient": 5
@@ -896,8 +928,11 @@
          "links": [ ],
          "maxDataPoints": 250,
          "nullPointMode": "null",
+         "options": {
+            "alertThreshold": true
+         },
          "percentage": false,
-         "pluginVersion": "7.1.3",
+         "pluginVersion": "7.4.5",
          "pointradius": 2,
          "points": false,
          "renderer": "flot",
@@ -1029,8 +1064,11 @@
          "linewidth": 1,
          "links": [ ],
          "nullPointMode": "null",
+         "options": {
+            "alertThreshold": true
+         },
          "percentage": false,
-         "pluginVersion": "7.1.3",
+         "pluginVersion": "7.4.5",
          "pointradius": 2,
          "points": false,
          "renderer": "flot",
@@ -1106,7 +1144,7 @@
       }
    ],
    "refresh": "1m",
-   "schemaVersion": 26,
+   "schemaVersion": 27,
    "style": "dark",
    "tags": [
       "cert-manager",
@@ -1120,6 +1158,8 @@
                "text": "prometheus",
                "value": "prometheus"
             },
+            "description": null,
+            "error": null,
             "hide": 0,
             "includeAll": false,
             "label": "Data Source",
@@ -1127,6 +1167,7 @@
             "name": "datasource",
             "options": [ ],
             "query": "prometheus",
+            "queryValue": "",
             "refresh": 1,
             "regex": "",
             "skipUrlSync": false,

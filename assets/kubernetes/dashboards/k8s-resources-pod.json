@@ -500,7 +500,7 @@
                      "dashes": true,
                      "fill": 0,
                      "hideTooltip": true,
-                     "legend": false,
+                     "legend": true,
                      "linewidth": 2,
                      "stack": false
                   },
@@ -510,7 +510,7 @@
                      "dashes": true,
                      "fill": 0,
                      "hideTooltip": true,
-                     "legend": false,
+                     "legend": true,
                      "linewidth": 2,
                      "stack": false
                   }
