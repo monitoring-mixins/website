@@ -24,8 +24,8 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosCompactMultipleRunning
 annotations:
-  description: 'No more than one Thanos Compact instance should be running at once.
-    There are {{$value}} '
+  description: No more than one Thanos Compact instance should be running at once.
+    There are {{$value}} instances running.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanoscompactmultiplerunning
   summary: Thanos Compact has multiple instances running.
 expr: sum by (job) (up{job=~"thanos-compact.*"}) > 1
@@ -40,7 +40,7 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosCompactHalted
 annotations:
-  description: Thanos Compact {{$labels.job}} has failed to run  and now is halted.
+  description: Thanos Compact {{$labels.job}} has failed to run and now is halted.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanoscompacthalted
   summary: Thanos Compact has failed to run ans is now halted.
 expr: thanos_compact_halted{job=~"thanos-compact.*"} == 1
@@ -55,7 +55,7 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosCompactHighCompactionFailures
 annotations:
-  description: Thanos Compact {{$labels.job}} , is failing to execute {{$value | humanize}}%
+  description: Thanos Compact {{$labels.job}} is failing to execute {{$value | humanize}}%
     of compactions.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanoscompacthighcompactionfailures
   summary: Thanos Compact is failing to execute compactions.
@@ -77,7 +77,7 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosCompactBucketHighOperationFailures
 annotations:
-  description: Thanos Compact {{$labels.job}} , Bucket is failing to execute {{$value
+  description: Thanos Compact {{$labels.job}} Bucket is failing to execute {{$value
     | humanize}}% of operations.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanoscompactbuckethighoperationfailures
   summary: Thanos Compact Bucket is having a high number of operation failures.
@@ -99,7 +99,7 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosCompactHasNotRun
 annotations:
-  description: Thanos Compact {{$labels.job}}  has not uploaded anything for 24 hours.
+  description: Thanos Compact {{$labels.job}} has not uploaded anything for 24 hours.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanoscompacthasnotrun
   summary: Thanos Compact has not uploaded anything for last 24 hours.
 expr: (time() - max by (job) (max_over_time(thanos_objstore_bucket_last_successful_upload_time{job=~"thanos-compact.*"}[24h])))
@@ -773,10 +773,10 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 {{< code lang="yaml" >}}
 alert: ThanosBucketReplicateErrorRate
 annotations:
-  description: Thanos Replicate is failing to run , {{$value | humanize}}% of attempts
+  description: Thanos Replicate is failing to run, {{$value | humanize}}% of attempts
     failed.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosbucketreplicateerrorrate
-  summary: Thanose Replicate is failing to run in  .
+  summary: Thanose Replicate is failing to run.
 expr: |
   (
     sum by (job) (rate(thanos_replicate_replication_runs_total{result="error", job=~"thanos-bucket-replicate.*"}[5m]))

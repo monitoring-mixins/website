@@ -928,7 +928,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 2,
+               "span": 6,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1005,7 +1005,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 2,
+               "span": 6,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1053,7 +1053,19 @@
                      "show": false
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Bandwidth",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
@@ -1082,7 +1094,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 2,
+               "span": 6,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1159,7 +1171,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 2,
+               "span": 6,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1207,7 +1219,19 @@
                      "show": false
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Rate of Packets",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
@@ -1236,7 +1260,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 2,
+               "span": 6,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1313,7 +1337,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 2,
+               "span": 6,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1367,7 +1391,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Network",
+         "title": "Rate of Packets Dropped",
          "titleSize": "h6"
       }
    ],
