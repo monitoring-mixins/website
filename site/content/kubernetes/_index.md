@@ -369,11 +369,11 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecpuovercommit
   summary: Cluster has overcommitted CPU resource requests.
 expr: |
-  sum(namespace:kube_pod_container_resource_requests_cpu_cores:sum{})
+  sum(namespace_cpu:kube_pod_container_resource_requests:sum{})
     /
-  sum(kube_node_status_allocatable_cpu_cores)
+  sum(kube_node_status_allocatable{resource="cpu"})
     >
-  (count(kube_node_status_allocatable_cpu_cores)-1) / count(kube_node_status_allocatable_cpu_cores)
+  (count(kube_node_status_allocatable{resource="cpu"}) -1) / count(kube_node_status_allocatable{resource="cpu"})
 for: 5m
 labels:
   severity: warning
@@ -390,13 +390,13 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubememoryovercommit
   summary: Cluster has overcommitted memory resource requests.
 expr: |
-  sum(namespace:kube_pod_container_resource_requests_memory_bytes:sum{})
+  sum(namespace_memory:kube_pod_container_resource_requests_bytes:sum{})
     /
-  sum(kube_node_status_allocatable_memory_bytes)
+  sum(kube_node_status_allocatable{resource="memory"})
     >
-  (count(kube_node_status_allocatable_memory_bytes)-1)
+  (count(kube_node_status_allocatable{resource="memory"})-1)
     /
-  count(kube_node_status_allocatable_memory_bytes)
+  count(kube_node_status_allocatable{resource="memory"})
 for: 5m
 labels:
   severity: warning
@@ -411,11 +411,12 @@ annotations:
   description: Cluster has overcommitted CPU resource requests for Namespaces.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecpuquotaovercommit
   summary: Cluster has overcommitted CPU resource requests.
-expr: |
-  sum(kube_resourcequota{job="kube-state-metrics", type="hard", resource="cpu"})
-    /
-  sum(kube_node_status_allocatable_cpu_cores)
-    > 1.5
+expr: "sum(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\", resource=\"cpu\"})
+
+  \ /
+sum(kube_node_status_allocatable{resource=\"cpu\"}) 
+  > 1.5
+"
 for: 5m
 labels:
   severity: warning
@@ -433,7 +434,7 @@ annotations:
 expr: |
   sum(kube_resourcequota{job="kube-state-metrics", type="hard", resource="memory"})
     /
-  sum(kube_node_status_allocatable_memory_bytes{job="kube-state-metrics"})
+  sum(kube_node_status_allocatable{resource="memory",job="kube-state-metrics"})
     > 1.5
 for: 5m
 labels:
@@ -858,7 +859,7 @@ expr: |
   )
   /
   max by(node) (
-    kube_node_status_capacity_pods{job="kube-state-metrics"} != 1
+    kube_node_status_capacity{job="kube-state-metrics",resource="pods"} != 1
   ) > 0.95
 for: 15m
 labels:
@@ -1886,36 +1887,36 @@ expr: |
 record: node_namespace_pod_container:container_memory_swap
 {{< /code >}}
  
-##### namespace:kube_pod_container_resource_requests_memory_bytes:sum
+##### namespace_memory:kube_pod_container_resource_requests:sum
 
 {{< code lang="yaml" >}}
 expr: |
   sum by (namespace, cluster) (
       sum by (namespace, pod, cluster) (
           max by (namespace, pod, container, cluster) (
-              kube_pod_container_resource_requests_memory_bytes{job="kube-state-metrics"}
-          ) * on(namespace, pod) group_left() max by (namespace, pod) (
-              kube_pod_status_phase{phase=~"Pending|Running"} == 1
-          )
-      )
-  )
-record: namespace:kube_pod_container_resource_requests_memory_bytes:sum
-{{< /code >}}
- 
-##### namespace:kube_pod_container_resource_requests_cpu_cores:sum
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (namespace, cluster) (
-      sum by (namespace, pod, cluster) (
-          max by (namespace, pod, container, cluster) (
-              kube_pod_container_resource_requests_cpu_cores{job="kube-state-metrics"}
-          ) * on(namespace, pod) group_left() max by (namespace, pod) (
+            kube_pod_container_resource_requests{resource="memory",job="kube-state-metrics"}
+          ) * on(namespace, pod, cluster) group_left() max by (namespace, pod) (
             kube_pod_status_phase{phase=~"Pending|Running"} == 1
           )
       )
   )
-record: namespace:kube_pod_container_resource_requests_cpu_cores:sum
+record: namespace_memory:kube_pod_container_resource_requests:sum
+{{< /code >}}
+ 
+##### namespace_cpu:kube_pod_container_resource_requests:sum
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (namespace, cluster) (
+      sum by (namespace, pod, cluster) (
+          max by (namespace, pod, container, cluster) (
+            kube_pod_container_resource_requests{resource="cpu",job="kube-state-metrics"}
+          ) * on(namespace, pod, cluster) group_left() max by (namespace, pod) (
+            kube_pod_status_phase{phase=~"Pending|Running"} == 1
+          )
+      )
+  )
+record: namespace_cpu:kube_pod_container_resource_requests:sum
 {{< /code >}}
  
 ##### namespace_workload_pod:kube_pod_owner:relabel
