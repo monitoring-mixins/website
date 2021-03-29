@@ -19,7 +19,7 @@
          "targetBlank": false,
          "title": "GitHub",
          "type": "link",
-         "url": "https://github.com/spinnaker/fiat"
+         "url": "https://github.com/spinnaker/deck"
       }
    ],
    "refresh": "1m",
@@ -29,7 +29,7 @@
          "collapsed": false,
          "panels": [
             {
-               "content": "Fiat is the authorization server for the Spinnaker system.\n\nIt exposes a RESTful interface for querying the access permissions for a particular user. It currently supports three kinds of resources:\n-Accounts\n-Applications\n-Service Accounts\n",
+               "content": "Deck is the browser-based UI.\n\nIt is built on Apache2 which does not natively serve a Prometheus metrics endpoint.",
                "datasource": null,
                "gridPos": { },
                "id": 2,
@@ -57,361 +57,11 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 3,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 3,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\",status=\"5xx\"}[$__rate_interval])) by (controller, method, statusCode)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{statusCode}}/{{controller}}/{{method}}",
-                     "refId": "A"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "5xx Controller Invocations (fiat, $Instance)",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 4,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 3,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{controller}}/{{method}}",
-                     "refId": "A"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Controller Invocations by Method (fiat, $Instance)",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 5,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 3,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(rate(controller_invocations_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)\n/\nsum(rate(controller_invocations_seconds_count{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{controller}}/{{method}}",
-                     "refId": "A"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Controller Invocation Latency by Method (fiat, $Instance)",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "dtdurations",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "dtdurations",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Additional Metrics",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 6,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 3,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(jvm_memory_used_bytes{job=~\"$job\", instance=~\"$Instance\", area=\"heap\"}) by (id)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{id}}",
-                     "refId": "A"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "JVM Memory Usage ($spinSvc, $Instance)",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "decbytes",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "decbytes",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Machine Metrics",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
                "description": "CPU Usage. Average is the average usage across all instances, max is the highest usage across all instances. As CPU Usage is a sampled metric it is best to view in relation to throttling percentage.",
                "fill": 0,
                "fillGradient": 0,
                "gridPos": { },
-               "id": 7,
+               "id": 3,
                "legend": {
                   "alignAsTable": false,
                   "avg": false,
@@ -531,7 +181,7 @@
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
-               "id": 8,
+               "id": 4,
                "legend": {
                   "alignAsTable": false,
                   "avg": false,
@@ -614,7 +264,7 @@
                "fill": 0,
                "fillGradient": 0,
                "gridPos": { },
-               "id": 9,
+               "id": 5,
                "legend": {
                   "alignAsTable": false,
                   "avg": false,
@@ -725,7 +375,7 @@
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
-               "id": 10,
+               "id": 6,
                "legend": {
                   "alignAsTable": false,
                   "avg": false,
@@ -843,8 +493,8 @@
          {
             "allValue": null,
             "current": {
-               "text": "fiat",
-               "value": "fiat"
+               "text": "echo",
+               "value": "echo"
             },
             "hide": 2,
             "includeAll": false,
@@ -853,11 +503,11 @@
             "name": "spinSvc",
             "options": [
                {
-                  "text": "fiat",
-                  "value": "fiat"
+                  "text": "deck",
+                  "value": "deck"
                }
             ],
-            "query": "fiat",
+            "query": "deck",
             "refresh": 0,
             "type": "custom"
          },
@@ -939,7 +589,7 @@
       ]
    },
    "timezone": "browser",
-   "title": "Fiat",
-   "uid": "spinnaker-fiat",
+   "title": "Deck",
+   "uid": "spinnaker-deck",
    "version": 0
 }

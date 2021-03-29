@@ -9,19 +9,7 @@
    "graphTooltip": 0,
    "hideControls": false,
    "id": null,
-   "links": [
-      {
-         "asDropdown": true,
-         "icon": "info",
-         "includeVars": false,
-         "keepTime": false,
-         "tags": [ ],
-         "targetBlank": false,
-         "title": "GitHub",
-         "type": "link",
-         "url": "https://github.com/spinnaker/fiat"
-      }
-   ],
+   "links": [ ],
    "refresh": "1m",
    "rows": [
       {
@@ -29,28 +17,93 @@
          "collapsed": false,
          "panels": [
             {
-               "content": "Fiat is the authorization server for the Spinnaker system.\n\nIt exposes a RESTful interface for querying the access permissions for a particular user. It currently supports three kinds of resources:\n-Accounts\n-Applications\n-Service Accounts\n",
-               "datasource": null,
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 2,
-               "mode": "markdown",
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
                "span": 3,
-               "title": "Service Description",
-               "type": "text"
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Key Metrics",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "label_replace(sum(AWS_delay_sum{instance=~\"$Instance\", statusCode=\"-1\"}) by (serviceName)\n/\nsum(AWS_delay_count{instance=~\"$Instance\", statusCode=\"-1\"}) by (serviceName) , \"serviceName\", \"$1\", \"serviceName\", \"Amazon(.+)\")",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{serviceName}} / UNK",
+                     "refId": "A"
+                  },
+                  {
+                     "expr": "label_replace(sum(AWS_delay_sum{instance=~\"$Instance\", statusCode!=\"-1\"}) by (serviceName, statusCode)\n/\nsum(AWS_delay_count{instance=~\"$Instance\", statusCode!=\"-1\"}) by (serviceName, statusCode), \"serviceName\", \"$1\", \"serviceName\", \"Amazon(.+)\") ",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{serviceName}} / {{statusCode}}",
+                     "refId": "B"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "AWS Delay by Service  (clouddriver, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -89,17 +142,24 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\",status=\"5xx\"}[$__rate_interval])) by (controller, method, statusCode)",
+                     "expr": "sum(AWS_delay_sum{instance=~\"$Instance\", statusCode=\"-1\"}) by (requestType)\n/\nsum(AWS_delay_count{instance=~\"$Instance\", statusCode=\"-1\"}) by (requestType) ",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{statusCode}}/{{controller}}/{{method}}",
+                     "legendFormat": "{{requestType}} / UNK",
                      "refId": "A"
+                  },
+                  {
+                     "expr": "sum(AWS_delay_sum{instance=~\"$Instance\", statusCode!=\"-1\"}) by (requestType, statusCode)\n/\nsum(AWS_delay_count{instance=~\"$Instance\", statusCode!=\"-1\"}) by (requestType, statusCode) ",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{requestType}} / {{statusCode}}",
+                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "5xx Controller Invocations (fiat, $Instance)",
+               "title": "AWS Delay by Request (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -115,7 +175,7 @@
                },
                "yaxes": [
                   {
-                     "format": "short",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -123,7 +183,7 @@
                      "show": true
                   },
                   {
-                     "format": "short",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -170,17 +230,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)",
+                     "expr": "label_replace(sum(rate(aws_request_httpRequestTime_seconds_count{instance=~\"$Instance\",serviceEndpoint=~\".*$AwsRegion.*\",error=\"true\"}[$__rate_interval])) by (serviceEndpoint, statusCode), \"region\", \"$1\", \"serviceEndpoint\", \"[^\\\\.]+\\\\.([^\\\\.]+).*\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{controller}}/{{method}}",
+                     "legendFormat": "{{region}} / {{statusCode}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Controller Invocations by Method (fiat, $Instance)",
+               "title": "AWS Errors by Region (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -251,17 +311,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(controller_invocations_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)\n/\nsum(rate(controller_invocations_seconds_count{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)",
+                     "expr": "label_replace(label_replace(sum(rate(aws_request_httpRequestTime_seconds_count{instance=~\"$Instance\",serviceEndpoint=~\".*$AwsRegion.*\",error=\"true\"}[$__rate_interval])) by (requestType, serviceName, statusCode, AWSErrorCode), \"requestType\", \"$1\", \"requestType\", \"(.*)Request(.*)\"), \"serviceName\",  \"$1\", \"serviceName\", \"Amazon(.+)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{controller}}/{{method}}",
+                     "legendFormat": "{{statusCode}}/{{serviceName}}.{{requestType}}->{{AWSErrorCode}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Controller Invocation Latency by Method (fiat, $Instance)",
+               "title": "AWS Errors in $AwsRegion (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -277,7 +337,7 @@
                },
                "yaxes": [
                   {
-                     "format": "dtdurations",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -285,7 +345,7 @@
                      "show": true
                   },
                   {
-                     "format": "dtdurations",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -293,20 +353,7 @@
                      "show": true
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Additional Metrics",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -345,17 +392,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(jvm_memory_used_bytes{job=~\"$job\", instance=~\"$Instance\", area=\"heap\"}) by (id)",
+                     "expr": "label_replace(sum(rate(aws_request_httpRequestTime_seconds_count{instance=~\"$Instance\",serviceName=\"AmazonEC2\", error=\"false\"}[$__rate_interval])) by (serviceEndpoint), \"region\", \"$1\", \"serviceEndpoint\", \"[^\\\\.]+\\\\.([^\\\\.]+).*\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{id}}",
+                     "legendFormat": "{{region}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "JVM Memory Usage ($spinSvc, $Instance)",
+               "title": "AWS EC2 Requests  by Region (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -371,7 +418,7 @@
                },
                "yaxes": [
                   {
-                     "format": "decbytes",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -379,7 +426,7 @@
                      "show": true
                   },
                   {
-                     "format": "decbytes",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -387,28 +434,14 @@
                      "show": true
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Machine Metrics",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "CPU Usage. Average is the average usage across all instances, max is the highest usage across all instances. As CPU Usage is a sampled metric it is best to view in relation to throttling percentage.",
-               "fill": 0,
+               "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
                "id": 7,
@@ -433,62 +466,24 @@
                "points": false,
                "renderer": "flot",
                "repeat": null,
-               "seriesOverrides": [
-                  {
-                     "alias": "/avg|max/",
-                     "fill": 1
-                  },
-                  {
-                     "alias": "Request",
-                     "color": "#FF9830",
-                     "dashes": true
-                  },
-                  {
-                     "alias": "Limit",
-                     "color": "#F2495C",
-                     "dashes": true
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(rate(container_cpu_usage_seconds_total{container=~\"$spinSvc\"}[$__rate_interval]))",
+                     "expr": "label_replace(sum(rate(aws_request_httpRequestTime_seconds_count{instance=~\"$Instance\",serviceEndpoint=~\".*$AwsRegion.*\",serviceName=\"AmazonEC2\", error=\"false\"}[$__rate_interval])) by (requestType, serviceName), \"requestType\", \"$1\", \"requestType\", \"(.*)Request\")",
                      "format": "time_series",
-                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "avg",
+                     "legendFormat": "{{requestType}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "max(rate(container_cpu_usage_seconds_total{container=\"$spinSvc\"}[$__rate_interval]))",
-                     "format": "time_series",
-                     "interval": "1m",
-                     "intervalFactor": 2,
-                     "legendFormat": "max",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "avg(kube_pod_container_resource_limits_cpu_cores{container=\"$spinSvc\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Limit",
-                     "refId": "C"
-                  },
-                  {
-                     "expr": "avg(kube_pod_container_resource_requests_cpu_cores{container=\"$spinSvc\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Request",
-                     "refId": "D"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "CPU",
+               "title": "AWS EC2 Requests in $AwsRegion (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -504,7 +499,7 @@
                },
                "yaxes": [
                   {
-                     "format": "percentunit",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -512,7 +507,7 @@
                      "show": true
                   },
                   {
-                     "format": "percentunit",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -527,7 +522,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Percent of the time that the CPU is being throttled. Application may be getting throttled during bursty tasks but overall be well below its CPU limit. Throttling may significantly impact application performance.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -547,7 +541,7 @@
                "lines": true,
                "linewidth": 1,
                "links": [ ],
-               "nullPointMode": "connected",
+               "nullPointMode": "null",
                "percentage": false,
                "pointradius": 5,
                "points": false,
@@ -560,18 +554,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(container_cpu_cfs_throttled_periods_total{container=\"$spinSvc\"}[$__rate_interval])\n/\nrate(container_cpu_cfs_periods_total{container=\"$spinSvc\"}[$__rate_interval])",
+                     "expr": "label_replace(sum(rate(aws_request_httpRequestTime_seconds_sum{instance=~\"$Instance\",serviceEndpoint=~\".*$AwsRegion.*\",serviceName=\"AmazonEC2\"}[$__rate_interval])) by (serviceEndpoint, serviceName)\n/ sum(rate(aws_request_httpRequestTime_seconds_count{instance=~\"$Instance\",serviceName=\"AmazonEC2\", error=\"false\"}[$__rate_interval])) by (serviceEndpoint, serviceName), \"region\", \"$1\", \"serviceEndpoint\", \"[^\\\\.]+\\\\.([^\\\\.]+).*\")",
                      "format": "time_series",
-                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{pod}}",
+                     "legendFormat": "{{region}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "CPU Throttling",
+               "title": "AWS EC2 Request Latency by Region  (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -587,7 +580,7 @@
                },
                "yaxes": [
                   {
-                     "format": "percentunit",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -595,7 +588,7 @@
                      "show": true
                   },
                   {
-                     "format": "percentunit",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -610,8 +603,7 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Memory utilisation. Average is the average usage across all instaces, max is the highest usage across all instances.",
-               "fill": 0,
+               "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
                "id": 9,
@@ -636,53 +628,24 @@
                "points": false,
                "renderer": "flot",
                "repeat": null,
-               "seriesOverrides": [
-                  {
-                     "alias": "/avg|max/",
-                     "fill": 1
-                  },
-                  {
-                     "alias": "Request",
-                     "color": "#FF9830",
-                     "dashes": true
-                  },
-                  {
-                     "alias": "Limit",
-                     "color": "#F2495C",
-                     "dashes": true
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(avg_over_time(container_memory_working_set_bytes{container=\"$spinSvc\"}[$__interval]))",
+                     "expr": "sum(rate(aws_request_httpRequestTime_seconds_sum{instance=~\"$Instance\",serviceEndpoint=~\".*$AwsRegion.*\",serviceName=\"AmazonEC2\"}[$__rate_interval])) by (requestType, serviceName)\n/ sum(rate(aws_request_httpRequestTime_seconds_count{instance=~\"$Instance\",serviceName=\"AmazonEC2\", error=\"false\"}[$__rate_interval])) by (requestType, serviceName)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "avg",
+                     "legendFormat": "{{requestType}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "max(max_over_time(container_memory_working_set_bytes{container=\"$spinSvc\"}[$__interval]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "max",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "avg(kube_pod_container_resource_limits_memory_bytes{container=\"$spinSvc\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Limit",
-                     "refId": "C"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Memory",
+               "title": "AWS EC2 Request Latency in $AwsRegion  (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -698,7 +661,7 @@
                },
                "yaxes": [
                   {
-                     "format": "decbytes",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -706,7 +669,7 @@
                      "show": true
                   },
                   {
-                     "format": "decbytes",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -721,7 +684,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Average network ingress/egress for the $spinSvc pods.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -741,42 +703,30 @@
                "lines": true,
                "linewidth": 1,
                "links": [ ],
-               "nullPointMode": "connected",
+               "nullPointMode": "null",
                "percentage": false,
                "pointradius": 5,
                "points": false,
                "renderer": "flot",
                "repeat": null,
-               "seriesOverrides": [
-                  {
-                     "alias": "transmit",
-                     "transform": "negative-Y"
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(\n  sum without (interface) (\n    rate(container_network_receive_bytes_total{pod=~\"$spinSvc.*\"}[$__rate_interval])\n  )\n)",
+                     "expr": "label_replace(sum(rate(aws_request_httpRequestTime_seconds_count{instance=~\"$Instance\",serviceEndpoint=~\".*$AwsRegion.*\",serviceName!=\"AmazonEC2\", error=\"false\"}[$__rate_interval])) by (serviceName, serviceEndpoint), \"region\", \"$1\", \"serviceEndpoint\", \"[^\\\\.]+\\\\.([^\\\\.]+).*\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "receive",
+                     "legendFormat": "{{serviceName}} / {{region}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "avg(\n  sum without (interface) (\n    rate(container_network_transmit_bytes_total{pod=~\"$spinSvc.*\"}[$__rate_interval])\n  )\n)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "transmit",
-                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Network",
+               "title": "AWS Requests (non EC2) by Region (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -792,7 +742,7 @@
                },
                "yaxes": [
                   {
-                     "format": "binBps",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -800,7 +750,250 @@
                      "show": true
                   },
                   {
-                     "format": "binBps",
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 11,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "label_replace(sum(rate(aws_request_httpRequestTime_seconds_count{instance=~\"$Instance\",serviceEndpoint=~\".*$AwsRegion.*\",serviceName!=\"AmazonEC2\", error=\"false\"}[$__rate_interval])) by (requestType, serviceName), \"serviceName\", \"$1\", \"serviceName\", \"Amazon(.+)\")",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{serviceName}}.{{requestType}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "AWS Requests (non EC2) in $AwsRegion (clouddriver, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 12,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "label_replace(label_replace(sum(rate(aws_request_httpRequestTime_seconds_sum{instance=~\"$Instance\",serviceEndpoint=~\".*$AwsRegion.*\",serviceName!=\"AmazonEC2\"}[$__rate_interval])) by (serviceEndpoint, serviceName)\n/ sum(rate(aws_request_httpRequestTime_seconds_count{serviceName!=\"AmazonEC2\", error=\"false\"}[$__rate_interval])) by (serviceEndpoint, serviceName), \"serviceName\", \"$1\", \"serviceName\", \"Amazon(.+)\"), \"region\", \"$1\", \"serviceEndpoint\", \"[^\\\\.]+\\\\.([^\\\\.]+).*\")",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{serviceName}} / {{region}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "AWS Non-EC2 Request Latency by Region  (clouddriver, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 13,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "label_replace(label_replace(sum(rate(aws_request_httpRequestTime_seconds_sum{instance=~\"$Instance\",serviceEndpoint=~\".*$AwsRegion.*\",serviceName!=\"AmazonEC2\"}[$__rate_interval])) by (requestType, serviceName)\n/\nsum(rate(aws_request_httpRequestTime_seconds_count{serviceName!=\"AmazonEC2\", error=\"false\"}[$__rate_interval])) by (requestType, serviceName), \"serviceName\", \"$1\", \"serviceName\", \"Amazon(.+)\"), \"requestType\", \"$1\", \"requestType\", \"(.*)Request\")",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{serviceName}}.{{requestType}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "AWS Non-EC2 Request Latency in $AwsRegion  (clouddriver, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -814,7 +1007,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Kubernetes Pod Metrics",
+         "title": "AWS",
          "titleSize": "h6",
          "type": "row"
       }
@@ -841,28 +1034,7 @@
             "type": "datasource"
          },
          {
-            "allValue": null,
-            "current": {
-               "text": "fiat",
-               "value": "fiat"
-            },
-            "hide": 2,
-            "includeAll": false,
-            "label": "",
-            "multi": false,
-            "name": "spinSvc",
-            "options": [
-               {
-                  "text": "fiat",
-                  "value": "fiat"
-               }
-            ],
-            "query": "fiat",
-            "refresh": 0,
-            "type": "custom"
-         },
-         {
-            "allValue": null,
+            "allValue": ".*",
             "current": {
                "text": "All",
                "value": "All"
@@ -872,12 +1044,12 @@
             "includeAll": true,
             "label": null,
             "multi": false,
-            "name": "job",
+            "name": "AwsRegion",
             "options": [ ],
-            "query": "label_values(up{job=~\".*$spinSvc.*\"}, job)",
-            "refresh": 1,
-            "regex": "",
-            "sort": 0,
+            "query": "aws_request_httpRequestTime_seconds_count",
+            "refresh": 2,
+            "regex": "/.*serviceEndpoint=\"[^\\.]+\\.([^\\.]+).*/",
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [ ],
             "tagsQuery": "",
@@ -894,11 +1066,11 @@
             "hide": 0,
             "includeAll": true,
             "label": null,
-            "multi": true,
+            "multi": false,
             "name": "Instance",
             "options": [ ],
-            "query": "label_values(up{job=~\"$job\"}, instance)",
-            "refresh": 1,
+            "query": "label_values(aws_request_httpRequestTime_seconds_count, instance)",
+            "refresh": 2,
             "regex": "",
             "sort": 1,
             "tagValuesQuery": "",
@@ -939,7 +1111,7 @@
       ]
    },
    "timezone": "browser",
-   "title": "Fiat",
-   "uid": "spinnaker-fiat",
+   "title": "Spinnaker AWS Platform",
+   "uid": "spinnaker-aws-platform",
    "version": 0
 }

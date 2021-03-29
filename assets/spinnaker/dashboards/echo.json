@@ -1,533 +1,906 @@
 {
+   "__inputs": [ ],
+   "__requires": [ ],
    "annotations": {
-      "list": [
-         {
-            "builtIn": 1,
-            "datasource": "-- Grafana --",
-            "enable": true,
-            "hide": true,
-            "iconColor": "rgba(0, 211, 255, 1)",
-            "name": "Annotations & Alerts",
-            "type": "dashboard"
-         }
-      ]
+      "list": [ ]
    },
    "editable": true,
    "gnetId": null,
    "graphTooltip": 0,
-   "iteration": 1597288868990,
+   "hideControls": false,
+   "id": null,
    "links": [
       {
+         "asDropdown": true,
          "icon": "info",
+         "includeVars": false,
+         "keepTime": false,
          "tags": [ ],
+         "targetBlank": false,
          "title": "GitHub",
-         "tooltip": "",
          "type": "link",
          "url": "https://github.com/spinnaker/echo"
       }
    ],
-   "panels": [
+   "refresh": "1m",
+   "rows": [
       {
-         "aliasColors": { },
-         "bars": true,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "prometheus",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { }
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 5,
-            "w": 24,
-            "x": 0,
-            "y": 0
-         },
-         "hiddenSeries": false,
-         "id": 73,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "hideEmpty": true,
-            "hideZero": true,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "links": [ ],
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.3",
-         "pointradius": 5,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": true,
-         "steppedLine": false,
-         "targets": [
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
-               "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\",status=\"5xx\"}[$__interval])) by (controller, method, statusCode)",
-               "hide": false,
-               "interval": "30s",
-               "intervalFactor": 2,
-               "legendFormat": "{{statusCode}}/{{controller}}/{{method}}",
-               "refId": "C",
-               "step": 10
+               "content": "Echo serves as two purposes within Spinnaker:\n\n1. a router for events\n   - incoming events, for example a new build is detected by Igor which should trigger a pipeline.\n   - outgoing events such as notifications via email, Slack, etc\n2. a scheduler for CRON triggered pipelines.",
+               "datasource": null,
+               "gridPos": { },
+               "id": 2,
+               "mode": "markdown",
+               "span": 3,
+               "title": "Service Description",
+               "type": "text"
             }
          ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Controller 5xx Errors (echo, $Instance)",
-         "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "$$hashKey": "object:3761",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": "0",
-               "show": true
-            },
-            {
-               "$$hashKey": "object:3762",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": "0",
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Key Metrics",
+         "titleSize": "h6",
+         "type": "row"
       },
       {
-         "aliasColors": { },
-         "bars": true,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "prometheus",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { }
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 5,
-            "w": 24,
-            "x": 0,
-            "y": 5
-         },
-         "hiddenSeries": false,
-         "id": 4,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "hideEmpty": true,
-            "hideZero": true,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "links": [ ],
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.3",
-         "pointradius": 5,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": true,
-         "steppedLine": false,
-         "targets": [
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
-               "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (controller, method)",
-               "hide": false,
-               "interval": "30s",
-               "intervalFactor": 2,
-               "legendFormat": "{{controller}}/{{method}}",
-               "refId": "C",
-               "step": 10
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 3,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\",status=\"5xx\"}[$__rate_interval])) by (controller, method, statusCode)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{statusCode}}/{{controller}}/{{method}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Controller 5xx Errors (echo, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 4,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{controller}}/{{method}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Controller Invocations by Method (echo, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 5,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(controller_invocations_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)\n/\nsum(rate(controller_invocations_seconds_count{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{controller}}/{{method}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Controller Invocation Latency by Method (echo, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 6,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(pipelines_triggered_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (application)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{application}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Pipelines Triggered (echo, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
             }
          ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Controller Invocations by Method (echo, $Instance)",
-         "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "$$hashKey": "object:3841",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": "0",
-               "show": true
-            },
-            {
-               "$$hashKey": "object:3842",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": "0",
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Additional Metrics",
+         "titleSize": "h6",
+         "type": "row"
       },
       {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "prometheus",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { }
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 5,
-            "w": 24,
-            "x": 0,
-            "y": 10
-         },
-         "hiddenSeries": false,
-         "id": 23,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "hideEmpty": true,
-            "hideZero": true,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "links": [ ],
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.3",
-         "pointradius": 5,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
-               "expr": "sum(rate(controller_invocations_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (controller, method)\n/\nsum(rate(controller_invocations_seconds_count{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (controller, method)",
-               "hide": false,
-               "interval": "30s",
-               "intervalFactor": 2,
-               "legendFormat": "{{controller}}/{{method}}",
-               "refId": "C",
-               "step": 10
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 7,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(jvm_memory_used_bytes{job=~\"$job\", instance=~\"$Instance\", area=\"heap\"}) by (id)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{id}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "JVM Memory Usage ($spinSvc, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "decbytes",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "decbytes",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
             }
          ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Controller Invocation Latency by Method (echo, $Instance)",
-         "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "$$hashKey": "object:3921",
-               "format": "s",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "$$hashKey": "object:3922",
-               "format": "ns",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Machine Metrics",
+         "titleSize": "h6",
+         "type": "row"
       },
       {
-         "aliasColors": { },
-         "bars": true,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "prometheus",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { }
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 5,
-            "w": 24,
-            "x": 0,
-            "y": 15
-         },
-         "hiddenSeries": false,
-         "id": 38,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "hideEmpty": true,
-            "hideZero": true,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "links": [ ],
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.3",
-         "pointradius": 5,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": true,
-         "steppedLine": false,
-         "targets": [
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
-               "expr": "sum(rate(pipelines_triggered_total{job=~\"$job\", instance=~\"$Instance\"}[$__interval])) by (application)",
-               "hide": false,
-               "interval": "30s",
-               "intervalFactor": 2,
-               "legendFormat": "{{application}}",
-               "metric": "",
-               "refId": "A",
-               "step": 10
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Pipelines Triggered (echo, $Instance)",
-         "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "$$hashKey": "object:4079",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": "0",
-               "show": true
-            },
-            {
-               "$$hashKey": "object:4080",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": "0",
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "prometheus",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { }
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 5,
-            "w": 24,
-            "x": 0,
-            "y": 20
-         },
-         "hiddenSeries": false,
-         "id": 21,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "links": [ ],
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.3",
-         "pointradius": 5,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum(jvm_memory_used_bytes{job=~\"$job\", instance=~\"$Instance\",area=\"heap\"}) by (id)",
-               "interval": "30s",
-               "intervalFactor": 2,
-               "legendFormat": "{{id}}",
-               "metric": "",
-               "refId": "B",
-               "step": 10
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "JVM Memory Usage (echo, $Instance)",
-         "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "$$hashKey": "object:3551",
-               "format": "decbytes",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "description": "CPU Usage. Average is the average usage across all instances, max is the highest usage across all instances. As CPU Usage is a sampled metric it is best to view in relation to throttling percentage.",
+               "fill": 0,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 8,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [
+                  {
+                     "alias": "/avg|max/",
+                     "fill": 1
+                  },
+                  {
+                     "alias": "Request",
+                     "color": "#FF9830",
+                     "dashes": true
+                  },
+                  {
+                     "alias": "Limit",
+                     "color": "#F2495C",
+                     "dashes": true
+                  }
+               ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "avg(rate(container_cpu_usage_seconds_total{container=~\"$spinSvc\"}[$__rate_interval]))",
+                     "format": "time_series",
+                     "interval": "1m",
+                     "intervalFactor": 2,
+                     "legendFormat": "avg",
+                     "refId": "A"
+                  },
+                  {
+                     "expr": "max(rate(container_cpu_usage_seconds_total{container=\"$spinSvc\"}[$__rate_interval]))",
+                     "format": "time_series",
+                     "interval": "1m",
+                     "intervalFactor": 2,
+                     "legendFormat": "max",
+                     "refId": "B"
+                  },
+                  {
+                     "expr": "avg(kube_pod_container_resource_limits_cpu_cores{container=\"$spinSvc\"})",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "Limit",
+                     "refId": "C"
+                  },
+                  {
+                     "expr": "avg(kube_pod_container_resource_requests_cpu_cores{container=\"$spinSvc\"})",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "Request",
+                     "refId": "D"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "CPU",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "percentunit",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "percentunit",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
             },
             {
-               "format": "decbytes",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "description": "Percent of the time that the CPU is being throttled. Application may be getting throttled during bursty tasks but overall be well below its CPU limit. Throttling may significantly impact application performance.",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 9,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "connected",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "rate(container_cpu_cfs_throttled_periods_total{container=\"$spinSvc\"}[$__rate_interval])\n/\nrate(container_cpu_cfs_periods_total{container=\"$spinSvc\"}[$__rate_interval])",
+                     "format": "time_series",
+                     "interval": "1m",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{pod}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "CPU Throttling",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "percentunit",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "percentunit",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "description": "Memory utilisation. Average is the average usage across all instaces, max is the highest usage across all instances.",
+               "fill": 0,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 10,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [
+                  {
+                     "alias": "/avg|max/",
+                     "fill": 1
+                  },
+                  {
+                     "alias": "Request",
+                     "color": "#FF9830",
+                     "dashes": true
+                  },
+                  {
+                     "alias": "Limit",
+                     "color": "#F2495C",
+                     "dashes": true
+                  }
+               ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "avg(avg_over_time(container_memory_working_set_bytes{container=\"$spinSvc\"}[$__interval]))",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "avg",
+                     "refId": "A"
+                  },
+                  {
+                     "expr": "max(max_over_time(container_memory_working_set_bytes{container=\"$spinSvc\"}[$__interval]))",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "max",
+                     "refId": "B"
+                  },
+                  {
+                     "expr": "avg(kube_pod_container_resource_limits_memory_bytes{container=\"$spinSvc\"})",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "Limit",
+                     "refId": "C"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Memory",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "decbytes",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "decbytes",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "description": "Average network ingress/egress for the $spinSvc pods.",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 11,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "connected",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [
+                  {
+                     "alias": "transmit",
+                     "transform": "negative-Y"
+                  }
+               ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "avg(\n  sum without (interface) (\n    rate(container_network_receive_bytes_total{pod=~\"$spinSvc.*\"}[$__rate_interval])\n  )\n)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "receive",
+                     "refId": "A"
+                  },
+                  {
+                     "expr": "avg(\n  sum without (interface) (\n    rate(container_network_transmit_bytes_total{pod=~\"$spinSvc.*\"}[$__rate_interval])\n  )\n)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "transmit",
+                     "refId": "B"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Network",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "binBps",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "binBps",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
             }
          ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Kubernetes Pod Metrics",
+         "titleSize": "h6",
+         "type": "row"
       }
    ],
-   "refresh": "1m",
-   "schemaVersion": 26,
+   "schemaVersion": 14,
    "style": "dark",
    "tags": [
       "spinnaker"
@@ -536,33 +909,46 @@
       "list": [
          {
             "current": {
-               "selected": true,
+               "text": "",
+               "value": ""
+            },
+            "hide": 0,
+            "label": null,
+            "name": "datasource",
+            "options": [ ],
+            "query": "prometheus",
+            "refresh": 1,
+            "regex": "",
+            "type": "datasource"
+         },
+         {
+            "allValue": null,
+            "current": {
                "text": "echo",
                "value": "echo"
             },
             "hide": 2,
-            "label": null,
+            "includeAll": false,
+            "label": "",
+            "multi": false,
             "name": "spinSvc",
             "options": [
                {
-                  "selected": true,
                   "text": "echo",
                   "value": "echo"
                }
             ],
             "query": "echo",
-            "skipUrlSync": false,
-            "type": "constant"
+            "refresh": 0,
+            "type": "custom"
          },
          {
-            "allValue": "",
+            "allValue": null,
             "current": {
-               "selected": true,
                "text": "All",
-               "value": "$__all"
+               "value": "All"
             },
-            "datasource": "prometheus",
-            "definition": "label_values(up{job=~\".*$spinSvc.*\"}, job)",
+            "datasource": "$datasource",
             "hide": 0,
             "includeAll": true,
             "label": null,
@@ -572,7 +958,6 @@
             "query": "label_values(up{job=~\".*$spinSvc.*\"}, job)",
             "refresh": 1,
             "regex": "",
-            "skipUrlSync": false,
             "sort": 0,
             "tagValuesQuery": "",
             "tags": [ ],
@@ -583,24 +968,19 @@
          {
             "allValue": ".*",
             "current": {
-               "selected": true,
                "text": "All",
-               "value": [
-                  "$__all"
-               ]
+               "value": "All"
             },
-            "datasource": "prometheus",
-            "definition": "label_values(up{job=~\"$job\"}, instance)",
+            "datasource": "$datasource",
             "hide": 0,
             "includeAll": true,
             "label": null,
-            "multi": false,
+            "multi": true,
             "name": "Instance",
             "options": [ ],
             "query": "label_values(up{job=~\"$job\"}, instance)",
             "refresh": 1,
             "regex": "",
-            "skipUrlSync": false,
             "sort": 1,
             "tagValuesQuery": "",
             "tags": [ ],
@@ -616,6 +996,7 @@
    },
    "timepicker": {
       "refresh_intervals": [
+         "5s",
          "10s",
          "30s",
          "1m",
@@ -639,7 +1020,7 @@
       ]
    },
    "timezone": "browser",
-   "title": "Echo Microservice",
-   "uid": "e4CQBc4Mk",
-   "version": 3
+   "title": "Echo",
+   "uid": "spinnaker-echo",
+   "version": 0
 }

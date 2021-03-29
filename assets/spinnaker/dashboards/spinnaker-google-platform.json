@@ -9,19 +9,7 @@
    "graphTooltip": 0,
    "hideControls": false,
    "id": null,
-   "links": [
-      {
-         "asDropdown": true,
-         "icon": "info",
-         "includeVars": false,
-         "keepTime": false,
-         "tags": [ ],
-         "targetBlank": false,
-         "title": "GitHub",
-         "type": "link",
-         "url": "https://github.com/spinnaker/orca"
-      }
-   ],
+   "links": [ ],
    "refresh": "1m",
    "rows": [
       {
@@ -29,20 +17,85 @@
          "collapsed": false,
          "panels": [
             {
-               "content": "Orca is the orchestration engine for Spinnaker. It is responsible for taking an execution definition and managing the stages and tasks, coordinating the other Spinnaker services.",
-               "datasource": null,
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 2,
-               "links": [
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
                   {
-                     "title": "Medium Blog Post: Monitoring Spinnaker Part 1",
-                     "url": "https://blog.spinnaker.io/monitoring-spinnaker-part-1-4847f42a3abd"
+                     "expr": "sum(label_replace(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",status!=\"2xx\"}[$__rate_interval]), \"resource\", \"$1\", \"api\", \"compute.(.*)\\\\..*\")) by (resource, statusCode)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{statusCode}}/{{resource}}",
+                     "refId": "A"
                   }
                ],
-               "mode": "markdown",
-               "span": 3,
-               "title": "Service Description",
-               "type": "text"
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "GCP API Failures by Resource (clouddriver, $ClouddriverInstance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
             },
             {
                "aliasColors": { },
@@ -50,7 +103,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "The primary domain model is an Execution, of which there are two types: PIPELINE and ORCHESTRATION. \n\nThe PIPELINE type is, you guessed it, for pipelines while ORCHESTRATION is what you see in the “Tasks” tab for an application. \n\nThis is really just good insight for answering the question of workload distribution. \n\nSince adding this metric, we’ve never seen it crater, but if that were to happen it’d be bad. \n\nFor Netflix, most ORCHESTRATION executions are API clients. \n\nDisregarding what the execution is doing, there’s no baseline cost difference between a running orchestration and a pipeline.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -83,17 +135,31 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (executionType) (\n  executions_active{container=\"orca\"}\n)",
+                     "expr": "sum(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",status!=\"2xx\", scope=\"regional\"}[$__rate_interval])) by (region, statusCode)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{ executionType }}",
+                     "legendFormat": "{{statusCode}}/{{region}}",
                      "refId": "A"
+                  },
+                  {
+                     "expr": "sum(label_replace(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",status!=\"2xx\",scope=\"zonal\"}[$__rate_interval]), \"zoneRegion\", \"$1\", \"zone\", \"(.*)-.\")) by (zoneRegion, statusCode)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{statusCode}}/{{zoneRegion}}+",
+                     "refId": "B"
+                  },
+                  {
+                     "expr": "sum(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",status!=\"2xx\",scope=\"global\"}[$__rate_interval])) by (zone, statusCode)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{statusCode}}/global",
+                     "refId": "C"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Active Executions",
+               "title": "GCP API Failures by Region (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -132,7 +198,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "If you’ve got a lot of 500’s, check your logs. \n\nWhen we see a spike in either invocation times or 5xx errors, it’s usually one of two things: \n\n1) Clouddriver is having a bad day, \n\n2) Orca doesn’t have enough capacity in some respect to service people polling for pipeline status updates. \n\nYou’ll need to dig elsewhere to find the cause.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -165,17 +230,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (controller, status) (\n  rate(controller_invocations_seconds_sum{container=\"orca\"}[$__rate_interval])\n) \n/\nsum by (controller, status) (\n  rate(controller_invocations_seconds_count{container=\"orca\"}[$__rate_interval])\n)\n",
+                     "expr": "sum(rate(front50:google:storage:invocation__count_total{instance=~\"$Front50Instance\",status!=\"2xx\"}[$__rate_interval])) by (method, statusCode)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "",
+                     "legendFormat": "{{statusCode}}/{{method}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Controller Invocation Time",
+               "title": "Google Storage Failures By Method (front50, $Front50Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -191,7 +256,7 @@
                },
                "yaxes": [
                   {
-                     "format": "dtdurations",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -199,7 +264,7 @@
                      "show": true
                   },
                   {
-                     "format": "dtdurations",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -214,7 +279,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "This will look similar to the first metric we looked at, but this is directly looking at our queue: \n\nThis is the number of Execution-related Messages that we’re invoking every second.\n\nIf this drops, it’s a sign that your QueueProcessor may be starting to freeze up.\n\nAt that point, check that the thread pool it’s on isn’t starved for threads.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -247,17 +311,24 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (executionType) (\n  rate(task_invocations_duration_seconds_count{container=\"orca\"}[$__rate_interval])\n)",
+                     "expr": "sum(rate(front50:google:storage:invocation__count_total{instance=~\"$Front50Instance\",status!=\"2xx\"}[$__rate_interval])) by (method, statusCode)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "",
+                     "legendFormat": "{{statusCode}}/{{method}}",
                      "refId": "A"
+                  },
+                  {
+                     "expr": "sum(rate(front50:google:safeRetry__count_total{instance=~\"$Front50Instance\", success!=\"true\"}[$__rate_interval])) by (action)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{action}}",
+                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Rate of Task Invocations",
+               "title": "Google Storage Retry Failures by Method (front50, $Front50Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -289,14 +360,26 @@
                      "show": true
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "API Errors",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "This is handy to see who your biggest customers are, from a pure orchestration volume perspective. \n\nOften times, if we start to experience pain and see a large uptick in queue usage, it’ll be due to a large submission from one or two customers. \n\nIf we were having pain, we could bump our capacity, or look to adjust some rate limits.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -329,17 +412,24 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (application, executionType) (\n  rate(\n    task_invocations_duration_seconds_count{container=\"orca\", status=\"RUNNING\"}[$__rate_interval])\n) ",
+                     "expr": "sum(label_replace(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\"}[$__rate_interval]), \"resource\", \"$1\", \"api\", \"compute.(.*)\\\\..*\")) by (resource)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{ application }} - {{ executionType }}",
+                     "legendFormat": "{{resource}}",
                      "refId": "A"
+                  },
+                  {
+                     "expr": "sum(label_replace(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\"}[$__rate_interval]), \"resource\", \"$1\", \"api\", \"compute.(.*)\\\\..*\")) by (resource, status, statusCode)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{resource}}",
+                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Task Invocations by Application",
+               "title": "GCP API Calls by Resource (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -378,7 +468,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "This is our thread pool for the Message Handlers.\n\n\nSpare capacity is good.\n\nActive is actual active usage.\n\nBlocking is when a thread is blocked. \n\nBlockingQueueSize is bad, especially \"pollSkippedNoCapacity\" should always block blockingQueueSize being changed from 0.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -411,31 +500,31 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(\n  threadpool_activeCount{container=\"orca\"}\n)",
+                     "expr": "sum(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",scope=\"regional\"}[$__rate_interval])) by (region)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "Active",
+                     "legendFormat": "{{region}}",
                      "refId": "A"
                   },
                   {
-                     "expr": "sum(\n  threadpool_blockingQueueSize{container=\"orca\"}\n)",
+                     "expr": "sum(label_replace(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",scope=\"zonal\"}[$__rate_interval]), \"zoneRegion\", \"$1\", \"zone\", \"(.*)-.\")) by (zoneRegion)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "Blocking",
+                     "legendFormat": "{{zoneRegion}}+",
                      "refId": "B"
                   },
                   {
-                     "expr": "sum(\n  threadpool_poolSize{container=\"orca\"}\n)",
+                     "expr": "sum(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",scope=\"global\"}[$__rate_interval])) by (zone)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "Size",
+                     "legendFormat": "global",
                      "refId": "C"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Message Handler Executor Usage",
+               "title": "GCP API Calls by Region (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -467,14 +556,26 @@
                      "show": true
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "API Call Summary",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "If messages pushed is out pacing acked, you’re presently having a bad time. \n\nMost messages will complete in a blink of an eye, only RunTask will really take much time. \n\nIf you see an uptick in messages pushed, but not a correlating ack’d, it’s a good indicator you’ve got a downstream service issue that’s preventing message handlers completing: \n\nTake a look at Clouddriver, it probably wants your love and attention.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -507,24 +608,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(\n  rate(queue_pushed_messages_total{container=\"orca\"}[$__rate_interval])\n)",
+                     "expr": "label_replace(sum(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",scope=\"global\"}[$__rate_interval])) by (api), \"api\", \"$1\", \"api\", \"compute.(.*)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "Pushed",
+                     "legendFormat": "{{api}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "sum(\n  rate(queue_acknowledged_messages_total{container=\"orca\"}[$__rate_interval])\n)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Ack'd",
-                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Rate of Queue Messages Pushed / Acked (s)",
+               "title": "Global GCP API Calls (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -563,7 +657,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Keiko supports setting a delivery time for messages, so you’ll always see queued messages outpacing in-process messages if your Spinnaker install is active.\n\nThings like wait tasks, execution windows, retries, and so-on all schedule message delivery in the future, and in-process messages are usually in-process for a handful of milliseconds.\n\nOperating Orca, one of your life mission is to keep ready messages at 0. \n\nA ready message is a message that has a delivery time of now or in the past, but it hasn’t been picked up and transitioned into processing yet: \n\nThis is a key contributor to a complaint of, “Spinnaker is slow.” \n\nAs I’ve mentioned before, Orca is horizontally scalable. \n\nGive Orca an adrenaline shot of instances if you see ready messages over 0 for more than two intervals so you can clear the queue out.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -596,209 +689,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(\n  queue_depth{container=\"orca\"}\n)",
+                     "expr": "label_replace(sum(rate(clouddriver:google:api__totalTime_total{instance=~\"$ClouddriverInstance\",scope=\"global\"}[$__rate_interval])) by (api) / sum(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",scope=\"global\"}[$__rate_interval])) by (api), \"api\", \"$1\", \"api\", \"compute.(.*)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "queued",
+                     "legendFormat": "{{api}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "sum(\n  queue_ready_depth{container=\"orca\"}\n)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "ready",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "sum(\nqueue_unacked_depth{container=\"orca\"}\n)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "unacked",
-                     "refId": "C"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Queue Depth",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "Retried is a normal error condition by itself. \n\nDead-lettered occurs when a message has been retried a bunch of times and has never been successfully delivered.\n\nOrphaned messages are bad. \n\nThey’re messages whose message contents are in the queue, but do not have a pointer in either the queue set or unacked set. \n\nThis is a sign of an internal error, likely a troubling issue with Redis. \n\nIt “should never happen” if your system is healthy, and likewise “should never happen” even if your system is really, really overloaded. It’s worth a bug report.",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 10,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 3,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(\n  queue_retried_messages_total{container=\"orca\"}\n)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "retried",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "sum(\n  rate(queue_orphaned_messages{container=\"orca\"}[$__rate_interval])\n)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "orphaned",
-                     "refId": "B"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Queue Errors",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "This is a measurement of a message’s desired delivery time and the actual delivery time: Smaller and tighter is better. This is a timer measurement of every message’s (usually very short) life in a ready state. When your queue gets backed up, this number will grow. \n\nWe consider this one of Orca’s key performance indicators.\n\nA mean message lag of anything under a few hundred milliseconds is fine. \n\nDon’t panic until you’re getting around a second. \n\nScale up, everything should be fine.",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 11,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 3,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(\n  queue_message_lag_seconds_sum\n)\n/\nsum(\n  queue_message_lag_seconds_count\n)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "mean",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "max(queue_message_lag_seconds_max)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "max",
-                     "refId": "B"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Message Lag",
+               "title": "Global GCP API Latency (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -836,7 +737,182 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Key Metrics",
+         "title": "Global API Calls",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 10,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "label_replace(sum(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",scope=\"regional\",region=~\"$GcpRegion\"}[$__rate_interval])) by (api), \"api\", \"$1\", \"api\", \"compute.(.*)\")",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{api}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Regional GCP API Calls in $GcpRegion (clouddriver, $ClouddriverInstance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 11,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "label_replace(sum(rate(clouddriver:google:api__totalTime_total{instance=~\"$ClouddriverInstance\",scope=\"regional\",region=~\"$GcpRegion\"}[$__rate_interval])) by (api) / sum(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",scope=\"regional\",region=~\"$GcpRegion\"}[$__rate_interval])) by (api), \"api\", \"$1\", \"api\", \"compute.(.*)\")",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{api}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Regional GCP API Latency in $GcpRegion (clouddriver, $ClouddriverInstance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Regional API Calls",
          "titleSize": "h6",
          "type": "row"
       },
@@ -882,17 +958,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\", status=\"5xx\"}[$__rate_interval])) by (controller, method, status)",
+                     "expr": "label_replace(label_replace(sum(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",scope=\"zonal\",zone=~\".*$GcpRegion.*\"}[$__rate_interval])) by (zone, api), \"api\", \"$1\", \"api\", \"compute.(.*)\"), \"cell\", \"$1\", \"zone\", \".*-(.)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{statusCode}}/{{controller}}/{{method}}",
+                     "legendFormat": "{{api}}/{{cell}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "5xx Invocation Errors (orca, $Instance)",
+               "title": "Zonal GCP API in $GcpRegion (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -963,17 +1039,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(stage_invocations_duration_total{job=~\"$job\", instance=~\"$Instance\", bucket!=\"lt5m\"}[$__rate_interval])) by (stageType, cloudProvider, bucket)",
+                     "expr": "label_replace(sum(rate(clouddriver:google:api__totalTime_total{instance=~\"$ClouddriverInstance\",scope=\"zonal\",zone=~\".*$GcpRegion.*\"}[$__rate_interval])) by (api, zone) / sum(rate(clouddriver:google:api__count_total{instance=~\"$ClouddriverInstance\",scope=\"zonal\", zone=~\".*$GcpRegion.*\"}[$__rate_interval])) by (api, zone), \"api\", \"$1\", \"api\", \"compute.(.*)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{bucket}}/{{cloudProvider}}/{{stageType}}",
+                     "legendFormat": "{{api}}/{{zone}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Stage Durations > 5m per Time-Bucket/Platform (orca, $Instance)",
+               "title": "Zonal GCP API Latency in $GcpRegion (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -989,7 +1065,7 @@
                },
                "yaxes": [
                   {
-                     "format": "short",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -997,7 +1073,7 @@
                      "show": true
                   },
                   {
-                     "format": "short",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -1005,7 +1081,20 @@
                      "show": true
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Zonal API Calls",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
@@ -1044,17 +1133,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(okhttp_requests_seconds_count{job=~\"$job\",instance=~\"$Instance\"}[$__rate_interval])) by (statusCode)",
+                     "expr": "label_replace(sum(rate(clouddriver:google:batchSize{instance=~\"$ClouddriverInstance\"}[$__rate_interval])) by (context), \"context\", \"$1$2\", \"context\", \"(.*)Caching(.*)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{statusCode}}",
+                     "legendFormat": "{{context}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Ok Http Calls by Status Code (orca, $Instance)",
+               "title": "GCP Batch Size (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1125,17 +1214,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(okhttp_requests_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (requestHost)\n/\nsum(rate(okhttp_requests_seconds_count{job=\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (requestHost)",
+                     "expr": "label_replace(sum(rate(clouddriver:google:batchExecute__count_total{instance=~\"$ClouddriverInstance\"}[$__rate_interval])) by (context), \"context\", \"$1$2\", \"context\", \"(.*)Caching(.*)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{requestHost}}",
+                     "legendFormat": "{{context}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Ok Http Calls Latency by Request Host (orca, $Instance)",
+               "title": "GCP Batch Count (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1151,7 +1240,7 @@
                },
                "yaxes": [
                   {
-                     "format": "dtdurations",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -1159,7 +1248,7 @@
                      "show": true
                   },
                   {
-                     "format": "dtdurations",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -1206,17 +1295,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)",
+                     "expr": "label_replace(rate(clouddriver:google:batchExecute__totalTime_total{instance=~\"$ClouddriverInstance\"}[$__rate_interval]) / rate(clouddriver:google:batchExecute__count_total{instance=~\"$ClouddriverInstance\"}[$__rate_interval]), \"context\", \"$1$2\", \"context\", \"(.*)Caching(.*)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{controller}}/{{method}}",
+                     "legendFormat": "{{context}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Controller Invocations by Method (orca, $Instance)",
+               "title": "GCP Batch Latency (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1232,7 +1321,7 @@
                },
                "yaxes": [
                   {
-                     "format": "short",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -1240,7 +1329,7 @@
                      "show": true
                   },
                   {
-                     "format": "short",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -1248,7 +1337,20 @@
                      "show": true
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Batch Calls",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
@@ -1287,17 +1389,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(controller_invocations_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)\n/\nsum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)",
+                     "expr": "sum(rate(clouddriver:google:operationWaits__count_total{instance=~\"$ClouddriverInstance\",status=\"DONE\"}[$__rate_interval])) by (basePhase)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{controller}}/{{method}}",
+                     "legendFormat": "{{basePhase}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Controller Invocation Latency by Method (orca, $Instance)",
+               "title": "Successful GCP Operations (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1313,7 +1415,7 @@
                },
                "yaxes": [
                   {
-                     "format": "dtdurations",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -1321,7 +1423,7 @@
                      "show": true
                   },
                   {
-                     "format": "dtdurations",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -1368,17 +1470,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(stage_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (cloudProvider, type)",
+                     "expr": "sum(rate(clouddriver:google:operationWaits__count_total{instance=~\"$ClouddriverInstance\",status!=\"DONE\"}[$__rate_interval])) by (basePhase, scope) ",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{type}}/{{cloudProvider}}",
+                     "legendFormat": "{{scope}}/{{basePhase}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Active Stages per Type/Platform (orca, $Instance)",
+               "title": "Failed GCP Operations (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1410,7 +1512,20 @@
                      "show": true
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "GCP Operations Outcome",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
@@ -1449,17 +1564,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(stage_invocations_duration_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (cloudProvider, stageType)",
+                     "expr": "sum(rate(clouddriver:google:operationWaits__totalTime_total{instance=~\"$ClouddriverInstance\",scope=\"global\"}[$__rate_interval])) by (basePhase) / sum(rate(clouddriver:google:operationWaits__count_total{instance=~\"$ClouddriverInstance\",scope=\"global\"}[$__rate_interval])) by (basePhase) ",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{stageType}}/{{cloudProvider}}",
+                     "legendFormat": "{{basePhase}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Stages Completed per Type/Platform (orca, $Instance)",
+               "title": "Global GCP Operation Waiting (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1530,17 +1645,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(threadpool_blockingQueueSize{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (id)",
+                     "expr": "sum(rate(clouddriver:google:operationWaits__totalTime_total{instance=~\"$ClouddriverInstance\",scope=\"regional\",region=~\"$GcpRegion\"}[$__rate_interval])) by (region, basePhase) / sum(rate(clouddriver:google:operationWaits__count_total{instance=~\"$ClouddriverInstance\",scope=\"regional\",region=~\"$GcpRegion\"}[$__rate_interval])) by (region, basePhase) ",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{id}}",
+                     "legendFormat": "{{basePhase}}//{{region}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Blocked Queues (orca, $Instance)",
+               "title": "Regional GCP Operation Waiting in $GcpRegion (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1611,17 +1726,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (application) (queue_zombies_total{job=~\"$job\", instance=~\"$Instance\"})",
+                     "expr": "sum(label_replace(rate(clouddriver:google:operationWaits__totalTime_total{instance=~\"$ClouddriverInstance\",scope=\"zonal\",zone=~\".*$GcpRegion.*\"}[$__rate_interval]), \"cell\", \"$1\", \"zone\", \".*-(.)\")) by (basePhase, cell) / sum(label_replace(rate(clouddriver:google:operationWaits__count_total{instance=~\"$ClouddriverInstance\",scope=\"zonal\",zone=~\".*$GcpRegion.*\"}[$__rate_interval]), \"cell\", \"$1\", \"zone\", \".*-(.)\")) by (basePhase, cell) ",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{ application }}",
+                     "legendFormat": "{{basePhase}}/{{cell}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Zombie Queues (orca, $Instance)",
+               "title": "Zonal GCP Operation Waiting in $GcpRegion (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1653,7 +1768,20 @@
                      "show": true
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Waiting GCP Operations",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
@@ -1692,17 +1820,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(threadpool_activeCount{job=~\"$job\", instance=~\"$Instance\"}) by (id)",
+                     "expr": "sum(rate(clouddriver:google:operationWaitRequests{instance=~\"$ClouddriverInstance\",scope=\"global\"}[$__rate_interval])) by (basePhase)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{id}}",
+                     "legendFormat": "{{basePhase}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Active Threads (orca, $Instance)",
+               "title": "Global GCP Operations Started (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1773,17 +1901,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(threadpool_poolSize{job=~\"$job\", instance=~\"$Instance\"}) by (id)",
+                     "expr": "sum(rate(clouddriver:google:operationWaitRequests{instance=~\"$ClouddriverInstance\",scope=\"regional\",region=~\"$GcpRegion\"}[$__rate_interval])) by (basePhase)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{id}}",
+                     "legendFormat": "{{basePhase}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "ThreadPool Size (orca, $Instance)",
+               "title": "Regional GCP Operations Started in $GcpRegion (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1854,31 +1982,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(queue_depth{job=~\"$job\", instance=~\"$Instance\"}) by (instance)",
+                     "expr": "sum(rate(clouddriver:google:operationWaitRequests{instance=~\"$ClouddriverInstance\",scope=\"zonal\",zone=~\".*$GcpRegion.*\"}[$__rate_interval])) by (basePhase)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "Queued",
+                     "legendFormat": "{{basePhase}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "sum(queue_ready_depth{job=~\"$job\", instance=~\"$Instance\"}) by (instance)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Ready",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "sum(queue_unacked_depth{job=~\"$job\", instance=~\"$Instance\"}) by (instance)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "In-Process",
-                     "refId": "C"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Queue Depth (orca, $Instance)",
+               "title": "Zonal GCP Operations Started in $GcpRegion (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -1910,7 +2024,20 @@
                      "show": true
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Started GCP Operations",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
@@ -1949,31 +2076,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(queue_retried_messages_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (job)",
+                     "expr": "sum(label_replace(rate(clouddriver:google:safeRetry__count_total{instance=~\"$ClouddriverInstance\",scope=\"global\"}[$__rate_interval]), \"operation\", \"$1\", \"operation\", \"compute.(.*)\")) by (operation, phase)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "Retried",
+                     "legendFormat": "{{phase}}.{{operation}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "sum(rate(queue_dead_messages_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (job)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Dead",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "sum(rate(queue_orphaned_messages{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (job)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Orphaned",
-                     "refId": "C"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Queue Errors (orca, $Instance)",
+               "title": "Retryable Global GCP (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -2005,7 +2118,20 @@
                      "show": true
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Safe Retry Count",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
@@ -2044,24 +2170,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(queue_message_lag_seconds_count{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])",
+                     "expr": "label_replace(sum(rate(clouddriver:google:safeRetry__count_total{instance=~\"$ClouddriverInstance\",scope=\"regional\",region=~\"$GcpRegion\"}[$__rate_interval])) by (instance, phase, operation), \"operation\", \"$1\", \"operation\", \"compute.(.*)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "messages {{ instance }}",
+                     "legendFormat": "{{phase}}.{{operation}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "rate(queue_message_lag_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])\n/\nrate(queue_message_lag_seconds_count{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "lag time {{ instance }}",
-                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Message Lag Time (orca, $Instance)",
+               "title": "Retryable Regional GCP in $GcpRegion (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -2132,24 +2251,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(queue_pushed_messages_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (instance)",
+                     "expr": "label_replace(label_replace(sum(rate(clouddriver:google:safeRetry__count_total{instance=~\"$ClouddriverInstance\",scope=\"zonal\",zone=~\".*$GcpRegion.*\"}[$__rate_interval])) by (instance, phase, operation, cell), \"operation\", \"$1\", \"operation\", \"compute.(.*)\"), \"cell\", \"$1\", \"zone\", \".*-(.)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "Pushed/{{ instance }}",
+                     "legendFormat": "{{phase}}.{{operation}}/{{cell}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "sum(rate(queue_acknowledged_messages_total{instance=~\"$Instance\"}[$__rate_interval])) by (instance)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Acknowledged/{{ instance }}",
-                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Pushed Message Summary (orca, $Instance)",
+               "title": "Retryable Zonal GCP in $GcpRegion (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -2181,20 +2293,7 @@
                      "show": true
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Additional Metrics",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -2233,17 +2332,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(jvm_memory_used_bytes{job=~\"$job\", instance=~\"$Instance\", area=\"heap\"}) by (id)",
+                     "expr": "label_replace(sum(rate(clouddriver:google:safeRetry__totalTime_total{instance=~\"$ClouddriverInstance\",scope=\"global\"}[$__rate_interval])) by (operation, phase) / sum(rate(clouddriver:google:safeRetry__count_total{instance=~\"$ClouddriverInstance\",scope=\"global\"}[$__rate_interval])) by (operation, phase), \"operation\", \"$1\", \"operation\", \"compute.(.*)\")",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{id}}",
+                     "legendFormat": "{{phase}}.{{operation}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "JVM Memory Usage ($spinSvc, $Instance)",
+               "title": "Retryable Global GCP Latency (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -2259,7 +2358,7 @@
                },
                "yaxes": [
                   {
-                     "format": "decbytes",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -2267,7 +2366,7 @@
                      "show": true
                   },
                   {
-                     "format": "decbytes",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -2275,28 +2374,14 @@
                      "show": true
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Machine Metrics",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "CPU Usage. Average is the average usage across all instances, max is the highest usage across all instances. As CPU Usage is a sampled metric it is best to view in relation to throttling percentage.",
-               "fill": 0,
+               "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
                "id": 29,
@@ -2321,62 +2406,24 @@
                "points": false,
                "renderer": "flot",
                "repeat": null,
-               "seriesOverrides": [
-                  {
-                     "alias": "/avg|max/",
-                     "fill": 1
-                  },
-                  {
-                     "alias": "Request",
-                     "color": "#FF9830",
-                     "dashes": true
-                  },
-                  {
-                     "alias": "Limit",
-                     "color": "#F2495C",
-                     "dashes": true
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(rate(container_cpu_usage_seconds_total{container=~\"$spinSvc\"}[$__rate_interval]))",
+                     "expr": "label_replace(sum(rate(clouddriver:google:safeRetry__totalTime_total{instance=~\"$ClouddriverInstance\",scope=\"regional\",region=~\"$GcpRegion\"}[$__rate_interval])) by (operation, phase) / sum(rate(clouddriver:google:safeRetry__count_total{instance=~\"$ClouddriverInstance\",scope=\"regional\",region=~\"$GcpRegion\"}[$__rate_interval])) by (operation, phase), \"operation\", \"$1\", \"operation\", \"compute.(.*)\")",
                      "format": "time_series",
-                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "avg",
+                     "legendFormat": "{{phase}}.{{operation}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "max(rate(container_cpu_usage_seconds_total{container=\"$spinSvc\"}[$__rate_interval]))",
-                     "format": "time_series",
-                     "interval": "1m",
-                     "intervalFactor": 2,
-                     "legendFormat": "max",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "avg(kube_pod_container_resource_limits_cpu_cores{container=\"$spinSvc\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Limit",
-                     "refId": "C"
-                  },
-                  {
-                     "expr": "avg(kube_pod_container_resource_requests_cpu_cores{container=\"$spinSvc\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Request",
-                     "refId": "D"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "CPU",
+               "title": "Retryable Regional GCP Latency in $GcpRegion (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -2392,7 +2439,7 @@
                },
                "yaxes": [
                   {
-                     "format": "percentunit",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -2400,7 +2447,7 @@
                      "show": true
                   },
                   {
-                     "format": "percentunit",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -2415,7 +2462,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Percent of the time that the CPU is being throttled. Application may be getting throttled during bursty tasks but overall be well below its CPU limit. Throttling may significantly impact application performance.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -2435,7 +2481,7 @@
                "lines": true,
                "linewidth": 1,
                "links": [ ],
-               "nullPointMode": "connected",
+               "nullPointMode": "null",
                "percentage": false,
                "pointradius": 5,
                "points": false,
@@ -2448,18 +2494,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(container_cpu_cfs_throttled_periods_total{container=\"$spinSvc\"}[$__rate_interval])\n/\nrate(container_cpu_cfs_periods_total{container=\"$spinSvc\"}[$__rate_interval])",
+                     "expr": "label_replace(sum(label_replace(sum(rate(clouddriver:google:safeRetry__totalTime_total{instance=~\"$ClouddriverInstance\",scope=\"zonal\",zone=~\".*$GcpRegion.*\"}[$__rate_interval])) by (operation, phase, zone) / sum(rate(clouddriver:google:safeRetry__count_total{instance=~\"$ClouddriverInstance\",scope=\"zonal\",zone=~\".*$GcpRegion.*\"}[$__rate_interval])) by (operation, phase, zone), \"cell\", \"$1\", \"zone\", \".*-(.)\")) by (phase, operation, cell), \"operation\", \"$1\", \"operation\", \"compute.(.*)\")",
                      "format": "time_series",
-                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{pod}}",
+                     "legendFormat": "{{phase}}.{{operation}}/{{cell}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "CPU Throttling",
+               "title": "Retryable Zonal GCP Latency in $GcpRegion (clouddriver, $ClouddriverInstance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -2475,7 +2520,7 @@
                },
                "yaxes": [
                   {
-                     "format": "percentunit",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -2483,7 +2528,7 @@
                      "show": true
                   },
                   {
-                     "format": "percentunit",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -2491,15 +2536,27 @@
                      "show": true
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Safe Retry Latency",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "panels": [
             {
                "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Memory utilisation. Average is the average usage across all instaces, max is the highest usage across all instances.",
-               "fill": 0,
+               "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
                "id": 31,
@@ -2524,53 +2581,24 @@
                "points": false,
                "renderer": "flot",
                "repeat": null,
-               "seriesOverrides": [
-                  {
-                     "alias": "/avg|max/",
-                     "fill": 1
-                  },
-                  {
-                     "alias": "Request",
-                     "color": "#FF9830",
-                     "dashes": true
-                  },
-                  {
-                     "alias": "Limit",
-                     "color": "#F2495C",
-                     "dashes": true
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(avg_over_time(container_memory_working_set_bytes{container=\"$spinSvc\"}[$__interval]))",
+                     "expr": "sum(rate(front50:google:storage:invocation__count_total{instance=~\"$Front50Instance\"}[$__rate_interval])) by (method)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "avg",
+                     "legendFormat": "{{method}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "max(max_over_time(container_memory_working_set_bytes{container=\"$spinSvc\"}[$__interval]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "max",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "avg(kube_pod_container_resource_limits_memory_bytes{container=\"$spinSvc\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Limit",
-                     "refId": "C"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Memory",
+               "title": "Google Storage Service Calls (front50, $Front50Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -2586,7 +2614,7 @@
                },
                "yaxes": [
                   {
-                     "format": "decbytes",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -2594,7 +2622,7 @@
                      "show": true
                   },
                   {
-                     "format": "decbytes",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -2609,7 +2637,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Average network ingress/egress for the $spinSvc pods.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -2629,42 +2656,30 @@
                "lines": true,
                "linewidth": 1,
                "links": [ ],
-               "nullPointMode": "connected",
+               "nullPointMode": "null",
                "percentage": false,
                "pointradius": 5,
                "points": false,
                "renderer": "flot",
                "repeat": null,
-               "seriesOverrides": [
-                  {
-                     "alias": "transmit",
-                     "transform": "negative-Y"
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(\n  sum without (interface) (\n    rate(container_network_receive_bytes_total{pod=~\"$spinSvc.*\"}[$__rate_interval])\n  )\n)",
+                     "expr": "sum(rate(front50:google:storage:invocation__totalTime_total{instance=~\"$Front50Instance\"}[$__rate_interval])) by (method) / sum(rate(front50:google:storage:invocation__count_total{instance=~\"$Front50Instance\"}[$__rate_interval])) by (method)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "receive",
+                     "legendFormat": "{{method}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "avg(\n  sum without (interface) (\n    rate(container_network_transmit_bytes_total{pod=~\"$spinSvc.*\"}[$__rate_interval])\n  )\n)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "transmit",
-                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Network",
+               "title": "Google Storage Service Latency (front50, $Front50Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -2680,7 +2695,7 @@
                },
                "yaxes": [
                   {
-                     "format": "binBps",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -2688,7 +2703,7 @@
                      "show": true
                   },
                   {
-                     "format": "binBps",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -2702,7 +2717,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Kubernetes Pod Metrics",
+         "title": "Google Storage",
          "titleSize": "h6",
          "type": "row"
       }
@@ -2729,28 +2744,7 @@
             "type": "datasource"
          },
          {
-            "allValue": null,
-            "current": {
-               "text": "orca",
-               "value": "orca"
-            },
-            "hide": 2,
-            "includeAll": false,
-            "label": "",
-            "multi": false,
-            "name": "spinSvc",
-            "options": [
-               {
-                  "text": "orca",
-                  "value": "orca"
-               }
-            ],
-            "query": "orca",
-            "refresh": 0,
-            "type": "custom"
-         },
-         {
-            "allValue": null,
+            "allValue": ".*",
             "current": {
                "text": "All",
                "value": "All"
@@ -2760,12 +2754,12 @@
             "includeAll": true,
             "label": null,
             "multi": false,
-            "name": "job",
+            "name": "GcpRegion",
             "options": [ ],
-            "query": "label_values(up{job=~\".*$spinSvc.*\"}, job)",
-            "refresh": 1,
-            "regex": "",
-            "sort": 0,
+            "query": "clouddriver:google:api__count",
+            "refresh": 2,
+            "regex": "/.*region=\"([^\"]+).*/",
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [ ],
             "tagsQuery": "",
@@ -2782,11 +2776,34 @@
             "hide": 0,
             "includeAll": true,
             "label": null,
-            "multi": true,
-            "name": "Instance",
+            "multi": false,
+            "name": "ClouddriverInstance",
             "options": [ ],
-            "query": "label_values(up{job=~\"$job\"}, instance)",
-            "refresh": 1,
+            "query": "label_values(clouddriver:google:api__count, instance)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": ".*",
+            "current": {
+               "text": "All",
+               "value": "All"
+            },
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": false,
+            "name": "Front50Instance",
+            "options": [ ],
+            "query": "label_values(front50:google:storage:invocation__count, instance)",
+            "refresh": 2,
             "regex": "",
             "sort": 1,
             "tagValuesQuery": "",
@@ -2827,7 +2844,7 @@
       ]
    },
    "timezone": "browser",
-   "title": "Orca",
-   "uid": "spinnaker-orca",
+   "title": "Spinnaker GCP Platform",
+   "uid": "spinnaker-gcp-platform",
    "version": 0
 }

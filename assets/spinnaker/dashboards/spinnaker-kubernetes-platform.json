@@ -9,19 +9,7 @@
    "graphTooltip": 0,
    "hideControls": false,
    "id": null,
-   "links": [
-      {
-         "asDropdown": true,
-         "icon": "info",
-         "includeVars": false,
-         "keepTime": false,
-         "tags": [ ],
-         "targetBlank": false,
-         "title": "GitHub",
-         "type": "link",
-         "url": "https://github.com/spinnaker/fiat"
-      }
-   ],
+   "links": [ ],
    "refresh": "1m",
    "rows": [
       {
@@ -29,28 +17,86 @@
          "collapsed": false,
          "panels": [
             {
-               "content": "Fiat is the authorization server for the Spinnaker system.\n\nIt exposes a RESTful interface for querying the access permissions for a particular user. It currently supports three kinds of resources:\n-Accounts\n-Applications\n-Service Accounts\n",
-               "datasource": null,
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
                "gridPos": { },
                "id": 2,
-               "mode": "markdown",
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
                "span": 3,
-               "title": "Service Description",
-               "type": "text"
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Key Metrics",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",exported_namespace=~\"$KubernetesNamespace\",account=~\"$KubernetesAccount\",success=\"true\"}[$__rate_interval])) by (action)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{action}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Kubernetes Success for \"$KubernetesAccount\" in \"$KubernetesNamespace\" (clouddriver)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -89,17 +135,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\",status=\"5xx\"}[$__rate_interval])) by (controller, method, statusCode)",
+                     "expr": "sum(rate(kubernetes_api_seconds_sum{instance=~\"$Instance\",exported_namespace=~\"$KubernetesNamespace\",success=\"true\",account=~\"$KubernetesAccount\"}[$__rate_interval])) by (action)\n/\nsum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",exported_namespace=~\"$KubernetesNamespace\",account=~\"$KubernetesAccount\",success=\"true\"}[$__rate_interval])) by (action)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{statusCode}}/{{controller}}/{{method}}",
+                     "legendFormat": "{{action}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "5xx Controller Invocations (fiat, $Instance)",
+               "title": "Kubernetes Latency for \"$KubernetesAccount\" in \"$KubernetesNamespace\" (clouddriver)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -115,7 +161,7 @@
                },
                "yaxes": [
                   {
-                     "format": "short",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -123,7 +169,7 @@
                      "show": true
                   },
                   {
-                     "format": "short",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -170,17 +216,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)",
+                     "expr": "sum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",exported_namespace=~\"$KubernetesNamespace\",account=~\"$KubernetesAccount\",success!=\"true\"}[$__rate_interval])) by (action, reason)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{controller}}/{{method}}",
+                     "legendFormat": "{{action}}/{{reason}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Controller Invocations by Method (fiat, $Instance)",
+               "title": "Kubernetes Failure for \"$KubernetesAccount\" in \"$KubernetesNamespace\" (clouddriver)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -251,17 +297,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(controller_invocations_seconds_sum{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)\n/\nsum(rate(controller_invocations_seconds_count{job=~\"$job\", instance=~\"$Instance\"}[$__rate_interval])) by (controller, method)",
+                     "expr": "sum(rate(kubernetes_api_seconds_sum{instance=~\"$Instance\",exported_namespace=~\"$KubernetesNamespace\",success!=\"true\",account=~\"$KubernetesAccount\"}[$__rate_interval])) by (action, reason)\n/\nsum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",exported_namespace=~\"$KubernetesNamespace\",account=~\"$KubernetesAccount\",success!=\"true\"}[$__rate_interval])) by (action)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{controller}}/{{method}}",
+                     "legendFormat": "{{action}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Controller Invocation Latency by Method (fiat, $Instance)",
+               "title": "Kubernetes Failure Latency for \"$KubernetesAccount\" in \"$KubernetesNamespace\" (clouddriver)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -293,20 +339,7 @@
                      "show": true
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Additional Metrics",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -345,17 +378,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(jvm_memory_used_bytes{job=~\"$job\", instance=~\"$Instance\", area=\"heap\"}) by (id)",
+                     "expr": "sum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",success=\"true\"}[$__rate_interval])) by (kinds)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{id}}",
+                     "legendFormat": "{{kinds}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "JVM Memory Usage ($spinSvc, $Instance)",
+               "title": "Kubernetes Success by Kind (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -371,7 +404,7 @@
                },
                "yaxes": [
                   {
-                     "format": "decbytes",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -379,7 +412,7 @@
                      "show": true
                   },
                   {
-                     "format": "decbytes",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -387,28 +420,14 @@
                      "show": true
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Machine Metrics",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "CPU Usage. Average is the average usage across all instances, max is the highest usage across all instances. As CPU Usage is a sampled metric it is best to view in relation to throttling percentage.",
-               "fill": 0,
+               "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
                "id": 7,
@@ -433,62 +452,24 @@
                "points": false,
                "renderer": "flot",
                "repeat": null,
-               "seriesOverrides": [
-                  {
-                     "alias": "/avg|max/",
-                     "fill": 1
-                  },
-                  {
-                     "alias": "Request",
-                     "color": "#FF9830",
-                     "dashes": true
-                  },
-                  {
-                     "alias": "Limit",
-                     "color": "#F2495C",
-                     "dashes": true
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(rate(container_cpu_usage_seconds_total{container=~\"$spinSvc\"}[$__rate_interval]))",
+                     "expr": "sum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",success=\"true\"}[$__rate_interval])) by (account)",
                      "format": "time_series",
-                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "avg",
+                     "legendFormat": "{{account}} ",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "max(rate(container_cpu_usage_seconds_total{container=\"$spinSvc\"}[$__rate_interval]))",
-                     "format": "time_series",
-                     "interval": "1m",
-                     "intervalFactor": 2,
-                     "legendFormat": "max",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "avg(kube_pod_container_resource_limits_cpu_cores{container=\"$spinSvc\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Limit",
-                     "refId": "C"
-                  },
-                  {
-                     "expr": "avg(kube_pod_container_resource_requests_cpu_cores{container=\"$spinSvc\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Request",
-                     "refId": "D"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "CPU",
+               "title": "Kubernetes Success by Account (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -504,7 +485,7 @@
                },
                "yaxes": [
                   {
-                     "format": "percentunit",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -512,7 +493,7 @@
                      "show": true
                   },
                   {
-                     "format": "percentunit",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -527,7 +508,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Percent of the time that the CPU is being throttled. Application may be getting throttled during bursty tasks but overall be well below its CPU limit. Throttling may significantly impact application performance.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -547,7 +527,7 @@
                "lines": true,
                "linewidth": 1,
                "links": [ ],
-               "nullPointMode": "connected",
+               "nullPointMode": "null",
                "percentage": false,
                "pointradius": 5,
                "points": false,
@@ -560,18 +540,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(container_cpu_cfs_throttled_periods_total{container=\"$spinSvc\"}[$__rate_interval])\n/\nrate(container_cpu_cfs_periods_total{container=\"$spinSvc\"}[$__rate_interval])",
+                     "expr": "sum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",success=\"true\"}[$__rate_interval])) by (exported_namespace)",
                      "format": "time_series",
-                     "interval": "1m",
                      "intervalFactor": 2,
-                     "legendFormat": "{{pod}}",
+                     "legendFormat": "{{exported_namespace}} ",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "CPU Throttling",
+               "title": "Kubernetes Success by Namespace (clouddriver, $Instance)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -587,7 +566,7 @@
                },
                "yaxes": [
                   {
-                     "format": "percentunit",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -595,7 +574,7 @@
                      "show": true
                   },
                   {
-                     "format": "percentunit",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -610,8 +589,7 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Memory utilisation. Average is the average usage across all instaces, max is the highest usage across all instances.",
-               "fill": 0,
+               "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
                "id": 9,
@@ -636,53 +614,24 @@
                "points": false,
                "renderer": "flot",
                "repeat": null,
-               "seriesOverrides": [
-                  {
-                     "alias": "/avg|max/",
-                     "fill": 1
-                  },
-                  {
-                     "alias": "Request",
-                     "color": "#FF9830",
-                     "dashes": true
-                  },
-                  {
-                     "alias": "Limit",
-                     "color": "#F2495C",
-                     "dashes": true
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(avg_over_time(container_memory_working_set_bytes{container=\"$spinSvc\"}[$__interval]))",
+                     "expr": "sum(rate(kubernetes_api_seconds_sum{instance=~\"$Instance\",success=\"true\"}[$__rate_interval])) by (kinds)\n/\nsum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",success=\"true\"}[$__rate_interval])) by (kinds)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "avg",
+                     "legendFormat": "{{kinds}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "max(max_over_time(container_memory_working_set_bytes{container=\"$spinSvc\"}[$__interval]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "max",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "avg(kube_pod_container_resource_limits_memory_bytes{container=\"$spinSvc\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Limit",
-                     "refId": "C"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Memory",
+               "title": "Kubernetes Latency by Kind (clouddriver)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -698,7 +647,7 @@
                },
                "yaxes": [
                   {
-                     "format": "decbytes",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -706,7 +655,7 @@
                      "show": true
                   },
                   {
-                     "format": "decbytes",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -721,7 +670,6 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Average network ingress/egress for the $spinSvc pods.",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -741,42 +689,30 @@
                "lines": true,
                "linewidth": 1,
                "links": [ ],
-               "nullPointMode": "connected",
+               "nullPointMode": "null",
                "percentage": false,
                "pointradius": 5,
                "points": false,
                "renderer": "flot",
                "repeat": null,
-               "seriesOverrides": [
-                  {
-                     "alias": "transmit",
-                     "transform": "negative-Y"
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "avg(\n  sum without (interface) (\n    rate(container_network_receive_bytes_total{pod=~\"$spinSvc.*\"}[$__rate_interval])\n  )\n)",
+                     "expr": "sum(rate(kubernetes_api_seconds_sum{instance=~\"$Instance\",success=\"true\"}[$__rate_interval])) by (account)\n/\nsum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",success=\"true\"}[$__rate_interval])) by (account)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "receive",
+                     "legendFormat": "{{account}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "avg(\n  sum without (interface) (\n    rate(container_network_transmit_bytes_total{pod=~\"$spinSvc.*\"}[$__rate_interval])\n  )\n)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "transmit",
-                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Network",
+               "title": "Kubernetes Latency by Account (clouddriver)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -792,7 +728,7 @@
                },
                "yaxes": [
                   {
-                     "format": "binBps",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -800,7 +736,331 @@
                      "show": true
                   },
                   {
-                     "format": "binBps",
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 11,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(kubernetes_api_seconds_sum{instance=~\"$Instance\",success=\"true\"}[$__rate_interval])) by (exported_namespace) / sum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",success=\"true\"}[$__rate_interval])) by (exported_namespace)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{exported_namespace}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Kubernetes Latency by Namespace (clouddriver)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 12,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",success!=\"true\"}[$__rate_interval])) by (kinds)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{kinds}} ",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Kubernetes Failure by Kind (clouddriver, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 13,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",success!=\"true\"}[$__rate_interval])) by (account)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{account}} ",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Kubernetes Failure by Account (clouddriver, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 14,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(kubernetes_api_seconds_count{instance=~\"$Instance\",success!=\"true\"}[$__rate_interval])) by (exported_namespace)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{exported_namespace}} ",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Kubernetes Failure by Namespace (clouddriver, $Instance)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -814,7 +1074,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Kubernetes Pod Metrics",
+         "title": "Kubernetes",
          "titleSize": "h6",
          "type": "row"
       }
@@ -843,8 +1103,8 @@
          {
             "allValue": null,
             "current": {
-               "text": "fiat",
-               "value": "fiat"
+               "text": "clouddriver",
+               "value": "clouddriver"
             },
             "hide": 2,
             "includeAll": false,
@@ -853,11 +1113,11 @@
             "name": "spinSvc",
             "options": [
                {
-                  "text": "fiat",
-                  "value": "fiat"
+                  "text": "clouddriver",
+                  "value": "clouddriver"
                }
             ],
-            "query": "fiat",
+            "query": "clouddriver",
             "refresh": 0,
             "type": "custom"
          },
@@ -906,6 +1166,52 @@
             "tagsQuery": "",
             "type": "query",
             "useTags": false
+         },
+         {
+            "allValue": ".*",
+            "current": {
+               "text": "All",
+               "value": "All"
+            },
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": false,
+            "name": "KubernetesAccount",
+            "options": [ ],
+            "query": "label_values(kubernetes_api_seconds_count, account)",
+            "refresh": 1,
+            "regex": "",
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": ".*",
+            "current": {
+               "text": "All",
+               "value": "All"
+            },
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": false,
+            "name": "KubernetesNamespace",
+            "options": [ ],
+            "query": "label_values(kubernetes_api_seconds_count, exported_namespace)",
+            "refresh": 1,
+            "regex": "",
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
          }
       ]
    },
@@ -939,7 +1245,7 @@
       ]
    },
    "timezone": "browser",
-   "title": "Fiat",
-   "uid": "spinnaker-fiat",
+   "title": "Spinnaker Kubernetes Platform",
+   "uid": "spinnaker-kubernetes-platform",
    "version": 0
 }

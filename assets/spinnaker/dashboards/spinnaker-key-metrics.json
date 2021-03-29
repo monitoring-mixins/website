@@ -1,1687 +1,621 @@
 {
+   "__inputs": [ ],
+   "__requires": [ ],
    "annotations": {
-      "list": [
-         {
-            "builtIn": 1,
-            "datasource": "-- Grafana --",
-            "enable": true,
-            "hide": true,
-            "iconColor": "rgba(0, 211, 255, 1)",
-            "name": "Annotations & Alerts",
-            "type": "dashboard"
-         }
-      ]
+      "list": [ ]
    },
-   "description": "Requires Armory Observability Plugin",
    "editable": true,
    "gnetId": null,
    "graphTooltip": 0,
-   "iteration": 1596168225473,
+   "hideControls": false,
+   "id": null,
    "links": [ ],
-   "panels": [
+   "refresh": "1m",
+   "rows": [
       {
+         "collapse": false,
          "collapsed": false,
-         "datasource": null,
-         "gridPos": {
-            "h": 1,
-            "w": 24,
-            "x": 0,
-            "y": 0
-         },
-         "id": 23,
-         "panels": [ ],
+         "panels": [
+            {
+               "content": "\n# Monitoring Spinnaker, SLA Metrics\n\n[Medium blog by Rob Zienert](https://blog.spinnaker.io/monitoring-spinnaker-sla-metrics-a408754f6b7b)\n\n> What are the key metrics we can track that help quickly answer the question, \"Is Spinnaker healthy?\"",
+               "datasource": null,
+               "gridPos": { },
+               "id": 2,
+               "mode": "markdown",
+               "span": 3,
+               "title": "Monitoring Spinnaker, SLA Metrics",
+               "type": "text"
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "description": "echo.triggers.count tracks the number of CRON-triggered pipeline executions fired. \n\nThis value should be pretty steady, so any significant deviation is an indicator of something going awry (or the addition/retirement of a customer integration).\n\n\necho.pubsub.messagesProcessed is important if you have any PubSub triggers. \n\nYour mileage may vary, but Netflix can alert if any subscriptions drop to zero for more than a few minutes.",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 3,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(\n  rate(echo_triggers_count[$__rate_interval])\n)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "triggers/s",
+                     "refId": "A"
+                  },
+                  {
+                     "expr": "sum(\n  rate(echo_events_processed_total[$__rate_interval])\n)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "events processed/s",
+                     "refId": "B"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Rate of Echo Triggers & Processed Events",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "description": "pollingMonitor.failed tracks the failure rate of CI/SCM monitor poll cycles. \n\nAny value above 0 is a bad place to be, but is often a result of downstream service availability issues such as Jenkins going offline for maintenance.\n\npollingMonitor.itemsOverThreshold tracks a polling monitor circuit breaker. \n\nAny value over 0 is a bad time, because it means the breaker is open for a particular monitor and it requires manual intervention.",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 4,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum by (partition) (\n  pollingMonitor_newItems\n)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "",
+                     "refId": "A"
+                  },
+                  {
+                     "expr": "sum by (partition) (\n  pollingMonitor_failed_total\n)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "",
+                     "refId": "B"
+                  },
+                  {
+                     "expr": "sum by (partition) (\n  pollingMonitor_itemsOverThreshold\n)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "",
+                     "refId": "C"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Igor",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": null,
+               "description": "All Spinnaker services are RPC-based, and as such, the reliability of requests inbound and outbound are supremely important: If the services can’t talk to each other reliably, someone will be having a poor experience.\n\n\nTODO: Add Recording Rules so don't melt Prometheus",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 5,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum by (container, status) (\n  rate(controller_invocations_total[$__rate_interval])\n )",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{ status }} :: {{ container }}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Controller Invocations Rate",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "description": "Each service emits metrics for each RPC client that is configured via okhttp.requests.\n\nHaving SLOs — and consequentially, alerts — around failure rate (determined via the succcess tag) and latency for both inbound and outbound RPC requests is, in my mind, mandatory across all Spinnaker services.",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 6,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum by (container, requestHost, status) (\n  rate(okhttp_requests_seconds_count[$__rate_interval])\n)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "HTTP RPC Rate",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "description": "cache.drift tracks cache freshness. \n\nYou should group this by agent and region to be granular on exactly what cache collection is falling behind. How much lag is acceptable for your org is up to you, but don’t make it zero.",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 7,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "max by (account, agent, region) (cache_drift)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Clouddriver AWS Cache Drift",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "dtdurations",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": null,
+               "description": "It’s OK that there are failures in agents: As stable as we like to think our cloud providers are, it’s still another software system and software will fail. \n\nUnless you see sustained failure, there’s not much to worry about here. \n\nThis is often an indicator of a downstream cloud provider issue.\n\nTODO: Confirm Metric Name",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 8,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [ ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Caching Agent Failures",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": null,
+               "description": "TODO: Find metric names",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 9,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [ ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Clouddriver Kubernetes / Other Provider Cache",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
          "title": "Monitoring Spinnaker, SLA Metrics",
+         "titleSize": "h6",
          "type": "row"
-      },
-      {
-         "content": "\n# Monitoring Spinnaker, SLA Metrics\n\n[Medium blog by Rob Zienert](https://blog.spinnaker.io/monitoring-spinnaker-sla-metrics-a408754f6b7b)\n\n> What are the key metrics we can track that help quickly answer the question, “Is Spinnaker healthy?”",
-         "datasource": null,
-         "description": "",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { }
-            },
-            "overrides": [ ]
-         },
-         "gridPos": {
-            "h": 4,
-            "w": 17,
-            "x": 0,
-            "y": 1
-         },
-         "id": 24,
-         "mode": "markdown",
-         "options": {
-            "content": "\n# Monitoring Spinnaker, SLA Metrics\n\n[Medium blog by Rob Zienert](https://blog.spinnaker.io/monitoring-spinnaker-sla-metrics-a408754f6b7b)\n\n> What are the key metrics we can track that help quickly answer the question, “Is Spinnaker healthy?”",
-            "mode": "markdown"
-         },
-         "pluginVersion": "7.1.0",
-         "timeFrom": null,
-         "timeShift": null,
-         "title": "Monitoring Spinnaker, SLA Metrics",
-         "type": "text"
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "echo.triggers.count tracks the number of CRON-triggered pipeline executions fired. \n\nThis value should be pretty steady, so any significant deviation is an indicator of something going awry (or the addition/retirement of a customer integration).\n\n\necho.pubsub.messagesProcessed is important if you have any PubSub triggers. \n\nYour mileage may vary, but Netflix can alert if any subscriptions drop to zero for more than a few minutes.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 5
-         },
-         "hiddenSeries": false,
-         "id": 29,
-         "interval": "30s",
-         "legend": {
-            "avg": false,
-            "current": false,
-            "hideEmpty": true,
-            "hideZero": true,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "maxDataPoints": 250,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum(\n  rate(echo_triggers_count[$__interval])\n)",
-               "interval": "30s",
-               "legendFormat": "triggers/s",
-               "refId": "A"
-            },
-            {
-               "expr": "sum(\n  rate(echo_events_processed_total[$__interval])\n)",
-               "interval": "30s",
-               "legendFormat": "events processed/s",
-               "refId": "B"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Rate of Echo Triggers & Processed Events",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "pollingMonitor.failed tracks the failure rate of CI/SCM monitor poll cycles. \n\nAny value above 0 is a bad place to be, but is often a result of downstream service availability issues such as Jenkins going offline for maintenance.\n\npollingMonitor.itemsOverThreshold tracks a polling monitor circuit breaker. \n\nAny value over 0 is a bad time, because it means the breaker is open for a particular monitor and it requires manual intervention.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 5
-         },
-         "hiddenSeries": false,
-         "id": 33,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum by (partition) (\n  pollingMonitor_newItems\n)",
-               "interval": "30s",
-               "legendFormat": "new :: {{ partition }}",
-               "refId": "A"
-            },
-            {
-               "expr": "sum by (partition) (\n  pollingMonitor_failed_total\n)",
-               "interval": "30s",
-               "legendFormat": "failed :: {{ partition }}",
-               "refId": "B"
-            },
-            {
-               "expr": "sum by (partition) (\n  pollingMonitor_itemsOverThreshold\n)",
-               "interval": "30s",
-               "legendFormat": "over threshold :: {{ partition }}",
-               "refId": "C"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Igor",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "$$hashKey": "object:156",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "$$hashKey": "object:157",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": null,
-         "description": "All Spinnaker services are RPC-based, and as such, the reliability of requests inbound and outbound are supremely important: If the services can’t talk to each other reliably, someone will be having a poor experience.\n\n\nTODO: Add Recording Rules so don't melt Prometheus\n\nsum by (container, status) (\n  rate(controller_invocations_total[$__interval])\n )\n\n{{ status }} :: {{ container }}",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 13
-         },
-         "hiddenSeries": false,
-         "id": 26,
-         "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "hideZero": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Controller Invocations Rate",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "Each service emits metrics for each RPC client that is configured via okhttp.requests.\n\nHaving SLOs — and consequentially, alerts — around failure rate (determined via the succcess tag) and latency for both inbound and outbound RPC requests is, in my mind, mandatory across all Spinnaker services.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 13
-         },
-         "hiddenSeries": false,
-         "id": 27,
-         "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "hideZero": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum by (container, requestHost, status) (\n  rate(okhttp_requests_seconds_count[$__interval])\n)",
-               "format": "time_series",
-               "interval": "30s",
-               "legendFormat": "{{ status }} :: {{ container }} :: {{ requestHost }}",
-               "refId": "A"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "HTTP RPC Rate",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "cache.drift tracks cache freshness. \n\nYou should group this by agent and region to be granular on exactly what cache collection is falling behind. How much lag is acceptable for your org is up to you, but don’t make it zero.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 21
-         },
-         "hiddenSeries": false,
-         "id": 31,
-         "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": true,
-            "min": false,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "max by (account, agent, region) (cache_drift)",
-               "interval": "30s",
-               "legendFormat": "{{ account }} :: {{ region }} :: {{ agent }}",
-               "refId": "A"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Clouddriver AWS Cache Drift",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "s",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": null,
-         "description": "It’s OK that there are failures in agents: As stable as we like to think our cloud providers are, it’s still another software system and software will fail. \n\nUnless you see sustained failure, there’s not much to worry about here. \n\nThis is often an indicator of a downstream cloud provider issue.\n\nTODO: Confirm Metric Name",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 21
-         },
-         "hiddenSeries": false,
-         "id": 35,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Caching Agent Failures",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "$$hashKey": "object:256",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "$$hashKey": "object:257",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": null,
-         "description": "TODO: Find metric names",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 29
-         },
-         "hiddenSeries": false,
-         "id": 37,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Clouddriver Kubernetes / Other Provider Cache",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "collapsed": false,
-         "datasource": null,
-         "gridPos": {
-            "h": 1,
-            "w": 24,
-            "x": 0,
-            "y": 37
-         },
-         "id": 19,
-         "panels": [ ],
-         "title": "Monitoring Spinnaker Part 1",
-         "type": "row"
-      },
-      {
-         "content": "\n# Monitoring Spinnaker, Part 1\n\n[Medium blog by Rob Zienert](https://blog.spinnaker.io/monitoring-spinnaker-part-1-4847f42a3abd)\n",
-         "datasource": null,
-         "description": "",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { }
-            },
-            "overrides": [ ]
-         },
-         "gridPos": {
-            "h": 4,
-            "w": 14,
-            "x": 0,
-            "y": 38
-         },
-         "id": 4,
-         "mode": "markdown",
-         "options": {
-            "content": "\n# Monitoring Spinnaker, Part 1\n\n[Medium blog by Rob Zienert](https://blog.spinnaker.io/monitoring-spinnaker-part-1-4847f42a3abd)\n",
-            "mode": "markdown"
-         },
-         "pluginVersion": "7.1.0",
-         "timeFrom": null,
-         "timeShift": null,
-         "title": "Monitoring Spinnaker, Part 1",
-         "type": "text"
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "he primary domain model is an Execution, of which there are two types: PIPELINE and ORCHESTRATION. \n\nThe PIPELINE type is, you guessed it, for pipelines while ORCHESTRATION is what you see in the “Tasks” tab for an application. \n\nThis is really just good insight for answering the question of workload distribution. \n\nSince adding this metric, we’ve never seen it crater, but if that were to happen it’d be bad. \n\nFor Netflix, most ORCHESTRATION executions are API clients. \n\nDisregarding what the execution is doing, there’s no baseline cost difference between a running orchestration and a pipeline.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 42
-         },
-         "hiddenSeries": false,
-         "id": 2,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum by (executionType) (\n  executions_active{container=\"orca\"}\n)",
-               "interval": "30s",
-               "legendFormat": "{{ executionType }} {{ pod }}",
-               "refId": "A"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Active Executions",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "If you’ve got a lot of 500’s, check your logs. \n\nWhen we see a spike in either invocation times or 5xx errors, it’s usually one of two things: \n\n1) Clouddriver is having a bad day, \n\n2) Orca doesn’t have enough capacity in some respect to service people polling for pipeline status updates. \n\nYou’ll need to dig elsewhere to find the cause.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 42
-         },
-         "hiddenSeries": false,
-         "id": 6,
-         "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum by (controller, status) (\n  rate(controller_invocations_seconds_sum{container=\"orca\"}[$__interval])\n) \n/\nsum by (controller, status) (\n  rate(controller_invocations_seconds_count{container=\"orca\"}[$__interval])\n)\n",
-               "interval": "30s",
-               "legendFormat": "mean :: {{ status }} {{ controller }} ",
-               "refId": "A"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Controller Invocation Time",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "s",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "This will look similar to the first metric we looked at, but this is directly looking at our queue: \n\nThis is the number of Execution-related Messages that we’re invoking every second.\n\nIf this drops, it’s a sign that your QueueProcessor may be starting to freeze up.\n\nAt that point, check that the thread pool it’s on isn’t starved for threads.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 51
-         },
-         "hiddenSeries": false,
-         "id": 8,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum by (executionType) (\n  rate(task_invocations_duration_seconds_count{container=\"orca\"}[$__interval])\n)",
-               "interval": "30s",
-               "legendFormat": "{{ executionType }}",
-               "refId": "A"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Rate pf Task Invocations",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "$$hashKey": "object:356",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "$$hashKey": "object:357",
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "This is handy to see who your biggest customers are, from a pure orchestration volume perspective. \n\nOften times, if we start to experience pain and see a large uptick in queue usage, it’ll be due to a large submission from one or two customers. \n\nIf we were having pain, we could bump our capacity, or look to adjust some rate limits.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 51
-         },
-         "hiddenSeries": false,
-         "id": 11,
-         "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "hideZero": true,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum by (application, executionType) (\n  rate(\n    task_invocations_duration_seconds_count{container=\"orca\", status=\"RUNNING\"}[$__interval])\n) ",
-               "instant": false,
-               "interval": "30s",
-               "legendFormat": "{{ application }} - {{ executionType }}",
-               "refId": "A"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Task Invocations by Application",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "This is our thread pool for the Message Handlers.\n\n\nSpare capacity is good.\n\nActive is actual active usage.\n\nBlocking is when a thread is blocked. \n\nBlockingQueueSize is bad, especially \"pollSkippedNoCapacity\" should always block blockingQueueSize being changed from 0.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 59
-         },
-         "hiddenSeries": false,
-         "id": 10,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum(\n  threadpool_activeCount{container=\"orca\"}\n)",
-               "interval": "30s",
-               "legendFormat": "Active",
-               "refId": "A"
-            },
-            {
-               "expr": "sum(\n  threadpool_blockingQueueSize{container=\"orca\"}\n)",
-               "interval": "30s",
-               "legendFormat": "Blocking",
-               "refId": "B"
-            },
-            {
-               "expr": "sum(\n  threadpool_poolSize{container=\"orca\"}\n)",
-               "interval": "30s",
-               "legendFormat": "Size",
-               "refId": "C"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Message Handler Executor Usage",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "If messages pushed is out pacing acked, you’re presently having a bad time. \n\nMost messages will complete in a blink of an eye, only RunTask will really take much time. \n\nIf you see an uptick in messages pushed, but not a correlating ack’d, it’s a good indicator you’ve got a downstream service issue that’s preventing message handlers completing: \n\nTake a look at Clouddriver, it probably wants your love and attention.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 59
-         },
-         "hiddenSeries": false,
-         "id": 13,
-         "legend": {
-            "alignAsTable": false,
-            "avg": true,
-            "current": true,
-            "max": true,
-            "min": false,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum(\n  rate(queue_pushed_messages_total{container=\"orca\"}[$__interval])\n)",
-               "interval": "30s",
-               "legendFormat": "Pushed",
-               "refId": "A"
-            },
-            {
-               "expr": "sum(\n  rate(queue_acknowledged_messages_total{container=\"orca\"}[$__interval])\n)",
-               "interval": "30s",
-               "legendFormat": "Ack'd",
-               "refId": "B"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Rate of Queue Messages Pushed / Acked (s)",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "Keiko supports setting a delivery time for messages, so you’ll always see queued messages outpacing in-process messages if your Spinnaker install is active.\n\nThings like wait tasks, execution windows, retries, and so-on all schedule message delivery in the future, and in-process messages are usually in-process for a handful of milliseconds.\n\nOperating Orca, one of your life mission is to keep ready messages at 0. \n\nA ready message is a message that has a delivery time of now or in the past, but it hasn’t been picked up and transitioned into processing yet: \n\nThis is a key contributor to a complaint of, “Spinnaker is slow.” \n\nAs I’ve mentioned before, Orca is horizontally scalable. \n\nGive Orca an adrenaline shot of instances if you see ready messages over 0 for more than two intervals so you can clear the queue out.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 67
-         },
-         "hiddenSeries": false,
-         "id": 15,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum(\n  queue_depth{container=\"orca\"}\n)",
-               "interval": "30s",
-               "legendFormat": "queued",
-               "refId": "A"
-            },
-            {
-               "expr": "sum(\n  queue_ready_depth{container=\"orca\"}\n)",
-               "interval": "30s",
-               "legendFormat": "ready",
-               "refId": "B"
-            },
-            {
-               "expr": "sum(\nqueue_unacked_depth{container=\"orca\"}\n)",
-               "interval": "30s",
-               "legendFormat": "unacked",
-               "refId": "C"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Queue Depth",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "Retried is a normal error condition by itself. \n\nDead-lettered occurs when a message has been retried a bunch of times and has never been successfully delivered.\n\nOrphaned messages are bad. \n\nThey’re messages whose message contents are in the queue, but do not have a pointer in either the queue set or unacked set. \n\nThis is a sign of an internal error, likely a troubling issue with Redis. \n\nIt “should never happen” if your system is healthy, and likewise “should never happen” even if your system is really, really overloaded. It’s worth a bug report.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 67
-         },
-         "hiddenSeries": false,
-         "id": 17,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum(\n  queue_retried_messages_total{container=\"orca\"}\n)",
-               "interval": "30s",
-               "legendFormat": "retried",
-               "refId": "A"
-            },
-            {
-               "expr": "sum(\n  rate(queue_orphaned_messages{container=\"orca\"}[$__interval])\n)",
-               "interval": "30s",
-               "legendFormat": "orphaned",
-               "refId": "B"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Queue Errors",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
-      },
-      {
-         "aliasColors": { },
-         "bars": false,
-         "dashLength": 10,
-         "dashes": false,
-         "datasource": "$datasource",
-         "description": "This is a measurement of a message’s desired delivery time and the actual delivery time: Smaller and tighter is better. This is a timer measurement of every message’s (usually very short) life in a ready state. When your queue gets backed up, this number will grow. \n\nWe consider this one of Orca’s key performance indicators.\n\nA mean message lag of anything under a few hundred milliseconds is fine. \n\nDon’t panic until you’re getting around a second. \n\nScale up, everything should be fine.",
-         "fieldConfig": {
-            "defaults": {
-               "custom": { },
-               "links": [ ]
-            },
-            "overrides": [ ]
-         },
-         "fill": 1,
-         "fillGradient": 0,
-         "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 75
-         },
-         "hiddenSeries": false,
-         "id": 21,
-         "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-         },
-         "lines": true,
-         "linewidth": 1,
-         "nullPointMode": "null",
-         "percentage": false,
-         "pluginVersion": "7.1.1",
-         "pointradius": 2,
-         "points": false,
-         "renderer": "flot",
-         "seriesOverrides": [ ],
-         "spaceLength": 10,
-         "stack": false,
-         "steppedLine": false,
-         "targets": [
-            {
-               "expr": "sum(\n  queue_message_lag_seconds_sum\n)\n/\nsum(\n  queue_message_lag_seconds_count\n)",
-               "interval": "30s",
-               "legendFormat": "mean",
-               "refId": "A"
-            },
-            {
-               "expr": "max(queue_message_lag_seconds_max)",
-               "interval": "30s",
-               "legendFormat": "max",
-               "refId": "B"
-            }
-         ],
-         "thresholds": [ ],
-         "timeFrom": null,
-         "timeRegions": [ ],
-         "timeShift": null,
-         "title": "Message Lag",
-         "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-         },
-         "type": "graph",
-         "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": [ ]
-         },
-         "yaxes": [
-            {
-               "format": "s",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            },
-            {
-               "format": "short",
-               "label": null,
-               "logBase": 1,
-               "max": null,
-               "min": null,
-               "show": true
-            }
-         ],
-         "yaxis": {
-            "align": false,
-            "alignLevel": null
-         }
       }
    ],
-   "refresh": false,
-   "schemaVersion": 26,
+   "schemaVersion": 14,
    "style": "dark",
    "tags": [
       "spinnaker"
@@ -1690,30 +624,27 @@
       "list": [
          {
             "current": {
-               "selected": false,
-               "text": "prometheus",
-               "value": "prometheus"
+               "text": "",
+               "value": ""
             },
             "hide": 0,
-            "includeAll": false,
             "label": null,
-            "multi": false,
             "name": "datasource",
             "options": [ ],
             "query": "prometheus",
             "refresh": 1,
             "regex": "",
-            "skipUrlSync": false,
             "type": "datasource"
          }
       ]
    },
    "time": {
-      "from": "now-3h",
+      "from": "now-1h",
       "to": "now"
    },
    "timepicker": {
       "refresh_intervals": [
+         "5s",
          "10s",
          "30s",
          "1m",
@@ -1723,10 +654,21 @@
          "1h",
          "2h",
          "1d"
+      ],
+      "time_options": [
+         "5m",
+         "15m",
+         "1h",
+         "6h",
+         "12h",
+         "24h",
+         "2d",
+         "7d",
+         "30d"
       ]
    },
-   "timezone": "",
+   "timezone": "browser",
    "title": "Spinnaker Key Metrics",
-   "uid": "xHsSVTMMk",
-   "version": 1
+   "uid": "spinnaker-key-metrics",
+   "version": 0
 }
