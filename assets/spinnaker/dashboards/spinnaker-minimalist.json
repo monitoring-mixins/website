@@ -49,7 +49,6 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -130,7 +129,6 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -211,7 +209,6 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -341,15 +338,14 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(stage_invocations_total[$__rate_interval])) by (instance, type, cloudProvider)",
+                     "expr": "sum(rate(stage_invocations_total[$__rate_interval])) by (type, cloudProvider)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{type}}/{{cloudProvider}}/{{instance}}",
+                     "legendFormat": "{{type}}/{{cloudProvider}}",
                      "refId": "A"
                   }
                ],
@@ -422,7 +418,6 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -476,6 +471,23 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
+               "description": "Not all AWS stages have \"cloudProvider\" label. Override missing options to \"aws(override)\"",
+               "fieldConfig": {
+                  "overrides": [
+                     {
+                        "matcher": {
+                           "id": "byRegexp",
+                           "options": "Value"
+                        },
+                        "properties": [
+                           {
+                              "id": "displayName",
+                              "value": "aws(override)"
+                           }
+                        ]
+                     }
+                  ]
+               },
                "fill": 1,
                "fillGradient": 0,
                "gridPos": { },
@@ -495,7 +507,7 @@
                "lines": true,
                "linewidth": 1,
                "links": [ ],
-               "nullPointMode": "null",
+               "nullPointMode": "null as zero",
                "percentage": false,
                "pointradius": 5,
                "points": false,
@@ -503,22 +515,21 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(stage_invocations_duration_total{bucket!=\"lt5m\"}[$__rate_interval])) by (cloudProvider, percentile)",
+                     "expr": "sum(rate(stage_invocations_duration_seconds_sum[$__rate_interval])) by (cloudProvider)\n/\nsum(rate(stage_invocations_duration_seconds_count[$__rate_interval])) by (cloudProvider)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{percentile}}/{{cloudProvider}}",
+                     "legendFormat": "{{cloudProvider}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Stage Duration > 5m per Time-Bucket/Platform (orca)",
+               "title": "Stage Duration (log2) per Platform (orca)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -534,15 +545,15 @@
                },
                "yaxes": [
                   {
-                     "format": "short",
+                     "format": "dtdurations",
                      "label": null,
-                     "logBase": 1,
+                     "logBase": "2",
                      "max": null,
                      "min": null,
                      "show": true
                   },
                   {
-                     "format": "short",
+                     "format": "dtdurations",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -584,7 +595,6 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -665,36 +675,21 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(bakesActive)",
+                     "expr": "bakesActive",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Active",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "sum(rate(bakesRequested_total[$__rate_interval])) by (flavor)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Request({{flavor}})",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "-1 * sum(rate(bakesCompleted{success=\"false\"}[$__rate_interval])) by (region)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Failed {{region}}",
-                     "refId": "C"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Bake Activity (rosco)",
+               "title": "Active Bakes (rosco)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -760,22 +755,35 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(storageServiceSupport_cacheSize) by (objectType)",
+                     "expr": "sum(rate(bakesRequested_total[$__rate_interval])) by (flavor)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{objectType}}",
+                     "legendFormat": "Requested/{{flavor}}",
                      "refId": "A"
+                  },
+                  {
+                     "expr": "sum(rate(bakesCompleted_seconds_count{success=\"false\"}[$__rate_interval])) by (region)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "Failure/{{region}}",
+                     "refId": "B"
+                  },
+                  {
+                     "expr": "sum(rate(bakesCompleted_seconds_count{success=\"true\"}[$__rate_interval])) by (region)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "Success/{{region}}",
+                     "refId": "C"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Item Cache Size (front50)",
+               "title": "Bake Request and Completion Rates (rosco)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -841,22 +849,21 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(executionCount_total[$__rate_interval])) by (instance)",
+                     "expr": "sum(storageServiceSupport_cacheSize) by (objectType)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{instance}}",
+                     "legendFormat": "{{objectType}}",
                      "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Execution Count (clouddriver)",
+               "title": "Item Cache Size (front50)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -922,7 +929,86 @@
                "repeat": null,
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(executionCount_total[$__rate_interval])) by (instance)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{instance}}",
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Execution Count (clouddriver)",
+               "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": true
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": { },
+               "id": 13,
+               "legend": {
+                  "alignAsTable": false,
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "rightSide": false,
+                  "show": true,
+                  "sideWidth": null,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "repeat": null,
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
                "stack": false,
                "steppedLine": false,
                "targets": [

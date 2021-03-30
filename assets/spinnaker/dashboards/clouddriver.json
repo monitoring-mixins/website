@@ -4119,7 +4119,7 @@
                },
                "yaxes": [
                   {
-                     "format": "binBps",
+                     "format": "Bps",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -4127,7 +4127,7 @@
                      "show": true
                   },
                   {
-                     "format": "binBps",
+                     "format": "Bps",
                      "label": null,
                      "logBase": 1,
                      "max": null,

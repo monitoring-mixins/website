@@ -54,7 +54,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(stage_invocations_total{spinSvc=\"$spinSvc\", application=~\"$Application\"}[$__rate_interval])) by (application, type)",
+                     "expr": "sum(rate(stage_invocations_total{spinSvc=~\".*orca.*\", application=~\"$Application\"}[$__rate_interval])) by (application, type)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{application}}/{{type}}",
@@ -135,7 +135,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(queue_pushed_messages_total{spinSvc=\"$spinSvc\", application=~\"$Application\"}[$__rate_interval])) by (application)",
+                     "expr": "sum(rate(pipelines_triggered_total{spinSvc=~\".*echo.*\", application=~\"$Application\"}[$__rate_interval])) by (application)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{application}}",
@@ -145,7 +145,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Pushed Messages by Application (orca, $Application)",
+               "title": "$Application Pipelines Triggered (echo, $Application)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -216,17 +216,24 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(pipelines_triggered_total{spinSvc=~\"echo\", application=~\"$Application\"}[$__rate_interval])) by (name, application)",
+                     "expr": "sum(bakesActive{spinSvc=~\".*rosco.*\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{name}}({{application}})",
+                     "legendFormat": "Active",
                      "refId": "A"
+                  },
+                  {
+                     "expr": "sum(rate(bakesRequested_total{spinSvc=~\".*rosco.*\"}[$__rate_interval])) by (flavor)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "Request({{flavor}})",
+                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "$Application Pipelines Triggered (echo)",
+               "title": "Bakes Active and Requested (rosco)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -297,24 +304,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(bakesActive)",
+                     "expr": "sum(rate(bakesCompleted_seconds_count{spinSvc=~\".*rosco.*\",success=\"false\"}[$__rate_interval])) by (cause, region)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "Active",
+                     "legendFormat": "{{cause}}/{{region}}",
                      "refId": "A"
-                  },
-                  {
-                     "expr": "sum(rate(bakesRequested_total[$__rate_interval])) by (flavor)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Request({{flavor}})",
-                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Bake Requests and Failures (rosco)",
+               "title": "Bake Failure Rate (rosco)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -334,7 +334,7 @@
                      "label": null,
                      "logBase": 1,
                      "max": null,
-                     "min": null,
+                     "min": 0,
                      "show": true
                   },
                   {
@@ -342,7 +342,7 @@
                      "label": null,
                      "logBase": 1,
                      "max": null,
-                     "min": null,
+                     "min": 0,
                      "show": true
                   }
                ]
@@ -385,24 +385,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "-1 * sum(rate(bakesCompleted_seconds_count{success=\"false\"}[$__rate_interval])) by (region)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Failed {{region}}",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "sum(rate(bakesCompleted_seconds_sum[$__rate_interval]) / 1000000000) by (region)\n/\nsum(rate(bakesCompleted_seconds_count[$__rate_interval])) by (region)",
+                     "expr": "sum(rate(bakesCompleted_seconds_count{spinSvc=~\".*rosco.*\",success=\"true\"}[$__rate_interval])) by (region)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{region}}",
-                     "refId": "B"
+                     "refId": "A"
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Bakes Completed (rosco)",
+               "title": "Bake Succees Rate (rosco)",
                "tooltip": {
                   "shared": true,
                   "sort": 0,
@@ -722,7 +715,7 @@
             "multi": true,
             "name": "Application",
             "options": [ ],
-            "query": "label_values(stage_invocations_total{spinSvc=\"orca\"}, application)",
+            "query": "label_values(stage_invocations_total{spinSvc=\".*orca.*\"}, application)",
             "refresh": 2,
             "regex": "",
             "sort": 1,
