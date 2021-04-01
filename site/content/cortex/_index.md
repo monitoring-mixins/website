@@ -2098,32 +2098,30 @@ labels:
 record: cluster_namespace_deployment_reason:required_replicas:count
 {{< /code >}}
  
-##### cluster_namespace_deployment_reason:required_replicas:count
+##### cluster_namespace_deployment:container_cpu_usage_seconds_total:sum_rate
 
 {{< code lang="yaml" >}}
 expr: |
-  ceil(
-    cluster_namespace_deployment:actual_replicas:count
-      *
-    quantile_over_time(0.99,
-      sum by (cluster, namespace, deployment) (
-        label_replace(
-          node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate,
-          "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
-        )
-      )[24h:5m]
-    )
-      /
-    sum by (cluster, namespace, deployment) (
-      label_replace(
-        kube_pod_container_resource_requests_cpu_cores,
-        "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
-      )
+  sum by (cluster, namespace, deployment) (
+    label_replace(
+      node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate,
+      "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
     )
   )
-labels:
-  reason: cpu_usage
-record: cluster_namespace_deployment_reason:required_replicas:count
+record: cluster_namespace_deployment:container_cpu_usage_seconds_total:sum_rate
+{{< /code >}}
+ 
+##### cluster_namespace_deployment:kube_pod_container_resource_requests_cpu_cores:sum
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, namespace, deployment) (
+    label_replace(
+      kube_pod_container_resource_requests_cpu_cores,
+      "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+    )
+  )
+record: cluster_namespace_deployment:kube_pod_container_resource_requests_cpu_cores:sum
 {{< /code >}}
  
 ##### cluster_namespace_deployment_reason:required_replicas:count
@@ -2133,21 +2131,51 @@ expr: |
   ceil(
     cluster_namespace_deployment:actual_replicas:count
       *
-    quantile_over_time(0.99,
-      sum by (cluster, namespace, deployment) (
-        label_replace(
-          container_memory_usage_bytes,
-          "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
-        )
-      )[24h:5m]
-    )
+    quantile_over_time(0.99, cluster_namespace_deployment:container_cpu_usage_seconds_total:sum_rate[24h])
       /
-    sum by (cluster, namespace, deployment) (
-      label_replace(
-        kube_pod_container_resource_requests_memory_bytes,
-        "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
-      )
+    cluster_namespace_deployment:kube_pod_container_resource_requests_cpu_cores:sum
+  )
+labels:
+  reason: cpu_usage
+record: cluster_namespace_deployment_reason:required_replicas:count
+{{< /code >}}
+ 
+##### cluster_namespace_deployment:container_memory_usage_bytes:sum
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, namespace, deployment) (
+    label_replace(
+      container_memory_usage_bytes,
+      "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
     )
+  )
+record: cluster_namespace_deployment:container_memory_usage_bytes:sum
+{{< /code >}}
+ 
+##### cluster_namespace_deployment:kube_pod_container_resource_requests_memory_bytes:sum
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, namespace, deployment) (
+    label_replace(
+      kube_pod_container_resource_requests_memory_bytes,
+      "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+    )
+  )
+record: cluster_namespace_deployment:kube_pod_container_resource_requests_memory_bytes:sum
+{{< /code >}}
+ 
+##### cluster_namespace_deployment_reason:required_replicas:count
+
+{{< code lang="yaml" >}}
+expr: |
+  ceil(
+    cluster_namespace_deployment:actual_replicas:count
+      *
+    quantile_over_time(0.99, cluster_namespace_deployment:container_memory_usage_bytes:sum[24h])
+      /
+    cluster_namespace_deployment:kube_pod_container_resource_requests_memory_bytes:sum
   )
 labels:
   reason: memory_usage
