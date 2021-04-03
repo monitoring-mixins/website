@@ -776,9 +776,9 @@ annotations:
   message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
     uploaded any block in the last 24 hours.
 expr: |
-  (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor"} > 60 * 60 * 24)
+  (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor.*"} > 60 * 60 * 24)
   and
-  (thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor"} > 0)
+  (thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor.*"} > 0)
 for: 15m
 labels:
   severity: critical
@@ -792,7 +792,7 @@ annotations:
   message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
     uploaded any block in the last 24 hours.
 expr: |
-  thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor"} == 0
+  thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor.*"} == 0
 for: 24h
 labels:
   severity: critical
@@ -806,7 +806,7 @@ annotations:
   message: |
     {{ $labels.job }}/{{ $labels.instance }} failed to run compaction.
 expr: |
-  increase(cortex_compactor_runs_failed_total[2h]) > 1
+  increase(cortex_compactor_runs_failed_total[2h]) >= 2
 labels:
   severity: critical
 {{< /code >}}
