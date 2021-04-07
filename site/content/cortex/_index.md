@@ -2195,6 +2195,7 @@ Following dashboards are generated from mixins and hosted on github:
 - [cortex-object-store](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-object-store.json)
 - [cortex-queries](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-queries.json)
 - [cortex-reads](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-reads.json)
+- [cortex-rollout-progress](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-rollout-progress.json)
 - [cortex-scaling](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-scaling.json)
 - [cortex-slow-queries](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-slow-queries.json)
 - [cortex-wal](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-wal.json)
