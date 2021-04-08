@@ -1033,7 +1033,7 @@
                "color": {
                   "mode": "thresholds"
                },
-               "decimals": 1,
+               "decimals": 0,
                "noValue": "All healthy",
                "thresholds": {
                   "mode": "absolute",
@@ -1052,7 +1052,7 @@
                      }
                   ]
                },
-               "unit": "percentunit"
+               "unit": "short"
             },
             "overrides": [ ]
          },

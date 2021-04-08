@@ -331,7 +331,7 @@ expr: |
     <
   kube_hpa_spec_max_replicas{job="kube-state-metrics"})
     and
-  changes(kube_hpa_status_current_replicas[15m]) == 0
+  changes(kube_hpa_status_current_replicas{job="kube-state-metrics"}[15m]) == 0
 for: 15m
 labels:
   severity: warning
@@ -390,7 +390,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubememoryovercommit
   summary: Cluster has overcommitted memory resource requests.
 expr: |
-  sum(namespace_memory:kube_pod_container_resource_requests_bytes:sum{})
+  sum(namespace_memory:kube_pod_container_resource_requests:sum{})
     /
   sum(kube_node_status_allocatable{resource="memory"})
     >

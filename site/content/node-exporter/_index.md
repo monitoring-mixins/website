@@ -326,14 +326,14 @@ expr: |
 record: instance:node_num_cpu:sum
 {{< /code >}}
  
-##### instance:node_cpu_utilisation:rate1m
+##### instance:node_cpu_utilisation:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
   1 - avg without (cpu, mode) (
-    rate(node_cpu_seconds_total{job="node", mode="idle"}[1m])
+    rate(node_cpu_seconds_total{job="node", mode="idle"}[5m])
   )
-record: instance:node_cpu_utilisation:rate1m
+record: instance:node_cpu_utilisation:rate5m
 {{< /code >}}
  
 ##### instance:node_load1_per_cpu:ratio
@@ -360,68 +360,68 @@ expr: |
 record: instance:node_memory_utilisation:ratio
 {{< /code >}}
  
-##### instance:node_vmstat_pgmajfault:rate1m
+##### instance:node_vmstat_pgmajfault:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
-  rate(node_vmstat_pgmajfault{job="node"}[1m])
-record: instance:node_vmstat_pgmajfault:rate1m
+  rate(node_vmstat_pgmajfault{job="node"}[5m])
+record: instance:node_vmstat_pgmajfault:rate5m
 {{< /code >}}
  
-##### instance_device:node_disk_io_time_seconds:rate1m
+##### instance_device:node_disk_io_time_seconds:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
-  rate(node_disk_io_time_seconds_total{job="node", device!=""}[1m])
-record: instance_device:node_disk_io_time_seconds:rate1m
+  rate(node_disk_io_time_seconds_total{job="node", device!=""}[5m])
+record: instance_device:node_disk_io_time_seconds:rate5m
 {{< /code >}}
  
-##### instance_device:node_disk_io_time_weighted_seconds:rate1m
+##### instance_device:node_disk_io_time_weighted_seconds:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
-  rate(node_disk_io_time_weighted_seconds_total{job="node", device!=""}[1m])
-record: instance_device:node_disk_io_time_weighted_seconds:rate1m
+  rate(node_disk_io_time_weighted_seconds_total{job="node", device!=""}[5m])
+record: instance_device:node_disk_io_time_weighted_seconds:rate5m
 {{< /code >}}
  
-##### instance:node_network_receive_bytes_excluding_lo:rate1m
+##### instance:node_network_receive_bytes_excluding_lo:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
   sum without (device) (
-    rate(node_network_receive_bytes_total{job="node", device!="lo"}[1m])
+    rate(node_network_receive_bytes_total{job="node", device!="lo"}[5m])
   )
-record: instance:node_network_receive_bytes_excluding_lo:rate1m
+record: instance:node_network_receive_bytes_excluding_lo:rate5m
 {{< /code >}}
  
-##### instance:node_network_transmit_bytes_excluding_lo:rate1m
+##### instance:node_network_transmit_bytes_excluding_lo:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
   sum without (device) (
-    rate(node_network_transmit_bytes_total{job="node", device!="lo"}[1m])
+    rate(node_network_transmit_bytes_total{job="node", device!="lo"}[5m])
   )
-record: instance:node_network_transmit_bytes_excluding_lo:rate1m
+record: instance:node_network_transmit_bytes_excluding_lo:rate5m
 {{< /code >}}
  
-##### instance:node_network_receive_drop_excluding_lo:rate1m
+##### instance:node_network_receive_drop_excluding_lo:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
   sum without (device) (
-    rate(node_network_receive_drop_total{job="node", device!="lo"}[1m])
+    rate(node_network_receive_drop_total{job="node", device!="lo"}[5m])
   )
-record: instance:node_network_receive_drop_excluding_lo:rate1m
+record: instance:node_network_receive_drop_excluding_lo:rate5m
 {{< /code >}}
  
-##### instance:node_network_transmit_drop_excluding_lo:rate1m
+##### instance:node_network_transmit_drop_excluding_lo:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
   sum without (device) (
-    rate(node_network_transmit_drop_total{job="node", device!="lo"}[1m])
+    rate(node_network_transmit_drop_total{job="node", device!="lo"}[5m])
   )
-record: instance:node_network_transmit_drop_excluding_lo:rate1m
+record: instance:node_network_transmit_drop_excluding_lo:rate5m
 {{< /code >}}
  
 ## Dashboards
