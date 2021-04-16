@@ -351,7 +351,7 @@ expr: |
   ) * 100 > 20
 for: 5m
 labels:
-  severity: warning
+  severity: info
 {{< /code >}}
  
 ##### ThanosReceiveHighHashringFileRefreshFailures
