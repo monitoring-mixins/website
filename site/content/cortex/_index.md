@@ -744,26 +744,24 @@ labels:
 alert: CortexCompactorHasNotSuccessfullyCleanedUpBlocks
 annotations:
   message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
-    successfully cleaned up blocks in the last 24 hours.
+    successfully cleaned up blocks in the last 6 hours.
 expr: |
-  (time() - cortex_compactor_block_cleanup_last_successful_run_timestamp_seconds > 60 * 60 * 24)
-  and
-  (cortex_compactor_block_cleanup_last_successful_run_timestamp_seconds > 0)
-for: 15m
+  (time() - cortex_compactor_block_cleanup_last_successful_run_timestamp_seconds > 60 * 60 * 6)
+for: 1h
 labels:
   severity: critical
 {{< /code >}}
  
-##### CortexCompactorHasNotSuccessfullyCleanedUpBlocksSinceStart
+##### CortexCompactorHasNotSuccessfullyRunCompaction
 
 {{< code lang="yaml" >}}
-alert: CortexCompactorHasNotSuccessfullyCleanedUpBlocksSinceStart
+alert: CortexCompactorHasNotSuccessfullyRunCompaction
 annotations:
   message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
-    successfully cleaned up blocks in the last 24 hours.
+    run compaction in the last 6 hours.
 expr: |
-  cortex_compactor_block_cleanup_last_successful_run_timestamp_seconds == 0
-for: 24h
+  time() - cortex_compactor_last_successful_run_timestamp_seconds > 60 * 60 * 6
+for: 1h
 labels:
   severity: critical
 {{< /code >}}
