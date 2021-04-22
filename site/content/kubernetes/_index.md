@@ -1081,26 +1081,26 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[1d]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[1d]))
       -
       (
         (
-          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[1d]))
+          sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[1d]))
           or
           vector(0)
         )
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[1d]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[1d]))
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[1d]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[1d]))
       )
     )
     +
     # errors
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[1d]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[1d]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[1d]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[1d]))
 labels:
   verb: read
 record: apiserver_request:burnrate1d
@@ -1113,26 +1113,26 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[1h]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[1h]))
       -
       (
         (
-          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[1h]))
+          sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[1h]))
           or
           vector(0)
         )
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[1h]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[1h]))
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[1h]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[1h]))
       )
     )
     +
     # errors
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[1h]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[1h]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[1h]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[1h]))
 labels:
   verb: read
 record: apiserver_request:burnrate1h
@@ -1145,26 +1145,26 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[2h]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[2h]))
       -
       (
         (
-          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[2h]))
+          sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[2h]))
           or
           vector(0)
         )
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[2h]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[2h]))
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[2h]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[2h]))
       )
     )
     +
     # errors
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[2h]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[2h]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[2h]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[2h]))
 labels:
   verb: read
 record: apiserver_request:burnrate2h
@@ -1177,26 +1177,26 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[30m]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[30m]))
       -
       (
         (
-          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30m]))
+          sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30m]))
           or
           vector(0)
         )
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[30m]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[30m]))
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[30m]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[30m]))
       )
     )
     +
     # errors
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[30m]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[30m]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[30m]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[30m]))
 labels:
   verb: read
 record: apiserver_request:burnrate30m
@@ -1209,26 +1209,26 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[3d]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[3d]))
       -
       (
         (
-          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[3d]))
+          sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[3d]))
           or
           vector(0)
         )
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[3d]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[3d]))
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[3d]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[3d]))
       )
     )
     +
     # errors
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[3d]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[3d]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[3d]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[3d]))
 labels:
   verb: read
 record: apiserver_request:burnrate3d
@@ -1241,26 +1241,26 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[5m]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[5m]))
       -
       (
         (
-          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[5m]))
+          sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[5m]))
           or
           vector(0)
         )
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[5m]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[5m]))
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[5m]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[5m]))
       )
     )
     +
     # errors
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[5m]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[5m]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[5m]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[5m]))
 labels:
   verb: read
 record: apiserver_request:burnrate5m
@@ -1273,26 +1273,26 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[6h]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[6h]))
       -
       (
         (
-          sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[6h]))
+          sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[6h]))
           or
           vector(0)
         )
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[6h]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[6h]))
         +
-        sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[6h]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[6h]))
       )
     )
     +
     # errors
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[6h]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET",code=~"5.."}[6h]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[6h]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[6h]))
 labels:
   verb: read
 record: apiserver_request:burnrate6h
@@ -1305,15 +1305,15 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[1d]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[1d]))
       -
-      sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[1d]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[1d]))
     )
     +
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[1d]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[1d]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[1d]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[1d]))
 labels:
   verb: write
 record: apiserver_request:burnrate1d
@@ -1326,15 +1326,15 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[1h]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[1h]))
       -
-      sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[1h]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[1h]))
     )
     +
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[1h]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[1h]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[1h]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[1h]))
 labels:
   verb: write
 record: apiserver_request:burnrate1h
@@ -1347,15 +1347,15 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[2h]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[2h]))
       -
-      sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[2h]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[2h]))
     )
     +
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[2h]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[2h]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[2h]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[2h]))
 labels:
   verb: write
 record: apiserver_request:burnrate2h
@@ -1368,15 +1368,15 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[30m]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[30m]))
       -
-      sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[30m]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[30m]))
     )
     +
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[30m]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[30m]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[30m]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[30m]))
 labels:
   verb: write
 record: apiserver_request:burnrate30m
@@ -1389,15 +1389,15 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[3d]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[3d]))
       -
-      sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[3d]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[3d]))
     )
     +
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[3d]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[3d]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[3d]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[3d]))
 labels:
   verb: write
 record: apiserver_request:burnrate3d
@@ -1410,15 +1410,15 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))
       -
-      sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[5m]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[5m]))
     )
     +
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[5m]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[5m]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))
 labels:
   verb: write
 record: apiserver_request:burnrate5m
@@ -1431,15 +1431,15 @@ expr: |
   (
     (
       # too slow
-      sum(rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[6h]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[6h]))
       -
-      sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[6h]))
+      sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",le="1"}[6h]))
     )
     +
-    sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[6h]))
+    sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",code=~"5.."}[6h]))
   )
   /
-  sum(rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[6h]))
+  sum by (cluster) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[6h]))
 labels:
   verb: write
 record: apiserver_request:burnrate6h
@@ -1449,7 +1449,7 @@ record: apiserver_request:burnrate6h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code,resource) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[5m]))
+  sum by (cluster,code,resource) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[5m]))
 labels:
   verb: read
 record: code_resource:apiserver_request_total:rate5m
@@ -1459,7 +1459,7 @@ record: code_resource:apiserver_request_total:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code,resource) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))
+  sum by (cluster,code,resource) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))
 labels:
   verb: write
 record: code_resource:apiserver_request_total:rate5m
@@ -1469,7 +1469,7 @@ record: code_resource:apiserver_request_total:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
-  histogram_quantile(0.99, sum by (le, resource) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET"}[5m]))) > 0
+  histogram_quantile(0.99, sum by (cluster, le, resource) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET"}[5m]))) > 0
 labels:
   quantile: "0.99"
   verb: read
@@ -1480,7 +1480,7 @@ record: cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
 
 {{< code lang="yaml" >}}
 expr: |
-  histogram_quantile(0.99, sum by (le, resource) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))) > 0
+  histogram_quantile(0.99, sum by (cluster, le, resource) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))) > 0
 labels:
   quantile: "0.99"
   verb: write
@@ -1526,31 +1526,31 @@ expr: |
   1 - (
     (
       # write too slow
-      sum(increase(apiserver_request_duration_seconds_count{verb=~"POST|PUT|PATCH|DELETE"}[30d]))
+      sum by (cluster) (increase(apiserver_request_duration_seconds_count{verb=~"POST|PUT|PATCH|DELETE"}[30d]))
       -
-      sum(increase(apiserver_request_duration_seconds_bucket{verb=~"POST|PUT|PATCH|DELETE",le="1"}[30d]))
+      sum by (cluster) (increase(apiserver_request_duration_seconds_bucket{verb=~"POST|PUT|PATCH|DELETE",le="1"}[30d]))
     ) +
     (
       # read too slow
-      sum(increase(apiserver_request_duration_seconds_count{verb=~"LIST|GET"}[30d]))
+      sum by (cluster) (increase(apiserver_request_duration_seconds_count{verb=~"LIST|GET"}[30d]))
       -
       (
         (
-          sum(increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30d]))
+          sum by (cluster) (increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30d]))
           or
           vector(0)
         )
         +
-        sum(increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope="namespace",le="0.5"}[30d]))
+        sum by (cluster) (increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope="namespace",le="0.5"}[30d]))
         +
-        sum(increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope="cluster",le="5"}[30d]))
+        sum by (cluster) (increase(apiserver_request_duration_seconds_bucket{verb=~"LIST|GET",scope="cluster",le="5"}[30d]))
       )
     ) +
     # errors
-    sum(code:apiserver_request_total:increase30d{code=~"5.."} or vector(0))
+    sum by (cluster) (code:apiserver_request_total:increase30d{code=~"5.."} or vector(0))
   )
   /
-  sum(code:apiserver_request_total:increase30d)
+  sum by (cluster) (code:apiserver_request_total:increase30d)
 labels:
   verb: all
 record: apiserver_request:availability30d
@@ -1561,26 +1561,26 @@ record: apiserver_request:availability30d
 {{< code lang="yaml" >}}
 expr: |
   1 - (
-    sum(increase(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[30d]))
+    sum by (cluster) (increase(apiserver_request_duration_seconds_count{job="kube-apiserver",verb=~"LIST|GET"}[30d]))
     -
     (
       # too slow
       (
-        sum(increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30d]))
+        sum by (cluster) (increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope=~"resource|",le="0.1"}[30d]))
         or
         vector(0)
       )
       +
-      sum(increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[30d]))
+      sum by (cluster) (increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="0.5"}[30d]))
       +
-      sum(increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[30d]))
+      sum by (cluster) (increase(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="5"}[30d]))
     )
     +
     # errors
-    sum(code:apiserver_request_total:increase30d{verb="read",code=~"5.."} or vector(0))
+    sum by (cluster) (code:apiserver_request_total:increase30d{verb="read",code=~"5.."} or vector(0))
   )
   /
-  sum(code:apiserver_request_total:increase30d{verb="read"})
+  sum by (cluster) (code:apiserver_request_total:increase30d{verb="read"})
 labels:
   verb: read
 record: apiserver_request:availability30d
@@ -1593,16 +1593,16 @@ expr: |
   1 - (
     (
       # too slow
-      sum(increase(apiserver_request_duration_seconds_count{verb=~"POST|PUT|PATCH|DELETE"}[30d]))
+      sum by (cluster) (increase(apiserver_request_duration_seconds_count{verb=~"POST|PUT|PATCH|DELETE"}[30d]))
       -
-      sum(increase(apiserver_request_duration_seconds_bucket{verb=~"POST|PUT|PATCH|DELETE",le="1"}[30d]))
+      sum by (cluster) (increase(apiserver_request_duration_seconds_bucket{verb=~"POST|PUT|PATCH|DELETE",le="1"}[30d]))
     )
     +
     # errors
-    sum(code:apiserver_request_total:increase30d{verb="write",code=~"5.."} or vector(0))
+    sum by (cluster) (code:apiserver_request_total:increase30d{verb="write",code=~"5.."} or vector(0))
   )
   /
-  sum(code:apiserver_request_total:increase30d{verb="write"})
+  sum by (cluster) (code:apiserver_request_total:increase30d{verb="write"})
 labels:
   verb: write
 record: apiserver_request:availability30d
@@ -1620,7 +1620,7 @@ record: code_verb:apiserver_request_total:increase30d
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"2.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"2.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1628,7 +1628,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"2.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"2.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1636,7 +1636,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"2.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"2.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1644,7 +1644,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"2.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"2.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1652,7 +1652,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"2.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"2.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1660,7 +1660,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"2.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"2.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1668,7 +1668,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"3.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"3.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1676,7 +1676,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"3.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"3.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1684,7 +1684,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"3.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"3.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1692,7 +1692,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"3.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"3.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1700,7 +1700,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"3.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"3.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1708,7 +1708,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"3.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"3.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1716,7 +1716,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"4.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"4.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1724,7 +1724,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"4.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"4.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1732,7 +1732,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"4.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"4.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1740,7 +1740,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"4.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"4.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1748,7 +1748,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"4.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"4.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1756,7 +1756,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"4.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"4.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1764,7 +1764,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"5.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"5.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1772,7 +1772,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"5.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"5.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1780,7 +1780,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"5.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"5.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1788,7 +1788,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"5.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"5.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1796,7 +1796,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"5.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"5.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1804,7 +1804,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"5.."}[1h]))
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"5.."}[1h]))
 record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
@@ -1812,7 +1812,7 @@ record: code_verb:apiserver_request_total:increase1h
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code) (code_verb:apiserver_request_total:increase30d{verb=~"LIST|GET"})
+  sum by (cluster, code) (code_verb:apiserver_request_total:increase30d{verb=~"LIST|GET"})
 labels:
   verb: read
 record: code:apiserver_request_total:increase30d
@@ -1822,7 +1822,7 @@ record: code:apiserver_request_total:increase30d
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (code) (code_verb:apiserver_request_total:increase30d{verb=~"POST|PUT|PATCH|DELETE"})
+  sum by (cluster, code) (code_verb:apiserver_request_total:increase30d{verb=~"POST|PUT|PATCH|DELETE"})
 labels:
   verb: write
 record: code:apiserver_request_total:increase30d

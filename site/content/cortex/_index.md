@@ -45,7 +45,7 @@ expr: |
     > 1
 for: 15m
 labels:
-  severity: warning
+  severity: critical
 {{< /code >}}
  
 ##### CortexRequestLatency
@@ -758,10 +758,26 @@ labels:
 alert: CortexCompactorHasNotSuccessfullyRunCompaction
 annotations:
   message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
-    run compaction in the last 6 hours.
+    run compaction in the last 24 hours.
 expr: |
-  time() - cortex_compactor_last_successful_run_timestamp_seconds > 60 * 60 * 6
+  (time() - cortex_compactor_last_successful_run_timestamp_seconds > 60 * 60 * 24)
+  and
+  (cortex_compactor_last_successful_run_timestamp_seconds > 0)
 for: 1h
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexCompactorHasNotSuccessfullyRunCompaction
+
+{{< code lang="yaml" >}}
+alert: CortexCompactorHasNotSuccessfullyRunCompaction
+annotations:
+  message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
+    run compaction in the last 24 hours.
+expr: |
+  cortex_compactor_last_successful_run_timestamp_seconds == 0
+for: 24h
 labels:
   severity: critical
 {{< /code >}}
