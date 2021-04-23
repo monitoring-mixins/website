@@ -548,7 +548,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Memory Usage",
+               "title": "Memory Usage (WSS)",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -631,7 +631,7 @@
                      "type": "hidden"
                   },
                   {
-                     "alias": "Memory Usage",
+                     "alias": "Memory Usage (WSS)",
                      "colorMode": null,
                      "colors": [ ],
                      "dateFormat": "YYYY-MM-DD HH:mm:ss",

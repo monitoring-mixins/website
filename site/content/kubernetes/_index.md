@@ -2155,5 +2155,4 @@ Following dashboards are generated from mixins and hosted on github:
 - [pod-total](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/pod-total.json)
 - [proxy](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/proxy.json)
 - [scheduler](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/scheduler.json)
-- [statefulset](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/statefulset.json)
 - [workload-total](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/workload-total.json)
