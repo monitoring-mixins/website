@@ -215,5 +215,6 @@ Following dashboards are generated from mixins and hosted on github:
 - [loki-operational](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-operational.json)
 - [loki-reads-resources](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-reads-resources.json)
 - [loki-reads](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-reads.json)
+- [loki-retention](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-retention.json)
 - [loki-writes-resources](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-writes-resources.json)
 - [loki-writes](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-writes.json)

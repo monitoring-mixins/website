@@ -6,7 +6,20 @@
    "gnetId": null,
    "graphTooltip": 0,
    "hideControls": false,
-   "links": [ ],
+   "links": [
+      {
+         "asDropdown": true,
+         "icon": "external link",
+         "includeVars": true,
+         "keepTime": true,
+         "tags": [
+            "loki"
+         ],
+         "targetBlank": false,
+         "title": "Loki Dashboards",
+         "type": "dashboards"
+      }
+   ],
    "refresh": "10s",
    "rows": [
       {
@@ -19,8 +32,7 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Shows rate of requests against /query for the given time.",
-               "fill": 10,
+               "fill": 1,
                "id": 1,
                "legend": {
                   "avg": false,
@@ -32,7 +44,7 @@
                   "values": false
                },
                "lines": true,
-               "linewidth": 0,
+               "linewidth": 1,
                "links": [ ],
                "nullPointMode": "null as zero",
                "percentage": false,
@@ -41,47 +53,39 @@
                "renderer": "flot",
                "seriesOverrides": [
                   {
-                     "alias": "/1../",
-                     "color": "#EAB839"
-                  },
-                  {
-                     "alias": "/2../",
-                     "color": "#37872D"
-                  },
-                  {
-                     "alias": "/3../",
-                     "color": "#E0B400"
-                  },
-                  {
-                     "alias": "/4../",
-                     "color": "#1F60C4"
-                  },
-                  {
-                     "alias": "/5../",
-                     "color": "#C4162A"
+                     "alias": "limit",
+                     "color": "#E02F44",
+                     "fill": 0
                   }
                ],
                "spaceLength": 10,
                "span": 4,
-               "stack": true,
+               "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (job, handler, code) (rate(http_requests_total{job=~\"$job\", handler=\"query\"}[$interval]))",
+                     "expr": "sum by(pod) (rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{job}} {{handler}} {{code}}",
+                     "legendFormat": "{{pod}}",
+                     "legendLink": null,
+                     "step": 10
+                  },
+                  {
+                     "expr": "min(container_spec_cpu_quota{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"} / container_spec_cpu_period{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"})",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "limit",
+                     "legendLink": null,
                      "step": 10
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Rate",
+               "title": "CPU",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
+                  "sort": 2
                },
                "type": "graph",
                "xaxis": {
@@ -94,84 +98,6 @@
                "yaxes": [
                   {
                      "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": {
-                  "error": "#E24D42"
-               },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "Shows ratio of errors compared to the the total number of handled requests against /query.",
-               "fill": 10,
-               "id": 2,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 4,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum by (job) (rate(http_requests_total{job=~\"$job\", handler=\"query\",code=~\"5..\"}[$interval])) / sum by (job) (rate(http_requests_total{job=~\"$job\", handler=\"query\"}[$interval]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "error",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Errors",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "percentunit",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -194,7 +120,94 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Shows how long has it taken to handle requests in quantiles.",
+               "fill": 1,
+               "id": 2,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [
+                  {
+                     "alias": "limit",
+                     "color": "#E02F44",
+                     "fill": 0
+                  }
+               ],
+               "spaceLength": 10,
+               "span": 4,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "max by(pod) (container_memory_working_set_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"})",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{pod}}",
+                     "legendLink": null,
+                     "step": 10
+                  },
+                  {
+                     "expr": "min(container_spec_memory_limit_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"} > 0)",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "limit",
+                     "legendLink": null,
+                     "step": 10
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Memory (workingset)",
+               "tooltip": {
+                  "sort": 2
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "bytes",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
                "fill": 1,
                "id": 3,
                "legend": {
@@ -214,66 +227,219 @@
                "pointradius": 5,
                "points": false,
                "renderer": "flot",
-               "seriesOverrides": [
-                  {
-                     "alias": "p99",
-                     "color": "#FA6400",
-                     "fill": 1,
-                     "fillGradient": 1
-                  },
-                  {
-                     "alias": "p90",
-                     "color": "#E0B400",
-                     "fill": 1,
-                     "fillGradient": 1
-                  },
-                  {
-                     "alias": "p50",
-                     "color": "#37872D",
-                     "fill": 10,
-                     "fillGradient": 0
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 4,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.50, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~\"$job\", handler=\"query\"}[$interval]))) * 1",
+                     "expr": "sum by(pod) (go_memstats_heap_inuse_bytes{cluster=~\"$cluster\", job=~\"($namespace)/compactor\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "p50 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.90, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~\"$job\", handler=\"query\"}[$interval]))) * 1",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "p90 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.99, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~\"$job\", handler=\"query\"}[$interval]))) * 1",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "p99 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
+                     "legendFormat": "{{pod}}",
+                     "legendLink": null,
                      "step": 10
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Duration",
+               "title": "Memory (go heap inuse)",
+               "tooltip": {
+                  "sort": 2
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "bytes",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Ressource Usage",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "fixedColor": "blue",
+                        "mode": "fixed"
+                     },
+                     "custom": { },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           }
+                        ]
+                     },
+                     "unit": "dateTimeFromNow"
+                  }
+               },
+               "fill": 1,
+               "id": 4,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "options": {
+                  "colorMode": "value",
+                  "graphMode": "area",
+                  "justifyMode": "auto",
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "text": { },
+                  "textMode": "auto"
+               },
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 4,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "loki_boltdb_shipper_compact_tables_operation_last_successful_run_timestamp_seconds{cluster=~\"$cluster\", namespace=~\"$namespace\"} * 1e3",
+                     "format": "time_series",
+                     "instant": true,
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Last Compact and Mark Operation Success",
+               "tooltip": {
+                  "shared": false,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "stat",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "id": 5,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 4,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "loki_boltdb_shipper_compact_tables_operation_duration_seconds{cluster=~\"$cluster\", namespace=~\"$namespace\"}",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "duration",
+                     "legendLink": null,
+                     "step": 10
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Compact and Mark Operations Duration",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -305,28 +471,15 @@
                      "show": false
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Instant Query API",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Shows rate of requests against /query_range for the given time range.",
-               "fill": 10,
-               "id": 4,
+               "fill": 1,
+               "id": 6,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -337,52 +490,32 @@
                   "values": false
                },
                "lines": true,
-               "linewidth": 0,
+               "linewidth": 1,
                "links": [ ],
                "nullPointMode": "null as zero",
                "percentage": false,
                "pointradius": 5,
                "points": false,
                "renderer": "flot",
-               "seriesOverrides": [
-                  {
-                     "alias": "/1../",
-                     "color": "#EAB839"
-                  },
-                  {
-                     "alias": "/2../",
-                     "color": "#37872D"
-                  },
-                  {
-                     "alias": "/3../",
-                     "color": "#E0B400"
-                  },
-                  {
-                     "alias": "/4../",
-                     "color": "#1F60C4"
-                  },
-                  {
-                     "alias": "/5../",
-                     "color": "#C4162A"
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 4,
-               "stack": true,
+               "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (job, handler, code) (rate(http_requests_total{job=~\"$job\", handler=\"query_range\"}[$interval]))",
+                     "expr": "sum by (status)(rate(loki_boltdb_shipper_compact_tables_operation_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{job}} {{handler}} {{code}}",
+                     "legendFormat": "{{success}}",
+                     "legendLink": null,
                      "step": 10
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Rate",
+               "title": "Compact and Mark Operations Per Status",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -414,18 +547,27 @@
                      "show": false
                   }
                ]
-            },
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Compact and Mark",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
             {
-               "aliasColors": {
-                  "error": "#E24D42"
-               },
+               "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Shows ratio of errors compared to the the total number of handled requests against /query_range.",
                "fill": 10,
-               "id": 5,
+               "id": 7,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -450,296 +592,18 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (job) (rate(http_requests_total{job=~\"$job\", handler=\"query_range\",code=~\"5..\"}[$interval])) / sum by (job) (rate(http_requests_total{job=~\"$job\", handler=\"query_range\"}[$interval]))",
+                     "expr": "count by(action)(loki_boltdb_shipper_retention_marker_table_processed_total{cluster=~\"$cluster\", namespace=~\"$namespace\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "error",
+                     "legendFormat": "{{action}}",
+                     "legendLink": null,
                      "step": 10
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Errors",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "percentunit",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "Shows how long has it taken to handle requests in quantiles.",
-               "fill": 1,
-               "id": 6,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [
-                  {
-                     "alias": "p99",
-                     "color": "#FA6400",
-                     "fill": 1,
-                     "fillGradient": 1
-                  },
-                  {
-                     "alias": "p90",
-                     "color": "#E0B400",
-                     "fill": 1,
-                     "fillGradient": 1
-                  },
-                  {
-                     "alias": "p50",
-                     "color": "#37872D",
-                     "fill": 10,
-                     "fillGradient": 0
-                  }
-               ],
-               "spaceLength": 10,
-               "span": 4,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "histogram_quantile(0.50, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~\"$job\", handler=\"query_range\"}[$interval]))) * 1",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "p50 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.90, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~\"$job\", handler=\"query_range\"}[$interval]))) * 1",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "p90 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.99, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~\"$job\", handler=\"query_range\"}[$interval]))) * 1",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "p99 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Duration",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "s",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Range Query API",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "Shows rate of handled Unary gRPC requests from other queriers.",
-               "fill": 10,
-               "id": 7,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [
-                  {
-                     "alias": "/Aborted/",
-                     "color": "#EAB839"
-                  },
-                  {
-                     "alias": "/AlreadyExists/",
-                     "color": "#37872D"
-                  },
-                  {
-                     "alias": "/FailedPrecondition/",
-                     "color": "#E0B400"
-                  },
-                  {
-                     "alias": "/Unimplemented/",
-                     "color": "#E0B400"
-                  },
-                  {
-                     "alias": "/InvalidArgument/",
-                     "color": "#1F60C4"
-                  },
-                  {
-                     "alias": "/NotFound/",
-                     "color": "#1F60C4"
-                  },
-                  {
-                     "alias": "/PermissionDenied/",
-                     "color": "#1F60C4"
-                  },
-                  {
-                     "alias": "/Unauthenticated/",
-                     "color": "#1F60C4"
-                  },
-                  {
-                     "alias": "/Canceled/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/DataLoss/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/DeadlineExceeded/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/Internal/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/OutOfRange/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/ResourceExhausted/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/Unavailable/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/Unknown/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/OK/",
-                     "color": "#37872D"
-                  },
-                  {
-                     "alias": "error",
-                     "color": "#C4162A"
-                  }
-               ],
-               "spaceLength": 10,
-               "span": 4,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum by (job, grpc_method, grpc_code) (rate(grpc_client_handled_total{job=~\"$job\", grpc_type=\"unary\"}[$interval]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{job}} {{grpc_method}} {{grpc_code}}",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Rate",
+               "title": "Processed Tables Per Action",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -773,14 +637,11 @@
                ]
             },
             {
-               "aliasColors": {
-                  "error": "#E24D42"
-               },
+               "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Shows ratio of errors compared to the the total number of handled requests from other queriers.",
                "fill": 10,
                "id": 8,
                "legend": {
@@ -807,17 +668,18 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (job) (rate(grpc_client_handled_total{grpc_code=~\"Unknown|ResourceExhausted|Internal|Unavailable|DataLoss\",job=~\"$job\", grpc_type=\"unary\"}[$interval])) / sum by (job) (rate(grpc_client_handled_total{job=~\"$job\", grpc_type=\"unary\"}[$interval]))",
+                     "expr": "count by(table,action)(loki_boltdb_shipper_retention_marker_table_processed_total{cluster=~\"$cluster\", namespace=~\"$namespace\" , action=~\"modified|deleted\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "error",
+                     "legendFormat": "{{table}}-{{action}}",
+                     "legendLink": null,
                      "step": 10
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Errors",
+               "title": "Modified Tables",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -833,7 +695,7 @@
                },
                "yaxes": [
                   {
-                     "format": "percentunit",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -856,290 +718,8 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Shows how long has it taken to handle requests from other queriers, in quantiles.",
-               "fill": 1,
+               "fill": 10,
                "id": 9,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [
-                  {
-                     "alias": "p99",
-                     "color": "#FA6400",
-                     "fill": 1,
-                     "fillGradient": 1
-                  },
-                  {
-                     "alias": "p90",
-                     "color": "#E0B400",
-                     "fill": 1,
-                     "fillGradient": 1
-                  },
-                  {
-                     "alias": "p50",
-                     "color": "#37872D",
-                     "fill": 10,
-                     "fillGradient": 0
-                  }
-               ],
-               "spaceLength": 10,
-               "span": 4,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "histogram_quantile(0.50, sum by (job, le) (rate(grpc_client_handling_seconds_bucket{job=~\"$job\", grpc_type=\"unary\"}[$interval]))) * 1",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "p50 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.90, sum by (job, le) (rate(grpc_client_handling_seconds_bucket{job=~\"$job\", grpc_type=\"unary\"}[$interval]))) * 1",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "p90 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.99, sum by (job, le) (rate(grpc_client_handling_seconds_bucket{job=~\"$job\", grpc_type=\"unary\"}[$interval]))) * 1",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "p99 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Duration",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "s",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "gRPC (Unary)",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "Shows rate of handled Streamed gRPC requests from other queriers.",
-               "fill": 10,
-               "id": 10,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [
-                  {
-                     "alias": "/Aborted/",
-                     "color": "#EAB839"
-                  },
-                  {
-                     "alias": "/AlreadyExists/",
-                     "color": "#37872D"
-                  },
-                  {
-                     "alias": "/FailedPrecondition/",
-                     "color": "#E0B400"
-                  },
-                  {
-                     "alias": "/Unimplemented/",
-                     "color": "#E0B400"
-                  },
-                  {
-                     "alias": "/InvalidArgument/",
-                     "color": "#1F60C4"
-                  },
-                  {
-                     "alias": "/NotFound/",
-                     "color": "#1F60C4"
-                  },
-                  {
-                     "alias": "/PermissionDenied/",
-                     "color": "#1F60C4"
-                  },
-                  {
-                     "alias": "/Unauthenticated/",
-                     "color": "#1F60C4"
-                  },
-                  {
-                     "alias": "/Canceled/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/DataLoss/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/DeadlineExceeded/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/Internal/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/OutOfRange/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/ResourceExhausted/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/Unavailable/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/Unknown/",
-                     "color": "#C4162A"
-                  },
-                  {
-                     "alias": "/OK/",
-                     "color": "#37872D"
-                  },
-                  {
-                     "alias": "error",
-                     "color": "#C4162A"
-                  }
-               ],
-               "spaceLength": 10,
-               "span": 4,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum by (job, grpc_method, grpc_code) (rate(grpc_client_handled_total{job=~\"$job\", grpc_type=\"server_stream\"}[$interval]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{job}} {{grpc_method}} {{grpc_code}}",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Rate",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": {
-                  "error": "#E24D42"
-               },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "Shows ratio of errors compared to the the total number of handled requests from other queriers.",
-               "fill": 10,
-               "id": 11,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1164,17 +744,18 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (job) (rate(grpc_client_handled_total{grpc_code=~\"Unknown|ResourceExhausted|Internal|Unavailable|DataLoss\",job=~\"$job\", grpc_type=\"server_stream\"}[$interval])) / sum by (job) (rate(grpc_client_handled_total{job=~\"$job\", grpc_type=\"server_stream\"}[$interval]))",
+                     "expr": "sum by (table)(rate(loki_boltdb_shipper_retention_marker_count_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])) >0",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "error",
+                     "legendFormat": "{{table}}",
+                     "legendLink": null,
                      "step": 10
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Errors",
+               "title": "Marks Creation Rate Per Table",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -1190,7 +771,95 @@
                },
                "yaxes": [
                   {
-                     "format": "percentunit",
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Per Table Marker",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "format": "short",
+               "id": 10,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 6,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum (increase(loki_boltdb_shipper_retention_marker_count_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[24h]))",
+                     "format": "time_series",
+                     "instant": true,
+                     "intervalFactor": 2,
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": "70,80",
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Marked Chunks (24h)",
+               "tooltip": {
+                  "shared": false,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "singlestat",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -1213,9 +882,8 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Shows how long has it taken to handle requests from other queriers, in quantiles",
                "fill": 1,
-               "id": 12,
+               "id": 11,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -1233,66 +901,41 @@
                "pointradius": 5,
                "points": false,
                "renderer": "flot",
-               "seriesOverrides": [
-                  {
-                     "alias": "p99",
-                     "color": "#FA6400",
-                     "fill": 1,
-                     "fillGradient": 1
-                  },
-                  {
-                     "alias": "p90",
-                     "color": "#E0B400",
-                     "fill": 1,
-                     "fillGradient": 1
-                  },
-                  {
-                     "alias": "p50",
-                     "color": "#37872D",
-                     "fill": 10,
-                     "fillGradient": 0
-                  }
-               ],
+               "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 6,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.50, sum by (job, le) (rate(grpc_client_handling_seconds_bucket{job=~\"$job\", grpc_type=\"server_stream\"}[$interval]))) * 1",
+                     "expr": "histogram_quantile(0.99, sum(rate(loki_boltdb_shipper_retention_marker_table_processed_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "p50 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
+                     "legendFormat": "99th Percentile",
+                     "refId": "A",
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.90, sum by (job, le) (rate(grpc_client_handling_seconds_bucket{job=~\"$job\", grpc_type=\"server_stream\"}[$interval]))) * 1",
+                     "expr": "histogram_quantile(0.50, sum(rate(loki_boltdb_shipper_retention_marker_table_processed_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "p90 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
+                     "legendFormat": "50th Percentile",
+                     "refId": "B",
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.99, sum by (job, le) (rate(grpc_client_handling_seconds_bucket{job=~\"$job\", grpc_type=\"server_stream\"}[$interval]))) * 1",
+                     "expr": "sum(rate(loki_boltdb_shipper_retention_marker_table_processed_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])) * 1e3 / sum(rate(loki_boltdb_shipper_retention_marker_table_processed_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "p99 {{job}}",
-                     "logBase": 10,
-                     "max": null,
-                     "min": null,
+                     "legendFormat": "Average",
+                     "refId": "C",
                      "step": 10
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Duration",
+               "title": "Mark Table Latency",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -1308,7 +951,7 @@
                },
                "yaxes": [
                   {
-                     "format": "s",
+                     "format": "ms",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -1330,7 +973,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "gRPC (Stream)",
+         "title": "",
          "titleSize": "h6"
       },
       {
@@ -1343,7 +986,82 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "description": "Shows rate of DNS lookups to discover stores.",
+               "fill": 1,
+               "format": "short",
+               "id": 12,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 6,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum (increase(loki_boltdb_shipper_retention_sweeper_chunk_deleted_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\"}[24h]))",
+                     "format": "time_series",
+                     "instant": true,
+                     "intervalFactor": 2,
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": "70,80",
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Delete Chunks (24h)",
+               "tooltip": {
+                  "shared": false,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "singlestat",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
                "fill": 1,
                "id": 13,
                "legend": {
@@ -1370,24 +1088,160 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (job) (rate(thanos_query_store_apis_dns_lookups_total{job=~\"$job\"}[$interval]))",
+                     "expr": "histogram_quantile(0.99, sum(rate(loki_boltdb_shipper_retention_sweeper_chunk_deleted_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "lookups {{job}}",
-                     "legendLink": null,
+                     "legendFormat": "99th Percentile",
+                     "refId": "A",
+                     "step": 10
+                  },
+                  {
+                     "expr": "histogram_quantile(0.50, sum(rate(loki_boltdb_shipper_retention_sweeper_chunk_deleted_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])) by (le)) * 1e3",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "50th Percentile",
+                     "refId": "B",
+                     "step": 10
+                  },
+                  {
+                     "expr": "sum(rate(loki_boltdb_shipper_retention_sweeper_chunk_deleted_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])) * 1e3 / sum(rate(loki_boltdb_shipper_retention_sweeper_chunk_deleted_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]))",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "Average",
+                     "refId": "C",
                      "step": 10
                   }
                ],
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Rate",
+               "title": "Delete Latency",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
                "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "ms",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Sweeper",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fieldConfig": {
+                  "defaults": {
+                     "color": {
+                        "fixedColor": "blue",
+                        "mode": "fixed"
+                     },
+                     "custom": { },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "green",
+                              "value": null
+                           }
+                        ]
+                     },
+                     "unit": "dateTimeFromNow"
+                  }
+               },
+               "fill": 1,
+               "id": 14,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "options": {
+                  "colorMode": "value",
+                  "graphMode": "area",
+                  "justifyMode": "auto",
+                  "orientation": "auto",
+                  "reduceOptions": {
+                     "calcs": [
+                        "lastNotNull"
+                     ],
+                     "fields": "",
+                     "values": false
+                  },
+                  "text": { },
+                  "textMode": "auto"
+               },
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 4,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "loki_boltdb_shipper_retention_sweeper_marker_file_processing_current_time{cluster=~\"$cluster\", namespace=~\"$namespace\"} * 1e3",
+                     "format": "time_series",
+                     "instant": true,
+                     "refId": "A"
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Sweep Lag",
+               "tooltip": {
+                  "shared": false,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "stat",
                "xaxis": {
                   "buckets": null,
                   "mode": "time",
@@ -1414,96 +1268,6 @@
                   }
                ]
             },
-            {
-               "aliasColors": {
-                  "error": "#E24D42"
-               },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "Shows ratio of failures compared to the the total number of executed DNS lookups.",
-               "fill": 10,
-               "id": 14,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum by (job) (rate(thanos_query_store_apis_dns_failures_total{job=~\"$job\"}[$interval])) / sum by (job) (rate(thanos_query_store_apis_dns_lookups_total{job=~\"$job\"}[$interval]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "error",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Errors",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "percentunit",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "DNS",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": true,
-         "height": "250px",
-         "panels": [
             {
                "aliasColors": { },
                "bars": false,
@@ -1536,50 +1300,10 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "go_memstats_alloc_bytes{job=~\"$job\"}",
+                     "expr": "loki_boltdb_shipper_retention_sweeper_marker_files_current{cluster=~\"$cluster\", namespace=~\"$namespace\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "alloc all {{instance}}",
-                     "legendLink": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "go_memstats_heap_alloc_bytes{job=~\"$job\"}",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "alloc heap {{instance}}",
-                     "legendLink": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "rate(go_memstats_alloc_bytes_total{job=~\"$job\"}[30s])",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "alloc rate all {{instance}}",
-                     "legendLink": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "rate(go_memstats_heap_alloc_bytes{job=~\"$job\"}[30s])",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "alloc rate heap {{instance}}",
-                     "legendLink": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "go_memstats_stack_inuse_bytes{job=~\"$job\"}",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "inuse heap {{instance}}",
-                     "legendLink": null,
-                     "step": 10
-                  },
-                  {
-                     "expr": "go_memstats_heap_inuse_bytes{job=~\"$job\"}",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "inuse stack {{instance}}",
+                     "legendFormat": "count",
                      "legendLink": null,
                      "step": 10
                   }
@@ -1587,7 +1311,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Memory Used",
+               "title": "Marks Files to Process",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -1603,7 +1327,7 @@
                },
                "yaxes": [
                   {
-                     "format": "bytes",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -1652,10 +1376,10 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "go_goroutines{job=~\"$job\"}",
+                     "expr": "sum by (status)(rate(loki_boltdb_shipper_retention_sweeper_chunk_deleted_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{instance}}",
+                     "legendFormat": "{{status}}",
                      "legendLink": null,
                      "step": 10
                   }
@@ -1663,83 +1387,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Goroutines",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "id": 17,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 4,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "go_gc_duration_seconds{job=~\"$job\"}",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{quantile}} {{instance}}",
-                     "legendLink": null,
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "GC Time Quantiles",
+               "title": "Delete Rate Per Status",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -1777,14 +1425,39 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Resources",
+         "title": "",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
+            {
+               "datasource": "$logs",
+               "id": 17,
+               "span": 12,
+               "targets": [
+                  {
+                     "expr": "{container=\"compactor\", cluster=~\"$cluster\", namespace=~\"$namespace\"}",
+                     "refId": "A"
+                  }
+               ],
+               "title": "Compactor Logs",
+               "type": "logs"
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Logs",
          "titleSize": "h6"
       }
    ],
    "schemaVersion": 14,
    "style": "dark",
    "tags": [
-      "thanos-mixin"
+      "loki"
    ],
    "templating": {
       "list": [
@@ -1803,34 +1476,19 @@
             "type": "datasource"
          },
          {
-            "auto": true,
-            "auto_count": 300,
-            "auto_min": "10s",
-            "current": {
-               "text": "5m",
-               "value": "5m"
-            },
-            "hide": 0,
-            "label": "interval",
-            "name": "interval",
-            "query": "5m,10m,30m,1h,6h,12h",
-            "refresh": 2,
-            "type": "interval"
-         },
-         {
             "allValue": null,
             "current": {
-               "text": "all",
-               "value": "$__all"
+               "text": "prod",
+               "value": "prod"
             },
             "datasource": "$datasource",
             "hide": 0,
-            "includeAll": true,
-            "label": "job",
+            "includeAll": false,
+            "label": "cluster",
             "multi": false,
-            "name": "job",
+            "name": "cluster",
             "options": [ ],
-            "query": "label_values(up{job=~\".*thanos-store.*\"}, job)",
+            "query": "label_values(loki_build_info, cluster)",
             "refresh": 1,
             "regex": "",
             "sort": 2,
@@ -1839,6 +1497,39 @@
             "tagsQuery": "",
             "type": "query",
             "useTags": false
+         },
+         {
+            "allValue": null,
+            "current": {
+               "text": "prod",
+               "value": "prod"
+            },
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": false,
+            "label": "namespace",
+            "multi": false,
+            "name": "namespace",
+            "options": [ ],
+            "query": "label_values(loki_build_info, namespace)",
+            "refresh": 1,
+            "regex": "",
+            "sort": 2,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "hide": 0,
+            "label": null,
+            "name": "logs",
+            "options": [ ],
+            "query": "loki",
+            "refresh": 1,
+            "regex": "",
+            "type": "datasource"
          }
       ]
    },
@@ -1871,8 +1562,8 @@
          "30d"
       ]
    },
-   "timezone": "UTC",
-   "title": "Thanos / Query",
-   "uid": "af36c91291a603f1d9fbdabdd127ac4a",
+   "timezone": "utc",
+   "title": "Loki / Retention",
+   "uid": "retention",
    "version": 0
 }
