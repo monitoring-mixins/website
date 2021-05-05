@@ -340,11 +340,11 @@ groups:
   - alert: CortexRulerFailedRingCheck
     annotations:
       message: |
-        {{ $labels.job }} is experiencing {{ printf "%.2f" $value }}% errors when checking the ring for rule group ownership.
+        Cortex Rulers {{ $labels.job }} are experiencing errors when checking the ring for rule group ownership.
     expr: |
-      sum by (cluster, namespace) (rate(cortex_ruler_ring_check_errors_total[5m]))
+      sum by (cluster, namespace, job) (rate(cortex_ruler_ring_check_errors_total[1m]))
          > 0
-    for: 1m
+    for: 5m
     labels:
       severity: critical
 - name: gossip_alerts
