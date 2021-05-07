@@ -297,6 +297,23 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### PrometheusLabelLimitHit
+
+{{< code lang="yaml" >}}
+alert: PrometheusLabelLimitHit
+annotations:
+  description: Prometheus {{$labels.instance}} has dropped {{ printf "%.0f" $value
+    }} targets because some samples exceeded the configured label_limit, label_name_length_limit
+    or label_value_length_limit.
+  summary: Prometheus has dropped targets because some scrape configs have exceeded
+    the labels limit.
+expr: |
+  increase(prometheus_target_scrape_pool_exceeded_label_limits_total{job="prometheus"}[5m]) > 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### PrometheusErrorSendingAlertsToAnyAlertmanager
 '{{ printf "%.1f" $value }}% minimum errors while sending alerts from
 Prometheus encounters more than 3% errors sending alerts to any Alertmanager.
