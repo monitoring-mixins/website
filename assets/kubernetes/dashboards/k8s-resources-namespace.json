@@ -208,7 +208,7 @@
                "thresholds": "70,80",
                "timeFrom": null,
                "timeShift": null,
-               "title": "Memory Utilization (from requests)",
+               "title": "Memory Utilisation (from requests)",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
