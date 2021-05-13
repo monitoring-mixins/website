@@ -2275,8 +2275,6 @@ Following dashboards are generated from mixins and hosted on github:
 
 
 - [alertmanager](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/alertmanager.json)
-- [cortex-blocks-vs-chunks](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-blocks-vs-chunks.json)
-- [cortex-chunks](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-chunks.json)
 - [cortex-compactor-resources](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-compactor-resources.json)
 - [cortex-compactor](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-compactor.json)
 - [cortex-config](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-config.json)
@@ -2286,6 +2284,5 @@ Following dashboards are generated from mixins and hosted on github:
 - [cortex-rollout-progress](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-rollout-progress.json)
 - [cortex-scaling](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-scaling.json)
 - [cortex-slow-queries](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-slow-queries.json)
-- [cortex-wal](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-wal.json)
 - [cortex-writes](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-writes.json)
 - [ruler](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/ruler.json)

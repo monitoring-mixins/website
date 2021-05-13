@@ -83,7 +83,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (executionType) (\n  executions_active{container=\"orca\"}\n)",
+                     "expr": "max by (executionType) (\n  executions_active{container=\"orca\"}\n)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{ executionType }}",

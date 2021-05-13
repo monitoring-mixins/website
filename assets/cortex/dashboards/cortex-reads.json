@@ -1698,391 +1698,13 @@
          "height": "250px",
          "panels": [
             {
-               "aliasColors": {
-                  "1xx": "#EAB839",
-                  "2xx": "#7EB26D",
-                  "3xx": "#6ED0E0",
-                  "4xx": "#EF843C",
-                  "5xx": "#E24D42",
-                  "error": "#E24D42",
-                  "success": "#7EB26D"
-               },
+               "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
                "id": 20,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",method=\"store.index-cache-read.memcache.fetch\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
-                     "format": "time_series",
-                     "interval": "1m",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{status}}",
-                     "refId": "A",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "QPS",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "id": 21,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"store.index-cache-read.memcache.fetch\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "99th Percentile",
-                     "refId": "A",
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"store.index-cache-read.memcache.fetch\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "50th Percentile",
-                     "refId": "B",
-                     "step": 10
-                  },
-                  {
-                     "expr": "1e3 * sum(cluster_job_method:cortex_cache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"store.index-cache-read.memcache.fetch\"}) / sum(cluster_job_method:cortex_cache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"store.index-cache-read.memcache.fetch\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Average",
-                     "refId": "C",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Latency",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ms",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Memcached - Chunks storage - Index",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
-            {
-               "aliasColors": {
-                  "1xx": "#EAB839",
-                  "2xx": "#7EB26D",
-                  "3xx": "#6ED0E0",
-                  "4xx": "#EF843C",
-                  "5xx": "#E24D42",
-                  "error": "#E24D42",
-                  "success": "#7EB26D"
-               },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 10,
-               "id": 22,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",method=\"chunksmemcache.fetch\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
-                     "format": "time_series",
-                     "interval": "1m",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{status}}",
-                     "refId": "A",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "QPS",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "id": 23,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"chunksmemcache.fetch\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "99th Percentile",
-                     "refId": "A",
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"chunksmemcache.fetch\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "50th Percentile",
-                     "refId": "B",
-                     "step": 10
-                  },
-                  {
-                     "expr": "1e3 * sum(cluster_job_method:cortex_cache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"chunksmemcache.fetch\"}) / sum(cluster_job_method:cortex_cache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", method=\"chunksmemcache.fetch\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Average",
-                     "refId": "C",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Latency",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ms",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Memcached - Chunks storage - Chunks",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 10,
-               "id": 24,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2159,7 +1781,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 25,
+               "id": 21,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2254,7 +1876,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 26,
+               "id": 22,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2343,7 +1965,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 27,
+               "id": 23,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2420,7 +2042,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 28,
+               "id": 24,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2515,7 +2137,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 29,
+               "id": 25,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2604,7 +2226,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 30,
+               "id": 26,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2681,7 +2303,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 31,
+               "id": 27,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2776,7 +2398,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 32,
+               "id": 28,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2865,7 +2487,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 33,
+               "id": 29,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -2942,7 +2564,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 34,
+               "id": 30,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3037,7 +2659,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 35,
+               "id": 31,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3120,769 +2742,13 @@
          "height": "250px",
          "panels": [
             {
-               "aliasColors": {
-                  "1xx": "#EAB839",
-                  "2xx": "#7EB26D",
-                  "3xx": "#6ED0E0",
-                  "4xx": "#EF843C",
-                  "5xx": "#E24D42",
-                  "error": "#E24D42",
-                  "success": "#7EB26D"
-               },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 10,
-               "id": 36,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cassandra_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"SELECT\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
-                     "format": "time_series",
-                     "interval": "1m",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{status}}",
-                     "refId": "A",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "QPS",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "id": 37,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_cassandra_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"SELECT\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "99th Percentile",
-                     "refId": "A",
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_cassandra_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"SELECT\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "50th Percentile",
-                     "refId": "B",
-                     "step": 10
-                  },
-                  {
-                     "expr": "1e3 * sum(cluster_job_operation:cortex_cassandra_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"SELECT\"}) / sum(cluster_job_operation:cortex_cassandra_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"SELECT\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Average",
-                     "refId": "C",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Latency",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ms",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Cassandra",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
-            {
-               "aliasColors": {
-                  "1xx": "#EAB839",
-                  "2xx": "#7EB26D",
-                  "3xx": "#6ED0E0",
-                  "4xx": "#EF843C",
-                  "5xx": "#E24D42",
-                  "error": "#E24D42",
-                  "success": "#7EB26D"
-               },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 10,
-               "id": 38,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_bigtable_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
-                     "format": "time_series",
-                     "interval": "1m",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{status}}",
-                     "refId": "A",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "QPS",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "id": 39,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_bigtable_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "99th Percentile",
-                     "refId": "A",
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_bigtable_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "50th Percentile",
-                     "refId": "B",
-                     "step": 10
-                  },
-                  {
-                     "expr": "1e3 * sum(cluster_job_operation:cortex_bigtable_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}) / sum(cluster_job_operation:cortex_bigtable_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Average",
-                     "refId": "C",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Latency",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ms",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "BigTable",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
-            {
-               "aliasColors": {
-                  "1xx": "#EAB839",
-                  "2xx": "#7EB26D",
-                  "3xx": "#6ED0E0",
-                  "4xx": "#EF843C",
-                  "5xx": "#E24D42",
-                  "error": "#E24D42",
-                  "success": "#7EB26D"
-               },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 10,
-               "id": 40,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_dynamo_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"DynamoDB.QueryPages\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
-                     "format": "time_series",
-                     "interval": "1m",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{status}}",
-                     "refId": "A",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "QPS",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "id": 41,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_dynamo_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"DynamoDB.QueryPages\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "99th Percentile",
-                     "refId": "A",
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_dynamo_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"DynamoDB.QueryPages\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "50th Percentile",
-                     "refId": "B",
-                     "step": 10
-                  },
-                  {
-                     "expr": "1e3 * sum(cluster_job_operation:cortex_dynamo_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"DynamoDB.QueryPages\"}) / sum(cluster_job_operation:cortex_dynamo_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"DynamoDB.QueryPages\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Average",
-                     "refId": "C",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Latency",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ms",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "DynamoDB",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
-            {
-               "aliasColors": {
-                  "1xx": "#EAB839",
-                  "2xx": "#7EB26D",
-                  "3xx": "#6ED0E0",
-                  "4xx": "#EF843C",
-                  "5xx": "#E24D42",
-                  "error": "#E24D42",
-                  "success": "#7EB26D"
-               },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 10,
-               "id": 42,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_gcs_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"GET\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
-                     "format": "time_series",
-                     "interval": "1m",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{status}}",
-                     "refId": "A",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "QPS",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "id": 43,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_operation:cortex_gcs_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"GET\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "99th Percentile",
-                     "refId": "A",
-                     "step": 10
-                  },
-                  {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_operation:cortex_gcs_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"GET\"})) * 1e3",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "50th Percentile",
-                     "refId": "B",
-                     "step": 10
-                  },
-                  {
-                     "expr": "1e3 * sum(cluster_job_operation:cortex_gcs_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"GET\"}) / sum(cluster_job_operation:cortex_gcs_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", operation=\"GET\"})",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "Average",
-                     "refId": "C",
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Latency",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ms",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "GCS",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
-            {
                "aliasColors": { },
                "bars": false,
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 44,
+               "id": 32,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -3959,7 +2825,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 45,
+               "id": 33,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4036,7 +2902,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 46,
+               "id": 34,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4131,7 +2997,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 47,
+               "id": 35,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4238,7 +3104,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 48,
+               "id": 36,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4333,7 +3199,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 49,
+               "id": 37,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4428,7 +3294,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 50,
+               "id": 38,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4523,7 +3389,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 51,
+               "id": 39,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4630,7 +3496,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 52,
+               "id": 40,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4707,7 +3573,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 53,
+               "id": 41,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4784,7 +3650,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 54,
+               "id": 42,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4879,7 +3745,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 55,
+               "id": 43,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -4986,7 +3852,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 56,
+               "id": 44,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -5081,7 +3947,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 57,
+               "id": 45,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -5176,7 +4042,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 58,
+               "id": 46,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -5271,7 +4137,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 59,
+               "id": 47,
                "legend": {
                   "avg": false,
                   "current": false,
