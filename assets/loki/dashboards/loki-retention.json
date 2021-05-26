@@ -1300,7 +1300,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "loki_boltdb_shipper_retention_sweeper_marker_files_current{cluster=~\"$cluster\", namespace=~\"$namespace\"}",
+                     "expr": "sum(loki_boltdb_shipper_retention_sweeper_marker_files_current{cluster=~\"$cluster\", namespace=~\"$namespace\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "count",
