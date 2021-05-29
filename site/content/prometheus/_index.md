@@ -314,6 +314,21 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### PrometheusTargetSyncFailure
+
+{{< code lang="yaml" >}}
+alert: PrometheusTargetSyncFailure
+annotations:
+  description: '{{ printf "%.0f" $value }} targets in Prometheus {{$labels.instance}}
+    have failed to sync because invalid configuration was supplied.'
+  summary: Prometheus has failed to sync targets.
+expr: |
+  increase(prometheus_target_sync_failed_total{job="prometheus"}[30m]) > 0
+for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ##### PrometheusErrorSendingAlertsToAnyAlertmanager
 '{{ printf "%.1f" $value }}% minimum errors while sending alerts from
 Prometheus encounters more than 3% errors sending alerts to any Alertmanager.
