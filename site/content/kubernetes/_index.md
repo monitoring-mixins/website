@@ -29,7 +29,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodcrashlooping
   summary: Pod is crash looping.
 expr: |
-  rate(kube_pod_container_status_restarts_total{job="kube-state-metrics"}[10m]) * 60 * 5 > 0
+  increase(kube_pod_container_status_restarts_total{job="kube-state-metrics"}[10m]) > 0
 for: 15m
 labels:
   severity: warning
