@@ -211,6 +211,7 @@ Following dashboards are generated from mixins and hosted on github:
 
 
 - [loki-chunks](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-chunks.json)
+- [loki-deletion](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-deletion.json)
 - [loki-logs](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-logs.json)
 - [loki-operational](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-operational.json)
 - [loki-reads-resources](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-reads-resources.json)
