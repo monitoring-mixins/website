@@ -185,3 +185,8 @@ labels:
   severity: critical
 {{< /code >}}
  
+## Dashboards
+Following dashboards are generated from mixins and hosted on github:
+
+
+- [alertmanager-overview](https://github.com/monitoring-mixins/website/blob/master/assets/alertmanager/dashboards/alertmanager-overview.json)

@@ -213,6 +213,23 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### CephOSDSlowOps
+
+{{< code lang="yaml" >}}
+alert: CephOSDSlowOps
+annotations:
+  description: '{{ $value }} Ceph OSD requests are taking too long to process. Please
+    check ceph status to find out the cause.'
+  message: OSD requests are taking too long to process.
+  severity_level: warning
+  storage_type: ceph
+expr: |
+  ceph_healthcheck_slow_ops > 0
+for: 30s
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### CephDataRecoveryTakingTooLong
 
 {{< code lang="yaml" >}}
@@ -401,6 +418,40 @@ annotations:
 expr: |
   ceph_cluster_total_used_raw_bytes / ceph_cluster_total_bytes >= 0.85
 for: 0s
+labels:
+  severity: critical
+{{< /code >}}
+ 
+### pool-quota.rules
+
+##### CephPoolQuotaBytesNearExhaustion
+
+{{< code lang="yaml" >}}
+alert: CephPoolQuotaBytesNearExhaustion
+annotations:
+  description: Storage pool {{ $labels.name }} quota usage has crossed 70%.
+  message: Storage pool quota(bytes) is near exhaustion.
+  severity_level: warning
+  storage_type: ceph
+expr: |
+  (ceph_pool_stored_raw * on (pool_id) group_left(name)ceph_pool_metadata) / ((ceph_pool_quota_bytes * on (pool_id) group_left(name)ceph_pool_metadata) > 0) > 0.70
+for: 1m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### CephPoolQuotaBytesCriticallyExhausted
+
+{{< code lang="yaml" >}}
+alert: CephPoolQuotaBytesCriticallyExhausted
+annotations:
+  description: Storage pool {{ $labels.name }} quota usage has crossed 90%.
+  message: Storage pool quota(bytes) is critically exhausted.
+  severity_level: critical
+  storage_type: ceph
+expr: |
+  (ceph_pool_stored_raw * on (pool_id) group_left(name)ceph_pool_metadata) / ((ceph_pool_quota_bytes * on (pool_id) group_left(name)ceph_pool_metadata) > 0) > 0.90
+for: 1m
 labels:
   severity: critical
 {{< /code >}}
