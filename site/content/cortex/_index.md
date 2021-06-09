@@ -194,9 +194,9 @@ annotations:
   message: '{{ $labels.job }}/{{ $labels.instance }} has restarted {{ printf "%.2f"
     $value }} times in the last 30 mins.'
 expr: |
-  changes(process_start_time_seconds{job=~".+(cortex|ingester.*)"}[30m]) > 1
+  changes(process_start_time_seconds{job=~".+(cortex|ingester.*)"}[30m]) >= 2
 labels:
-  severity: critical
+  severity: warning
 {{< /code >}}
  
 ##### CortexTransferFailed
@@ -536,7 +536,7 @@ annotations:
 expr: |
   memberlist_client_cluster_members_count
     != on (cluster, namespace) group_left
-  sum by (cluster, namespace) (up{job=~".+/(distributor|ingester.*|querier|cortex|ruler)"})
+  sum by (cluster, namespace) (up{job=~".+/(admin-api|compactor|store-gateway|distributor|ingester.*|querier|cortex|ruler)"})
 for: 5m
 labels:
   severity: warning
