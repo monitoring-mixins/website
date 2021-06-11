@@ -135,7 +135,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(cortex_ingester_memory_series{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}\n/ on(namespace) group_left\nmax by (namespace) (cortex_distributor_replication_factor{cluster=~\"$cluster\", job=~\"($namespace)/(distributor|cortex$)\"}))\n",
+                     "expr": "sum(cortex_ingester_memory_series{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}\n/ on(cluster, namespace) group_left\nmax by (cluster, namespace) (cortex_distributor_replication_factor{cluster=~\"$cluster\", job=~\"($namespace)/(distributor|cortex$)\"}))\n",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,

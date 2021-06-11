@@ -1830,16 +1830,16 @@ record: code:apiserver_request_total:increase30d
  
 ### k8s.rules
 
-##### node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
+##### node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate
 
 {{< code lang="yaml" >}}
 expr: |
   sum by (cluster, namespace, pod, container) (
-    rate(container_cpu_usage_seconds_total{job="cadvisor", image!=""}[5m])
+    irate(container_cpu_usage_seconds_total{job="cadvisor", image!=""}[5m])
   ) * on (cluster, namespace, pod) group_left(node) topk by (cluster, namespace, pod) (
     1, max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
   )
-record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
+record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate
 {{< /code >}}
  
 ##### node_namespace_pod_container:container_memory_working_set_bytes
