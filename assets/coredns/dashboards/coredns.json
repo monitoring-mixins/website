@@ -150,7 +150,7 @@
                "tableColumn": "",
                "targets": [
                   {
-                     "expr": "sum(coredns_panic_count_total{job=\"kube-dns\"})",
+                     "expr": "sum(coredns_panics_total{job=\"kube-dns\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "",
@@ -208,14 +208,14 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(coredns_dns_response_rcode_count_total{job=\"kube-dns\",pod=~\"$instance\"}[5m])) by (rcode)",
+                     "expr": "sum(rate(coredns_dns_responses_total{job=\"kube-dns\",pod=~\"$instance\"}[5m])) by (rcode)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{rcode}}",
                      "refId": "A"
                   },
                   {
-                     "expr": "sum(rate(coredns_forward_response_rcode_count_total{job=\"kube-dns\",pod=~\"$instance\"}[5m])) by (rcode)",
+                     "expr": "sum(rate(coredns_forward_responses_total{job=\"kube-dns\",pod=~\"$instance\"}[5m])) by (rcode)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "forward {{rcode}}",
@@ -397,7 +397,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(coredns_dns_request_type_count_total{job=\"kube-dns\",pod=~\"$instance\"}[5m])) by (type)",
+                     "expr": "sum(rate(coredns_dns_requests_total{job=\"kube-dns\",pod=~\"$instance\"}[5m])) by (type)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{type}}",
@@ -478,7 +478,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(coredns_dns_request_type_count_total{job=\"kube-dns\",pod=~\"$instance\"}[5m])) by (zone)",
+                     "expr": "sum(rate(coredns_dns_requests_total{job=\"kube-dns\",pod=~\"$instance\"}[5m])) by (zone)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{zone}}",
@@ -559,7 +559,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(coredns_forward_request_count_total{job=\"kube-dns\",pod=~\"$instance\"}[5m])) by (to)",
+                     "expr": "sum(rate(coredns_forward_requests_total{job=\"kube-dns\",pod=~\"$instance\"}[5m])) by (to)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{to}}",
@@ -818,7 +818,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(coredns_cache_size{job=\"kube-dns\",pod=~\"$instance\"}) by (type)",
+                     "expr": "sum(coredns_cache_entries{job=\"kube-dns\",pod=~\"$instance\"}) by (type)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{type}}",
@@ -1418,13 +1418,33 @@
             "allValue": null,
             "current": { },
             "datasource": "$datasource",
+            "hide": 2,
+            "includeAll": false,
+            "label": "cluster",
+            "multi": false,
+            "name": "cluster",
+            "options": [ ],
+            "query": "label_values(coredns_build_info{job=coredns}, cluster)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": null,
+            "current": { },
+            "datasource": "$datasource",
             "hide": 0,
             "includeAll": true,
             "label": null,
             "multi": false,
             "name": "instance",
             "options": [ ],
-            "query": "label_values(coredns_dns_request_count_total{job=\"kube-dns\"}, pod)",
+            "query": "label_values(coredns_build_info{job=\"kube-dns\"}, pod)",
             "refresh": 2,
             "regex": "",
             "sort": 1,

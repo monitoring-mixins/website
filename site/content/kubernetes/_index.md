@@ -319,19 +319,19 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubehpareplicasmismatch
   summary: HPA has not matched descired number of replicas.
 expr: |
-  (kube_hpa_status_desired_replicas{job="kube-state-metrics"}
+  (kube_horizontalpodautoscaler_status_desired_replicas{job="kube-state-metrics"}
     !=
-  kube_hpa_status_current_replicas{job="kube-state-metrics"})
+  kube_horizontalpodautoscaler_status_current_replicas{job="kube-state-metrics"})
     and
-  (kube_hpa_status_current_replicas{job="kube-state-metrics"}
+  (kube_horizontalpodautoscaler_status_current_replicas{job="kube-state-metrics"}
     >
-  kube_hpa_spec_min_replicas{job="kube-state-metrics"})
+  kube_horizontalpodautoscaler_spec_min_replicas{job="kube-state-metrics"})
     and
-  (kube_hpa_status_current_replicas{job="kube-state-metrics"}
+  (kube_horizontalpodautoscaler_status_current_replicas{job="kube-state-metrics"}
     <
-  kube_hpa_spec_max_replicas{job="kube-state-metrics"})
+  kube_horizontalpodautoscaler_spec_max_replicas{job="kube-state-metrics"})
     and
-  changes(kube_hpa_status_current_replicas{job="kube-state-metrics"}[15m]) == 0
+  changes(kube_horizontalpodautoscaler_status_current_replicas{job="kube-state-metrics"}[15m]) == 0
 for: 15m
 labels:
   severity: warning
@@ -348,9 +348,9 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubehpamaxedout
   summary: HPA is running at max replicas
 expr: |
-  kube_hpa_status_current_replicas{job="kube-state-metrics"}
+  kube_horizontalpodautoscaler_status_current_replicas{job="kube-state-metrics"}
     ==
-  kube_hpa_spec_max_replicas{job="kube-state-metrics"}
+  kube_horizontalpodautoscaler_spec_max_replicas{job="kube-state-metrics"}
 for: 15m
 labels:
   severity: warning

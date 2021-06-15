@@ -80,3 +80,22 @@ groups:
     for: 10m
     labels:
       severity: warning
+  - alert: CoreDNSForwardHealthcheckFailureCount
+    annotations:
+      message: CoreDNS health checks have failed to upstream server {{ $labels.to
+        }}.
+      runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednsforwardhealthcheckfailurecount
+    expr: |
+      sum(rate(coredns_forward_healthcheck_failures_total{job="kube-dns"}[5m])) by (to) > 0
+    for: 10m
+    labels:
+      severity: warning
+  - alert: CoreDNSForwardHealthcheckBrokenCount
+    annotations:
+      message: CoreDNS health checks have failed for all upstream servers.
+      runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednsforwardhealthcheckbrokencount
+    expr: |
+      sum(rate(coredns_forward_healthcheck_broken_total{job="kube-dns"}[5m])) > 0
+    for: 10m
+    labels:
+      severity: warning
