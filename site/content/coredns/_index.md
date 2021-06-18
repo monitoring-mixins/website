@@ -59,9 +59,9 @@ annotations:
     requests.
   runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednserrorshigh
 expr: |
-  sum(rate(coredns_dns_response_rcode_count_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
+  sum(rate(coredns_dns_responses_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
     /
-  sum(rate(coredns_dns_response_rcode_count_total{job="kube-dns"}[5m])) > 0.03
+  sum(rate(coredns_dns_responses_total{job="kube-dns"}[5m])) > 0.03
 for: 10m
 labels:
   severity: critical
@@ -77,9 +77,9 @@ annotations:
     requests.
   runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednserrorshigh
 expr: |
-  sum(rate(coredns_dns_response_rcode_count_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
+  sum(rate(coredns_dns_responses_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
     /
-  sum(rate(coredns_dns_response_rcode_count_total{job="kube-dns"}[5m])) > 0.01
+  sum(rate(coredns_dns_responses_total{job="kube-dns"}[5m])) > 0.01
 for: 10m
 labels:
   severity: warning
@@ -113,9 +113,9 @@ annotations:
     forward requests to {{ $labels.to }}.
   runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednsforwarderrorshigh
 expr: |
-  sum(rate(coredns_forward_response_rcode_count_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
+  sum(rate(coredns_forward_responses_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
     /
-  sum(rate(coredns_forward_response_rcode_count_total{job="kube-dns"}[5m])) > 0.03
+  sum(rate(coredns_forward_responses_total{job="kube-dns"}[5m])) > 0.03
 for: 10m
 labels:
   severity: critical
@@ -131,9 +131,9 @@ annotations:
     forward requests to {{ $labels.to }}.
   runbook_url: https://github.com/povilasv/coredns-mixin/tree/master/runbook.md#alert-name-corednsforwarderrorshigh
 expr: |
-  sum(rate(coredns_dns_response_rcode_count_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
+  sum(rate(coredns_forward_responses_total{job="kube-dns",rcode="SERVFAIL"}[5m]))
     /
-  sum(rate(coredns_dns_response_rcode_count_total{job="kube-dns"}[5m])) > 0.01
+  sum(rate(coredns_forward_responses_total{job="kube-dns"}[5m])) > 0.01
 for: 10m
 labels:
   severity: warning

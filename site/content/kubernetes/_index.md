@@ -30,6 +30,8 @@ annotations:
   summary: Pod is crash looping.
 expr: |
   increase(kube_pod_container_status_restarts_total{job="kube-state-metrics"}[10m]) > 0
+  and
+  sum without (phase) (kube_pod_status_phase{phase!="Running",job="kube-state-metrics"} == 1)
 for: 15m
 labels:
   severity: warning
