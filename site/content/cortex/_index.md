@@ -863,6 +863,19 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### CortexCompactorHasNotSuccessfullyRunCompaction
+
+{{< code lang="yaml" >}}
+alert: CortexCompactorHasNotSuccessfullyRunCompaction
+annotations:
+  message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} failed
+    to run 2 consecutive compactions.
+expr: |
+  increase(cortex_compactor_runs_failed_total[2h]) >= 2
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ##### CortexCompactorHasNotUploadedBlocks
 
 {{< code lang="yaml" >}}
@@ -879,29 +892,16 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### CortexCompactorHasNotUploadedBlocksSinceStart
+##### CortexCompactorHasNotUploadedBlocks
 
 {{< code lang="yaml" >}}
-alert: CortexCompactorHasNotUploadedBlocksSinceStart
+alert: CortexCompactorHasNotUploadedBlocks
 annotations:
   message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
     uploaded any block in the last 24 hours.
 expr: |
   thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor.*"} == 0
 for: 24h
-labels:
-  severity: critical
-{{< /code >}}
- 
-##### CortexCompactorRunFailed
-
-{{< code lang="yaml" >}}
-alert: CortexCompactorRunFailed
-annotations:
-  message: |
-    {{ $labels.job }}/{{ $labels.instance }} failed to run compaction.
-expr: |
-  increase(cortex_compactor_runs_failed_total[2h]) >= 2
 labels:
   severity: critical
 {{< /code >}}
