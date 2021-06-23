@@ -97,18 +97,18 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### CortexInconsistentConfig
+##### CortexInconsistentRuntimeConfig
 
 {{< code lang="yaml" >}}
-alert: CortexInconsistentConfig
+alert: CortexInconsistentRuntimeConfig
 annotations:
   message: |
-    An inconsistent config file hash is used across cluster {{ $labels.job }}.
+    An inconsistent runtime config file is used across cluster {{ $labels.job }}.
 expr: |
-  count(count by(cluster, namespace, job, sha256) (cortex_config_hash)) without(sha256) > 1
+  count(count by(cluster, namespace, job, sha256) (cortex_runtime_config_hash)) without(sha256) > 1
 for: 1h
 labels:
-  severity: warning
+  severity: critical
 {{< /code >}}
  
 ##### CortexBadRuntimeConfig
@@ -119,12 +119,11 @@ annotations:
   message: |
     {{ $labels.job }} failed to reload runtime config.
 expr: |
+  # The metric value is reset to 0 on error while reloading the config at runtime.
   cortex_runtime_config_last_reload_successful == 0
-    or
-  cortex_overrides_last_reload_successful == 0
 for: 5m
 labels:
-  severity: warning
+  severity: critical
 {{< /code >}}
  
 ##### CortexQuerierCapacityFull
@@ -551,13 +550,12 @@ alert: EtcdAllocatingTooMuchMemory
 annotations:
   message: |
     Too much memory being used by {{ $labels.namespace }}/{{ $labels.pod }} - bump memory limit.
-expr: "(
-  container_memory_working_set_bytes{container=\"etcd\"}
-    /
-  container_spec_memory_limit_bytes{container=\"etcd\"}
-)
-  > 0.65 
-"
+expr: |
+  (
+    container_memory_working_set_bytes{container="etcd"}
+      /
+    container_spec_memory_limit_bytes{container="etcd"}
+  ) > 0.65
 for: 15m
 labels:
   severity: warning

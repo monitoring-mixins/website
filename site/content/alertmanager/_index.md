@@ -48,7 +48,7 @@ expr: |
     max_over_time(alertmanager_cluster_members{job="alertmanager"}[5m])
   < on (job) group_left
     count by (job) (max_over_time(alertmanager_cluster_members{job="alertmanager"}[5m]))
-for: 10m
+for: 15m
 labels:
   severity: critical
 {{< /code >}}
