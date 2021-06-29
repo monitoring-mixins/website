@@ -539,6 +539,6 @@
    },
    "timezone": "utc",
    "title": "Loki / Deletion",
-   "uid": "retention",
+   "uid": "deletion",
    "version": 0
 }
