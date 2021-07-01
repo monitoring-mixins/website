@@ -224,7 +224,7 @@
                   {
                      "expr": "sum(rate(cortex_alertmanager_alerts_received_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n-\nsum(rate(cortex_alertmanager_alerts_invalid_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "success",
                      "legendLink": null,
@@ -233,7 +233,7 @@
                   {
                      "expr": "sum(rate(cortex_alertmanager_alerts_invalid_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "failed",
                      "legendLink": null,
@@ -322,7 +322,7 @@
                   {
                      "expr": "sum(rate(cortex_alertmanager_notifications_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n-\nsum(rate(cortex_alertmanager_notifications_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "success",
                      "legendLink": null,
@@ -331,7 +331,7 @@
                   {
                      "expr": "sum(rate(cortex_alertmanager_notifications_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "failed",
                      "legendLink": null,
@@ -408,7 +408,7 @@
                   {
                      "expr": "(\nsum(rate(cortex_alertmanager_notifications_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval])) by(integration)\n-\nsum(rate(cortex_alertmanager_notifications_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval])) by(integration)\n) > 0\nor on () vector(0)\n",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "success - {{ integration }}",
                      "legendLink": null,
@@ -417,7 +417,7 @@
                   {
                      "expr": "sum(rate(cortex_alertmanager_notifications_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval])) by(integration)",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "failed - {{ integration }}",
                      "legendLink": null,
@@ -494,7 +494,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_alertmanager_notification_latency_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -503,7 +503,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_alertmanager_notification_latency_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -512,7 +512,7 @@
                   {
                      "expr": "sum(rate(cortex_alertmanager_notification_latency_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__interval])) * 1e3 / sum(rate(cortex_alertmanager_notification_latency_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -609,7 +609,7 @@
                   {
                      "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(gateway|cortex-gw|cortex-gw-internal)\", route=~\"api_v1_alerts|alertmanager\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{status}}",
                      "refId": "A",

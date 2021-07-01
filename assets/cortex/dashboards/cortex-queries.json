@@ -60,7 +60,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_query_frontend_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -69,7 +69,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_query_frontend_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -78,7 +78,7 @@
                   {
                      "expr": "sum(rate(cortex_query_frontend_queue_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_query_frontend_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -155,7 +155,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_query_frontend_retries_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval])) by (le)) * 1",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -164,7 +164,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_query_frontend_retries_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval])) by (le)) * 1",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -173,7 +173,7 @@
                   {
                      "expr": "sum(rate(cortex_query_frontend_retries_sum{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval])) * 1 / sum(rate(cortex_query_frontend_retries_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -250,7 +250,7 @@
                   {
                      "expr": "cortex_query_frontend_queue_length{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{cluster}} / {{namespace}} / {{pod}}",
                      "legendLink": null,
@@ -339,7 +339,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -348,7 +348,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -357,7 +357,7 @@
                   {
                      "expr": "sum(rate(cortex_query_scheduler_queue_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval])) * 1e3 / sum(rate(cortex_query_scheduler_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -434,7 +434,7 @@
                   {
                      "expr": "cortex_query_scheduler_queue_length{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{cluster}} / {{namespace}} / {{pod}}",
                      "legendLink": null,
@@ -523,7 +523,7 @@
                   {
                      "expr": "sum(rate(cortex_cache_hits{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[1m])) / sum(rate(cortex_cache_fetched_keys{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[1m]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Hit Rate",
                      "legendLink": null,
@@ -600,7 +600,7 @@
                   {
                      "expr": "sum(rate(cortex_cache_fetched_keys{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[1m])) - sum(rate(cortex_cache_hits{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[1m]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Miss Rate",
                      "legendLink": null,
@@ -689,7 +689,7 @@
                   {
                      "expr": "sum(rate(cortex_frontend_split_queries_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[1m])) / sum(rate(cortex_frontend_query_range_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", method=\"split_by_interval\"}[1m]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "partition rate",
                      "legendLink": null,
@@ -766,7 +766,7 @@
                   {
                      "expr": "sum(rate(cortex_frontend_mapped_asts_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[1m])) / sum(rate(cortex_frontend_split_queries_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[1m])) * 100",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "shard rate",
                      "legendLink": null,
@@ -843,7 +843,7 @@
                   {
                      "expr": "sum(rate(cortex_frontend_sharded_queries_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[1m])) / sum(rate(cortex_frontend_mapped_asts_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[1m]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "legendLink": null,
@@ -932,7 +932,7 @@
                   {
                      "expr": "max by (slice) (prometheus_engine_query_duration_seconds{quantile=\"0.9\",cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{slice}}",
                      "legendLink": null,
@@ -1009,7 +1009,7 @@
                   {
                      "expr": "sum(rate(cortex_cache_fetched_keys{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",name=\"chunksmemcache\"}[1m])) - sum(rate(cortex_cache_hits{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",name=\"chunksmemcache\"}[1m]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Hit rate",
                      "legendLink": null,
@@ -1086,7 +1086,7 @@
                   {
                      "expr": "sum(rate(cortex_cache_corrupt_chunks_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[1m]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Corrupt chunks",
                      "legendLink": null,
@@ -1463,7 +1463,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval])) by (le)) * 1",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -1472,7 +1472,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval])) by (le)) * 1",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -1481,7 +1481,7 @@
                   {
                      "expr": "sum(rate(cortex_querier_storegateway_instances_hit_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval])) * 1 / sum(rate(cortex_querier_storegateway_instances_hit_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -1558,7 +1558,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval])) by (le)) * 1",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -1567,7 +1567,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval])) by (le)) * 1",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -1576,7 +1576,7 @@
                   {
                      "expr": "sum(rate(cortex_querier_storegateway_refetches_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval])) * 1 / sum(rate(cortex_querier_storegateway_refetches_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -1653,7 +1653,7 @@
                   {
                      "expr": "sum(rate(cortex_querier_blocks_consistency_checks_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[1m])) / sum(rate(cortex_querier_blocks_consistency_checks_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[1m]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Failure Rate",
                      "legendLink": null,
@@ -1742,7 +1742,7 @@
                   {
                      "expr": "max(cortex_bucket_index_loaded{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"})",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Max",
                      "legendLink": null,
@@ -1751,7 +1751,7 @@
                   {
                      "expr": "min(cortex_bucket_index_loaded{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"})",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Min",
                      "legendLink": null,
@@ -1760,7 +1760,7 @@
                   {
                      "expr": "avg(cortex_bucket_index_loaded{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"})",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "legendLink": null,
@@ -1840,7 +1840,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_index_loads_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__rate_interval])) - sum(rate(cortex_bucket_index_load_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "successful",
                      "legendLink": null,
@@ -1849,7 +1849,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_index_load_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "failed",
                      "legendLink": null,
@@ -1926,7 +1926,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_index_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -1935,7 +1935,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_index_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -1944,7 +1944,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_index_load_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_bucket_index_load_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -2033,7 +2033,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_store_series_blocks_queried_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "blocks",
                      "legendLink": null,
@@ -2110,7 +2110,7 @@
                   {
                      "expr": "sum by(data_type) (rate(cortex_bucket_store_series_data_fetched_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{data_type}}",
                      "legendLink": null,
@@ -2187,7 +2187,7 @@
                   {
                      "expr": "sum by(data_type) (rate(cortex_bucket_store_series_data_touched_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{data_type}}",
                      "legendLink": null,
@@ -2276,7 +2276,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_store_series_get_all_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -2285,7 +2285,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_store_series_get_all_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -2294,7 +2294,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_store_series_get_all_duration_seconds_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_bucket_store_series_get_all_duration_seconds_count{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -2371,7 +2371,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_store_series_merge_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -2380,7 +2380,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_store_series_merge_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -2389,7 +2389,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_store_series_merge_duration_seconds_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_bucket_store_series_merge_duration_seconds_count{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -2466,7 +2466,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_store_series_result_series_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) / sum(rate(cortex_bucket_store_series_result_series_count{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "avg series returned",
                      "legendLink": null,
@@ -2555,7 +2555,7 @@
                   {
                      "expr": "cortex_bucket_store_blocks_loaded{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
                      "legendLink": null,
@@ -2635,7 +2635,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_store_block_loads_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) - sum(rate(cortex_bucket_store_block_load_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "successful",
                      "legendLink": null,
@@ -2644,7 +2644,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_store_block_load_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "failed",
                      "legendLink": null,
@@ -2724,7 +2724,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_store_block_drops_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) - sum(rate(cortex_bucket_store_block_drop_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "successful",
                      "legendLink": null,
@@ -2733,7 +2733,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_store_block_drop_failures_total{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "failed",
                      "legendLink": null,
@@ -2822,7 +2822,7 @@
                   {
                      "expr": "cortex_bucket_store_indexheader_lazy_load_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"} - cortex_bucket_store_indexheader_lazy_unload_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
                      "legendLink": null,
@@ -2899,7 +2899,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -2908,7 +2908,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -2917,7 +2917,7 @@
                   {
                      "expr": "sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",

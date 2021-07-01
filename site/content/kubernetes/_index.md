@@ -93,7 +93,7 @@ annotations:
 expr: |
   (
     kube_deployment_spec_replicas{job="kube-state-metrics"}
-      !=
+      >
     kube_deployment_status_replicas_available{job="kube-state-metrics"}
   ) and (
     changes(kube_deployment_status_replicas_updated{job="kube-state-metrics"}[10m])

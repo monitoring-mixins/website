@@ -376,7 +376,7 @@
                   {
                      "expr": "sum(rate(cortex_prometheus_rule_evaluations_total{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval]))\n-\nsum(rate(cortex_prometheus_rule_evaluation_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval]))\n",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "success",
                      "legendLink": null,
@@ -385,7 +385,7 @@
                   {
                      "expr": "sum(rate(cortex_prometheus_rule_evaluation_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "failed",
                      "legendLink": null,
@@ -462,7 +462,7 @@
                   {
                      "expr": "sum (rate(cortex_prometheus_rule_evaluation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval]))\n  /\nsum (rate(cortex_prometheus_rule_evaluation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval]))\n",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "average",
                      "legendLink": null,
@@ -559,7 +559,7 @@
                   {
                      "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(gateway|cortex-gw|cortex-gw-internal)\", route=~\"api_prom_rules.*|api_prom_api_v1_(rules|alerts)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{status}}",
                      "refId": "A",
@@ -748,7 +748,7 @@
                   {
                      "expr": "sum by (status) (label_replace(label_replace(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{status}}",
                      "refId": "A",
@@ -825,7 +825,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -834,7 +834,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -843,7 +843,7 @@
                   {
                      "expr": "sum(rate(cortex_ingester_client_request_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__interval])) * 1e3 / sum(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -940,7 +940,7 @@
                   {
                      "expr": "sum by (status) (label_replace(label_replace(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{status}}",
                      "refId": "A",
@@ -1017,7 +1017,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -1026,7 +1026,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -1035,7 +1035,7 @@
                   {
                      "expr": "sum(rate(cortex_ingester_client_request_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__interval])) * 1e3 / sum(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -1124,7 +1124,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) by (le)) * 1",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -1133,7 +1133,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) by (le)) * 1",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -1142,7 +1142,7 @@
                   {
                      "expr": "sum(rate(cortex_querier_storegateway_instances_hit_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) * 1 / sum(rate(cortex_querier_storegateway_instances_hit_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -1219,7 +1219,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) by (le)) * 1",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -1228,7 +1228,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) by (le)) * 1",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -1237,7 +1237,7 @@
                   {
                      "expr": "sum(rate(cortex_querier_storegateway_refetches_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) * 1 / sum(rate(cortex_querier_storegateway_refetches_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -1314,7 +1314,7 @@
                   {
                      "expr": "sum(rate(cortex_querier_blocks_consistency_checks_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[1m])) / sum(rate(cortex_querier_blocks_consistency_checks_total{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[1m]))",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "Failure Rate",
                      "legendLink": null,
@@ -1403,7 +1403,7 @@
                   {
                      "expr": "sum by(user) (rate(cortex_prometheus_notifications_errors_total{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval]))\n  /\nsum by(user) (rate(cortex_prometheus_notifications_sent_total{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval]))\n> 0\n",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{ user }}",
                      "legendLink": null,
@@ -1480,7 +1480,7 @@
                   {
                      "expr": "sum by(user) (rate(cortex_prometheus_notifications_queue_length{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval]))\n  /\nsum by(user) (rate(cortex_prometheus_notifications_queue_capacity{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval])) > 0\n",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{ user }}",
                      "legendLink": null,
@@ -1557,7 +1557,7 @@
                   {
                      "expr": "sum by (user) (increase(cortex_prometheus_notifications_dropped_total{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval])) > 0\n",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{ user }}",
                      "legendLink": null,
@@ -1646,7 +1646,7 @@
                   {
                      "expr": "sum by(user) (rate(cortex_prometheus_rule_group_iterations_missed_total{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval])) > 0",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{ user }}",
                      "legendLink": null,
@@ -1723,7 +1723,7 @@
                   {
                      "expr": "rate(cortex_prometheus_rule_group_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval])\n  /\nrate(cortex_prometheus_rule_group_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval])\n",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{ user }}",
                      "legendLink": null,
@@ -1800,7 +1800,7 @@
                   {
                      "expr": "sum by(rule_group) (rate(cortex_prometheus_rule_evaluation_failures_total{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval])) > 0",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{ rule_group }}",
                      "legendLink": null,
@@ -1889,7 +1889,7 @@
                   {
                      "expr": "sum by(user) (rate(cortex_prometheus_rule_evaluation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval]))\n  /\nsum by(user) (rate(cortex_prometheus_rule_evaluation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\"}[$__rate_interval]))\n",
                      "format": "time_series",
-                     "interval": "1m",
+                     "interval": "15s",
                      "intervalFactor": 2,
                      "legendFormat": "{{ user }}",
                      "legendLink": null,
