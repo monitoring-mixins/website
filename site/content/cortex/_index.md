@@ -23,7 +23,8 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 {{< code lang="yaml" >}}
 alert: CortexIngesterUnhealthy
 annotations:
-  message: There are {{ printf "%f" $value }} unhealthy ingester(s).
+  message: Cortex cluster {{ $labels.cluster }}/{{ $labels.namespace }} has {{ printf
+    "%f" $value }} unhealthy ingester(s).
 expr: |
   min by (cluster, namespace) (cortex_ring_members{state="Unhealthy", name="ingester"}) > 0
 for: 15m
@@ -37,7 +38,7 @@ labels:
 alert: CortexRequestErrors
 annotations:
   message: |
-    {{ $labels.job }} {{ $labels.route }} is experiencing {{ printf "%.2f" $value }}% errors.
+    The route {{ $labels.route }} in {{ $labels.cluster }}/{{ $labels.namespace }} is experiencing {{ printf "%.2f" $value }}% errors.
 expr: |
   100 * sum by (cluster, namespace, job, route) (rate(cortex_request_duration_seconds_count{status_code=~"5..",route!~"ready"}[1m]))
     /
@@ -87,7 +88,7 @@ labels:
 alert: CortexQueriesIncorrect
 annotations:
   message: |
-    Incorrect results for {{ printf "%.2f" $value }}% of queries.
+    The Cortex cluster {{ $labels.cluster }}/{{ $labels.namespace }} is experiencing {{ printf "%.2f" $value }}% incorrect query results.
 expr: |
   100 * sum by (cluster, namespace) (rate(test_exporter_test_case_result_total{result="fail"}[5m]))
     /
@@ -103,7 +104,7 @@ labels:
 alert: CortexInconsistentRuntimeConfig
 annotations:
   message: |
-    An inconsistent runtime config file is used across cluster {{ $labels.job }}.
+    An inconsistent runtime config file is used across cluster {{ $labels.cluster }}/{{ $labels.namespace }}.
 expr: |
   count(count by(cluster, namespace, job, sha256) (cortex_runtime_config_hash)) without(sha256) > 1
 for: 1h
@@ -126,27 +127,13 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### CortexQuerierCapacityFull
-
-{{< code lang="yaml" >}}
-alert: CortexQuerierCapacityFull
-annotations:
-  message: |
-    {{ $labels.job }} is at capacity processing queries.
-expr: |
-  prometheus_engine_queries_concurrent_max{job=~".+/(cortex|ruler|querier)"} - prometheus_engine_queries{job=~".+/(cortex|ruler|querier)"} == 0
-for: 5m
-labels:
-  severity: critical
-{{< /code >}}
- 
 ##### CortexFrontendQueriesStuck
 
 {{< code lang="yaml" >}}
 alert: CortexFrontendQueriesStuck
 annotations:
   message: |
-    There are {{ $value }} queued up queries in query-frontend.
+    There are {{ $value }} queued up queries in {{ $labels.cluster }}/{{ $labels.namespace }} query-frontend.
 expr: |
   sum by (cluster, namespace) (cortex_query_frontend_queue_length) > 1
 for: 5m
@@ -160,7 +147,7 @@ labels:
 alert: CortexSchedulerQueriesStuck
 annotations:
   message: |
-    There are {{ $value }} queued up queries in query-scheduler.
+    There are {{ $value }} queued up queries in {{ $labels.cluster }}/{{ $labels.namespace }} query-scheduler.
 expr: |
   sum by (cluster, namespace) (cortex_query_scheduler_queue_length) > 1
 for: 5m
@@ -168,19 +155,19 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### CortexCacheRequestErrors
+##### CortexMemcachedRequestErrors
 
 {{< code lang="yaml" >}}
-alert: CortexCacheRequestErrors
+alert: CortexMemcachedRequestErrors
 annotations:
   message: |
-    Cache {{ $labels.method }} is experiencing {{ printf "%.2f" $value }}% errors.
+    Memcached {{ $labels.name }} used by Cortex {{ $labels.cluster }}/{{ $labels.namespace }} is experiencing {{ printf "%.2f" $value }}% errors for {{ $labels.operation }} operation.
 expr: |
-  100 * sum by (cluster, namespace, method) (rate(cortex_cache_request_duration_seconds_count{status_code=~"5.."}[1m]))
-    /
-  sum  by (cluster, namespace, method) (rate(cortex_cache_request_duration_seconds_count[1m]))
-    > 1
-for: 15m
+  (
+    sum by(cluster, namespace, name, operation) (rate(thanos_memcached_operation_failures_total[1m])) /
+    sum by(cluster, namespace, name, operation) (rate(thanos_memcached_operations_total[1m]))
+  ) * 100 > 5
+for: 5m
 labels:
   severity: warning
 {{< /code >}}
@@ -390,7 +377,7 @@ labels:
 alert: CortexProvisioningMemcachedTooSmall
 annotations:
   message: |
-    Chunk memcached cluster is too small, should be at least {{ printf "%.2f" $value }}GB.
+    Chunk memcached cluster in {{ $labels.cluster }}/{{ $labels.namespace }} is too small, should be at least {{ printf "%.2f" $value }}GB.
 expr: |
   (
     4 *
@@ -412,12 +399,10 @@ labels:
 alert: CortexProvisioningTooManyActiveSeries
 annotations:
   message: |
-    Too many active series for ingesters, add more ingesters.
+    The number of in-memory series per ingester in {{ $labels.cluster }}/{{ $labels.namespace }} is too high.
 expr: |
   avg by (cluster, namespace) (cortex_ingester_memory_series) > 1.6e6
-    and
-  sum by (cluster, namespace) (rate(cortex_ingester_received_chunks[1h])) == 0
-for: 1h
+for: 2h
 labels:
   severity: warning
 {{< /code >}}
@@ -428,7 +413,7 @@ labels:
 alert: CortexProvisioningTooManyWrites
 annotations:
   message: |
-    High QPS for ingesters, add more ingesters.
+    Ingesters in {{ $labels.cluster }}/{{ $labels.namespace }} ingest too many samples per second.
 expr: |
   avg by (cluster, namespace) (rate(cortex_ingester_ingested_samples_total[1m])) > 80e3
 for: 15m
@@ -442,7 +427,7 @@ labels:
 alert: CortexAllocatingTooMuchMemory
 annotations:
   message: |
-    Too much memory being used by {{ $labels.namespace }}/{{ $labels.pod }} - add more ingesters.
+    Ingester {{ $labels.pod }} in {{ $labels.cluster }}/{{ $labels.namespace }} is using too much memory.
 expr: |
   (
     container_memory_working_set_bytes{container="ingester"}
@@ -460,7 +445,7 @@ labels:
 alert: CortexAllocatingTooMuchMemory
 annotations:
   message: |
-    Too much memory being used by {{ $labels.namespace }}/{{ $labels.pod }} - add more ingesters.
+    Ingester {{ $labels.pod }} in {{ $labels.cluster }}/{{ $labels.namespace }} is using too much memory.
 expr: |
   (
     container_memory_working_set_bytes{container="ingester"}
@@ -474,18 +459,37 @@ labels:
  
 ### ruler_alerts
 
-##### CortexRulerFailedEvaluations
+##### CortexRulerTooManyFailedPushes
 
 {{< code lang="yaml" >}}
-alert: CortexRulerFailedEvaluations
+alert: CortexRulerTooManyFailedPushes
 annotations:
   message: |
-    Cortex Ruler {{ $labels.instance }} is experiencing {{ printf "%.2f" $value }}% errors for the rule group {{ $labels.rule_group }}.
+    Cortex Ruler {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace }} is experiencing {{ printf "%.2f" $value }}% write (push) errors.
 expr: |
-  sum by (cluster, namespace, instance, rule_group) (rate(cortex_prometheus_rule_evaluation_failures_total[1m]))
+  100 * (
+  sum by (cluster, namespace, instance) (rate(cortex_ruler_write_requests_failed_total[1m]))
     /
-  sum by (cluster, namespace, instance, rule_group) (rate(cortex_prometheus_rule_evaluations_total[1m]))
-    > 0.01
+  sum by (cluster, namespace, instance) (rate(cortex_ruler_write_requests_total[1m]))
+  ) > 1
+for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexRulerTooManyFailedQueries
+
+{{< code lang="yaml" >}}
+alert: CortexRulerTooManyFailedQueries
+annotations:
+  message: |
+    Cortex Ruler {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace }} is experiencing {{ printf "%.2f" $value }}% errors while evaluating rules.
+expr: |
+  100 * (
+  sum by (cluster, namespace, instance) (rate(cortex_ruler_queries_failed_total[1m]))
+    /
+  sum by (cluster, namespace, instance) (rate(cortex_ruler_queries_total[1m]))
+  ) > 1
 for: 5m
 labels:
   severity: warning
@@ -497,7 +501,7 @@ labels:
 alert: CortexRulerMissedEvaluations
 annotations:
   message: |
-    Cortex Ruler {{ $labels.instance }} is experiencing {{ printf "%.2f" $value }}% missed iterations for the rule group {{ $labels.rule_group }}.
+    Cortex Ruler {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace }} is experiencing {{ printf "%.2f" $value }}% missed iterations for the rule group {{ $labels.rule_group }}.
 expr: |
   sum by (cluster, namespace, instance, rule_group) (rate(cortex_prometheus_rule_group_iterations_missed_total[1m]))
     /
@@ -514,7 +518,7 @@ labels:
 alert: CortexRulerFailedRingCheck
 annotations:
   message: |
-    Cortex Rulers {{ $labels.job }} are experiencing errors when checking the ring for rule group ownership.
+    Cortex Rulers in {{ $labels.cluster }}/{{ $labels.namespace }} are experiencing errors when checking the ring for rule group ownership.
 expr: |
   sum by (cluster, namespace, job) (rate(cortex_ruler_ring_check_errors_total[1m]))
      > 0
@@ -530,8 +534,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexGossipMembersMismatch
 annotations:
-  message: '{{ $labels.job }}/{{ $labels.instance }} sees incorrect number of gossip
-    members.'
+  message: Cortex instance {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} sees incorrect number of gossip members.
 expr: |
   memberlist_client_cluster_members_count
     != on (cluster, namespace) group_left
@@ -586,21 +590,21 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexIngesterHasNotShippedBlocks
 annotations:
-  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has not
-    shipped any block in the last 4 hours.
+  message: Cortex Ingester {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} has not shipped any block in the last 4 hours.
 expr: |
-  (min by(namespace, instance) (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester.*"}) > 60 * 60 * 4)
+  (min by(cluster, namespace, instance) (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester.*"}) > 60 * 60 * 4)
   and
-  (max by(namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester.*"}) > 0)
+  (max by(cluster, namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester.*"}) > 0)
   and
   # Only if the ingester has ingested samples over the last 4h.
-  (max by(namespace, instance) (rate(cortex_ingester_ingested_samples_total[4h])) > 0)
+  (max by(cluster, namespace, instance) (rate(cortex_ingester_ingested_samples_total[4h])) > 0)
   and
   # Only if the ingester was ingesting samples 4h ago. This protects from the case the ingester instance
   # had ingested samples in the past, then no traffic was received for a long period and then it starts
   # receiving samples again. Without this check, the alert would fire as soon as it gets back receiving
   # samples, while the a block shipping is expected within the next 4h.
-  (max by(namespace, instance) (rate(cortex_ingester_ingested_samples_total[1h] offset 4h)) > 0)
+  (max by(cluster, namespace, instance) (rate(cortex_ingester_ingested_samples_total[1h] offset 4h)) > 0)
 for: 15m
 labels:
   severity: critical
@@ -611,12 +615,12 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexIngesterHasNotShippedBlocksSinceStart
 annotations:
-  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has not
-    shipped any block in the last 4 hours.
+  message: Cortex Ingester {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} has not shipped any block in the last 4 hours.
 expr: |
-  (max by(namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester.*"}) == 0)
+  (max by(cluster, namespace, instance) (thanos_objstore_bucket_last_successful_upload_time{job=~".+/ingester.*"}) == 0)
   and
-  (max by(namespace, instance) (rate(cortex_ingester_ingested_samples_total[4h])) > 0)
+  (max by(cluster, namespace, instance) (rate(cortex_ingester_ingested_samples_total[4h])) > 0)
 for: 4h
 labels:
   severity: critical
@@ -627,9 +631,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexIngesterHasUnshippedBlocks
 annotations:
-  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} has compacted
-    a block {{ $value | humanizeDuration }} ago but it hasn't been successfully uploaded
-    to the storage yet.
+  message: Cortex Ingester {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} has compacted a block {{ $value | humanizeDuration }} ago but it hasn't been
+    successfully uploaded to the storage yet.
 expr: |
   (time() - cortex_ingester_oldest_unshipped_block_timestamp_seconds > 3600)
   and
@@ -644,8 +648,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexIngesterTSDBHeadCompactionFailed
 annotations:
-  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
-    to compact TSDB head.
+  message: Cortex Ingester {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} is failing to compact TSDB head.
 expr: |
   rate(cortex_ingester_tsdb_compactions_failed_total[5m]) > 0
 for: 15m
@@ -658,8 +662,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexIngesterTSDBHeadTruncationFailed
 annotations:
-  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
-    to truncate TSDB head.
+  message: Cortex Ingester {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} is failing to truncate TSDB head.
 expr: |
   rate(cortex_ingester_tsdb_head_truncations_failed_total[5m]) > 0
 labels:
@@ -671,8 +675,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexIngesterTSDBCheckpointCreationFailed
 annotations:
-  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
-    to create TSDB checkpoint.
+  message: Cortex Ingester {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} is failing to create TSDB checkpoint.
 expr: |
   rate(cortex_ingester_tsdb_checkpoint_creations_failed_total[5m]) > 0
 labels:
@@ -684,8 +688,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexIngesterTSDBCheckpointDeletionFailed
 annotations:
-  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
-    to delete TSDB checkpoint.
+  message: Cortex Ingester {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} is failing to delete TSDB checkpoint.
 expr: |
   rate(cortex_ingester_tsdb_checkpoint_deletions_failed_total[5m]) > 0
 labels:
@@ -697,8 +701,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexIngesterTSDBWALTruncationFailed
 annotations:
-  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
-    to truncate TSDB WAL.
+  message: Cortex Ingester {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} is failing to truncate TSDB WAL.
 expr: |
   rate(cortex_ingester_tsdb_wal_truncations_failed_total[5m]) > 0
 labels:
@@ -710,8 +714,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexIngesterTSDBWALCorrupted
 annotations:
-  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} got a corrupted
-    TSDB WAL.
+  message: Cortex Ingester {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} got a corrupted TSDB WAL.
 expr: |
   rate(cortex_ingester_tsdb_wal_corruptions_total[5m]) > 0
 labels:
@@ -723,8 +727,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexIngesterTSDBWALWritesFailed
 annotations:
-  message: Cortex Ingester {{ $labels.namespace }}/{{ $labels.instance }} is failing
-    to write to TSDB WAL.
+  message: Cortex Ingester {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} is failing to write to TSDB WAL.
 expr: |
   rate(cortex_ingester_tsdb_wal_writes_failed_total[1m]) > 0
 for: 3m
@@ -737,8 +741,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexQuerierHasNotScanTheBucket
 annotations:
-  message: Cortex Querier {{ $labels.namespace }}/{{ $labels.instance }} has not successfully
-    scanned the bucket since {{ $value | humanizeDuration }}.
+  message: Cortex Querier {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} has not successfully scanned the bucket since {{ $value | humanizeDuration
+    }}.
 expr: |
   (time() - cortex_querier_blocks_last_successful_scan_timestamp_seconds > 60 * 30)
   and
@@ -753,18 +758,18 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexQuerierHighRefetchRate
 annotations:
-  message: Cortex Queries in {{ $labels.namespace }} are refetching series from different
-    store-gateways (because of missing blocks) for the {{ printf "%.0f" $value }}%
-    of queries.
+  message: Cortex Queries in {{ $labels.cluster }}/{{ $labels.namespace }} are refetching
+    series from different store-gateways (because of missing blocks) for the {{ printf
+    "%.0f" $value }}% of queries.
 expr: |
   100 * (
     (
-      sum by(namespace) (rate(cortex_querier_storegateway_refetches_per_query_count[5m]))
+      sum by(cluster, namespace) (rate(cortex_querier_storegateway_refetches_per_query_count[5m]))
       -
-      sum by(namespace) (rate(cortex_querier_storegateway_refetches_per_query_bucket{le="0.0"}[5m]))
+      sum by(cluster, namespace) (rate(cortex_querier_storegateway_refetches_per_query_bucket{le="0.0"}[5m]))
     )
     /
-    sum by(namespace) (rate(cortex_querier_storegateway_refetches_per_query_count[5m]))
+    sum by(cluster, namespace) (rate(cortex_querier_storegateway_refetches_per_query_count[5m]))
   )
   > 1
 for: 10m
@@ -777,8 +782,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexStoreGatewayHasNotSyncTheBucket
 annotations:
-  message: Cortex Store Gateway {{ $labels.namespace }}/{{ $labels.instance }} has
-    not successfully synched the bucket since {{ $value | humanizeDuration }}.
+  message: Cortex Store Gateway {{ $labels.instance }} in {{ $labels.cluster }}/{{
+    $labels.namespace }} has not successfully synched the bucket since {{ $value |
+    humanizeDuration }}.
 expr: |
   (time() - cortex_bucket_stores_blocks_last_successful_sync_timestamp_seconds{component="store-gateway"} > 60 * 30)
   and
@@ -793,10 +799,11 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexBucketIndexNotUpdated
 annotations:
-  message: Cortex bucket index for tenant {{ $labels.user }} in {{ $labels.namespace
-    }} has not been updated since {{ $value | humanizeDuration }}.
+  message: Cortex bucket index for tenant {{ $labels.user }} in {{ $labels.cluster
+    }}/{{ $labels.namespace }} has not been updated since {{ $value | humanizeDuration
+    }}.
 expr: |
-  min by(namespace, user) (time() - cortex_bucket_index_last_successful_update_timestamp_seconds) > 7200
+  min by(cluster, namespace, user) (time() - cortex_bucket_index_last_successful_update_timestamp_seconds) > 7200
 labels:
   severity: critical
 {{< /code >}}
@@ -806,10 +813,10 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexTenantHasPartialBlocks
 annotations:
-  message: Cortex tenant {{ $labels.user }} in {{ $labels.namespace }} has {{ $value
-    }} partial blocks.
+  message: Cortex tenant {{ $labels.user }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} has {{ $value }} partial blocks.
 expr: |
-  max by(namespace, user) (cortex_bucket_blocks_partials_count) > 0
+  max by(cluster, namespace, user) (cortex_bucket_blocks_partials_count) > 0
 for: 6h
 labels:
   severity: warning
@@ -822,8 +829,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexCompactorHasNotSuccessfullyCleanedUpBlocks
 annotations:
-  message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
-    successfully cleaned up blocks in the last 6 hours.
+  message: Cortex Compactor {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} has not successfully cleaned up blocks in the last 6 hours.
 expr: |
   (time() - cortex_compactor_block_cleanup_last_successful_run_timestamp_seconds > 60 * 60 * 6)
 for: 1h
@@ -836,8 +843,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexCompactorHasNotSuccessfullyRunCompaction
 annotations:
-  message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
-    run compaction in the last 24 hours.
+  message: Cortex Compactor {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} has not run compaction in the last 24 hours.
 expr: |
   (time() - cortex_compactor_last_successful_run_timestamp_seconds > 60 * 60 * 24)
   and
@@ -852,8 +859,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexCompactorHasNotSuccessfullyRunCompaction
 annotations:
-  message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
-    run compaction in the last 24 hours.
+  message: Cortex Compactor {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} has not run compaction in the last 24 hours.
 expr: |
   cortex_compactor_last_successful_run_timestamp_seconds == 0
 for: 24h
@@ -866,8 +873,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexCompactorHasNotSuccessfullyRunCompaction
 annotations:
-  message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} failed
-    to run 2 consecutive compactions.
+  message: Cortex Compactor {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} failed to run 2 consecutive compactions.
 expr: |
   increase(cortex_compactor_runs_failed_total[2h]) >= 2
 labels:
@@ -879,8 +886,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexCompactorHasNotUploadedBlocks
 annotations:
-  message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
-    uploaded any block in the last 24 hours.
+  message: Cortex Compactor {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} has not uploaded any block in the last 24 hours.
 expr: |
   (time() - thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor.*"} > 60 * 60 * 24)
   and
@@ -895,8 +902,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: CortexCompactorHasNotUploadedBlocks
 annotations:
-  message: Cortex Compactor {{ $labels.namespace }}/{{ $labels.instance }} has not
-    uploaded any block in the last 24 hours.
+  message: Cortex Compactor {{ $labels.instance }} in {{ $labels.cluster }}/{{ $labels.namespace
+    }} has not uploaded any block in the last 24 hours.
 expr: |
   thanos_objstore_bucket_last_successful_upload_time{job=~".+/compactor.*"} == 0
 for: 24h
