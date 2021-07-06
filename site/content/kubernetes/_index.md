@@ -537,10 +537,13 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumefillingup
   summary: PersistentVolume is filling up.
 expr: |
-  kubelet_volume_stats_available_bytes{job="kubelet"}
-    /
-  kubelet_volume_stats_capacity_bytes{job="kubelet"}
-    < 0.03
+  (
+    kubelet_volume_stats_available_bytes{job="kubelet"}
+      /
+    kubelet_volume_stats_capacity_bytes{job="kubelet"}
+  ) < 0.03
+  and
+  kubelet_volume_stats_used_bytes{job="kubelet"} > 0
 for: 1m
 labels:
   severity: critical
@@ -563,6 +566,8 @@ expr: |
       /
     kubelet_volume_stats_capacity_bytes{job="kubelet"}
   ) < 0.15
+  and
+  kubelet_volume_stats_used_bytes{job="kubelet"} > 0
   and
   predict_linear(kubelet_volume_stats_available_bytes{job="kubelet"}[6h], 4 * 24 * 3600) < 0
 for: 1h
