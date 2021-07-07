@@ -316,8 +316,8 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeHpaReplicasMismatch
 annotations:
-  description: HPA {{ $labels.namespace }}/{{ $labels.hpa }} has not matched the desired
-    number of replicas for longer than 15 minutes.
+  description: HPA {{ $labels.namespace }}/{{ $labels.horizontalpodautoscaler  }}
+    has not matched the desired number of replicas for longer than 15 minutes.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubehpareplicasmismatch
   summary: HPA has not matched descired number of replicas.
 expr: |
@@ -345,8 +345,8 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeHpaMaxedOut
 annotations:
-  description: HPA {{ $labels.namespace }}/{{ $labels.hpa }} has been running at max
-    replicas for longer than 15 minutes.
+  description: HPA {{ $labels.namespace }}/{{ $labels.horizontalpodautoscaler  }}
+    has been running at max replicas for longer than 15 minutes.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubehpamaxedout
   summary: HPA is running at max replicas
 expr: |
