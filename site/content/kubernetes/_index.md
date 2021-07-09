@@ -31,7 +31,7 @@ annotations:
 expr: |
   increase(kube_pod_container_status_restarts_total{job="kube-state-metrics"}[10m]) > 0
   and
-  sum without (phase) (kube_pod_status_phase{phase!="Running",job="kube-state-metrics"} == 1)
+  kube_pod_container_status_waiting{job="kube-state-metrics"} == 1
 for: 15m
 labels:
   severity: warning
@@ -1079,7 +1079,7 @@ labels:
 Complete list of pregenerated recording rules is available [here](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/rules.yaml).
 {{< /panel >}}
 
-### kube-apiserver.rules
+### kube-apiserver-burnrate.rules
 
 ##### apiserver_request:burnrate1d
 
@@ -1452,26 +1452,8 @@ labels:
 record: apiserver_request:burnrate6h
 {{< /code >}}
  
-##### code_resource:apiserver_request_total:rate5m
+### kube-apiserver-histogram.rules
 
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster,code,resource) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[5m]))
-labels:
-  verb: read
-record: code_resource:apiserver_request_total:rate5m
-{{< /code >}}
- 
-##### code_resource:apiserver_request_total:rate5m
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster,code,resource) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))
-labels:
-  verb: write
-record: code_resource:apiserver_request_total:rate5m
-{{< /code >}}
- 
 ##### cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
 
 {{< code lang="yaml" >}}
@@ -1526,6 +1508,34 @@ record: cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
  
 ### kube-apiserver-availability.rules
 
+##### code_verb:apiserver_request_total:increase30d
+
+{{< code lang="yaml" >}}
+expr: |
+  avg_over_time(code_verb:apiserver_request_total:increase1h[30d]) * 24 * 30
+record: code_verb:apiserver_request_total:increase30d
+{{< /code >}}
+ 
+##### code:apiserver_request_total:increase30d
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, code) (code_verb:apiserver_request_total:increase30d{verb=~"LIST|GET"})
+labels:
+  verb: read
+record: code:apiserver_request_total:increase30d
+{{< /code >}}
+ 
+##### code:apiserver_request_total:increase30d
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, code) (code_verb:apiserver_request_total:increase30d{verb=~"POST|PUT|PATCH|DELETE"})
+labels:
+  verb: write
+record: code:apiserver_request_total:increase30d
+{{< /code >}}
+ 
 ##### apiserver_request:availability30d
 
 {{< code lang="yaml" >}}
@@ -1615,224 +1625,56 @@ labels:
 record: apiserver_request:availability30d
 {{< /code >}}
  
-##### code_verb:apiserver_request_total:increase30d
+##### code_resource:apiserver_request_total:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
-  avg_over_time(code_verb:apiserver_request_total:increase1h[30d]) * 24 * 30
-record: code_verb:apiserver_request_total:increase30d
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"2.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"2.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"2.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"2.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"2.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"2.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"3.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"3.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"3.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"3.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"3.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"3.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"4.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"4.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"4.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"4.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"4.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"4.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="LIST",code=~"5.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="GET",code=~"5.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="POST",code=~"5.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PUT",code=~"5.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="PATCH",code=~"5.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code_verb:apiserver_request_total:increase1h
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb="DELETE",code=~"5.."}[1h]))
-record: code_verb:apiserver_request_total:increase1h
-{{< /code >}}
- 
-##### code:apiserver_request_total:increase30d
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, code) (code_verb:apiserver_request_total:increase30d{verb=~"LIST|GET"})
+  sum by (cluster,code,resource) (rate(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET"}[5m]))
 labels:
   verb: read
-record: code:apiserver_request_total:increase30d
+record: code_resource:apiserver_request_total:rate5m
 {{< /code >}}
  
-##### code:apiserver_request_total:increase30d
+##### code_resource:apiserver_request_total:rate5m
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (cluster, code) (code_verb:apiserver_request_total:increase30d{verb=~"POST|PUT|PATCH|DELETE"})
+  sum by (cluster,code,resource) (rate(apiserver_request_total{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))
 labels:
   verb: write
-record: code:apiserver_request_total:increase30d
+record: code_resource:apiserver_request_total:rate5m
+{{< /code >}}
+ 
+##### code_verb:apiserver_request_total:increase1h
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET|POST|PUT|PATCH|DELETE",code=~"2.."}[1h]))
+record: code_verb:apiserver_request_total:increase1h
+{{< /code >}}
+ 
+##### code_verb:apiserver_request_total:increase1h
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET|POST|PUT|PATCH|DELETE",code=~"3.."}[1h]))
+record: code_verb:apiserver_request_total:increase1h
+{{< /code >}}
+ 
+##### code_verb:apiserver_request_total:increase1h
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET|POST|PUT|PATCH|DELETE",code=~"4.."}[1h]))
+record: code_verb:apiserver_request_total:increase1h
+{{< /code >}}
+ 
+##### code_verb:apiserver_request_total:increase1h
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, code, verb) (increase(apiserver_request_total{job="kube-apiserver",verb=~"LIST|GET|POST|PUT|PATCH|DELETE",code=~"5.."}[1h]))
+record: code_verb:apiserver_request_total:increase1h
 {{< /code >}}
  
 ### k8s.rules
