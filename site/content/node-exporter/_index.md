@@ -306,6 +306,40 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### NodeFileDescriptorLimit
+
+{{< code lang="yaml" >}}
+alert: NodeFileDescriptorLimit
+annotations:
+  description: File descriptors limit at {{ $labels.instance }} is currently at {{
+    printf "%.2f" $value }}%.
+  summary: Kernel is predicted to exhaust file descriptors limit soon.
+expr: |
+  (
+    node_filefd_allocated{job="node-exporter"} * 100 / node_filefd_maximum{job="node-exporter"} > 70
+  )
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### NodeFileDescriptorLimit
+
+{{< code lang="yaml" >}}
+alert: NodeFileDescriptorLimit
+annotations:
+  description: File descriptors limit at {{ $labels.instance }} is currently at {{
+    printf "%.2f" $value }}%.
+  summary: Kernel is predicted to exhaust file descriptors limit soon.
+expr: |
+  (
+    node_filefd_allocated{job="node-exporter"} * 100 / node_filefd_maximum{job="node-exporter"} > 90
+  )
+for: 15m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ## Recording rules
 
 {{< panel style="warning" >}}
