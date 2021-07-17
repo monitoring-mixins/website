@@ -1735,6 +1735,17 @@ expr: |
 record: node_namespace_pod_container:container_memory_swap
 {{< /code >}}
  
+##### cluster:namespace:pod_memory:active:kube_pod_container_resource_requests
+
+{{< code lang="yaml" >}}
+expr: |
+  kube_pod_container_resource_requests{resource="memory",job="kube-state-metrics"}  * on (namespace, pod, cluster)
+  group_left() max by (namespace, pod) (
+    (kube_pod_status_phase{phase=~"Pending|Running"} == 1)
+  )
+record: cluster:namespace:pod_memory:active:kube_pod_container_resource_requests
+{{< /code >}}
+ 
 ##### namespace_memory:kube_pod_container_resource_requests:sum
 
 {{< code lang="yaml" >}}
@@ -1749,6 +1760,17 @@ expr: |
       )
   )
 record: namespace_memory:kube_pod_container_resource_requests:sum
+{{< /code >}}
+ 
+##### cluster:namespace:pod_cpu:active:kube_pod_container_resource_requests
+
+{{< code lang="yaml" >}}
+expr: |
+  kube_pod_container_resource_requests{resource="cpu",job="kube-state-metrics"}  * on (namespace, pod, cluster)
+  group_left() max by (namespace, pod) (
+    (kube_pod_status_phase{phase=~"Pending|Running"} == 1)
+  )
+record: cluster:namespace:pod_cpu:active:kube_pod_container_resource_requests
 {{< /code >}}
  
 ##### namespace_cpu:kube_pod_container_resource_requests:sum
@@ -1767,6 +1789,17 @@ expr: |
 record: namespace_cpu:kube_pod_container_resource_requests:sum
 {{< /code >}}
  
+##### cluster:namespace:pod_memory:active:kube_pod_container_resource_limits
+
+{{< code lang="yaml" >}}
+expr: |
+  kube_pod_container_resource_limits{resource="memory",job="kube-state-metrics"}  * on (namespace, pod, cluster)
+  group_left() max by (namespace, pod) (
+    (kube_pod_status_phase{phase=~"Pending|Running"} == 1)
+  )
+record: cluster:namespace:pod_memory:active:kube_pod_container_resource_limits
+{{< /code >}}
+ 
 ##### namespace_memory:kube_pod_container_resource_limits:sum
 
 {{< code lang="yaml" >}}
@@ -1781,6 +1814,17 @@ expr: |
       )
   )
 record: namespace_memory:kube_pod_container_resource_limits:sum
+{{< /code >}}
+ 
+##### cluster:namespace:pod_cpu:active:kube_pod_container_resource_limits
+
+{{< code lang="yaml" >}}
+expr: |
+  kube_pod_container_resource_limits{resource="cpu",job="kube-state-metrics"}  * on (namespace, pod, cluster)
+  group_left() max by (namespace, pod) (
+   (kube_pod_status_phase{phase=~"Pending|Running"} == 1)
+   )
+record: cluster:namespace:pod_cpu:active:kube_pod_container_resource_limits
 {{< /code >}}
  
 ##### namespace_cpu:kube_pod_container_resource_limits:sum
