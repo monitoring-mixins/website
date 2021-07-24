@@ -40,7 +40,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 12,
+               "span": 6,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -57,6 +57,82 @@
                "timeFrom": null,
                "timeShift": null,
                "title": "Hit Rate",
+               "tooltip": {
+                  "shared": false,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "percentunit",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "id": 2,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 6,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "topk(20,\n  max by (cluster, job, instance) (\n    memcached_current_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"} / memcached_max_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}\n))\n",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{cluster }} / {{ job }} / {{ instance }}",
+                     "legendLink": null,
+                     "step": 10
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Top 20 Highest Connection Usage",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -108,7 +184,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 2,
+               "id": 3,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -184,7 +260,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 3,
+               "id": 4,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -260,7 +336,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 4,
+               "id": 5,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -348,7 +424,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 5,
+               "id": 6,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -424,7 +500,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
-               "id": 6,
+               "id": 7,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -512,7 +588,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 7,
+               "id": 8,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -604,7 +680,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 8,
+               "id": 9,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -680,7 +756,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 9,
+               "id": 10,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -768,7 +844,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 10,
+               "id": 11,
                "legend": {
                   "avg": false,
                   "current": false,

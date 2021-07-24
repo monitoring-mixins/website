@@ -32,6 +32,34 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### MemcachedConnectionLimitApproaching
+
+{{< code lang="yaml" >}}
+alert: MemcachedConnectionLimitApproaching
+annotations:
+  message: |
+    Memcached Instance {{ $labels.job }} / {{ $labels.instance }} connection usage is at {{ printf "%0.0f" $value }}% for at least 15m.
+expr: |
+  (memcached_current_connections / memcached_max_connections * 100) > 80
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### MemcachedConnectionLimitApproaching
+
+{{< code lang="yaml" >}}
+alert: MemcachedConnectionLimitApproaching
+annotations:
+  message: |
+    Memcached Instance {{ $labels.job }} / {{ $labels.instance }} connection usage is at {{ printf "%0.0f" $value }}% for at least 15m.
+expr: |
+  (memcached_current_connections / memcached_max_connections * 100) > 95
+for: 15m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 
