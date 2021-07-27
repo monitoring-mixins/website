@@ -267,7 +267,7 @@
          "pluginVersion": "7.4.5",
          "targets": [
             {
-               "expr": "avg by (name, condition) (certmanager_certificate_ready_status == 1)",
+               "expr": "label_join(avg by (name, namespace, condition, exported_namespace) (certmanager_certificate_ready_status == 1), \"namespaced_name\", \"-\", \"namespace\", \"exported_namespace\", \"name\")",
                "format": "table",
                "instant": true,
                "interval": "",
@@ -275,7 +275,7 @@
                "refId": "A"
             },
             {
-               "expr": "avg by (name, namespace, exported_namespace) (certmanager_certificate_expiration_timestamp_seconds) * 1000",
+               "expr": "label_join(avg by (name, namespace, exported_namespace) (certmanager_certificate_expiration_timestamp_seconds) * 1000, \"namespaced_name\", \"-\", \"namespace\", \"exported_namespace\", \"name\")",
                "format": "table",
                "instant": true,
                "interval": "",
@@ -290,7 +290,7 @@
             {
                "id": "seriesToColumns",
                "options": {
-                  "byField": "name"
+                  "byField": "namespaced_name"
                }
             },
             {
@@ -301,23 +301,39 @@
                      "Time 1": true,
                      "Time 2": true,
                      "Value #A": true,
-                     "exported_namespace": false
+                     "exported_namespace": false,
+                     "exported_namespace 1": false,
+                     "exported_namespace 2": true,
+                     "name 1": true,
+                     "namespace 2": true,
+                     "namespaced_name": true
                   },
                   "indexByName": {
-                     "Time": 6,
-                     "Value #A": 5,
-                     "Value #B": 4,
-                     "condition": 3,
-                     "exported_namespace": 1,
-                     "name": 2,
-                     "namespace": 0
+                     "Time 1": 8,
+                     "Time 2": 10,
+                     "Value #A": 6,
+                     "Value #B": 5,
+                     "condition": 4,
+                     "exported_namespace 1": 1,
+                     "exported_namespace 2": 11,
+                     "name 1": 9,
+                     "name 2": 3,
+                     "namespace": 0,
+                     "namespace 1": 2,
+                     "namespaced_name": 7
                   },
                   "renameByName": {
+                     "Time 1": "",
                      "Value #B": "Valid Until",
                      "condition": "Ready Status",
                      "exported_namespace": "Certificate Namespace",
+                     "exported_namespace 1": "Certificate Namespace",
+                     "exported_namespace 2": "",
                      "name": "Certificate",
-                     "namespace": "Namespace"
+                     "name 2": "Certificate",
+                     "namespace": "Namespace",
+                     "namespace 1": "Namespace",
+                     "namespaced_name": ""
                   }
                }
             }
