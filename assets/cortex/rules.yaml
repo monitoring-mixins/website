@@ -442,10 +442,17 @@ groups:
 - name: cortex_scaling_rules
   rules:
   - expr: |
-      sum by (cluster, namespace, deployment) (kube_deployment_spec_replicas)
-        or
       sum by (cluster, namespace, deployment) (
-        label_replace(kube_statefulset_replicas, "deployment", "$1", "statefulset", "(.*)")
+        label_replace(
+          kube_deployment_spec_replicas,
+          # The question mark in "(.*?)" is used to make it non-greedy, otherwise it
+          # always matches everything and the (optional) zone is not removed.
+          "deployment", "$1", "deployment", "(.*?)(?:-zone-[a-z])?"
+        )
+      )
+      or
+      sum by (cluster, namespace, deployment) (
+        label_replace(kube_statefulset_replicas, "deployment", "$1", "statefulset", "(.*?)(?:-zone-[a-z])?")
       )
     record: cluster_namespace_deployment:actual_replicas:count
   - expr: |
@@ -517,7 +524,7 @@ groups:
   - expr: |
       ceil(
         (sum by (cluster, namespace) (
-          cortex_ingester_tsdb_storage_blocks_bytes{job=~".+/ingester"}
+          cortex_ingester_tsdb_storage_blocks_bytes{job=~".+/ingester.*"}
         ) / 4)
           /
         avg by (cluster, namespace) (
@@ -531,8 +538,13 @@ groups:
   - expr: |
       sum by (cluster, namespace, deployment) (
         label_replace(
-          node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate,
-          "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+          label_replace(
+            node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate,
+            "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+          ),
+          # The question mark in "(.*?)" is used to make it non-greedy, otherwise it
+          # always matches everything and the (optional) zone is not removed.
+          "deployment", "$1", "deployment", "(.*?)(?:-zone-[a-z])?"
         )
       )
     record: cluster_namespace_deployment:container_cpu_usage_seconds_total:sum_rate
@@ -547,8 +559,13 @@ groups:
       (
         sum by (cluster, namespace, deployment) (
           label_replace(
-            kube_pod_container_resource_requests_cpu_cores,
-            "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+            label_replace(
+              kube_pod_container_resource_requests_cpu_cores,
+              "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+            ),
+            # The question mark in "(.*?)" is used to make it non-greedy, otherwise it
+            # always matches everything and the (optional) zone is not removed.
+            "deployment", "$1", "deployment", "(.*?)(?:-zone-[a-z])?"
           )
         )
       )
@@ -558,8 +575,13 @@ groups:
       (
         sum by (cluster, namespace, deployment) (
           label_replace(
-            kube_pod_container_resource_requests{resource="cpu"},
-            "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+            label_replace(
+              kube_pod_container_resource_requests{resource="cpu"},
+              "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+            ),
+            # The question mark in "(.*?)" is used to make it non-greedy, otherwise it
+            # always matches everything and the (optional) zone is not removed.
+            "deployment", "$1", "deployment", "(.*?)(?:-zone-[a-z])?"
           )
         )
       )
@@ -578,8 +600,13 @@ groups:
   - expr: |
       sum by (cluster, namespace, deployment) (
         label_replace(
-          container_memory_usage_bytes,
-          "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+          label_replace(
+            container_memory_usage_bytes,
+            "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+          ),
+          # The question mark in "(.*?)" is used to make it non-greedy, otherwise it
+          # always matches everything and the (optional) zone is not removed.
+          "deployment", "$1", "deployment", "(.*?)(?:-zone-[a-z])?"
         )
       )
     record: cluster_namespace_deployment:container_memory_usage_bytes:sum
@@ -594,8 +621,13 @@ groups:
       (
         sum by (cluster, namespace, deployment) (
           label_replace(
-            kube_pod_container_resource_requests_memory_bytes,
-            "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+            label_replace(
+              kube_pod_container_resource_requests_memory_bytes,
+              "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+            ),
+            # The question mark in "(.*?)" is used to make it non-greedy, otherwise it
+            # always matches everything and the (optional) zone is not removed.
+            "deployment", "$1", "deployment", "(.*?)(?:-zone-[a-z])?"
           )
         )
       )
@@ -605,8 +637,13 @@ groups:
       (
         sum by (cluster, namespace, deployment) (
           label_replace(
-            kube_pod_container_resource_requests{resource="memory"},
-            "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+            label_replace(
+              kube_pod_container_resource_requests{resource="memory"},
+              "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
+            ),
+            # The question mark in "(.*?)" is used to make it non-greedy, otherwise it
+            # always matches everything and the (optional) zone is not removed.
+            "deployment", "$1", "deployment", "(.*?)(?:-zone-[a-z])?"
           )
         )
       )

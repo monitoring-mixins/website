@@ -153,7 +153,7 @@ groups:
           and ignoring (limit)
           (cortex_ingester_instance_limits{limit="max_series"} > 0)
       ) > 0.7
-    for: 5m
+    for: 3h
     labels:
       severity: warning
   - alert: CortexIngesterReachingSeriesLimit
@@ -165,7 +165,7 @@ groups:
           (cortex_ingester_memory_series / ignoring(limit) cortex_ingester_instance_limits{limit="max_series"})
           and ignoring (limit)
           (cortex_ingester_instance_limits{limit="max_series"} > 0)
-      ) > 0.8
+      ) > 0.85
     for: 5m
     labels:
       severity: critical
