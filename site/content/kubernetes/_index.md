@@ -366,17 +366,15 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeCPUOvercommit
 annotations:
-  description: Cluster has overcommitted CPU resource requests for Pods and cannot
-    tolerate node failure.
+  description: Cluster has overcommitted CPU resource requests for Pods by {{ $value
+    }} CPU shares and cannot tolerate node failure.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecpuovercommit
   summary: Cluster has overcommitted CPU resource requests.
 expr: |
-  sum(namespace_cpu:kube_pod_container_resource_requests:sum{})
-    /
-  sum(kube_node_status_allocatable{resource="cpu"})
-    >
-  ((count(kube_node_status_allocatable{resource="cpu"}) > 1) - 1) / count(kube_node_status_allocatable{resource="cpu"})
-for: 5m
+  sum(namespace_cpu:kube_pod_container_resource_requests:sum{}) - (sum(kube_node_status_allocatable{resource="cpu"}) - max(kube_node_status_allocatable{resource="cpu"})) > 0
+  and
+  (sum(kube_node_status_allocatable{resource="cpu"}) - max(kube_node_status_allocatable{resource="cpu"})) > 0
+for: 10m
 labels:
   severity: warning
 {{< /code >}}
@@ -387,19 +385,15 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeMemoryOvercommit
 annotations:
-  description: Cluster has overcommitted memory resource requests for Pods and cannot
-    tolerate node failure.
+  description: Cluster has overcommitted memory resource requests for Pods by {{ $value
+    }} bytes and cannot tolerate node failure.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubememoryovercommit
   summary: Cluster has overcommitted memory resource requests.
 expr: |
-  sum(namespace_memory:kube_pod_container_resource_requests:sum{})
-    /
-  sum(kube_node_status_allocatable{resource="memory"})
-    >
-  ((count(kube_node_status_allocatable{resource="memory"}) > 1) - 1)
-    /
-  count(kube_node_status_allocatable{resource="memory"})
-for: 5m
+  sum(namespace_memory:kube_pod_container_resource_requests:sum{}) - (sum(kube_node_status_allocatable{resource="memory"}) - max(kube_node_status_allocatable{resource="memory"})) > 0
+  and
+  (sum(kube_node_status_allocatable{resource="memory"}) - max(kube_node_status_allocatable{resource="memory"})) > 0
+for: 10m
 labels:
   severity: warning
 {{< /code >}}
