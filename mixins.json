@@ -32,7 +32,7 @@
         {
             "name": "etcd",
             "source": "https://github.com/etcd-io/etcd",
-            "subdir": "Documentation/etcd-mixin",
+            "subdir": "contrib/mixin",
             "description": "A set of customisable Prometheus alerts for etcd."
         },
         {
