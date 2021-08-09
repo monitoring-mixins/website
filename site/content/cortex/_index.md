@@ -2366,8 +2366,8 @@ Following dashboards are generated from mixins and hosted on github:
 
 
 - [alertmanager](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/alertmanager.json)
-- [cortex-compactor-resources](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-compactor-resources.json)
 - [cortex-compactor](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-compactor.json)
+- [cortex-compactor-resources](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-compactor-resources.json)
 - [cortex-config](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-config.json)
 - [cortex-object-store](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-object-store.json)
 - [cortex-queries](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/dashboards/cortex-queries.json)
