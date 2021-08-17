@@ -1367,7 +1367,7 @@
             "multi": false,
             "name": "cluster",
             "options": [ ],
-            "query": "label_values(kube_pod_info, cluster)",
+            "query": "label_values(up{job=\"cadvisor\"}, cluster)",
             "refresh": 2,
             "regex": "",
             "sort": 0,

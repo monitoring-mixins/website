@@ -2599,7 +2599,7 @@
             "multi": false,
             "name": "cluster",
             "options": [ ],
-            "query": "label_values(node_cpu_seconds_total, cluster)",
+            "query": "label_values(up{job=\"cadvisor\"}, cluster)",
             "refresh": 2,
             "regex": "",
             "sort": 1,

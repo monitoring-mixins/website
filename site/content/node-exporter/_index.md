@@ -74,7 +74,7 @@ expr: |
   and
     node_filesystem_readonly{job="node",fstype!=""} == 0
   )
-for: 1h
+for: 30m
 labels:
   severity: warning
 {{< /code >}}
@@ -93,7 +93,7 @@ expr: |
   and
     node_filesystem_readonly{job="node",fstype!=""} == 0
   )
-for: 1h
+for: 30m
 labels:
   severity: critical
 {{< /code >}}
