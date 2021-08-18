@@ -102,7 +102,7 @@
         },
         {
             "name": "spinnaker",
-            "source": "https://gitlab.com/uneeq-oss/spinnaker-mixin.git",
+            "source": "https://github.com/uneeq-oss/spinnaker-mixin.git",
             "subdir": ""
         },
         {

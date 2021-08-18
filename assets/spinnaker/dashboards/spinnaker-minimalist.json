@@ -933,7 +933,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(executionCount_total[$__rate_interval])) by (instance)",
+                     "expr": "sum(rate(executionTime_seconds_count[$__rate_interval])) by (instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",

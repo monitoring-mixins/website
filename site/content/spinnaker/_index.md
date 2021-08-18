@@ -7,7 +7,7 @@ title: spinnaker
 
 
 {{< panel style="danger" >}}
-Jsonnet source code is available at [gitlab.com/uneeq-oss/spinnaker-mixin.git](https://gitlab.com/uneeq-oss/spinnaker-mixin.git)
+Jsonnet source code is available at [github.com/uneeq-oss/spinnaker-mixin.git](https://github.com/uneeq-oss/spinnaker-mixin.git)
 {{< /panel >}}
 
 ## Alerts
