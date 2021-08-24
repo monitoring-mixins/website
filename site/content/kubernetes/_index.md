@@ -863,7 +863,7 @@ expr: |
   ) > 0.95
 for: 15m
 labels:
-  severity: warning
+  severity: info
 {{< /code >}}
  
 ##### KubeNodeReadinessFlapping
