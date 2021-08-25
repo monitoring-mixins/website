@@ -83,7 +83,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(\n  rate(\n    cortex_request_duration_seconds_count{\n      cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\",\n      route=~\"(prometheus|api_prom)_api_v1_query\"\n    }[$__rate_interval]\n  )\n) +\nsum(\n  rate(\n    cortex_prometheus_rule_evaluations_total{\n      cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"\n    }[$__rate_interval]\n  )\n)\n",
+                     "expr": "sum(\n  rate(\n    cortex_request_duration_seconds_count{\n      cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\",\n      route=~\"(prometheus|api_prom)_api_v1_query\"\n    }[$__rate_interval]\n  )\n) +\nsum(\n  rate(\n    cortex_prometheus_rule_evaluations_total{\n      cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"\n    }[$__rate_interval]\n  )\n)\n",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,
@@ -160,7 +160,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(\n  rate(\n    cortex_request_duration_seconds_count{\n      cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\",\n      route=~\"(prometheus|api_prom)_api_v1_query_range\"\n    }[$__rate_interval]\n  )\n)\n",
+                     "expr": "sum(\n  rate(\n    cortex_request_duration_seconds_count{\n      cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\",\n      route=~\"(prometheus|api_prom)_api_v1_query_range\"\n    }[$__rate_interval]\n  )\n)\n",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,
@@ -513,7 +513,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -590,7 +590,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -598,7 +598,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -606,7 +606,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})",
+                     "expr": "1e3 * sum(cluster_job_route:cortex_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}) / sum(cluster_job_route:cortex_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -676,7 +676,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__rate_interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -782,7 +782,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_query_scheduler_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_query_scheduler_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -859,7 +859,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -868,7 +868,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -877,7 +877,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_query_scheduler_queue_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval])) * 1e3 / sum(rate(cortex_query_scheduler_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_query_scheduler_queue_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__interval])) * 1e3 / sum(rate(cortex_query_scheduler_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -974,7 +974,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{method=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_cache_request_duration_seconds_count{method=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1051,7 +1051,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", method=~\"frontend.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\", method=~\"frontend.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1059,7 +1059,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", method=~\"frontend.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_method:cortex_cache_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\", method=~\"frontend.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1067,7 +1067,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_method:cortex_cache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", method=~\"frontend.+\"}) / sum(cluster_job_method:cortex_cache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend|cortex$)\", method=~\"frontend.+\"})",
+                     "expr": "1e3 * sum(cluster_job_method:cortex_cache_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\", method=~\"frontend.+\"}) / sum(cluster_job_method:cortex_cache_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\", method=~\"frontend.+\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1163,7 +1163,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_querier_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_querier_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1240,7 +1240,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_querier_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum by (le) (cluster_job_route:cortex_querier_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -1248,7 +1248,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_querier_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum by (le) (cluster_job_route:cortex_querier_request_duration_seconds_bucket:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -1256,7 +1256,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(cluster_job_route:cortex_querier_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}) / sum(cluster_job_route:cortex_querier_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})",
+                     "expr": "1e3 * sum(cluster_job_route:cortex_querier_request_duration_seconds_sum:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}) / sum(cluster_job_route:cortex_querier_request_duration_seconds_count:sum_rate{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -1326,7 +1326,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_querier_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__rate_interval])))",
+                     "expr": "histogram_quantile(0.99, sum by(le, pod) (rate(cortex_querier_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\", route=~\"(prometheus|api_prom)_api_v1_.+\"}[$__rate_interval])))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2713,7 +2713,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(operation) (\n  rate(\n    thanos_memcached_operations_total{\n      cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",\n      component=\"querier\",\n      name=\"metadata-cache\"\n    }[$__rate_interval]\n  )\n)\n",
+                     "expr": "sum by(operation) (\n  rate(\n    thanos_memcached_operations_total{\n      cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\",\n      component=\"querier\",\n      name=\"metadata-cache\"\n    }[$__rate_interval]\n  )\n)\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2790,7 +2790,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_memcached_operation_duration_seconds_bucket{\n  cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",\n  operation=\"getmulti\",\n  component=\"querier\",\n  name=\"metadata-cache\"\n}\n[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_memcached_operation_duration_seconds_bucket{\n  cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\",\n  operation=\"getmulti\",\n  component=\"querier\",\n  name=\"metadata-cache\"\n}\n[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2799,7 +2799,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_memcached_operation_duration_seconds_bucket{\n  cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",\n  operation=\"getmulti\",\n  component=\"querier\",\n  name=\"metadata-cache\"\n}\n[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_memcached_operation_duration_seconds_bucket{\n  cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\",\n  operation=\"getmulti\",\n  component=\"querier\",\n  name=\"metadata-cache\"\n}\n[$__interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2808,7 +2808,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_memcached_operation_duration_seconds_sum{\n  cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",\n  operation=\"getmulti\",\n  component=\"querier\",\n  name=\"metadata-cache\"\n}\n[$__interval])) * 1e3 / sum(rate(thanos_memcached_operation_duration_seconds_count{\n  cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",\n  operation=\"getmulti\",\n  component=\"querier\",\n  name=\"metadata-cache\"\n}\n[$__interval]))",
+                     "expr": "sum(rate(thanos_memcached_operation_duration_seconds_sum{\n  cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\",\n  operation=\"getmulti\",\n  component=\"querier\",\n  name=\"metadata-cache\"\n}\n[$__interval])) * 1e3 / sum(rate(thanos_memcached_operation_duration_seconds_count{\n  cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\",\n  operation=\"getmulti\",\n  component=\"querier\",\n  name=\"metadata-cache\"\n}\n[$__interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2885,7 +2885,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(\n  rate(\n    thanos_cache_memcached_hits_total{\n      cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",\n      component=\"querier\",\n      name=\"metadata-cache\"\n    }[$__rate_interval]\n  )\n)\n/\nsum(\n  rate(\n    thanos_cache_memcached_requests_total{\n      cluster=~\"$cluster\", job=~\"($namespace)/(querier|cortex$)\",\n      component=\"querier\",\n      name=\"metadata-cache\"\n    }[$__rate_interval]\n  )\n)\n",
+                     "expr": "sum(\n  rate(\n    thanos_cache_memcached_hits_total{\n      cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\",\n      component=\"querier\",\n      name=\"metadata-cache\"\n    }[$__rate_interval]\n  )\n)\n/\nsum(\n  rate(\n    thanos_cache_memcached_requests_total{\n      cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\",\n      component=\"querier\",\n      name=\"metadata-cache\"\n    }[$__rate_interval]\n  )\n)\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
