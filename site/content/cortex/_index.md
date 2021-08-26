@@ -583,6 +583,91 @@ labels:
   severity: critical
 {{< /code >}}
  
+### alertmanager_alerts
+
+##### CortexAlertmanagerSyncConfigsFailing
+
+{{< code lang="yaml" >}}
+alert: CortexAlertmanagerSyncConfigsFailing
+annotations:
+  message: |
+    Cortex Alertmanager {{ $labels.job }}/{{ $labels.instance }} is failing to read tenant configurations from storage.
+expr: |
+  rate(cortex_alertmanager_sync_configs_failed_total[5m]) > 0
+for: 30m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexAlertmanagerRingCheckFailing
+
+{{< code lang="yaml" >}}
+alert: CortexAlertmanagerRingCheckFailing
+annotations:
+  message: |
+    Cortex Alertmanager {{ $labels.job }}/{{ $labels.instance }} is unable to check tenants ownership via the ring.
+expr: |
+  rate(cortex_alertmanager_ring_check_errors_total[2m]) > 0
+for: 10m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexAlertmanagerPartialStateMergeFailing
+
+{{< code lang="yaml" >}}
+alert: CortexAlertmanagerPartialStateMergeFailing
+annotations:
+  message: |
+    Cortex Alertmanager {{ $labels.job }}/{{ $labels.instance }} is failing to merge partial state changes received from a replica.
+expr: |
+  rate(cortex_alertmanager_partial_state_merges_failed_total[2m]) > 0
+for: 10m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexAlertmanagerReplicationFailing
+
+{{< code lang="yaml" >}}
+alert: CortexAlertmanagerReplicationFailing
+annotations:
+  message: |
+    Cortex Alertmanager {{ $labels.job }}/{{ $labels.instance }} is failing to replicating partial state to its replicas.
+expr: |
+  rate(cortex_alertmanager_state_replication_failed_total[2m]) > 0
+for: 10m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexAlertmanagerPersistStateFailing
+
+{{< code lang="yaml" >}}
+alert: CortexAlertmanagerPersistStateFailing
+annotations:
+  message: |
+    Cortex Alertmanager {{ $labels.job }}/{{ $labels.instance }} is unable to persist full state snaphots to remote storage.
+expr: |
+  rate(cortex_alertmanager_state_persist_failed_total[15m]) > 0
+for: 1h
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CortexAlertmanagerInitialSyncFailed
+
+{{< code lang="yaml" >}}
+alert: CortexAlertmanagerInitialSyncFailed
+annotations:
+  message: |
+    Cortex Alertmanager {{ $labels.job }}/{{ $labels.instance }} was unable to obtain some initial state when starting up.
+expr: |
+  increase(cortex_alertmanager_state_initial_sync_completed_total{outcome="failed"}[1m]) > 0
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ### cortex_blocks_alerts
 
 ##### CortexIngesterHasNotShippedBlocks
@@ -2212,7 +2297,7 @@ expr: |
   sum by (cluster, namespace, deployment) (
     label_replace(
       label_replace(
-        node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate,
+        node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate,
         "deployment", "$1", "pod", "(.*)-(?:([0-9]+)|([a-z0-9]+)-([a-z0-9]+))"
       ),
       # The question mark in "(.*?)" is used to make it non-greedy, otherwise it
