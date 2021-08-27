@@ -119,7 +119,7 @@
          "timeShift": null,
          "title": "Rollout progress",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -223,7 +223,7 @@
          "timeShift": null,
          "title": "Writes - 2xx",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -335,7 +335,7 @@
          "timeShift": null,
          "title": "Writes - 4xx",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -443,7 +443,7 @@
          "timeShift": null,
          "title": "Writes - 5xx",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -555,7 +555,7 @@
          "timeShift": null,
          "title": "Writes 99th Latency",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -659,7 +659,7 @@
          "timeShift": null,
          "title": "Reads - 2xx",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -771,7 +771,7 @@
          "timeShift": null,
          "title": "Reads - 4xx",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -879,7 +879,7 @@
          "timeShift": null,
          "title": "Reads - 5xx",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -991,7 +991,7 @@
          "timeShift": null,
          "title": "Reads 99th Latency",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -1119,7 +1119,7 @@
          "timeShift": null,
          "title": "Unhealthy pods",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -1274,7 +1274,7 @@
          "timeShift": null,
          "title": "Latency vs 24h ago",
          "tooltip": {
-            "shared": true,
+            "shared": false,
             "sort": 0,
             "value_type": "individual"
          },
@@ -1317,8 +1317,8 @@
       "list": [
          {
             "current": {
-               "text": "Prometheus",
-               "value": "Prometheus"
+               "text": "default",
+               "value": "default"
             },
             "hide": 0,
             "label": null,

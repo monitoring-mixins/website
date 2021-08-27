@@ -96,6 +96,7 @@
                      "dateFormat": "YYYY-MM-DD HH:mm:ss",
                      "decimals": 0,
                      "link": false,
+                     "linkTargetBlank": false,
                      "linkTooltip": "Drill down",
                      "linkUrl": "",
                      "pattern": "Value",
@@ -110,6 +111,7 @@
                      "dateFormat": "YYYY-MM-DD HH:mm:ss",
                      "decimals": 2,
                      "link": false,
+                     "linkTargetBlank": false,
                      "linkTooltip": "Drill down",
                      "linkUrl": "",
                      "pattern": "__name__",
@@ -124,6 +126,7 @@
                      "dateFormat": "YYYY-MM-DD HH:mm:ss",
                      "decimals": 2,
                      "link": false,
+                     "linkTargetBlank": false,
                      "linkTooltip": "Drill down",
                      "linkUrl": "",
                      "pattern": "cluster",
@@ -138,6 +141,7 @@
                      "dateFormat": "YYYY-MM-DD HH:mm:ss",
                      "decimals": 2,
                      "link": false,
+                     "linkTargetBlank": false,
                      "linkTooltip": "Drill down",
                      "linkUrl": "",
                      "pattern": "deployment",
@@ -152,6 +156,7 @@
                      "dateFormat": "YYYY-MM-DD HH:mm:ss",
                      "decimals": 2,
                      "link": false,
+                     "linkTargetBlank": false,
                      "linkTooltip": "Drill down",
                      "linkUrl": "",
                      "pattern": "namespace",
@@ -166,6 +171,7 @@
                      "dateFormat": "YYYY-MM-DD HH:mm:ss",
                      "decimals": 2,
                      "link": false,
+                     "linkTargetBlank": false,
                      "linkTooltip": "Drill down",
                      "linkUrl": "",
                      "pattern": "reason",
@@ -201,7 +207,7 @@
                "timeShift": null,
                "title": "Workload-based scaling",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -251,8 +257,8 @@
       "list": [
          {
             "current": {
-               "text": "Prometheus",
-               "value": "Prometheus"
+               "text": "default",
+               "value": "default"
             },
             "hide": 0,
             "label": null,
@@ -264,7 +270,7 @@
             "type": "datasource"
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
                "selected": true,
                "text": "All",
@@ -288,7 +294,7 @@
             "useTags": false
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
                "selected": true,
                "text": "All",

@@ -58,7 +58,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_query_frontend_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_query_frontend_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -67,7 +67,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_query_frontend_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_query_frontend_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -76,7 +76,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_query_frontend_queue_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_query_frontend_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_query_frontend_queue_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval])) * 1e3 / sum(rate(cortex_query_frontend_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -90,7 +90,7 @@
                "timeShift": null,
                "title": "Queue Duration",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -153,7 +153,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_query_frontend_retries_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_query_frontend_retries_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -162,7 +162,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_query_frontend_retries_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_query_frontend_retries_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -171,7 +171,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_query_frontend_retries_sum{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__interval])) * 1 / sum(rate(cortex_query_frontend_retries_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_query_frontend_retries_sum{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval])) * 1 / sum(rate(cortex_query_frontend_retries_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -185,7 +185,7 @@
                "timeShift": null,
                "title": "Retries",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -262,7 +262,7 @@
                "timeShift": null,
                "title": "Queue Length",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -337,7 +337,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -346,7 +346,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_query_scheduler_queue_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -355,7 +355,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_query_scheduler_queue_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__interval])) * 1e3 / sum(rate(cortex_query_scheduler_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_query_scheduler_queue_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__rate_interval])) * 1e3 / sum(rate(cortex_query_scheduler_queue_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/query-scheduler.*\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -369,7 +369,7 @@
                "timeShift": null,
                "title": "Queue Duration",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -446,7 +446,7 @@
                "timeShift": null,
                "title": "Queue Length",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -535,7 +535,7 @@
                "timeShift": null,
                "title": "Cache Hit %",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -612,7 +612,7 @@
                "timeShift": null,
                "title": "Cache misses",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -701,7 +701,7 @@
                "timeShift": null,
                "title": "Intervals per Query",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -778,7 +778,7 @@
                "timeShift": null,
                "title": "Sharded Queries %",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -855,7 +855,7 @@
                "timeShift": null,
                "title": "Sharding factor",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -944,7 +944,7 @@
                "timeShift": null,
                "title": "Stages",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1021,7 +1021,7 @@
                "timeShift": null,
                "title": "Chunk cache misses",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1098,7 +1098,7 @@
                "timeShift": null,
                "title": "Chunk cache corruptions",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1202,7 +1202,7 @@
                "timeShift": null,
                "title": "Series per Query",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1294,7 +1294,7 @@
                "timeShift": null,
                "title": "Chunks per Query",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1386,7 +1386,7 @@
                "timeShift": null,
                "title": "Samples per Query",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1461,7 +1461,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1470,7 +1470,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1479,7 +1479,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_querier_storegateway_instances_hit_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval])) * 1 / sum(rate(cortex_querier_storegateway_instances_hit_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_querier_storegateway_instances_hit_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval])) * 1 / sum(rate(cortex_querier_storegateway_instances_hit_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1493,7 +1493,7 @@
                "timeShift": null,
                "title": "Number of store-gateways hit per Query",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1556,7 +1556,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1565,7 +1565,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1574,7 +1574,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_querier_storegateway_refetches_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval])) * 1 / sum(rate(cortex_querier_storegateway_refetches_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_querier_storegateway_refetches_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval])) * 1 / sum(rate(cortex_querier_storegateway_refetches_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1588,7 +1588,7 @@
                "timeShift": null,
                "title": "Refetches of missing blocks per Query",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1665,7 +1665,7 @@
                "timeShift": null,
                "title": "Consistency checks failed",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1772,7 +1772,7 @@
                "timeShift": null,
                "title": "Bucket indexes loaded (per querier)",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1861,7 +1861,7 @@
                "timeShift": null,
                "title": "Bucket indexes load / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1924,7 +1924,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_index_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_index_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1933,7 +1933,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_index_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_index_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1942,7 +1942,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_bucket_index_load_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_bucket_index_load_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_bucket_index_load_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval])) * 1e3 / sum(rate(cortex_bucket_index_load_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1956,7 +1956,7 @@
                "timeShift": null,
                "title": "Bucket indexes load latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2045,7 +2045,7 @@
                "timeShift": null,
                "title": "Blocks queried / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2122,7 +2122,7 @@
                "timeShift": null,
                "title": "Data fetched / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2199,7 +2199,7 @@
                "timeShift": null,
                "title": "Data touched / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2274,7 +2274,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_store_series_get_all_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_store_series_get_all_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2283,7 +2283,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_store_series_get_all_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_store_series_get_all_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2292,7 +2292,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_bucket_store_series_get_all_duration_seconds_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_bucket_store_series_get_all_duration_seconds_count{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_bucket_store_series_get_all_duration_seconds_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) * 1e3 / sum(rate(cortex_bucket_store_series_get_all_duration_seconds_count{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2306,7 +2306,7 @@
                "timeShift": null,
                "title": "Series fetch duration (per request)",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2369,7 +2369,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_store_series_merge_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_store_series_merge_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2378,7 +2378,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_store_series_merge_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_store_series_merge_duration_seconds_bucket{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2387,7 +2387,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_bucket_store_series_merge_duration_seconds_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_bucket_store_series_merge_duration_seconds_count{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_bucket_store_series_merge_duration_seconds_sum{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) * 1e3 / sum(rate(cortex_bucket_store_series_merge_duration_seconds_count{component=\"store-gateway\",cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2401,7 +2401,7 @@
                "timeShift": null,
                "title": "Series merge duration (per request)",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2478,7 +2478,7 @@
                "timeShift": null,
                "title": "Series returned (per request)",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2567,7 +2567,7 @@
                "timeShift": null,
                "title": "Blocks currently loaded",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2656,7 +2656,7 @@
                "timeShift": null,
                "title": "Blocks loaded / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2745,7 +2745,7 @@
                "timeShift": null,
                "title": "Blocks dropped / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2834,7 +2834,7 @@
                "timeShift": null,
                "title": "Lazy loaded index-headers",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2897,7 +2897,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2906,7 +2906,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2915,7 +2915,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval])) * 1e3 / sum(rate(cortex_bucket_store_indexheader_lazy_load_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2929,7 +2929,7 @@
                "timeShift": null,
                "title": "Index-header lazy load duration",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2978,8 +2978,8 @@
       "list": [
          {
             "current": {
-               "text": "Prometheus",
-               "value": "Prometheus"
+               "text": "default",
+               "value": "default"
             },
             "hide": 0,
             "label": null,
@@ -2991,7 +2991,7 @@
             "type": "datasource"
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
                "selected": true,
                "text": "All",
@@ -3015,7 +3015,7 @@
             "useTags": false
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
                "selected": true,
                "text": "All",

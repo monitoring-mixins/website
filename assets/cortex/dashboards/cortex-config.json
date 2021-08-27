@@ -72,7 +72,7 @@
                "timeShift": null,
                "title": "Startup config file hashes",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -161,7 +161,7 @@
                "timeShift": null,
                "title": "Runtime config file hashes",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -210,8 +210,8 @@
       "list": [
          {
             "current": {
-               "text": "Prometheus",
-               "value": "Prometheus"
+               "text": "default",
+               "value": "default"
             },
             "hide": 0,
             "label": null,
@@ -223,7 +223,7 @@
             "type": "datasource"
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
                "selected": true,
                "text": "All",
@@ -247,7 +247,7 @@
             "useTags": false
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
                "selected": true,
                "text": "All",

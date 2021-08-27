@@ -94,7 +94,7 @@
                "timeShift": null,
                "title": "Samples / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -170,7 +170,7 @@
                "timeShift": null,
                "title": "Active Series",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -246,7 +246,7 @@
                "timeShift": null,
                "title": "Tenants",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -322,7 +322,7 @@
                "timeShift": null,
                "title": "Requests / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -405,7 +405,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(gateway|cortex-gw|cortex-gw-internal)\", route=~\"api_(v1|prom)_push\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(gateway|cortex-gw|cortex-gw-internal)\", route=~\"api_(v1|prom)_push\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -419,7 +419,7 @@
                "timeShift": null,
                "title": "Requests / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -511,7 +511,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -663,7 +663,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(distributor|cortex$)\", route=~\"/distributor.Distributor/Push|/httpgrpc.*|api_(v1|prom)_push\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(distributor|cortex$)\", route=~\"/distributor.Distributor/Push|/httpgrpc.*|api_(v1|prom)_push\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -677,7 +677,7 @@
                "timeShift": null,
                "title": "Requests / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -769,7 +769,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -921,7 +921,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_kv_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(distributor|cortex$)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(cortex_kv_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(distributor|cortex$)\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -935,7 +935,7 @@
                "timeShift": null,
                "title": "Requests / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1027,7 +1027,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1110,7 +1110,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",route=\"/cortex.Ingester/Push\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",route=\"/cortex.Ingester/Push\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1124,7 +1124,7 @@
                "timeShift": null,
                "title": "Requests / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1216,7 +1216,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1368,7 +1368,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_kv_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(cortex_kv_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1382,7 +1382,7 @@
                "timeShift": null,
                "title": "Requests / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1474,7 +1474,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1576,7 +1576,7 @@
                "timeShift": null,
                "title": "Uploaded blocks / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1640,7 +1640,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1649,7 +1649,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1658,7 +1658,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__rate_interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\",component=\"ingester\",operation=\"upload\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1672,7 +1672,7 @@
                "timeShift": null,
                "title": "Upload latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1774,7 +1774,7 @@
                "timeShift": null,
                "title": "Compactions / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1838,7 +1838,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1847,7 +1847,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1856,7 +1856,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval])) * 1e3 / sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval])) * 1e3 / sum(rate(cortex_ingester_tsdb_compaction_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1870,7 +1870,7 @@
                "timeShift": null,
                "title": "Compactions latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1972,7 +1972,7 @@
                "timeShift": null,
                "title": "WAL truncations / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2062,7 +2062,7 @@
                "timeShift": null,
                "title": "Checkpoints created / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2140,7 +2140,7 @@
                "timeShift": null,
                "title": "WAL truncations latency (includes checkpointing)",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2229,7 +2229,7 @@
                "timeShift": null,
                "title": "Corruptions / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2278,8 +2278,8 @@
       "list": [
          {
             "current": {
-               "text": "Prometheus",
-               "value": "Prometheus"
+               "text": "default",
+               "value": "default"
             },
             "hide": 0,
             "label": null,
@@ -2291,7 +2291,7 @@
             "type": "datasource"
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
                "selected": true,
                "text": "All",
@@ -2315,7 +2315,7 @@
             "useTags": false
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
                "selected": true,
                "text": "All",

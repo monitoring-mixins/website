@@ -71,7 +71,7 @@
                "timeShift": null,
                "title": "Active Configurations",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -147,7 +147,7 @@
                "timeShift": null,
                "title": "Total Rules",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -223,7 +223,7 @@
                "timeShift": null,
                "title": "Read from Ingesters - QPS",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -299,7 +299,7 @@
                "timeShift": null,
                "title": "Write to Ingesters - QPS",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -397,7 +397,7 @@
                "timeShift": null,
                "title": "EPS",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -474,7 +474,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -557,7 +557,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(gateway|cortex-gw|cortex-gw-internal)\", route=~\"api_prom_rules.*|api_prom_api_v1_(rules|alerts)\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(cortex_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(gateway|cortex-gw|cortex-gw-internal)\", route=~\"api_prom_rules.*|api_prom_api_v1_(rules|alerts)\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -571,7 +571,7 @@
                "timeShift": null,
                "title": "QPS",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -663,7 +663,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -740,7 +740,7 @@
                "timeShift": null,
                "title": "Per route p99 Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -823,7 +823,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -837,7 +837,7 @@
                "timeShift": null,
                "title": "QPS",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -900,7 +900,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -909,7 +909,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -918,7 +918,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_client_request_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__interval])) * 1e3 / sum(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_client_request_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__rate_interval])) * 1e3 / sum(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/Push\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -932,7 +932,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1015,7 +1015,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (label_replace(label_replace(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__interval]), \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"), \"status\", \"${1}\",   \"status_code\", \"([a-z]+)\"))",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1029,7 +1029,7 @@
                "timeShift": null,
                "title": "QPS",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1092,7 +1092,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1101,7 +1101,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_ingester_client_request_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1110,7 +1110,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_ingester_client_request_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__interval])) * 1e3 / sum(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_ingester_client_request_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__rate_interval])) * 1e3 / sum(rate(cortex_ingester_client_request_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/ruler\", operation=\"/cortex.Ingester/QueryStream\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1124,7 +1124,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1199,7 +1199,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1208,7 +1208,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_instances_hit_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1217,7 +1217,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_querier_storegateway_instances_hit_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) * 1 / sum(rate(cortex_querier_storegateway_instances_hit_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_querier_storegateway_instances_hit_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__rate_interval])) * 1 / sum(rate(cortex_querier_storegateway_instances_hit_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1231,7 +1231,7 @@
                "timeShift": null,
                "title": "Number of store-gateways hit per Query",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1294,7 +1294,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1303,7 +1303,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_querier_storegateway_refetches_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1312,7 +1312,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_querier_storegateway_refetches_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval])) * 1 / sum(rate(cortex_querier_storegateway_refetches_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__interval]))",
+                     "expr": "sum(rate(cortex_querier_storegateway_refetches_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__rate_interval])) * 1 / sum(rate(cortex_querier_storegateway_refetches_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(ruler|cortex$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1326,7 +1326,7 @@
                "timeShift": null,
                "title": "Refetches of missing blocks per Query",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1403,7 +1403,7 @@
                "timeShift": null,
                "title": "Consistency checks failed",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1492,7 +1492,7 @@
                "timeShift": null,
                "title": "Delivery Errors",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1569,7 +1569,7 @@
                "timeShift": null,
                "title": "Queue Length",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1646,7 +1646,7 @@
                "timeShift": null,
                "title": "Dropped",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1735,7 +1735,7 @@
                "timeShift": null,
                "title": "Missed Iterations",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1812,7 +1812,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1889,7 +1889,7 @@
                "timeShift": null,
                "title": "Failures",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -1978,7 +1978,7 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2067,7 +2067,7 @@
                "timeShift": null,
                "title": "Operations / sec",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2144,7 +2144,7 @@
                "timeShift": null,
                "title": "Error rate",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2207,7 +2207,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"attributes\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"attributes\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2216,7 +2216,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"attributes\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"attributes\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2225,7 +2225,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"attributes\"}[$__interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"attributes\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"attributes\"}[$__rate_interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"attributes\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2239,7 +2239,7 @@
                "timeShift": null,
                "title": "Latency of Op: Attributes",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2302,7 +2302,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"exists\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"exists\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2311,7 +2311,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"exists\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"exists\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2320,7 +2320,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"exists\"}[$__interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"exists\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"exists\"}[$__rate_interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"exists\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2334,7 +2334,7 @@
                "timeShift": null,
                "title": "Latency of Op: Exists",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2409,7 +2409,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2418,7 +2418,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2427,7 +2427,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get\"}[$__interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get\"}[$__rate_interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2441,7 +2441,7 @@
                "timeShift": null,
                "title": "Latency of Op: Get",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2504,7 +2504,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get_range\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get_range\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2513,7 +2513,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get_range\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get_range\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2522,7 +2522,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get_range\"}[$__interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get_range\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get_range\"}[$__rate_interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"get_range\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2536,7 +2536,7 @@
                "timeShift": null,
                "title": "Latency of Op: GetRange",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2599,7 +2599,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"upload\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"upload\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2608,7 +2608,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"upload\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"upload\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2617,7 +2617,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"upload\"}[$__interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"upload\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"upload\"}[$__rate_interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"upload\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2631,7 +2631,7 @@
                "timeShift": null,
                "title": "Latency of Op: Upload",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2694,7 +2694,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"delete\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"delete\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2703,7 +2703,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"delete\"}[$__interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(thanos_objstore_bucket_operation_duration_seconds_bucket{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"delete\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2712,7 +2712,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"delete\"}[$__interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"delete\"}[$__interval]))",
+                     "expr": "sum(rate(thanos_objstore_bucket_operation_duration_seconds_sum{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"delete\"}[$__rate_interval])) * 1e3 / sum(rate(thanos_objstore_bucket_operation_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\",component=\"ruler-storage\",operation=\"delete\"}[$__rate_interval]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2726,7 +2726,7 @@
                "timeShift": null,
                "title": "Latency of Op: Delete",
                "tooltip": {
-                  "shared": true,
+                  "shared": false,
                   "sort": 0,
                   "value_type": "individual"
                },
@@ -2775,8 +2775,8 @@
       "list": [
          {
             "current": {
-               "text": "Prometheus",
-               "value": "Prometheus"
+               "text": "default",
+               "value": "default"
             },
             "hide": 0,
             "label": null,
@@ -2788,7 +2788,7 @@
             "type": "datasource"
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
                "selected": true,
                "text": "All",
@@ -2812,7 +2812,7 @@
             "useTags": false
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
                "selected": true,
                "text": "All",
