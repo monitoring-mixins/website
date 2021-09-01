@@ -539,7 +539,7 @@ annotations:
 expr: |
   memberlist_client_cluster_members_count
     != on (cluster, namespace) group_left
-  sum by (cluster, namespace) (up{job=~".+/(admin-api|compactor|store-gateway|distributor|ingester.*|querier.*|cortex|ruler)"})
+  sum by (cluster, namespace) (up{job=~".+/(compactor|distributor|ingester.*|querier.*|ruler|store-gateway|cortex)"})
 for: 5m
 labels:
   severity: warning
