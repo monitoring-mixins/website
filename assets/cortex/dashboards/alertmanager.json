@@ -2081,7 +2081,7 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "fill": 1,
+               "fill": 10,
                "id": 24,
                "legend": {
                   "avg": false,
@@ -2093,7 +2093,7 @@
                   "values": false
                },
                "lines": true,
-               "linewidth": 1,
+               "linewidth": 0,
                "links": [ ],
                "nullPointMode": "null as zero",
                "percentage": false,
@@ -2103,11 +2103,11 @@
                "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 4,
-               "stack": false,
+               "stack": true,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(outcome) (rate(cortex_alertmanager_state_initial_sync_completed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))",
+                     "expr": "sum by(outcome) (cortex_alertmanager_state_initial_sync_completed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2119,7 +2119,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Initial syncs/sec",
+               "title": "Tenant initial sync outcomes",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -2186,7 +2186,7 @@
                   {
                      "expr": "histogram_quantile(0.99, sum(rate(cortex_alertmanager_state_initial_sync_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "15s",
+                     "interval": "1m",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "refId": "A",
@@ -2195,7 +2195,7 @@
                   {
                      "expr": "histogram_quantile(0.50, sum(rate(cortex_alertmanager_state_initial_sync_duration_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
-                     "interval": "15s",
+                     "interval": "1m",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "refId": "B",
@@ -2204,7 +2204,7 @@
                   {
                      "expr": "sum(rate(cortex_alertmanager_state_initial_sync_duration_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval])) * 1e3 / sum(rate(cortex_alertmanager_state_initial_sync_duration_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "15s",
+                     "interval": "1m",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
                      "refId": "C",
@@ -2281,7 +2281,7 @@
                   {
                      "expr": "sum(rate(cortex_alertmanager_state_fetch_replica_state_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n-\nsum(rate(cortex_alertmanager_state_fetch_replica_state_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n",
                      "format": "time_series",
-                     "interval": "15s",
+                     "interval": "1m",
                      "intervalFactor": 2,
                      "legendFormat": "success",
                      "legendLink": null,
@@ -2290,7 +2290,7 @@
                   {
                      "expr": "sum(rate(cortex_alertmanager_state_fetch_replica_state_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "15s",
+                     "interval": "1m",
                      "intervalFactor": 2,
                      "legendFormat": "failed",
                      "legendLink": null,
