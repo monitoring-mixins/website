@@ -2,10 +2,8 @@ groups:
 - name: node-exporter.rules
   rules:
   - expr: |
-      count without (cpu) (
-        count without (mode) (
-          node_cpu_seconds_total{job="node"}
-        )
+      count without (cpu, mode) (
+        node_cpu_seconds_total{job="node",mode="idle"}
       )
     record: instance:node_num_cpu:sum
   - expr: |

@@ -352,10 +352,8 @@ Complete list of pregenerated recording rules is available [here](https://github
 
 {{< code lang="yaml" >}}
 expr: |
-  count without (cpu) (
-    count without (mode) (
-      node_cpu_seconds_total{job="node"}
-    )
+  count without (cpu, mode) (
+    node_cpu_seconds_total{job="node",mode="idle"}
   )
 record: instance:node_num_cpu:sum
 {{< /code >}}
