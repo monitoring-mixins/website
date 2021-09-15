@@ -495,174 +495,9 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
+               "description": "### Intervals per Query\nThe average number of splitted queries (partitioned by time) executed a single input query.\n\n",
                "fill": 1,
                "id": 6,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(rate(cortex_cache_hits{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) / sum(rate(cortex_cache_fetched_keys{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m]))",
-                     "format": "time_series",
-                     "interval": "15s",
-                     "intervalFactor": 2,
-                     "legendFormat": "Hit Rate",
-                     "legendLink": null,
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Cache Hit %",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "percentunit",
-                     "label": null,
-                     "logBase": 1,
-                     "max": 1,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "id": 7,
-               "legend": {
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "show": true,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null as zero",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(rate(cortex_cache_fetched_keys{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) - sum(rate(cortex_cache_hits{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m]))",
-                     "format": "time_series",
-                     "interval": "15s",
-                     "intervalFactor": 2,
-                     "legendFormat": "Miss Rate",
-                     "legendLink": null,
-                     "step": 10
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Cache misses",
-               "tooltip": {
-                  "shared": false,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Query Frontend - Results Cache",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "fill": 1,
-               "id": 8,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -691,7 +526,7 @@
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
-                     "legendFormat": "partition rate",
+                     "legendFormat": "splitting rate",
                      "legendLink": null,
                      "step": 10
                   }
@@ -739,7 +574,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 9,
+               "id": 7,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -764,11 +599,11 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_frontend_mapped_asts_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) / sum(rate(cortex_frontend_split_queries_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) * 100",
+                     "expr": "sum(rate(cortex_cache_hits{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) / sum(rate(cortex_cache_fetched_keys{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
-                     "legendFormat": "shard rate",
+                     "legendFormat": "Hit Rate",
                      "legendLink": null,
                      "step": 10
                   }
@@ -776,7 +611,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Sharded Queries %",
+               "title": "Results Cache Hit %",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -792,10 +627,10 @@
                },
                "yaxes": [
                   {
-                     "format": "short",
+                     "format": "percentunit",
                      "label": null,
                      "logBase": 1,
-                     "max": null,
+                     "max": 1,
                      "min": 0,
                      "show": true
                   },
@@ -816,7 +651,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 10,
+               "id": 8,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -841,11 +676,11 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_frontend_sharded_queries_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) / sum(rate(cortex_frontend_mapped_asts_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m]))",
+                     "expr": "sum(rate(cortex_cache_fetched_keys{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) - sum(rate(cortex_cache_hits{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m]))",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
-                     "legendFormat": "Average",
+                     "legendFormat": "Miss Rate",
                      "legendLink": null,
                      "step": 10
                   }
@@ -853,7 +688,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Sharding factor",
+               "title": "Results Cache misses",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -891,7 +726,193 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Query Frontend - Sharding/Splitting",
+         "title": "Query Frontend - Query Splitting and Results Cache",
+         "titleSize": "h6"
+      },
+      {
+         "collapse": false,
+         "height": "250px",
+         "panels": [
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "description": "### Sharded Queries Ratio\nThe % of queries that have been successfully rewritten and executed in a shardable way.\nThis panel takes in account only type of queries which are supported by query sharding (eg. range queries).\n\n",
+               "fill": 1,
+               "id": 9,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 6,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(cortex_frontend_query_sharding_rewrites_succeeded_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval])) /\nsum(rate(cortex_frontend_query_sharding_rewrites_attempted_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval]))\n",
+                     "format": "time_series",
+                     "interval": "15s",
+                     "intervalFactor": 2,
+                     "legendFormat": "sharded queries ratio",
+                     "legendLink": null,
+                     "step": 10
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Sharded Queries Ratio",
+               "tooltip": {
+                  "shared": false,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "percentunit",
+                     "label": null,
+                     "logBase": 1,
+                     "max": 1,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "description": "### Number of Sharded Queries per Query\nHow many sharded queries have been executed for a single input query. It tracks only queries which have\nbeen successfully rewritten in a shardable way.\n\n",
+               "fill": 1,
+               "id": 10,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 6,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "histogram_quantile(0.99, sum(rate(cortex_frontend_sharded_queries_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval])) by (le)) * 1",
+                     "format": "time_series",
+                     "interval": "15s",
+                     "intervalFactor": 2,
+                     "legendFormat": "99th Percentile",
+                     "refId": "A",
+                     "step": 10
+                  },
+                  {
+                     "expr": "histogram_quantile(0.50, sum(rate(cortex_frontend_sharded_queries_per_query_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval])) by (le)) * 1",
+                     "format": "time_series",
+                     "interval": "15s",
+                     "intervalFactor": 2,
+                     "legendFormat": "50th Percentile",
+                     "refId": "B",
+                     "step": 10
+                  },
+                  {
+                     "expr": "sum(rate(cortex_frontend_sharded_queries_per_query_sum{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval])) * 1 / sum(rate(cortex_frontend_sharded_queries_per_query_count{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[$__rate_interval]))",
+                     "format": "time_series",
+                     "interval": "15s",
+                     "intervalFactor": 2,
+                     "legendFormat": "Average",
+                     "refId": "C",
+                     "step": 10
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Number of Sharded Queries per Query",
+               "tooltip": {
+                  "shared": false,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            }
+         ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Query Frontend - Query sharding",
          "titleSize": "h6"
       },
       {
@@ -2815,7 +2836,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 6,
+               "span": 4,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -2892,7 +2913,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 6,
+               "span": 4,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -2947,6 +2968,83 @@
                      "label": null,
                      "logBase": 1,
                      "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "id": 34,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 4,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum(rate(cortex_bucket_store_series_hash_cache_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))\n/\nsum(rate(cortex_bucket_store_series_hash_cache_requests_total{cluster=~\"$cluster\", job=~\"($namespace)/(store-gateway|cortex$)\"}[$__rate_interval]))\n",
+                     "format": "time_series",
+                     "interval": "15s",
+                     "intervalFactor": 2,
+                     "legendFormat": "hit ratio",
+                     "legendLink": null,
+                     "step": 10
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Series hash cache hit ratio",
+               "tooltip": {
+                  "shared": false,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "percentunit",
+                     "label": null,
+                     "logBase": 1,
+                     "max": 1,
                      "min": 0,
                      "show": true
                   },

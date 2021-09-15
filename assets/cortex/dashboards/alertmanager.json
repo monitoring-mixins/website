@@ -2081,7 +2081,7 @@
                "dashLength": 10,
                "dashes": false,
                "datasource": "$datasource",
-               "fill": 10,
+               "fill": 1,
                "id": 24,
                "legend": {
                   "avg": false,
@@ -2093,7 +2093,7 @@
                   "values": false
                },
                "lines": true,
-               "linewidth": 0,
+               "linewidth": 1,
                "links": [ ],
                "nullPointMode": "null as zero",
                "percentage": false,
@@ -2103,13 +2103,13 @@
                "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 4,
-               "stack": true,
+               "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(outcome) (cortex_alertmanager_state_initial_sync_completed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
+                     "expr": "sum by(outcome) (rate(cortex_alertmanager_state_initial_sync_completed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))",
                      "format": "time_series",
-                     "interval": "15s",
+                     "interval": "1m",
                      "intervalFactor": 2,
                      "legendFormat": "{{outcome}}",
                      "legendLink": null,
@@ -2119,7 +2119,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Tenant initial sync outcomes",
+               "title": "Initial syncs /sec",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
