@@ -538,6 +538,8 @@ expr: |
   ) < 0.03
   and
   kubelet_volume_stats_used_bytes{job="kubelet"} > 0
+  unless on(namespace, persistentvolumeclaim)
+  kube_persistentvolumeclaim_access_mode{ access_mode="ReadOnlyMany"} == 1
 for: 1m
 labels:
   severity: critical
@@ -564,6 +566,8 @@ expr: |
   kubelet_volume_stats_used_bytes{job="kubelet"} > 0
   and
   predict_linear(kubelet_volume_stats_available_bytes{job="kubelet"}[6h], 4 * 24 * 3600) < 0
+  unless on(namespace, persistentvolumeclaim)
+  kube_persistentvolumeclaim_access_mode{ access_mode="ReadOnlyMany"} == 1
 for: 1h
 labels:
   severity: warning
