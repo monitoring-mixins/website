@@ -83,7 +83,7 @@ annotations:
   severity_level: error
   storage_type: ceph
 expr: |
-  count(ceph_mon_quorum_status{job="rook-ceph-mgr"} == 1) <= ((count(ceph_mon_metadata{job="rook-ceph-mgr"}) % 2) + 1)
+  count(ceph_mon_quorum_status{job="rook-ceph-mgr"} == 1) <= (floor(count(ceph_mon_metadata{job="rook-ceph-mgr"}) / 2) + 1)
 for: 15m
 labels:
   severity: critical
@@ -138,7 +138,7 @@ annotations:
   severity_level: error
   storage_type: ceph
 expr: |
-  (ceph_osd_metadata * on (ceph_daemon) group_right(device_class) (ceph_osd_stat_bytes_used / ceph_osd_stat_bytes)) >= 0.80
+  (ceph_osd_metadata * on (ceph_daemon) group_right(device_class,hostname) (ceph_osd_stat_bytes_used / ceph_osd_stat_bytes)) >= 0.80
 for: 40s
 labels:
   severity: critical
@@ -173,7 +173,7 @@ annotations:
   severity_level: warning
   storage_type: ceph
 expr: |
-  (ceph_osd_metadata * on (ceph_daemon) group_right(device_class) (ceph_osd_stat_bytes_used / ceph_osd_stat_bytes)) >= 0.75
+  (ceph_osd_metadata * on (ceph_daemon) group_right(device_class,hostname) (ceph_osd_stat_bytes_used / ceph_osd_stat_bytes)) >= 0.75
 for: 40s
 labels:
   severity: warning
