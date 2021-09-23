@@ -2446,6 +2446,88 @@ labels:
 record: cluster_namespace_deployment_reason:required_replicas:count
 {{< /code >}}
  
+### cortex_alertmanager_rules
+
+##### cluster_job_pod:cortex_alertmanager_alerts:sum
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, job, pod) (cortex_alertmanager_alerts)
+record: cluster_job_pod:cortex_alertmanager_alerts:sum
+{{< /code >}}
+ 
+##### cluster_job_pod:cortex_alertmanager_silences:sum
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, job, pod) (cortex_alertmanager_silences)
+record: cluster_job_pod:cortex_alertmanager_silences:sum
+{{< /code >}}
+ 
+##### cluster_job:cortex_alertmanager_alerts_received_total:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, job) (rate(cortex_alertmanager_alerts_received_total[5m]))
+record: cluster_job:cortex_alertmanager_alerts_received_total:rate5m
+{{< /code >}}
+ 
+##### cluster_job:cortex_alertmanager_alerts_invalid_total:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, job) (rate(cortex_alertmanager_alerts_invalid_total[5m]))
+record: cluster_job:cortex_alertmanager_alerts_invalid_total:rate5m
+{{< /code >}}
+ 
+##### cluster_job_integration:cortex_alertmanager_notifications_total:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, job, integration) (rate(cortex_alertmanager_notifications_total[5m]))
+record: cluster_job_integration:cortex_alertmanager_notifications_total:rate5m
+{{< /code >}}
+ 
+##### cluster_job_integration:cortex_alertmanager_notifications_failed_total:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, job, integration) (rate(cortex_alertmanager_notifications_failed_total[5m]))
+record: cluster_job_integration:cortex_alertmanager_notifications_failed_total:rate5m
+{{< /code >}}
+ 
+##### cluster_job:cortex_alertmanager_state_replication_total:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, job) (rate(cortex_alertmanager_state_replication_total[5m]))
+record: cluster_job:cortex_alertmanager_state_replication_total:rate5m
+{{< /code >}}
+ 
+##### cluster_job:cortex_alertmanager_state_replication_failed_total:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, job) (rate(cortex_alertmanager_state_replication_failed_total[5m]))
+record: cluster_job:cortex_alertmanager_state_replication_failed_total:rate5m
+{{< /code >}}
+ 
+##### cluster_job:cortex_alertmanager_partial_state_merges_total:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, job) (rate(cortex_alertmanager_partial_state_merges_total[5m]))
+record: cluster_job:cortex_alertmanager_partial_state_merges_total:rate5m
+{{< /code >}}
+ 
+##### cluster_job:cortex_alertmanager_partial_state_merges_failed_total:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, job) (rate(cortex_alertmanager_partial_state_merges_failed_total[5m]))
+record: cluster_job:cortex_alertmanager_partial_state_merges_failed_total:rate5m
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 

@@ -59,7 +59,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(cortex_alertmanager_alerts{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
+                     "expr": "sum(cluster_job_pod:cortex_alertmanager_alerts:sum{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,
@@ -135,7 +135,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(cortex_alertmanager_silences{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
+                     "expr": "sum(cluster_job_pod:cortex_alertmanager_silences:sum{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,
@@ -298,7 +298,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_alertmanager_alerts_received_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n-\nsum(rate(cortex_alertmanager_alerts_invalid_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n",
+                     "expr": "sum(cluster_job:cortex_alertmanager_alerts_received_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})\n-\nsum(cluster_job:cortex_alertmanager_alerts_invalid_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -307,7 +307,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_alertmanager_alerts_invalid_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))",
+                     "expr": "sum(cluster_job:cortex_alertmanager_alerts_invalid_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -396,7 +396,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_alertmanager_notifications_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n-\nsum(rate(cortex_alertmanager_notifications_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n",
+                     "expr": "sum(cluster_job_integration:cortex_alertmanager_notifications_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})\n-\nsum(cluster_job_integration:cortex_alertmanager_notifications_failed_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -405,7 +405,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_alertmanager_notifications_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))",
+                     "expr": "sum(cluster_job_integration:cortex_alertmanager_notifications_failed_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -482,7 +482,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "(\nsum(rate(cortex_alertmanager_notifications_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval])) by(integration)\n-\nsum(rate(cortex_alertmanager_notifications_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval])) by(integration)\n) > 0\nor on () vector(0)\n",
+                     "expr": "(\nsum(cluster_job_integration:cortex_alertmanager_notifications_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}) by(integration)\n-\nsum(cluster_job_integration:cortex_alertmanager_notifications_failed_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}) by(integration)\n) > 0\nor on () vector(0)\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -491,7 +491,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_alertmanager_notifications_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval])) by(integration)",
+                     "expr": "sum(cluster_job_integration:cortex_alertmanager_notifications_failed_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}) by(integration)",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1689,7 +1689,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod) (cortex_alertmanager_alerts{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
+                     "expr": "sum by(pod) (cluster_job_pod:cortex_alertmanager_alerts:sum{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1766,7 +1766,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod) (cortex_alertmanager_silences{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
+                     "expr": "sum by(pod) (cluster_job_pod:cortex_alertmanager_silences:sum{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2377,7 +2377,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_alertmanager_state_replication_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n-\nsum(rate(cortex_alertmanager_state_replication_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n",
+                     "expr": "sum(cluster_job:cortex_alertmanager_state_replication_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})\n-\nsum(cluster_job:cortex_alertmanager_state_replication_failed_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2386,7 +2386,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_alertmanager_state_replication_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))",
+                     "expr": "sum(cluster_job:cortex_alertmanager_state_replication_failed_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2463,7 +2463,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_alertmanager_partial_state_merges_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n-\nsum(rate(cortex_alertmanager_partial_state_merges_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))\n",
+                     "expr": "sum(cluster_job:cortex_alertmanager_partial_state_merges_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})\n-\nsum(cluster_job:cortex_alertmanager_partial_state_merges_failed_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -2472,7 +2472,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(cortex_alertmanager_partial_state_merges_failed_total{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"}[$__rate_interval]))",
+                     "expr": "sum(cluster_job:cortex_alertmanager_partial_state_merges_failed_total:rate5m{cluster=~\"$cluster\", job=~\"($namespace)/alertmanager\"})",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
