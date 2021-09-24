@@ -43,7 +43,8 @@
                ],
                "fields": "",
                "values": false
-            }
+            },
+            "textMode": "auto"
          },
          "pluginVersion": "7",
          "targets": [
@@ -91,7 +92,8 @@
                ],
                "fields": "",
                "values": false
-            }
+            },
+            "textMode": "auto"
          },
          "pluginVersion": "7",
          "targets": [
@@ -139,7 +141,8 @@
                ],
                "fields": "",
                "values": false
-            }
+            },
+            "textMode": "auto"
          },
          "pluginVersion": "7",
          "targets": [
@@ -187,7 +190,8 @@
                ],
                "fields": "",
                "values": false
-            }
+            },
+            "textMode": "auto"
          },
          "pluginVersion": "7",
          "targets": [
@@ -235,7 +239,8 @@
                ],
                "fields": "",
                "values": false
-            }
+            },
+            "textMode": "auto"
          },
          "pluginVersion": "7",
          "targets": [
@@ -283,7 +288,8 @@
                ],
                "fields": "",
                "values": false
-            }
+            },
+            "textMode": "auto"
          },
          "pluginVersion": "7",
          "targets": [
