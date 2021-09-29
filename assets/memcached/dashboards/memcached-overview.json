@@ -209,7 +209,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum without (job, instance) (rate(memcached_commands_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(command, status) (rate(memcached_commands_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{command}} {{status}}",
@@ -285,7 +285,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum without (job) (rate(memcached_items_evicted_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(instance) (rate(memcached_items_evicted_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
@@ -361,7 +361,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum without (job) (rate(memcached_items_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(instance) (rate(memcached_items_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
@@ -449,7 +449,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum without (job) (memcached_current_bytes{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
+                     "expr": "sum by(instance) (memcached_current_bytes{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
@@ -525,7 +525,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum without (job) (memcached_current_items{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
+                     "expr": "sum by(instance) (memcached_current_items{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
@@ -613,7 +613,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum without (job) (rate(memcached_connections_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(instance) (rate(memcached_connections_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} - Connection Rate",
@@ -621,7 +621,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum without (job) (memcached_current_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
+                     "expr": "sum by(instance) (memcached_current_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} - Current Connrections",
@@ -629,7 +629,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum without (job) (memcached_max_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
+                     "expr": "sum by(instance) (memcached_max_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} - Max Connections",
@@ -705,7 +705,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum without (job) (rate(memcached_read_bytes_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(instance) (rate(memcached_read_bytes_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
@@ -781,7 +781,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum without (job) (rate(memcached_written_bytes_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(instance) (rate(memcached_written_bytes_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
