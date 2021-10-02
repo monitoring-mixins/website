@@ -1161,8 +1161,35 @@
          "height": "250px",
          "panels": [
             {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
                "id": 14,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
                "span": 4,
+               "stack": false,
+               "steppedLine": false,
                "targets": [
                   {
                      "expr": "time() - (loki_boltdb_shipper_retention_sweeper_marker_file_processing_current_time{cluster=~\"$cluster\", namespace=~\"$namespace\"} > 0)",
@@ -1173,6 +1200,23 @@
                      "step": 10
                   }
                ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Sweeper Lag",
+               "tooltip": {
+                  "shared": false,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
                "yaxes": [
                   {
                      "format": "s",
