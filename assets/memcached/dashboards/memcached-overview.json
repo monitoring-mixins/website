@@ -45,7 +45,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(memcached_commands_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\", command=\"get\", status=\"hit\"}[1m])) / sum(rate(memcached_commands_total{cluster=~\"$cluster\", job=~\"$job\", command=\"get\"}[1m]))",
+                     "expr": "sum(rate(memcached_commands_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\", command=\"get\", status=\"hit\"}[$__rate_interval])) / sum(rate(memcached_commands_total{cluster=~\"$cluster\", job=~\"$job\", command=\"get\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Hit Rate",
@@ -209,7 +209,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(command, status) (rate(memcached_commands_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(command, status) (rate(memcached_commands_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{command}} {{status}}",
@@ -285,7 +285,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(instance) (rate(memcached_items_evicted_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(instance) (rate(memcached_items_evicted_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
@@ -361,7 +361,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(instance) (rate(memcached_items_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(instance) (rate(memcached_items_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
@@ -613,7 +613,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(instance) (rate(memcached_connections_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(instance) (rate(memcached_connections_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} - Connection Rate",
@@ -705,7 +705,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(instance) (rate(memcached_read_bytes_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(instance) (rate(memcached_read_bytes_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
@@ -781,7 +781,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(instance) (rate(memcached_written_bytes_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[1m]))",
+                     "expr": "sum by(instance) (rate(memcached_written_bytes_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",

@@ -1002,7 +1002,7 @@ labels:
 Complete list of pregenerated recording rules is available [here](https://github.com/monitoring-mixins/website/blob/master/assets/cortex/rules.yaml).
 {{< /panel >}}
 
-### cortex_api
+### cortex_api_1
 
 ##### cluster_job:cortex_request_duration_seconds:99quantile
 
@@ -1049,6 +1049,8 @@ expr: sum(rate(cortex_request_duration_seconds_count[1m])) by (cluster, job)
 record: cluster_job:cortex_request_duration_seconds_count:sum_rate
 {{< /code >}}
  
+### cortex_api_2
+
 ##### cluster_job_route:cortex_request_duration_seconds:99quantile
 
 {{< code lang="yaml" >}}
@@ -1095,6 +1097,8 @@ expr: sum(rate(cortex_request_duration_seconds_count[1m])) by (cluster, job, rou
 record: cluster_job_route:cortex_request_duration_seconds_count:sum_rate
 {{< /code >}}
  
+### cortex_api_3
+
 ##### cluster_namespace_job_route:cortex_request_duration_seconds:99quantile
 
 {{< code lang="yaml" >}}
