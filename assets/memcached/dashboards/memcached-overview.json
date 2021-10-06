@@ -608,31 +608,23 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(instance) (rate(memcached_connections_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[$__rate_interval]))",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} - Connection Rate",
-                     "legendLink": null,
-                     "step": 10
-                  },
-                  {
                      "expr": "sum by(instance) (memcached_current_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{instance}} - Current Connrections",
+                     "legendFormat": "{{instance}}",
                      "legendLink": null,
                      "step": 10
                   },
                   {
-                     "expr": "sum by(instance) (memcached_max_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
+                     "expr": "min(memcached_max_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{instance}} - Max Connections",
+                     "legendFormat": "Max Connections (min setting across all instances)",
                      "legendLink": null,
                      "step": 10
                   }
@@ -640,7 +632,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Connections",
+               "title": "Current Connections",
                "tooltip": {
                   "shared": false,
                   "sort": 0,
@@ -700,7 +692,83 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 3,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                  {
+                     "expr": "sum by(instance) (rate(memcached_connections_total{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}[$__rate_interval]))",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "{{instance}}",
+                     "legendLink": null,
+                     "step": 10
+                  }
+               ],
+               "thresholds": [ ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Connections / sec",
+               "tooltip": {
+                  "shared": false,
+                  "sort": 0,
+                  "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": [ ]
+               },
+               "yaxes": [
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": 0,
+                     "show": true
+                  },
+                  {
+                     "format": "short",
+                     "label": null,
+                     "logBase": 1,
+                     "max": null,
+                     "min": null,
+                     "show": false
+                  }
+               ]
+            },
+            {
+               "aliasColors": { },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "$datasource",
+               "fill": 1,
+               "id": 10,
+               "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "links": [ ],
+               "nullPointMode": "null as zero",
+               "percentage": false,
+               "pointradius": 5,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [ ],
+               "spaceLength": 10,
+               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -756,7 +824,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 10,
+               "id": 11,
                "legend": {
                   "avg": false,
                   "current": false,
@@ -776,7 +844,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 3,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -844,7 +912,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
-               "id": 11,
+               "id": 12,
                "legend": {
                   "avg": false,
                   "current": false,
