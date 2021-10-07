@@ -65,8 +65,8 @@
                "timeShift": null,
                "title": "Status",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -154,8 +154,8 @@
                "timeShift": null,
                "title": "Capacity Utilization",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -231,8 +231,8 @@
                "timeShift": null,
                "title": "Available Capacity",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -308,8 +308,8 @@
                "timeShift": null,
                "title": "IOPS",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -384,8 +384,8 @@
                "timeShift": null,
                "title": "Capacity Utilization",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -460,8 +460,8 @@
                "timeShift": null,
                "title": "IOPS",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -548,8 +548,8 @@
                "timeShift": null,
                "title": "LVM Thin Pool Metadata %",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -624,8 +624,8 @@
                "timeShift": null,
                "title": "LVM Thin Pool Data Usage  %",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -713,8 +713,8 @@
                "timeShift": null,
                "title": "Bricks-Total",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -796,8 +796,8 @@
                "timeShift": null,
                "title": "Bricks-Up",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -879,8 +879,8 @@
                "timeShift": null,
                "title": "Bricks-Down",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -956,8 +956,8 @@
                "timeShift": null,
                "title": "Capacity Utilization-Average",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1033,8 +1033,8 @@
                "timeShift": null,
                "title": "Capacity Utilization-Min",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1110,8 +1110,8 @@
                "timeShift": null,
                "title": "Capacity Utilization-Max",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1187,8 +1187,8 @@
                "timeShift": null,
                "title": "Brick Usage < 80%",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1264,8 +1264,8 @@
                "timeShift": null,
                "title": "Brick Usage > 80% < 90%",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1341,8 +1341,8 @@
                "timeShift": null,
                "title": "Brick Usage > 90%",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1418,8 +1418,8 @@
                "timeShift": null,
                "title": "IOPS - Avg",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1495,8 +1495,8 @@
                "timeShift": null,
                "title": "IOPS - Min",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1572,8 +1572,8 @@
                "timeShift": null,
                "title": "IOPS - Max",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1649,8 +1649,8 @@
                "timeShift": null,
                "title": "Heal Counts-Total Files",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1726,8 +1726,8 @@
                "timeShift": null,
                "title": "Heal Counts-Files in Split-Brain",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1873,8 +1873,8 @@
                "timeShift": null,
                "title": "Top file operation",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "transform": "table",
@@ -1950,8 +1950,8 @@
                "timeShift": null,
                "title": "File Operations For Locks Trends",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -2026,8 +2026,8 @@
                "timeShift": null,
                "title": "File Operations for Read/Write",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -2102,8 +2102,8 @@
                "timeShift": null,
                "title": "File Operations for Inode Operations",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -2178,8 +2178,8 @@
                "timeShift": null,
                "title": "File Operations for Entry Operations",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",

@@ -78,6 +78,18 @@
          "title": "Consul",
          "type": "link",
          "url": "/grafana/d/836793349c8ce200baa98f045123d19b/consul?var-datasource=$datasource&var-job=$namespace%2Fconsul"
+      },
+      {
+         "asDropdown": true,
+         "icon": "external link",
+         "includeVars": true,
+         "keepTime": true,
+         "tags": [
+            "loki"
+         ],
+         "targetBlank": false,
+         "title": "Loki Dashboards",
+         "type": "dashboards"
       }
    ],
    "panels": [
@@ -103,7 +115,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -199,7 +211,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -293,7 +305,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -389,7 +401,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -484,7 +496,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -580,7 +592,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -676,7 +688,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -782,7 +794,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -888,7 +900,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -986,7 +998,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -1094,7 +1106,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -1192,7 +1204,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -1300,7 +1312,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -1406,7 +1418,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -1504,7 +1516,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "description": "",
          "fieldConfig": {
             "defaults": {
@@ -1611,7 +1623,7 @@
          "bars": false,
          "dashLength": 10,
          "dashes": false,
-         "datasource": "$metrics",
+         "datasource": "$datasource",
          "fieldConfig": {
             "defaults": {
                "custom": { }
@@ -1720,7 +1732,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -1806,7 +1818,7 @@
             },
             {
                "columns": [ ],
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fontSize": "100%",
                "gridPos": {
                   "h": 8,
@@ -1917,7 +1929,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -2006,7 +2018,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -2217,7 +2229,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 0,
                "fillGradient": 0,
                "gridPos": {
@@ -2307,7 +2319,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -2396,7 +2408,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -2485,7 +2497,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -2590,7 +2602,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -2679,7 +2691,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -2890,7 +2902,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 0,
                "fillGradient": 0,
                "gridPos": {
@@ -2996,7 +3008,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -3087,7 +3099,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -3194,7 +3206,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -3302,7 +3314,7 @@
                   "mode": "spectrum"
                },
                "dataFormat": "tsbuckets",
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "gridPos": {
                   "h": 8,
                   "w": 12,
@@ -3359,7 +3371,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 7,
                "fillGradient": 0,
                "gridPos": {
@@ -3477,7 +3489,7 @@
                   "mode": "spectrum"
                },
                "dataFormat": "tsbuckets",
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "gridPos": {
                   "h": 9,
                   "w": 12,
@@ -3550,7 +3562,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -3639,7 +3651,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -3850,7 +3862,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 0,
                "fillGradient": 0,
                "gridPos": {
@@ -3956,7 +3968,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -4060,7 +4072,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -4168,7 +4180,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -4272,7 +4284,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -4380,7 +4392,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -4478,7 +4490,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -4581,7 +4593,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -4684,7 +4696,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -4782,7 +4794,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -4872,7 +4884,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -4962,7 +4974,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -5052,7 +5064,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -5158,7 +5170,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -5262,7 +5274,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -5811,7 +5823,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -5914,7 +5926,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -6021,7 +6033,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -6124,7 +6136,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -6231,7 +6243,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -6334,7 +6346,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -6441,7 +6453,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -6544,7 +6556,7 @@
                "bars": false,
                "dashLength": 10,
                "dashes": false,
-               "datasource": "$metrics",
+               "datasource": "$datasource",
                "fill": 1,
                "fillGradient": 0,
                "gridPos": {
@@ -6639,7 +6651,9 @@
    "refresh": "30s",
    "schemaVersion": 25,
    "style": "dark",
-   "tags": [ ],
+   "tags": [
+      "loki"
+   ],
    "templating": {
       "list": [
          {
@@ -6660,7 +6674,7 @@
             "includeAll": false,
             "label": null,
             "multi": false,
-            "name": "metrics",
+            "name": "datasource",
             "options": [ ],
             "query": "prometheus",
             "refresh": 1,
@@ -6671,7 +6685,7 @@
          {
             "allValue": null,
             "current": { },
-            "datasource": "$metrics",
+            "datasource": "$datasource",
             "hide": 0,
             "includeAll": false,
             "label": "cluster",
@@ -6691,7 +6705,7 @@
          {
             "allValue": null,
             "current": { },
-            "datasource": "$metrics",
+            "datasource": "$datasource",
             "hide": 0,
             "includeAll": false,
             "label": "namespace",

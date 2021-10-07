@@ -59,7 +59,7 @@
                "title": "CPU Usage",
                "tooltip": {
                   "shared": false,
-                  "sort": 0,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -293,7 +293,7 @@
                "title": "CPU Quota",
                "tooltip": {
                   "shared": false,
-                  "sort": 0,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "transform": "table",
@@ -382,7 +382,7 @@
                "title": "Memory Usage (w/o cache)",
                "tooltip": {
                   "shared": false,
-                  "sort": 0,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -688,7 +688,7 @@
                "title": "Memory Quota",
                "tooltip": {
                   "shared": false,
-                  "sort": 0,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "transform": "table",

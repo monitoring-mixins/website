@@ -65,8 +65,8 @@
                "timeShift": null,
                "title": "$instance",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -172,8 +172,8 @@
                "timeShift": null,
                "title": "$instance",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -279,8 +279,8 @@
                "timeShift": null,
                "title": "$instance",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -386,8 +386,8 @@
                "timeShift": null,
                "title": "$instance",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -474,8 +474,8 @@
                "timeShift": null,
                "title": "QPS",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -566,8 +566,8 @@
                "timeShift": null,
                "title": "Latency",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",

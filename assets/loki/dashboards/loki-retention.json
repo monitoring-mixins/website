@@ -365,8 +365,8 @@
                "timeShift": null,
                "title": "Last Compact and Mark Operation Success",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "stat",
@@ -441,8 +441,8 @@
                "timeShift": null,
                "title": "Compact and Mark Operations Duration",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -517,8 +517,8 @@
                "timeShift": null,
                "title": "Compact and Mark Operations Per Status",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -605,8 +605,8 @@
                "timeShift": null,
                "title": "Processed Tables Per Action",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -681,8 +681,8 @@
                "timeShift": null,
                "title": "Modified Tables",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -757,8 +757,8 @@
                "timeShift": null,
                "title": "Marks Creation Rate Per Table",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -845,8 +845,8 @@
                "timeShift": null,
                "title": "Marked Chunks (24h)",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -937,8 +937,8 @@
                "timeShift": null,
                "title": "Mark Table Latency",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1025,8 +1025,8 @@
                "timeShift": null,
                "title": "Delete Chunks (24h)",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1117,8 +1117,8 @@
                "timeShift": null,
                "title": "Delete Latency",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1205,8 +1205,8 @@
                "timeShift": null,
                "title": "Sweeper Lag",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1281,8 +1281,8 @@
                "timeShift": null,
                "title": "Marks Files to Process",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1357,8 +1357,8 @@
                "timeShift": null,
                "title": "Delete Rate Per Status",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",

@@ -222,8 +222,3 @@ expr: sum(rate(promtail_request_duration_seconds_count[1m])) by (job, status_cod
 record: job_status_code_namespace:promtail_request_duration_seconds_count:sum_rate
 {{< /code >}}
  
-## Dashboards
-Following dashboards are generated from mixins and hosted on github:
-
-
-- [promtail](https://github.com/monitoring-mixins/website/blob/master/assets/promtail/dashboards/promtail.json)

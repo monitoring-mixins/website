@@ -69,8 +69,8 @@
                "timeShift": null,
                "title": "span creation rate",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -145,8 +145,8 @@
                "timeShift": null,
                "title": "% spans dropped",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -244,8 +244,8 @@
                "timeShift": null,
                "title": "batch ingest rate",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -320,8 +320,8 @@
                "timeShift": null,
                "title": "% batches dropped",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -419,8 +419,8 @@
                "timeShift": null,
                "title": "span ingest rate",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -495,8 +495,8 @@
                "timeShift": null,
                "title": "% spans dropped",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -583,8 +583,8 @@
                "timeShift": null,
                "title": "Traces by Service",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -659,8 +659,8 @@
                "timeShift": null,
                "title": "Spans by Service",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -747,8 +747,8 @@
                "timeShift": null,
                "title": "Span Queue Length",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -823,8 +823,8 @@
                "timeShift": null,
                "title": "Span Queue Time - P95",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -922,8 +922,8 @@
                "timeShift": null,
                "title": "Collector Save Rate",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -998,8 +998,8 @@
                "timeShift": null,
                "title": "Collector Save Latency - P95 ",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",

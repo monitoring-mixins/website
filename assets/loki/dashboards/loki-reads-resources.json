@@ -857,8 +857,8 @@
                "timeShift": null,
                "title": "Disk Writes",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -933,8 +933,8 @@
                "timeShift": null,
                "title": "Disk Reads",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1009,8 +1009,8 @@
                "timeShift": null,
                "title": "Disk Space Utilization",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1359,8 +1359,8 @@
                "timeShift": null,
                "title": "Disk Writes",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1435,8 +1435,8 @@
                "timeShift": null,
                "title": "Disk Reads",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1511,8 +1511,8 @@
                "timeShift": null,
                "title": "Disk Space Utilization",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1861,8 +1861,8 @@
                "timeShift": null,
                "title": "Rules",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
