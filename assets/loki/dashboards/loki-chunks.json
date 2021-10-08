@@ -58,7 +58,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(loki_ingester_memory_chunks{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"})",
+                     "expr": "sum(loki_ingester_memory_chunks{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "series",
@@ -71,8 +71,8 @@
                "timeShift": null,
                "title": "Series",
                "tooltip": {
-                  "shared": true,
-                  "sort": 2,
+                  "shared": false,
+                  "sort": 0,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -134,7 +134,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(loki_ingester_memory_chunks{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}) / sum(loki_ingester_memory_streams{job=~\"($namespace)/ingester\"})",
+                     "expr": "sum(loki_ingester_memory_chunks{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}) / sum(loki_ingester_memory_streams{job=~\"cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "chunks",
@@ -147,8 +147,8 @@
                "timeShift": null,
                "title": "Chunks per series",
                "tooltip": {
-                  "shared": true,
-                  "sort": 2,
+                  "shared": false,
+                  "sort": 0,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -222,7 +222,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(loki_ingester_chunk_utilization_bucket{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.99, sum(rate(loki_ingester_chunk_utilization_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -230,7 +230,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(loki_ingester_chunk_utilization_bucket{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.50, sum(rate(loki_ingester_chunk_utilization_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -238,7 +238,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(loki_ingester_chunk_utilization_sum{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval])) * 1 / sum(rate(loki_ingester_chunk_utilization_count{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval]))",
+                     "expr": "sum(rate(loki_ingester_chunk_utilization_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval])) * 1 / sum(rate(loki_ingester_chunk_utilization_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -251,8 +251,8 @@
                "timeShift": null,
                "title": "Utilization",
                "tooltip": {
-                  "shared": true,
-                  "sort": 2,
+                  "shared": false,
+                  "sort": 0,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -314,7 +314,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(loki_ingester_chunk_age_seconds_bucket{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.99, sum(rate(loki_ingester_chunk_age_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -322,7 +322,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(loki_ingester_chunk_age_seconds_bucket{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval])) by (le)) * 1e3",
+                     "expr": "histogram_quantile(0.50, sum(rate(loki_ingester_chunk_age_seconds_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval])) by (le)) * 1e3",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -330,7 +330,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(loki_ingester_chunk_age_seconds_sum{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval])) * 1e3 / sum(rate(loki_ingester_chunk_age_seconds_count{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval]))",
+                     "expr": "sum(rate(loki_ingester_chunk_age_seconds_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval])) * 1e3 / sum(rate(loki_ingester_chunk_age_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -343,8 +343,8 @@
                "timeShift": null,
                "title": "Age",
                "tooltip": {
-                  "shared": true,
-                  "sort": 2,
+                  "shared": false,
+                  "sort": 0,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -418,7 +418,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(loki_ingester_chunk_entries_bucket{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.99, sum(rate(loki_ingester_chunk_entries_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
@@ -426,7 +426,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum(rate(loki_ingester_chunk_entries_bucket{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval])) by (le)) * 1",
+                     "expr": "histogram_quantile(0.50, sum(rate(loki_ingester_chunk_entries_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval])) by (le)) * 1",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
@@ -434,7 +434,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(loki_ingester_chunk_entries_sum{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval])) * 1 / sum(rate(loki_ingester_chunk_entries_count{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval]))",
+                     "expr": "sum(rate(loki_ingester_chunk_entries_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval])) * 1 / sum(rate(loki_ingester_chunk_entries_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -447,8 +447,8 @@
                "timeShift": null,
                "title": "Size",
                "tooltip": {
-                  "shared": true,
-                  "sort": 2,
+                  "shared": false,
+                  "sort": 0,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -510,7 +510,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(loki_chunk_store_index_entries_per_chunk_sum{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[5m])) / sum(rate(loki_chunk_store_index_entries_per_chunk_count{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[5m]))",
+                     "expr": "sum(rate(loki_chunk_store_index_entries_per_chunk_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[5m])) / sum(rate(loki_chunk_store_index_entries_per_chunk_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[5m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "entries",
@@ -523,8 +523,8 @@
                "timeShift": null,
                "title": "Entries",
                "tooltip": {
-                  "shared": true,
-                  "sort": 2,
+                  "shared": false,
+                  "sort": 0,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -598,7 +598,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "cortex_ingester_flush_queue_length{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}",
+                     "expr": "cortex_ingester_flush_queue_length{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -611,8 +611,8 @@
                "timeShift": null,
                "title": "Queue Length",
                "tooltip": {
-                  "shared": true,
-                  "sort": 2,
+                  "shared": false,
+                  "sort": 0,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -682,7 +682,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(loki_ingester_chunk_age_seconds_count{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(loki_ingester_chunk_age_seconds_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{status}}",
@@ -695,8 +695,8 @@
                "timeShift": null,
                "title": "Flush Rate",
                "tooltip": {
-                  "shared": true,
-                  "sort": 2,
+                  "shared": false,
+                  "sort": 0,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -770,7 +770,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.5, sum(rate(loki_ingester_chunk_bounds_hours_bucket{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[5m])) by (le))",
+                     "expr": "histogram_quantile(0.5, sum(rate(loki_ingester_chunk_bounds_hours_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[5m])) by (le))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "p50",
@@ -778,7 +778,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.99, sum(rate(loki_ingester_chunk_bounds_hours_bucket{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[5m])) by (le))",
+                     "expr": "histogram_quantile(0.99, sum(rate(loki_ingester_chunk_bounds_hours_bucket{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[5m])) by (le))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "p99",
@@ -786,7 +786,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(loki_ingester_chunk_bounds_hours_sum{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[5m])) / sum(rate(loki_ingester_chunk_bounds_hours_count{cluster=~\"$cluster\",job=~\"($namespace)/ingester\"}[5m]))",
+                     "expr": "sum(rate(loki_ingester_chunk_bounds_hours_sum{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[5m])) / sum(rate(loki_ingester_chunk_bounds_hours_count{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"}[5m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "avg",
@@ -799,8 +799,8 @@
                "timeShift": null,
                "title": "Chunk Duration hours (end-start)",
                "tooltip": {
-                  "shared": true,
-                  "sort": 2,
+                  "shared": false,
+                  "sort": 0,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -861,82 +861,20 @@
             "type": "datasource"
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
-               "text": "prod",
-               "value": "prod"
+               "selected": true,
+               "text": "All",
+               "value": "$__all"
             },
             "datasource": "$datasource",
             "hide": 0,
-            "includeAll": false,
+            "includeAll": true,
             "label": "cluster",
-            "multi": false,
+            "multi": true,
             "name": "cluster",
             "options": [ ],
             "query": "label_values(loki_build_info, cluster)",
-            "refresh": 1,
-            "regex": "",
-            "sort": 2,
-            "tagValuesQuery": "",
-            "tags": [ ],
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
-         },
-         {
-            "allValue": null,
-            "current": {
-               "text": "prod",
-               "value": "prod"
-            },
-            "datasource": "$datasource",
-            "hide": 0,
-            "includeAll": false,
-            "label": "namespace",
-            "multi": false,
-            "name": "namespace",
-            "options": [ ],
-            "query": "label_values(loki_build_info, namespace)",
-            "refresh": 1,
-            "regex": "",
-            "sort": 2,
-            "tagValuesQuery": "",
-            "tags": [ ],
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
-         },
-         {
-            "allValue": null,
-            "current": { },
-            "datasource": "$datasource",
-            "hide": 0,
-            "includeAll": false,
-            "label": "cluster",
-            "multi": false,
-            "name": "cluster",
-            "options": [ ],
-            "query": "label_values(kube_pod_container_info{image=~\".*loki.*\"}, cluster)",
-            "refresh": 1,
-            "regex": "",
-            "sort": 2,
-            "tagValuesQuery": "",
-            "tags": [ ],
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
-         },
-         {
-            "allValue": null,
-            "current": { },
-            "datasource": "$datasource",
-            "hide": 0,
-            "includeAll": false,
-            "label": "namespace",
-            "multi": false,
-            "name": "namespace",
-            "options": [ ],
-            "query": "label_values(kube_pod_container_info{cluster=\"$cluster\", image=~\".*loki.*\"}, namespace)",
             "refresh": 1,
             "regex": "",
             "sort": 2,
