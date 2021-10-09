@@ -64,7 +64,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod) (rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor.*\"}[$__rate_interval]))",
+                     "expr": "sum by(pod) (rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -72,7 +72,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "min(container_spec_cpu_quota{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor.*\"} / container_spec_cpu_period{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor.*\"})",
+                     "expr": "min(container_spec_cpu_quota{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"} / container_spec_cpu_period{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "limit",
@@ -152,7 +152,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "max by(pod) (container_memory_working_set_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor.*\"})",
+                     "expr": "max by(pod) (container_memory_working_set_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -160,7 +160,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "min(container_spec_memory_limit_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor.*\"} > 0)",
+                     "expr": "min(container_spec_memory_limit_bytes{cluster=~\"$cluster\", namespace=~\"$namespace\",container=\"compactor\"} > 0)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "limit",
@@ -234,7 +234,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod) (go_memstats_heap_inuse_bytes{cluster=~\"$cluster\", job=~\"($namespace)/compactor.*\"})",
+                     "expr": "sum by(pod) (go_memstats_heap_inuse_bytes{cluster=~\"$cluster\", job=~\"($namespace)/compactor\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -281,7 +281,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Resource Usage",
+         "title": "Ressource Usage",
          "titleSize": "h6"
       },
       {
@@ -365,8 +365,8 @@
                "timeShift": null,
                "title": "Last Compact and Mark Operation Success",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "stat",
@@ -441,8 +441,8 @@
                "timeShift": null,
                "title": "Compact and Mark Operations Duration",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -517,8 +517,8 @@
                "timeShift": null,
                "title": "Compact and Mark Operations Per Status",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -605,8 +605,8 @@
                "timeShift": null,
                "title": "Processed Tables Per Action",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -681,8 +681,8 @@
                "timeShift": null,
                "title": "Modified Tables",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -757,8 +757,8 @@
                "timeShift": null,
                "title": "Marks Creation Rate Per Table",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -845,8 +845,8 @@
                "timeShift": null,
                "title": "Marked Chunks (24h)",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -937,8 +937,8 @@
                "timeShift": null,
                "title": "Mark Table Latency",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1025,8 +1025,8 @@
                "timeShift": null,
                "title": "Delete Chunks (24h)",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "singlestat",
@@ -1117,8 +1117,8 @@
                "timeShift": null,
                "title": "Delete Latency",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1205,8 +1205,8 @@
                "timeShift": null,
                "title": "Sweeper Lag",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1281,8 +1281,8 @@
                "timeShift": null,
                "title": "Marks Files to Process",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1357,8 +1357,8 @@
                "timeShift": null,
                "title": "Delete Rate Per Status",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1406,7 +1406,7 @@
                "span": 12,
                "targets": [
                   {
-                     "expr": "{cluster=~\"$cluster\", job=~\"($namespace)/compactor.*\"}",
+                     "expr": "{container=\"compactor\", cluster=~\"$cluster\", namespace=~\"$namespace\"}",
                      "refId": "A"
                   }
                ],
@@ -1444,20 +1444,42 @@
             "type": "datasource"
          },
          {
-            "allValue": ".+",
+            "allValue": null,
             "current": {
-               "selected": true,
-               "text": "All",
-               "value": "$__all"
+               "text": "prod",
+               "value": "prod"
             },
             "datasource": "$datasource",
             "hide": 0,
-            "includeAll": true,
+            "includeAll": false,
             "label": "cluster",
-            "multi": true,
+            "multi": false,
             "name": "cluster",
             "options": [ ],
             "query": "label_values(loki_build_info, cluster)",
+            "refresh": 1,
+            "regex": "",
+            "sort": 2,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": null,
+            "current": {
+               "text": "prod",
+               "value": "prod"
+            },
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": false,
+            "label": "namespace",
+            "multi": false,
+            "name": "namespace",
+            "options": [ ],
+            "query": "label_values(loki_build_info, namespace)",
             "refresh": 1,
             "regex": "",
             "sort": 2,

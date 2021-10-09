@@ -234,7 +234,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod) (go_memstats_heap_inuse_bytes{cluster=~\"$cluster\", job=~\"($namespace)/(gateway|loki-gw|loki-gw-internal)\"})",
+                     "expr": "sum by(pod) (go_memstats_heap_inuse_bytes{cluster=~\"$cluster\", job=~\"($namespace)/cortex-gw\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -496,7 +496,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod) (go_memstats_heap_inuse_bytes{cluster=~\"$cluster\", job=~\"($namespace)/(distributor.*|loki$)\"})",
+                     "expr": "sum by(pod) (go_memstats_heap_inuse_bytes{cluster=~\"$cluster\", job=~\"($namespace)/distributor\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -582,7 +582,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod) (loki_ingester_memory_streams{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"})",
+                     "expr": "sum by(pod) (loki_ingester_memory_streams{cluster=~\"$cluster\", job=~\"($namespace)/ingester\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -844,7 +844,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod) (go_memstats_heap_inuse_bytes{cluster=~\"$cluster\", job=~\"($namespace)/(ingester.*|loki$)\"})",
+                     "expr": "sum by(pod) (go_memstats_heap_inuse_bytes{cluster=~\"$cluster\", job=~\"($namespace)/ingester\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -943,8 +943,8 @@
                "timeShift": null,
                "title": "Disk Writes",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1019,8 +1019,8 @@
                "timeShift": null,
                "title": "Disk Reads",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1095,8 +1095,8 @@
                "timeShift": null,
                "title": "Disk Space Utilization",
                "tooltip": {
-                  "shared": false,
-                  "sort": 0,
+                  "shared": true,
+                  "sort": 2,
                   "value_type": "individual"
                },
                "type": "graph",
@@ -1157,20 +1157,42 @@
             "type": "datasource"
          },
          {
-            "allValue": ".+",
+            "allValue": null,
             "current": {
-               "selected": true,
-               "text": "All",
-               "value": "$__all"
+               "text": "prod",
+               "value": "prod"
             },
             "datasource": "$datasource",
             "hide": 0,
-            "includeAll": true,
+            "includeAll": false,
             "label": "cluster",
-            "multi": true,
+            "multi": false,
             "name": "cluster",
             "options": [ ],
             "query": "label_values(loki_build_info, cluster)",
+            "refresh": 1,
+            "regex": "",
+            "sort": 2,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": null,
+            "current": {
+               "text": "prod",
+               "value": "prod"
+            },
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": false,
+            "label": "namespace",
+            "multi": false,
+            "name": "namespace",
+            "options": [ ],
+            "query": "label_values(loki_build_info, namespace)",
             "refresh": 1,
             "regex": "",
             "sort": 2,
