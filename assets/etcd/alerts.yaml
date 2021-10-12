@@ -82,7 +82,7 @@ groups:
         is {{ $value }}s on etcd instance {{ $labels.instance }}.'
       summary: etcd grpc requests are slow
     expr: |
-      histogram_quantile(0.99, sum(rate(grpc_server_handling_seconds_bucket{job=~".*etcd.*", grpc_type="unary"}[5m])) without(grpc_type))
+      histogram_quantile(0.99, sum(rate(grpc_server_handling_seconds_bucket{job=~".*etcd.*", grpc_method!="Defragment", grpc_type="unary"}[5m])) without(grpc_type))
       > 0.15
     for: 10m
     labels:
