@@ -132,6 +132,21 @@ groups:
     for: 5m
     labels:
       severity: warning
+  - alert: CortexKVStoreFailure
+    annotations:
+      message: |
+        Cortex {{ $labels.pod }} in  {{ $labels.cluster }}/{{ $labels.namespace }} is failing to talk to the KV store {{ $labels.kv_name }}.
+    expr: |
+      (
+        sum by(cluster, namespace, pod, status_code, kv_name) (rate(cortex_kv_request_duration_seconds_count{status_code!~"2.+"}[1m]))
+        /
+        sum by(cluster, namespace, pod, status_code, kv_name) (rate(cortex_kv_request_duration_seconds_count[1m]))
+      )
+      # We want to get alerted only in case there's a constant failure.
+      == 1
+    for: 5m
+    labels:
+      severity: warning
   - alert: CortexMemoryMapAreasTooHigh
     annotations:
       message: '{{ $labels.job }}/{{ $labels.instance }} has a number of mmap-ed areas
@@ -152,7 +167,7 @@ groups:
           (cortex_ingester_memory_series / ignoring(limit) cortex_ingester_instance_limits{limit="max_series"})
           and ignoring (limit)
           (cortex_ingester_instance_limits{limit="max_series"} > 0)
-      ) > 0.7
+      ) > 0.8
     for: 3h
     labels:
       severity: warning
@@ -165,7 +180,7 @@ groups:
           (cortex_ingester_memory_series / ignoring(limit) cortex_ingester_instance_limits{limit="max_series"})
           and ignoring (limit)
           (cortex_ingester_instance_limits{limit="max_series"} > 0)
-      ) > 0.85
+      ) > 0.9
     for: 5m
     labels:
       severity: critical
@@ -237,6 +252,52 @@ groups:
       increase(cortex_ingester_checkpoint_deletions_failed_total[2h]) > 1
     labels:
       severity: critical
+- name: cortex-rollout-alerts
+  rules:
+  - alert: CortexRolloutStuck
+    annotations:
+      message: |
+        The {{ $labels.statefulset }} rollout is stuck in {{ $labels.cluster }}/{{ $labels.namespace }}.
+    expr: |
+      (
+        max without (revision) (
+          kube_statefulset_status_current_revision
+            unless
+          kube_statefulset_status_update_revision
+        )
+          *
+        (
+          kube_statefulset_replicas
+            !=
+          kube_statefulset_status_replicas_updated
+        )
+      )  and (
+        changes(kube_statefulset_status_replicas_updated[15m])
+          ==
+        0
+      )
+      * on(cluster, namespace) group_left max by(cluster, namespace) (cortex_build_info)
+    for: 15m
+    labels:
+      severity: warning
+  - alert: CortexRolloutStuck
+    annotations:
+      message: |
+        The {{ $labels.deployment }} rollout is stuck in {{ $labels.cluster }}/{{ $labels.namespace }}.
+    expr: |
+      (
+        kube_deployment_spec_replicas
+          !=
+        kube_deployment_status_replicas_updated
+      ) and (
+        changes(kube_deployment_status_replicas_updated[15m])
+          ==
+        0
+      )
+      * on(cluster, namespace) group_left max by(cluster, namespace) (cortex_build_info)
+    for: 15m
+    labels:
+      severity: warning
 - name: cortex-provisioning
   rules:
   - alert: CortexProvisioningMemcachedTooSmall

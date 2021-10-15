@@ -1069,6 +1069,24 @@ labels:
   severity: critical
 {{< /code >}}
  
+### kubernetes-system-kube-proxy
+
+##### KubeProxyDown
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeproxydown
+
+{{< code lang="yaml" >}}
+alert: KubeProxyDown
+annotations:
+  description: KubeProxy has disappeared from Prometheus target discovery.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeproxydown
+  summary: Target disappeared from Prometheus target discovery.
+expr: |
+  absent(up{job="kube-proxy"} == 1)
+for: 15m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ## Recording rules
 
 {{< panel style="warning" >}}
