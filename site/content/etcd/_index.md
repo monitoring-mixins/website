@@ -127,7 +127,8 @@ labels:
 alert: etcdGRPCRequestsSlow
 annotations:
   description: 'etcd cluster "{{ $labels.job }}": 99th percentile of gRPC requests
-    is {{ $value }}s on etcd instance {{ $labels.instance }}.'
+    is {{ $value }}s on etcd instance {{ $labels.instance }} for {{ $labels.grpc_method
+    }} method.'
   summary: etcd grpc requests are slow
 expr: |
   histogram_quantile(0.99, sum(rate(grpc_server_handling_seconds_bucket{job=~".*etcd.*", grpc_method!="Defragment", grpc_type="unary"}[5m])) without(grpc_type))
