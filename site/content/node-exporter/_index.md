@@ -385,16 +385,18 @@ record: instance:node_load1_per_cpu:ratio
 {{< code lang="yaml" >}}
 expr: |
   1 - (
-    node_memory_MemAvailable_bytes{job="node"}
-    or
     (
-      node_memory_Buffers_bytes{job="node"}
-      +
-      node_memory_Cached_bytes{job="node"}
-      +
-      node_memory_MemFree_bytes{job="node"}
-      +
-      node_memory_Slab_bytes{job="node"}
+      node_memory_MemAvailable_bytes{job="node"}
+      or
+      (
+        node_memory_Buffers_bytes{job="node"}
+        +
+        node_memory_Cached_bytes{job="node"}
+        +
+        node_memory_MemFree_bytes{job="node"}
+        +
+        node_memory_Slab_bytes{job="node"}
+      )
     )
   /
     node_memory_MemTotal_bytes{job="node"}
