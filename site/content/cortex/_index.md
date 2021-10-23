@@ -322,6 +322,24 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### CortexDistributorReachingInflightPushRequestLimit
+
+{{< code lang="yaml" >}}
+alert: CortexDistributorReachingInflightPushRequestLimit
+annotations:
+  message: |
+    Distributor {{ $labels.job }}/{{ $labels.instance }} has reached {{ $value | humanizePercentage }} of its inflight push request limit.
+expr: |
+  (
+      (cortex_distributor_inflight_push_requests / ignoring(limit) cortex_distributor_instance_limits{limit="max_inflight_push_requests"})
+      and ignoring (limit)
+      (cortex_distributor_instance_limits{limit="max_inflight_push_requests"} > 0)
+  ) > 0.8
+for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ### cortex_wal_alerts
 
 ##### CortexWALCorruption
