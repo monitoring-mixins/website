@@ -1113,7 +1113,7 @@ expr: |
         +
         sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="5"}[1d]))
         +
-        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="40"}[1d]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="30"}[1d]))
       )
     )
     +
@@ -1145,7 +1145,7 @@ expr: |
         +
         sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="5"}[1h]))
         +
-        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="40"}[1h]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="30"}[1h]))
       )
     )
     +
@@ -1177,7 +1177,7 @@ expr: |
         +
         sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="5"}[2h]))
         +
-        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="40"}[2h]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="30"}[2h]))
       )
     )
     +
@@ -1209,7 +1209,7 @@ expr: |
         +
         sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="5"}[30m]))
         +
-        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="40"}[30m]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="30"}[30m]))
       )
     )
     +
@@ -1241,7 +1241,7 @@ expr: |
         +
         sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="5"}[3d]))
         +
-        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="40"}[3d]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="30"}[3d]))
       )
     )
     +
@@ -1273,7 +1273,7 @@ expr: |
         +
         sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="5"}[5m]))
         +
-        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="40"}[5m]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="30"}[5m]))
       )
     )
     +
@@ -1305,7 +1305,7 @@ expr: |
         +
         sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="namespace",le="5"}[6h]))
         +
-        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="40"}[6h]))
+        sum by (cluster) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",scope="cluster",le="30"}[6h]))
       )
     )
     +
@@ -1606,7 +1606,7 @@ expr: |
         +
         sum by (cluster) (cluster_verb_scope_le:apiserver_request_duration_seconds_bucket:increase30d{verb=~"LIST|GET",scope="namespace",le="5"})
         +
-        sum by (cluster) (cluster_verb_scope_le:apiserver_request_duration_seconds_bucket:increase30d{verb=~"LIST|GET",scope="cluster",le="40"})
+        sum by (cluster) (cluster_verb_scope_le:apiserver_request_duration_seconds_bucket:increase30d{verb=~"LIST|GET",scope="cluster",le="30"})
       )
     ) +
     # errors
@@ -1636,7 +1636,7 @@ expr: |
       +
       sum by (cluster) (cluster_verb_scope_le:apiserver_request_duration_seconds_bucket:increase30d{verb=~"LIST|GET",scope="namespace",le="5"})
       +
-      sum by (cluster) (cluster_verb_scope_le:apiserver_request_duration_seconds_bucket:increase30d{verb=~"LIST|GET",scope="cluster",le="40"})
+      sum by (cluster) (cluster_verb_scope_le:apiserver_request_duration_seconds_bucket:increase30d{verb=~"LIST|GET",scope="cluster",le="30"})
     )
     +
     # errors
