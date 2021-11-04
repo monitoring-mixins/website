@@ -220,17 +220,3 @@ expr: sum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, rou
 record: namespace_job_route:loki_request_duration_seconds_count:sum_rate
 {{< /code >}}
  
-## Dashboards
-Following dashboards are generated from mixins and hosted on github:
-
-
-- [loki-chunks](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-chunks.json)
-- [loki-deletion](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-deletion.json)
-- [loki-logs](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-logs.json)
-- [loki-mixin-recording-rules](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-mixin-recording-rules.json)
-- [loki-operational](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-operational.json)
-- [loki-reads-resources](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-reads-resources.json)
-- [loki-reads](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-reads.json)
-- [loki-retention](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-retention.json)
-- [loki-writes-resources](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-writes-resources.json)
-- [loki-writes](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-writes.json)
