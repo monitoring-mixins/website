@@ -362,8 +362,8 @@ record: instance:node_num_cpu:sum
 
 {{< code lang="yaml" >}}
 expr: |
-  1 - avg without (cpu, mode) (
-    rate(node_cpu_seconds_total{job="node", mode="idle"}[5m])
+  1 - avg without (cpu) (
+    sum without (mode) (rate(node_cpu_seconds_total{job="node", mode=~"idle|iowait|steal"}[5m]))
   )
 record: instance:node_cpu_utilisation:rate5m
 {{< /code >}}
