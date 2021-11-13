@@ -406,7 +406,7 @@
             "multi": false,
             "name": "cluster",
             "options": [ ],
-            "query": "label_values(kubelet_volume_stats_capacity_bytes, cluster)",
+            "query": "label_values(kubelet_volume_stats_capacity_bytes{job=\"kubelet\"}, cluster)",
             "refresh": 2,
             "regex": "",
             "sort": 1,

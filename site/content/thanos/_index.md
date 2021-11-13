@@ -1155,6 +1155,7 @@ Following dashboards are generated from mixins and hosted on github:
 - [compact](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/compact.json)
 - [overview](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/overview.json)
 - [query](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/query.json)
+- [queryFrontend](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/queryFrontend.json)
 - [receive](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/receive.json)
 - [rule](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/rule.json)
 - [sidecar](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/sidecar.json)
