@@ -168,7 +168,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(increase(container_cpu_cfs_throttled_periods_total{job=\"kubelet\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", cluster=\"$cluster\"}[5m])) by (container) /sum(increase(container_cpu_cfs_periods_total{job=\"kubelet\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", cluster=\"$cluster\"}[5m])) by (container)",
+                     "expr": "sum(increase(container_cpu_cfs_throttled_periods_total{job=\"cadvisor\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", cluster=\"$cluster\"}[5m])) by (container) /sum(increase(container_cpu_cfs_periods_total{job=\"cadvisor\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", cluster=\"$cluster\"}[5m])) by (container)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{container}}",
@@ -521,7 +521,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container)",
+                     "expr": "sum(container_memory_working_set_bytes{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{container}}",
@@ -779,7 +779,7 @@
                ],
                "targets": [
                   {
-                     "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container)",
+                     "expr": "sum(container_memory_working_set_bytes{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -797,7 +797,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", image!=\"\"}) by (container) / sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_requests{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
+                     "expr": "sum(container_memory_working_set_bytes{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", image!=\"\"}) by (container) / sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_requests{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -815,7 +815,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container) / sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_limits{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
+                     "expr": "sum(container_memory_working_set_bytes{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container) / sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_limits{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -824,7 +824,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_rss{job=\"kubelet\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
+                     "expr": "sum(container_memory_rss{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -833,7 +833,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_cache{job=\"kubelet\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
+                     "expr": "sum(container_memory_cache{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -842,7 +842,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum(container_memory_swap{job=\"kubelet\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
+                     "expr": "sum(container_memory_swap{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -933,7 +933,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_receive_bytes_total{job=\"kubelet\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                     "expr": "sum(irate(container_network_receive_bytes_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -1010,7 +1010,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_transmit_bytes_total{job=\"kubelet\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                     "expr": "sum(irate(container_network_transmit_bytes_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -1099,7 +1099,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_receive_packets_total{job=\"kubelet\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                     "expr": "sum(irate(container_network_receive_packets_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -1176,7 +1176,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_transmit_packets_total{job=\"kubelet\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                     "expr": "sum(irate(container_network_transmit_packets_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -1265,7 +1265,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_receive_packets_dropped_total{job=\"kubelet\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                     "expr": "sum(irate(container_network_receive_packets_dropped_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -1342,7 +1342,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(irate(container_network_transmit_packets_dropped_total{job=\"kubelet\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                     "expr": "sum(irate(container_network_transmit_packets_dropped_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -1431,7 +1431,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "ceil(sum by(pod) (rate(container_fs_reads_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[5m])))",
+                     "expr": "ceil(sum by(pod) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[5m])))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Reads",
@@ -1439,7 +1439,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "ceil(sum by(pod) (rate(container_fs_writes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[5m])))",
+                     "expr": "ceil(sum by(pod) (rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[5m])))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Writes",
@@ -1515,7 +1515,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod) (rate(container_fs_reads_bytes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[5m]))",
+                     "expr": "sum by(pod) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[5m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Reads",
@@ -1523,7 +1523,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(pod) (rate(container_fs_writes_bytes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[5m]))",
+                     "expr": "sum by(pod) (rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[5m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Writes",
@@ -1612,7 +1612,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "ceil(sum by(container) (rate(container_fs_reads_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]) + rate(container_fs_writes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m])))",
+                     "expr": "ceil(sum by(container) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]) + rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m])))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{container}}",
@@ -1688,7 +1688,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(container) (rate(container_fs_reads_bytes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]) + rate(container_fs_writes_bytes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
+                     "expr": "sum by(container) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]) + rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{container}}",
@@ -1904,7 +1904,7 @@
                ],
                "targets": [
                   {
-                     "expr": "sum by(container) (rate(container_fs_reads_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
+                     "expr": "sum by(container) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -1913,7 +1913,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(container) (rate(container_fs_writes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
+                     "expr": "sum by(container) (rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -1922,7 +1922,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(container) (rate(container_fs_reads_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]) + rate(container_fs_writes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
+                     "expr": "sum by(container) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]) + rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -1931,7 +1931,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(container) (rate(container_fs_reads_bytes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
+                     "expr": "sum by(container) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -1940,7 +1940,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(container) (rate(container_fs_writes_bytes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
+                     "expr": "sum by(container) (rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -1949,7 +1949,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(container) (rate(container_fs_reads_bytes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]) + rate(container_fs_writes_bytes_total{job=\"kubelet\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
+                     "expr": "sum by(container) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]) + rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=~\"$namespace\", pod=\"$pod\"}[5m]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2061,7 +2061,7 @@
             "multi": false,
             "name": "namespace",
             "options": [ ],
-            "query": "label_values(kube_namespace_created{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
+            "query": "label_values(kube_namespace_status_phase{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
             "refresh": 2,
             "regex": "",
             "sort": 1,
