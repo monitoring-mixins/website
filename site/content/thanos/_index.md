@@ -787,7 +787,7 @@ annotations:
   description: Thanos Replicate is failing to run, {{$value | humanize}}% of attempts
     failed.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosbucketreplicateerrorrate
-  summary: Thanose Replicate is failing to run.
+  summary: Thanos Replicate is failing to run.
 expr: |
   (
     sum by (job) (rate(thanos_replicate_replication_runs_total{result="error", job=~".*thanos-bucket-replicate.*"}[5m]))
@@ -822,23 +822,6 @@ labels:
  
 ### thanos-component-absent
 
-##### ThanosBucketReplicateIsDown
-https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosbucketreplicateisdown
-
-{{< code lang="yaml" >}}
-alert: ThanosBucketReplicateIsDown
-annotations:
-  description: ThanosBucketReplicate has disappeared. Prometheus target for the component
-    cannot be discovered.
-  runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosbucketreplicateisdown
-  summary: Thanos component has disappeared.
-expr: |
-  absent(up{job=~".*thanos-bucket-replicate.*"} == 1)
-for: 5m
-labels:
-  severity: critical
-{{< /code >}}
- 
 ##### ThanosCompactIsDown
 https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanoscompactisdown
 
@@ -1155,7 +1138,7 @@ Following dashboards are generated from mixins and hosted on github:
 - [compact](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/compact.json)
 - [overview](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/overview.json)
 - [query](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/query.json)
-- [queryFrontend](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/queryFrontend.json)
+- [query_frontend](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/query_frontend.json)
 - [receive](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/receive.json)
 - [rule](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/rule.json)
 - [sidecar](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/sidecar.json)

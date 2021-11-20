@@ -616,7 +616,7 @@
                      "link": true,
                      "linkTargetBlank": false,
                      "linkTooltip": "Drill down to pods",
-                     "linkUrl": "./d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell_1",
+                     "linkUrl": "/d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell_1",
                      "pattern": "Value #A",
                      "thresholds": [ ],
                      "type": "number",
@@ -631,7 +631,7 @@
                      "link": true,
                      "linkTargetBlank": false,
                      "linkTooltip": "Drill down to workloads",
-                     "linkUrl": "./d/a87fb0d919ec0ea5f6543124e16c42a5/k8s-resources-workloads-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell_1",
+                     "linkUrl": "/d/a87fb0d919ec0ea5f6543124e16c42a5/k8s-resources-workloads-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell_1",
                      "pattern": "Value #B",
                      "thresholds": [ ],
                      "type": "number",
@@ -721,7 +721,7 @@
                      "link": true,
                      "linkTargetBlank": false,
                      "linkTooltip": "Drill down to pods",
-                     "linkUrl": "./d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell",
+                     "linkUrl": "/d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell",
                      "pattern": "namespace",
                      "thresholds": [ ],
                      "type": "number",
@@ -987,7 +987,7 @@
                      "link": true,
                      "linkTargetBlank": false,
                      "linkTooltip": "Drill down to pods",
-                     "linkUrl": "./d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell_1",
+                     "linkUrl": "/d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell_1",
                      "pattern": "Value #A",
                      "thresholds": [ ],
                      "type": "number",
@@ -1002,7 +1002,7 @@
                      "link": true,
                      "linkTargetBlank": false,
                      "linkTooltip": "Drill down to workloads",
-                     "linkUrl": "./d/a87fb0d919ec0ea5f6543124e16c42a5/k8s-resources-workloads-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell_1",
+                     "linkUrl": "/d/a87fb0d919ec0ea5f6543124e16c42a5/k8s-resources-workloads-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell_1",
                      "pattern": "Value #B",
                      "thresholds": [ ],
                      "type": "number",
@@ -1092,7 +1092,7 @@
                      "link": true,
                      "linkTargetBlank": false,
                      "linkTooltip": "Drill down to pods",
-                     "linkUrl": "./d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell",
+                     "linkUrl": "/d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell",
                      "pattern": "namespace",
                      "thresholds": [ ],
                      "type": "number",
@@ -1361,7 +1361,7 @@
                      "link": true,
                      "linkTargetBlank": false,
                      "linkTooltip": "Drill down to pods",
-                     "linkUrl": "./d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell",
+                     "linkUrl": "/d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell",
                      "pattern": "namespace",
                      "thresholds": [ ],
                      "type": "number",
@@ -2173,7 +2173,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "ceil(sum by(namespace) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]) + rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m])))",
+                     "expr": "ceil(sum by(namespace) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]) + rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval])))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{namespace}}",
@@ -2249,7 +2249,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]) + rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]))",
+                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{namespace}}",
@@ -2445,7 +2445,7 @@
                      "link": true,
                      "linkTargetBlank": false,
                      "linkTooltip": "Drill down to pods",
-                     "linkUrl": "./d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell",
+                     "linkUrl": "/d/85a562078cdf77779eaa1add43ccec1e/k8s-resources-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$__cell",
                      "pattern": "namespace",
                      "thresholds": [ ],
                      "type": "number",
@@ -2465,7 +2465,7 @@
                ],
                "targets": [
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]))",
+                     "expr": "sum by(namespace) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2474,7 +2474,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]))",
+                     "expr": "sum by(namespace) (rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2483,7 +2483,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]) + rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]))",
+                     "expr": "sum by(namespace) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]) + rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2492,7 +2492,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]))",
+                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2501,7 +2501,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]))",
+                     "expr": "sum by(namespace) (rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2510,7 +2510,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]) + rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[5m]))",
+                     "expr": "sum by(namespace) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
