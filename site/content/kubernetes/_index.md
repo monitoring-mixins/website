@@ -717,8 +717,8 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeClientCertificateExpiration
 annotations:
-  description: A client certificate used to authenticate to the apiserver is expiring
-    in less than 7.0 days.
+  description: A client certificate used to authenticate to kubernetes apiserver is
+    expiring in less than 7.0 days.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclientcertificateexpiration
   summary: Client certificate is about to expire.
 expr: |
@@ -733,8 +733,8 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeClientCertificateExpiration
 annotations:
-  description: A client certificate used to authenticate to the apiserver is expiring
-    in less than 24.0 hours.
+  description: A client certificate used to authenticate to kubernetes apiserver is
+    expiring in less than 24.0 hours.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclientcertificateexpiration
   summary: Client certificate is about to expire.
 expr: |
@@ -743,33 +743,33 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### AggregatedAPIErrors
-https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-aggregatedapierrors
+##### KubeAggregatedAPIErrors
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeaggregatedapierrors
 
 {{< code lang="yaml" >}}
-alert: AggregatedAPIErrors
+alert: KubeAggregatedAPIErrors
 annotations:
-  description: An aggregated API {{ $labels.name }}/{{ $labels.namespace }} has reported
-    errors. It has appeared unavailable {{ $value | humanize }} times averaged over
-    the past 10m.
-  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-aggregatedapierrors
-  summary: An aggregated API has reported errors.
+  description: Kubernetes aggregated API {{ $labels.name }}/{{ $labels.namespace }}
+    has reported errors. It has appeared unavailable {{ $value | humanize }} times
+    averaged over the past 10m.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeaggregatedapierrors
+  summary: Kubernetes aggregated API has reported errors.
 expr: |
   sum by(name, namespace)(increase(aggregator_unavailable_apiservice_total[10m])) > 4
 labels:
   severity: warning
 {{< /code >}}
  
-##### AggregatedAPIDown
-https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-aggregatedapidown
+##### KubeAggregatedAPIDown
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeaggregatedapidown
 
 {{< code lang="yaml" >}}
-alert: AggregatedAPIDown
+alert: KubeAggregatedAPIDown
 annotations:
-  description: An aggregated API {{ $labels.name }}/{{ $labels.namespace }} has been
-    only {{ $value | humanize }}% available over the last 10m.
-  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-aggregatedapidown
-  summary: An aggregated API is down.
+  description: Kubernetes aggregated API {{ $labels.name }}/{{ $labels.namespace }}
+    has been only {{ $value | humanize }}% available over the last 10m.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeaggregatedapidown
+  summary: Kubernetes aggregated API is down.
 expr: |
   (1 - max by(name, namespace)(avg_over_time(aggregator_unavailable_apiservice[10m]))) * 100 < 85
 for: 5m
@@ -799,11 +799,11 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeAPITerminatedRequests
 annotations:
-  description: The apiserver has terminated {{ $value | humanizePercentage }} of its
-    incoming requests.
+  description: The kubernetes apiserver has terminated {{ $value | humanizePercentage
+    }} of its incoming requests.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapiterminatedrequests
-  summary: The apiserver has terminated {{ $value | humanizePercentage }} of its incoming
-    requests.
+  summary: The kubernetes apiserver has terminated {{ $value | humanizePercentage
+    }} of its incoming requests.
 expr: |
   sum(rate(apiserver_request_terminations_total{job="kube-apiserver"}[10m]))  / (  sum(rate(apiserver_request_total{job="kube-apiserver"}[10m])) + sum(rate(apiserver_request_terminations_total{job="kube-apiserver"}[10m])) ) > 0.20
 for: 5m
