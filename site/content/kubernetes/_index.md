@@ -406,9 +406,9 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecpuquotaovercommit
   summary: Cluster has overcommitted CPU resource requests.
 expr: |
-  sum(kube_resourcequota{job="kube-state-metrics", type="hard", resource="cpu"})
+  sum(min without(resource) (kube_resourcequota{job="kube-state-metrics", type="hard", resource=~"(cpu|requests.cpu)"}))
     /
-  sum(kube_node_status_allocatable{resource="cpu"})
+  sum(kube_node_status_allocatable{resource="cpu", job="kube-state-metrics"})
     > 1.5
 for: 5m
 labels:
@@ -425,9 +425,9 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubememoryquotaovercommit
   summary: Cluster has overcommitted memory resource requests.
 expr: |
-  sum(kube_resourcequota{job="kube-state-metrics", type="hard", resource="memory"})
+  sum(min without(resource) (kube_resourcequota{job="kube-state-metrics", type="hard", resource=~"(memory|requests.memory)"}))
     /
-  sum(kube_node_status_allocatable{resource="memory",job="kube-state-metrics"})
+  sum(kube_node_status_allocatable{resource="memory", job="kube-state-metrics"})
     > 1.5
 for: 5m
 labels:
