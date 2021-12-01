@@ -1063,6 +1063,6 @@
    },
    "timezone": "utc",
    "title": "Loki / Writes",
-   "uid": "",
+   "uid": "writes",
    "version": 0
 }

@@ -2263,6 +2263,6 @@
    },
    "timezone": "utc",
    "title": "Loki / Reads Resources",
-   "uid": "",
+   "uid": "reads-resources",
    "version": 0
 }

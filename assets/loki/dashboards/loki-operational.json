@@ -6660,6 +6660,6 @@
    },
    "timezone": "utc",
    "title": "Loki / Operational",
-   "uid": "",
+   "uid": "operational",
    "version": 0
 }

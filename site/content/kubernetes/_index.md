@@ -384,7 +384,7 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 alert: KubeMemoryOvercommit
 annotations:
   description: Cluster has overcommitted memory resource requests for Pods by {{ $value
-    }} bytes and cannot tolerate node failure.
+    | humanize }} bytes and cannot tolerate node failure.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubememoryovercommit
   summary: Cluster has overcommitted memory resource requests.
 expr: |

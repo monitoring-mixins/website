@@ -1235,6 +1235,6 @@
    },
    "timezone": "utc",
    "title": "Loki / Writes Resources",
-   "uid": "",
+   "uid": "writes-resources",
    "version": 0
 }
