@@ -58,7 +58,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(promtail_targets_active_total{cluster=~\"$cluster\",job=\"$namespace/$name\"})",
+                     "expr": "sum(promtail_targets_active_total{cluster=~\"$cluster\", namespace=~\"$namespace\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Active Targets",
@@ -134,7 +134,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(promtail_files_active_total{cluster=~\"$cluster\",job=\"$namespace/$name\"})",
+                     "expr": "sum(promtail_files_active_total{cluster=~\"$cluster\", namespace=~\"$namespace\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Active Targets",
@@ -222,7 +222,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(promtail_read_bytes_total{cluster=~\"$cluster\",job=\"$namespace/$name\"}[1m]))",
+                     "expr": "sum(rate(promtail_read_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[1m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "logs read",
@@ -298,7 +298,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(promtail_read_lines_total{cluster=~\"$cluster\",job=\"$namespace/$name\"}[1m]))",
+                     "expr": "sum(rate(promtail_read_lines_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[1m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "lines read",
@@ -394,7 +394,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(promtail_request_duration_seconds_count{cluster=~\"$cluster\",job=\"$namespace/$name\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(promtail_request_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{status}}",
@@ -470,27 +470,27 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99, sum by (le) (job:promtail_request_duration_seconds_bucket:sum_rate{job=\"$namespace/$name\", cluster=~\"$cluster\"})) * 1e3",
+                     "expr": "job:promtail_request_duration_seconds:99quantile{cluster=~\"$cluster\", job=~\"$namespace/promtail\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "99th Percentile",
-                     "refId": "A",
+                     "legendFormat": "p99",
+                     "legendLink": null,
                      "step": 10
                   },
                   {
-                     "expr": "histogram_quantile(0.50, sum by (le) (job:promtail_request_duration_seconds_bucket:sum_rate{job=\"$namespace/$name\", cluster=~\"$cluster\"})) * 1e3",
+                     "expr": "job:promtail_request_duration_seconds:50quantile{cluster=~\"$cluster\", job=~\"$namespace/promtail\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "50th Percentile",
-                     "refId": "B",
+                     "legendFormat": "p50",
+                     "legendLink": null,
                      "step": 10
                   },
                   {
-                     "expr": "1e3 * sum(job:promtail_request_duration_seconds_sum:sum_rate{job=\"$namespace/$name\", cluster=~\"$cluster\"}) / sum(job:promtail_request_duration_seconds_count:sum_rate{job=\"$namespace/$name\", cluster=~\"$cluster\"})",
+                     "expr": "job:promtail_request_duration_seconds:avg{cluster=~\"$cluster\", job=~\"$namespace/promtail\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "Average",
-                     "refId": "C",
+                     "legendFormat": "avg",
+                     "legendLink": null,
                      "step": 10
                   }
                ],
@@ -513,7 +513,7 @@
                },
                "yaxes": [
                   {
-                     "format": "ms",
+                     "format": "short",
                      "label": null,
                      "logBase": 1,
                      "max": null,
@@ -596,7 +596,7 @@
             "multi": false,
             "name": "namespace",
             "options": [ ],
-            "query": "label_values(loki_build_info{cluster=~\"$cluster\"}, namespace)",
+            "query": "label_values(promtail_build_info{cluster=~\"$cluster\"}, namespace)",
             "refresh": 1,
             "regex": "",
             "sort": 2,
