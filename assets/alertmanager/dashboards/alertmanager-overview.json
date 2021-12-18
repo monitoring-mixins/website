@@ -54,7 +54,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(alertmanager_alerts{job=\"$job\"}) by (job,instance)",
+                     "expr": "sum(alertmanager_alerts{job=~\"$job\"}) by (job,instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
@@ -135,14 +135,14 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(alertmanager_alerts_received_total{job=\"$job\"}[5m])) by (job,instance)",
+                     "expr": "sum(rate(alertmanager_alerts_received_total{job=~\"$job\"}[$__rate_interval])) by (job,instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} Received",
                      "refId": "A"
                   },
                   {
-                     "expr": "sum(rate(alertmanager_alerts_invalid_total{job=\"$job\"}[5m])) by (job,instance)",
+                     "expr": "sum(rate(alertmanager_alerts_invalid_total{job=~\"$job\"}[$__rate_interval])) by (job,instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} Invalid",
@@ -235,14 +235,14 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(alertmanager_notifications_total{job=\"$job\", integration=\"$integration\"}[5m])) by (integration,job,instance)",
+                     "expr": "sum(rate(alertmanager_notifications_total{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (integration,job,instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} Total",
                      "refId": "A"
                   },
                   {
-                     "expr": "sum(rate(alertmanager_notifications_failed_total{job=\"$job\", integration=\"$integration\"}[5m])) by (integration,job,instance)",
+                     "expr": "sum(rate(alertmanager_notifications_failed_total{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (integration,job,instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} Failed",
@@ -322,21 +322,21 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(0.99,\n  sum(rate(alertmanager_notification_latency_seconds_bucket{job=\"$job\", integration=\"$integration\"}[5m])) by (le,job,instance)\n) \n",
+                     "expr": "histogram_quantile(0.99,\n  sum(rate(alertmanager_notification_latency_seconds_bucket{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (le,job,instance)\n) \n",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} 99th Percentile",
                      "refId": "A"
                   },
                   {
-                     "expr": "histogram_quantile(0.50,\n  sum(rate(alertmanager_notification_latency_seconds_bucket{job=\"$job\", integration=\"$integration\"}[5m])) by (le,job,instance)\n) \n",
+                     "expr": "histogram_quantile(0.50,\n  sum(rate(alertmanager_notification_latency_seconds_bucket{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (le,job,instance)\n) \n",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} Median",
                      "refId": "B"
                   },
                   {
-                     "expr": "sum(rate(alertmanager_notification_latency_seconds_sum{job=\"$job\", integration=\"$integration\"}[5m])) by (job,instance)\n/\nsum(rate(alertmanager_notification_latency_seconds_count{job=\"$job\", integration=\"$integration\"}[5m])) by (job,instance)\n",
+                     "expr": "sum(rate(alertmanager_notification_latency_seconds_sum{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (job,instance)\n/\nsum(rate(alertmanager_notification_latency_seconds_count{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (job,instance)\n",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}} Average",
@@ -402,7 +402,7 @@
                "value": "Prometheus"
             },
             "hide": 0,
-            "label": null,
+            "label": "Data Source",
             "name": "datasource",
             "options": [ ],
             "query": "prometheus",
@@ -419,7 +419,7 @@
             "datasource": "$datasource",
             "hide": 0,
             "includeAll": false,
-            "label": null,
+            "label": "job",
             "multi": false,
             "name": "job",
             "options": [ ],
