@@ -1134,11 +1134,11 @@ record: :thanos_objstore_bucket_operation_duration_seconds:histogram_quantile
 Following dashboards are generated from mixins and hosted on github:
 
 
-- [bucket_replicate](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/bucket_replicate.json)
+- [bucket-replicate](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/bucket-replicate.json)
 - [compact](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/compact.json)
 - [overview](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/overview.json)
+- [query-frontend](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/query-frontend.json)
 - [query](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/query.json)
-- [query_frontend](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/query_frontend.json)
 - [receive](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/receive.json)
 - [rule](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/rule.json)
 - [sidecar](https://github.com/monitoring-mixins/website/blob/master/assets/thanos/dashboards/sidecar.json)

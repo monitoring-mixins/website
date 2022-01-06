@@ -445,7 +445,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Size",
+               "title": "Log Entries Per Chunk",
                "tooltip": {
                   "shared": true,
                   "sort": 2,
@@ -513,7 +513,7 @@
                      "expr": "sum(rate(loki_chunk_store_index_entries_per_chunk_sum{cluster=\"$cluster\", job=\"$namespace/ingester\"}[5m])) / sum(rate(loki_chunk_store_index_entries_per_chunk_count{cluster=\"$cluster\", job=\"$namespace/ingester\"}[5m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "entries",
+                     "legendFormat": "Index Entries",
                      "legendLink": null,
                      "step": 10
                   }
@@ -521,7 +521,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Entries",
+               "title": "Index Entries Per Chunk",
                "tooltip": {
                   "shared": true,
                   "sort": 2,
@@ -957,7 +957,7 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "Utiliziation",
+         "title": "Utilization",
          "titleSize": "h6"
       },
       {
