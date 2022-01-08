@@ -1945,6 +1945,21 @@ labels:
 record: namespace_workload_pod:kube_pod_owner:relabel
 {{< /code >}}
  
+##### namespace_workload_pod:kube_pod_owner:relabel
+
+{{< code lang="yaml" >}}
+expr: |
+  max by (cluster, namespace, workload, pod) (
+    label_replace(
+      kube_pod_owner{job="kube-state-metrics", owner_kind="Job"},
+      "workload", "$1", "owner_name", "(.*)"
+    )
+  )
+labels:
+  workload_type: job
+record: namespace_workload_pod:kube_pod_owner:relabel
+{{< /code >}}
+ 
 ### kube-scheduler.rules
 
 ##### cluster_quantile:scheduler_e2e_scheduling_duration_seconds:histogram_quantile
