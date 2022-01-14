@@ -202,7 +202,7 @@ expr: |
        !=
       0
     ) or (
-      kube_daemonset_updated_number_scheduled{job="kube-state-metrics"}
+      kube_daemonset_status_updated_number_scheduled{job="kube-state-metrics"}
        !=
       kube_daemonset_status_desired_number_scheduled{job="kube-state-metrics"}
     ) or (
@@ -211,7 +211,7 @@ expr: |
       kube_daemonset_status_desired_number_scheduled{job="kube-state-metrics"}
     )
   ) and (
-    changes(kube_daemonset_updated_number_scheduled{job="kube-state-metrics"}[5m])
+    changes(kube_daemonset_status_updated_number_scheduled{job="kube-state-metrics"}[5m])
       ==
     0
   )
