@@ -30,7 +30,7 @@ annotations:
   severity_level: critical
   storage_type: ceph
 expr: |
-  absent(up{job="rook-ceph-mgr"} == 1)
+  label_replace((up{job="rook-ceph-mgr"} == 0 or absent(up{job="rook-ceph-mgr"})), "namespace", "openshift-storage", "", "")
 for: 5m
 labels:
   severity: critical
@@ -46,7 +46,7 @@ annotations:
   severity_level: warning
   storage_type: ceph
 expr: |
-  sum(up{job="rook-ceph-mgr"}) < 1
+  sum(kube_deployment_spec_replicas{deployment=~"rook-ceph-mgr-.*"}) by (namespace) < 1
 for: 5m
 labels:
   severity: warning
@@ -65,7 +65,7 @@ annotations:
   severity_level: warning
   storage_type: ceph
 expr: |
-  sum(ceph_mds_metadata{job="rook-ceph-mgr"} == 1) < 2
+  sum(ceph_mds_metadata{job="rook-ceph-mgr"} == 1) by (namespace) < 2
 for: 5m
 labels:
   severity: warning
@@ -83,8 +83,24 @@ annotations:
   severity_level: error
   storage_type: ceph
 expr: |
-  count(ceph_mon_quorum_status{job="rook-ceph-mgr"} == 1) <= (floor(count(ceph_mon_metadata{job="rook-ceph-mgr"}) / 2) + 1)
+  count(ceph_mon_quorum_status{job="rook-ceph-mgr"} == 1) by (namespace) <= (floor(count(ceph_mon_metadata{job="rook-ceph-mgr"}) by (namespace) / 2) + 1)
 for: 15m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### CephMonQuorumLost
+
+{{< code lang="yaml" >}}
+alert: CephMonQuorumLost
+annotations:
+  description: Storage cluster quorum is lost. Contact Support.
+  message: Storage quorum is lost
+  severity_level: critical
+  storage_type: ceph
+expr: |
+  count(kube_pod_status_phase{pod=~"rook-ceph-mon-.*", phase=~"Running|running"} == 1) by (namespace) < 2
+for: 5m
 labels:
   severity: critical
 {{< /code >}}
@@ -191,7 +207,7 @@ annotations:
   storage_type: ceph
 expr: |
   label_replace((ceph_osd_in == 1 and ceph_osd_up == 0),"disk","$1","ceph_daemon","osd.(.*)") + on(ceph_daemon) group_left(host, device) label_replace(ceph_disk_occupation,"host","$1","exported_instance","(.*)")
-for: 1m
+for: 15m
 labels:
   severity: critical
 {{< /code >}}
@@ -329,7 +345,7 @@ annotations:
   storage_type: ceph
 expr: |
   ceph_health_status{job="rook-ceph-mgr"} == 1
-for: 10m
+for: 15m
 labels:
   severity: warning
 {{< /code >}}
@@ -344,7 +360,7 @@ annotations:
   severity_level: warning
   storage_type: ceph
 expr: |
-  count(count(ceph_osd_metadata{job="rook-ceph-mgr"}) by (ceph_version)) > 1
+  count(count(ceph_osd_metadata{job="rook-ceph-mgr"}) by (ceph_version, namespace)) by (ceph_version, namespace) > 1
 for: 10m
 labels:
   severity: warning
@@ -360,7 +376,7 @@ annotations:
   severity_level: warning
   storage_type: ceph
 expr: |
-  count(count(ceph_mon_metadata{job="rook-ceph-mgr"}) by (ceph_version)) > 1
+  count(count(ceph_mon_metadata{job="rook-ceph-mgr", ceph_version != ""}) by (ceph_version)) > 1
 for: 10m
 labels:
   severity: warning
@@ -468,7 +484,7 @@ Complete list of pregenerated recording rules is available [here](https://github
 
 {{< code lang="yaml" >}}
 expr: |
-  kube_node_status_condition{condition="Ready",job="kube-state-metrics",status="true"} * on (node) group_right() max(label_replace(ceph_disk_occupation{job="rook-ceph-mgr"},"node","$1","exported_instance","(.*)")) by (node)
+  kube_node_status_condition{condition="Ready",job="kube-state-metrics",status="true"} * on (node) group_right() max(label_replace(ceph_disk_occupation{job="rook-ceph-mgr"},"node","$1","exported_instance","(.*)")) by (node, namespace)
 record: cluster:ceph_node_down:join_kube
 {{< /code >}}
  
