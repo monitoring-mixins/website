@@ -2099,7 +2099,7 @@ record: :node_memory_MemAvailable_bytes:sum
 
 {{< code lang="yaml" >}}
 expr: |
-  histogram_quantile(0.99, sum(rate(kubelet_pleg_relist_duration_seconds_bucket[5m])) by (instance, le) * on(instance) group_left(node) kubelet_node_name{job="kubelet"})
+  histogram_quantile(0.99, sum(rate(kubelet_pleg_relist_duration_seconds_bucket[5m])) by (cluster, instance, le) * on(cluster, instance) group_left(node) kubelet_node_name{job="kubelet"})
 labels:
   quantile: "0.99"
 record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
@@ -2109,7 +2109,7 @@ record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
 
 {{< code lang="yaml" >}}
 expr: |
-  histogram_quantile(0.9, sum(rate(kubelet_pleg_relist_duration_seconds_bucket[5m])) by (instance, le) * on(instance) group_left(node) kubelet_node_name{job="kubelet"})
+  histogram_quantile(0.9, sum(rate(kubelet_pleg_relist_duration_seconds_bucket[5m])) by (cluster, instance, le) * on(cluster, instance) group_left(node) kubelet_node_name{job="kubelet"})
 labels:
   quantile: "0.9"
 record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
@@ -2119,7 +2119,7 @@ record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
 
 {{< code lang="yaml" >}}
 expr: |
-  histogram_quantile(0.5, sum(rate(kubelet_pleg_relist_duration_seconds_bucket[5m])) by (instance, le) * on(instance) group_left(node) kubelet_node_name{job="kubelet"})
+  histogram_quantile(0.5, sum(rate(kubelet_pleg_relist_duration_seconds_bucket[5m])) by (cluster, instance, le) * on(cluster, instance) group_left(node) kubelet_node_name{job="kubelet"})
 labels:
   quantile: "0.5"
 record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
