@@ -1957,7 +1957,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "ceil(sum by(pod) (rate(container_fs_reads_total{container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]) + rate(container_fs_writes_total{container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval])))",
+                     "expr": "ceil(sum by(pod) (rate(container_fs_reads_total{container!=\"\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]) + rate(container_fs_writes_total{container!=\"\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -2036,7 +2036,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by(pod) (rate(container_fs_reads_bytes_total{container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]))",
+                     "expr": "sum by(pod) (rate(container_fs_reads_bytes_total{container!=\"\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{container!=\"\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{pod}}",
@@ -2255,7 +2255,7 @@
                ],
                "targets": [
                   {
-                     "expr": "sum by(pod) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]))",
+                     "expr": "sum by(pod) (rate(container_fs_reads_total{job=\"cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2264,7 +2264,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(pod) (rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]))",
+                     "expr": "sum by(pod) (rate(container_fs_writes_total{job=\"cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2273,7 +2273,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(pod) (rate(container_fs_reads_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]) + rate(container_fs_writes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]))",
+                     "expr": "sum by(pod) (rate(container_fs_reads_total{job=\"cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]) + rate(container_fs_writes_total{job=\"cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2282,7 +2282,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(pod) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]))",
+                     "expr": "sum by(pod) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2291,7 +2291,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(pod) (rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]))",
+                     "expr": "sum by(pod) (rate(container_fs_writes_bytes_total{job=\"cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -2300,7 +2300,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "sum by(pod) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{job=\"cadvisor\", container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\"}[$__rate_interval]))",
+                     "expr": "sum by(pod) (rate(container_fs_reads_bytes_total{job=\"cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{job=\"cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval]))",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
