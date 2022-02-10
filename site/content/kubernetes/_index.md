@@ -1476,7 +1476,7 @@ record: apiserver_request:burnrate6h
 
 {{< code lang="yaml" >}}
 expr: |
-  histogram_quantile(0.99, sum by (cluster, le, resource) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET"}[5m]))) > 0
+  histogram_quantile(0.99, sum by (cluster, le, resource) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"LIST|GET",subresource!~"proxy|attach|log|exec|portforward"}[5m]))) > 0
 labels:
   quantile: "0.99"
   verb: read
@@ -1487,40 +1487,10 @@ record: cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
 
 {{< code lang="yaml" >}}
 expr: |
-  histogram_quantile(0.99, sum by (cluster, le, resource) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE"}[5m]))) > 0
+  histogram_quantile(0.99, sum by (cluster, le, resource) (rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",verb=~"POST|PUT|PATCH|DELETE",subresource!~"proxy|attach|log|exec|portforward"}[5m]))) > 0
 labels:
   quantile: "0.99"
   verb: write
-record: cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
-{{< /code >}}
- 
-##### cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
-
-{{< code lang="yaml" >}}
-expr: |
-  histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",subresource!="log",verb!~"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT"}[5m])) without(instance, pod))
-labels:
-  quantile: "0.99"
-record: cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
-{{< /code >}}
- 
-##### cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
-
-{{< code lang="yaml" >}}
-expr: |
-  histogram_quantile(0.9, sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",subresource!="log",verb!~"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT"}[5m])) without(instance, pod))
-labels:
-  quantile: "0.9"
-record: cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
-{{< /code >}}
- 
-##### cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
-
-{{< code lang="yaml" >}}
-expr: |
-  histogram_quantile(0.5, sum(rate(apiserver_request_duration_seconds_bucket{job="kube-apiserver",subresource!="log",verb!~"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT"}[5m])) without(instance, pod))
-labels:
-  quantile: "0.5"
 record: cluster_quantile:apiserver_request_duration_seconds:histogram_quantile
 {{< /code >}}
  
