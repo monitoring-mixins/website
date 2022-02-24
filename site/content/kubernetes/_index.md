@@ -2063,6 +2063,15 @@ expr: |
 record: :node_memory_MemAvailable_bytes:sum
 {{< /code >}}
  
+##### cluster:node_cpu:ratio_rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum(rate(node_cpu_seconds_total{job="node-exporter",mode!="idle",mode!="iowait",mode!="steal"}[5m])) /
+  count(sum(node_cpu_seconds_total{job="node-exporter"}) by (cluster, instance, cpu))
+record: cluster:node_cpu:ratio_rate5m
+{{< /code >}}
+ 
 ### kubelet.rules
 
 ##### node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
