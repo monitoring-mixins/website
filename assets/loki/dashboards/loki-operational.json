@@ -4340,17 +4340,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(.99, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.99, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}[5m])) by (operation, le))",
                      "intervalFactor": 1,
                      "legendFormat": ".9",
                      "refId": "A"
                   },
                   {
-                     "expr": "histogram_quantile(.9, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.9, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}[5m])) by (operation, le))",
                      "refId": "B"
                   },
                   {
-                     "expr": "histogram_quantile(.5, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.5, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}[5m])) by (operation, le))",
                      "refId": "C"
                   }
                ],
@@ -4438,20 +4438,20 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(.99, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.99, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[5m])) by (operation, le))",
                      "interval": "",
                      "intervalFactor": 1,
                      "legendFormat": "99%",
                      "refId": "A"
                   },
                   {
-                     "expr": "histogram_quantile(.9, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.9, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[5m])) by (operation, le))",
                      "interval": "",
                      "legendFormat": "90%",
                      "refId": "B"
                   },
                   {
-                     "expr": "histogram_quantile(.5, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.5, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[5m])) by (operation, le))",
                      "interval": "",
                      "legendFormat": "50%",
                      "refId": "C"
@@ -4541,20 +4541,20 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(.99, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/GetTable\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.99, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/GetTable\"}[5m])) by (operation, le))",
                      "interval": "",
                      "intervalFactor": 1,
                      "legendFormat": "99%",
                      "refId": "A"
                   },
                   {
-                     "expr": "histogram_quantile(.9, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/GetTable\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.9, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/GetTable\"}[5m])) by (operation, le))",
                      "interval": "",
                      "legendFormat": "90%",
                      "refId": "B"
                   },
                   {
-                     "expr": "histogram_quantile(.5, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/GetTable\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.5, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/GetTable\"}[5m])) by (operation, le))",
                      "interval": "",
                      "legendFormat": "50%",
                      "refId": "C"
@@ -4644,17 +4644,17 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "histogram_quantile(.99, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/ListTables\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.99, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/ListTables\"}[5m])) by (operation, le))",
                      "intervalFactor": 1,
                      "legendFormat": ".9",
                      "refId": "A"
                   },
                   {
-                     "expr": "histogram_quantile(.9, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/ListTables\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.9, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/ListTables\"}[5m])) by (operation, le))",
                      "refId": "B"
                   },
                   {
-                     "expr": "histogram_quantile(.5, sum(rate(cortex_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/ListTables\"}[5m])) by (operation, le))",
+                     "expr": "histogram_quantile(.5, sum(rate(loki_bigtable_request_duration_seconds_bucket{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/ListTables\"}[5m])) by (operation, le))",
                      "refId": "C"
                   }
                ],
@@ -4742,7 +4742,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_bigtable_request_duration_seconds_count{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}[5m])) by (status_code)",
+                     "expr": "sum(rate(loki_bigtable_request_duration_seconds_count{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/MutateRows\"}[5m])) by (status_code)",
                      "intervalFactor": 1,
                      "legendFormat": "{{status_code}}",
                      "refId": "A"
@@ -4832,7 +4832,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_bigtable_request_duration_seconds_count{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[5m])) by (status_code)",
+                     "expr": "sum(rate(loki_bigtable_request_duration_seconds_count{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.v2.Bigtable/ReadRows\"}[5m])) by (status_code)",
                      "intervalFactor": 1,
                      "legendFormat": "{{status_code}}",
                      "refId": "A"
@@ -4922,7 +4922,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_bigtable_request_duration_seconds_count{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/GetTable\"}[5m])) by (status_code)",
+                     "expr": "sum(rate(loki_bigtable_request_duration_seconds_count{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/GetTable\"}[5m])) by (status_code)",
                      "intervalFactor": 1,
                      "legendFormat": "{{status_code}}",
                      "refId": "A"
@@ -5012,7 +5012,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_bigtable_request_duration_seconds_count{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/ListTables\"}[5m])) by (status_code)",
+                     "expr": "sum(rate(loki_bigtable_request_duration_seconds_count{cluster=\"$cluster\", namespace=\"$namespace\", operation=\"/google.bigtable.admin.v2.BigtableTableAdmin/ListTables\"}[5m])) by (status_code)",
                      "intervalFactor": 1,
                      "legendFormat": "{{status_code}}",
                      "refId": "A"
