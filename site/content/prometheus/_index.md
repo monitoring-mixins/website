@@ -314,6 +314,21 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### PrometheusScrapeBodySizeLimitHit
+
+{{< code lang="yaml" >}}
+alert: PrometheusScrapeBodySizeLimitHit
+annotations:
+  description: Prometheus {{$labels.instance}} has dropped {{ printf "%.0f" $value
+    }} targets because some targets exceeded the configured body_size_limit.
+  summary: Prometheus has dropped some targets that exceeded body size limit.
+expr: |
+  increase(prometheus_target_scrapes_exceeded_body_size_limit_total{job="prometheus"}[5m]) > 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### PrometheusTargetSyncFailure
 
 {{< code lang="yaml" >}}
