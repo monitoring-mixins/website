@@ -622,9 +622,9 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclienterrors
   summary: Kubernetes API server client is experiencing errors.
 expr: |
-  (sum(rate(rest_client_requests_total{code=~"5.."}[5m])) by (instance, job, namespace)
+  (sum(rate(rest_client_requests_total{code=~"5.."}[5m])) by (cluster, instance, job, namespace)
     /
-  sum(rate(rest_client_requests_total[5m])) by (instance, job, namespace))
+  sum(rate(rest_client_requests_total[5m])) by (cluster, instance, job, namespace))
   > 0.01
 for: 15m
 labels:
@@ -860,11 +860,11 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubelettoomanypods
   summary: Kubelet is running at capacity.
 expr: |
-  count by(node) (
+  count by(cluster, node) (
     (kube_pod_status_phase{job="kube-state-metrics",phase="Running"} == 1) * on(instance,pod,namespace,cluster) group_left(node) topk by(instance,pod,namespace,cluster) (1, kube_pod_info{job="kube-state-metrics"})
   )
   /
-  max by(node) (
+  max by(cluster, node) (
     kube_node_status_capacity{job="kube-state-metrics",resource="pods"} != 1
   ) > 0.95
 for: 15m
@@ -883,7 +883,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodereadinessflapping
   summary: Node readiness status is flapping.
 expr: |
-  sum(changes(kube_node_status_condition{status="true",condition="Ready"}[15m])) by (node) > 2
+  sum(changes(kube_node_status_condition{status="true",condition="Ready"}[15m])) by (cluster, node) > 2
 for: 15m
 labels:
   severity: warning
@@ -2028,8 +2028,8 @@ record: cluster_quantile:scheduler_binding_duration_seconds:histogram_quantile
 
 {{< code lang="yaml" >}}
 expr: |
-  topk by(namespace, pod) (1,
-    max by (node, namespace, pod) (
+  topk by(cluster, namespace, pod) (1,
+    max by (cluster, node, namespace, pod) (
       label_replace(kube_pod_info{job="kube-state-metrics",node!=""}, "pod", "$1", "pod", "(.*)")
   ))
 record: 'node_namespace_pod:kube_pod_info:'
