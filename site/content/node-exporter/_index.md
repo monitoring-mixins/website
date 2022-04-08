@@ -316,7 +316,7 @@ annotations:
   summary: Kernel is predicted to exhaust file descriptors limit soon.
 expr: |
   (
-    node_filefd_allocated{job="node-exporter"} * 100 / node_filefd_maximum{job="node-exporter"} > 70
+    node_filefd_allocated{job="node"} * 100 / node_filefd_maximum{job="node"} > 70
   )
 for: 15m
 labels:
@@ -333,7 +333,7 @@ annotations:
   summary: Kernel is predicted to exhaust file descriptors limit soon.
 expr: |
   (
-    node_filefd_allocated{job="node-exporter"} * 100 / node_filefd_maximum{job="node-exporter"} > 90
+    node_filefd_allocated{job="node"} * 100 / node_filefd_maximum{job="node"} > 90
   )
 for: 15m
 labels:
