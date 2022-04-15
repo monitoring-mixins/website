@@ -576,6 +576,64 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### KubePersistentVolumeInodesFillingUp
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeinodesfillingup
+
+{{< code lang="yaml" >}}
+alert: KubePersistentVolumeInodesFillingUp
+annotations:
+  description: The PersistentVolume claimed by {{ $labels.persistentvolumeclaim }}
+    in Namespace {{ $labels.namespace }} only has {{ $value | humanizePercentage }}
+    free inodes.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeinodesfillingup
+  summary: PersistentVolumeInodes are filling up.
+expr: |
+  (
+    kubelet_volume_stats_inodes_free{job="kubelet"}
+      /
+    kubelet_volume_stats_inodes{job="kubelet"}
+  ) < 0.03
+  and
+  kubelet_volume_stats_inodes_used{job="kubelet"} > 0
+  unless on(namespace, persistentvolumeclaim)
+  kube_persistentvolumeclaim_access_mode{ access_mode="ReadOnlyMany"} == 1
+  unless on(namespace, persistentvolumeclaim)
+  kube_persistentvolumeclaim_labels{label_excluded_from_alerts="true"} == 1
+for: 1m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### KubePersistentVolumeInodesFillingUp
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeinodesfillingup
+
+{{< code lang="yaml" >}}
+alert: KubePersistentVolumeInodesFillingUp
+annotations:
+  description: Based on recent sampling, the PersistentVolume claimed by {{ $labels.persistentvolumeclaim
+    }} in Namespace {{ $labels.namespace }} is expected to run out of inodes within
+    four days. Currently {{ $value | humanizePercentage }} of its inodes are free.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeinodesfillingup
+  summary: PersistentVolumeInodes are filling up.
+expr: |
+  (
+    kubelet_volume_stats_inodes_free{job="kubelet"}
+      /
+    kubelet_volume_stats_inodes{job="kubelet"}
+  ) < 0.15
+  and
+  kubelet_volume_stats_inodes_used{job="kubelet"} > 0
+  and
+  predict_linear(kubelet_volume_stats_inodes_free{job="kubelet"}[6h], 4 * 24 * 3600) < 0
+  unless on(namespace, persistentvolumeclaim)
+  kube_persistentvolumeclaim_access_mode{ access_mode="ReadOnlyMany"} == 1
+  unless on(namespace, persistentvolumeclaim)
+  kube_persistentvolumeclaim_labels{label_excluded_from_alerts="true"} == 1
+for: 1h
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### KubePersistentVolumeErrors
 https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeerrors
 
