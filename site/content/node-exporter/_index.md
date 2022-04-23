@@ -67,10 +67,10 @@ alert: NodeFilesystemAlmostOutOfSpace
 annotations:
   description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
     {{ printf "%.2f" $value }}% available space left.
-  summary: Filesystem has less than 5% space left.
+  summary: Filesystem has less than 3% space left.
 expr: |
   (
-    node_filesystem_avail_bytes{job="node",fstype!=""} / node_filesystem_size_bytes{job="node",fstype!=""} * 100 < 5
+    node_filesystem_avail_bytes{job="node",fstype!=""} / node_filesystem_size_bytes{job="node",fstype!=""} * 100 < 3
   and
     node_filesystem_readonly{job="node",fstype!=""} == 0
   )
@@ -86,10 +86,10 @@ alert: NodeFilesystemAlmostOutOfSpace
 annotations:
   description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
     {{ printf "%.2f" $value }}% available space left.
-  summary: Filesystem has less than 3% space left.
+  summary: Filesystem has less than 5% space left.
 expr: |
   (
-    node_filesystem_avail_bytes{job="node",fstype!=""} / node_filesystem_size_bytes{job="node",fstype!=""} * 100 < 3
+    node_filesystem_avail_bytes{job="node",fstype!=""} / node_filesystem_size_bytes{job="node",fstype!=""} * 100 < 5
   and
     node_filesystem_readonly{job="node",fstype!=""} == 0
   )
