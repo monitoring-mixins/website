@@ -548,7 +548,7 @@
       },
       {
          "collapse": false,
-         "height": "250px",
+         "collapsed": false,
          "panels": [
             {
                "aliasColors": { },
@@ -557,6 +557,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "gridPos": { },
                "id": 7,
                "legend": {
                   "avg": false,
@@ -631,6 +632,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "gridPos": { },
                "id": 8,
                "legend": {
                   "avg": false,
@@ -711,19 +713,7 @@
                      "show": false
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Ingester",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -731,6 +721,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "gridPos": { },
                "id": 9,
                "legend": {
                   "avg": false,
@@ -819,6 +810,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "gridPos": { },
                "id": 10,
                "legend": {
                   "avg": false,
@@ -885,19 +877,7 @@
                      "show": false
                   }
                ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "",
-         "titleSize": "h6"
-      },
-      {
-         "collapse": false,
-         "height": "250px",
-         "panels": [
+            },
             {
                "aliasColors": { },
                "bars": false,
@@ -905,6 +885,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
+               "gridPos": { },
                "id": 11,
                "legend": {
                   "avg": false,
@@ -925,7 +906,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 6,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -981,6 +962,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 10,
+               "gridPos": { },
                "id": 12,
                "legend": {
                   "avg": false,
@@ -1001,7 +983,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 6,
                "stack": true,
                "steppedLine": false,
                "targets": [
@@ -1057,6 +1039,7 @@
                "dashes": false,
                "datasource": "$datasource",
                "fill": 1,
+               "gridPos": { },
                "id": 13,
                "legend": {
                   "avg": false,
@@ -1077,7 +1060,7 @@
                "renderer": "flot",
                "seriesOverrides": [ ],
                "spaceLength": 10,
-               "span": 4,
+               "span": 6,
                "stack": false,
                "steppedLine": false,
                "targets": [
@@ -1131,8 +1114,9 @@
          "repeatIteration": null,
          "repeatRowId": null,
          "showTitle": true,
-         "title": "",
-         "titleSize": "h6"
+         "title": "Ingester",
+         "titleSize": "h6",
+         "type": "row"
       }
    ],
    "schemaVersion": 14,

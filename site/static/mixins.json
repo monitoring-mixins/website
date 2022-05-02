@@ -114,6 +114,11 @@
             "name": "promtail",
             "source": "https://github.com/grafana/loki",
             "subdir": "production/promtail-mixin"
+        },
+        {
+            "name": "promscale",
+            "source": "https://github.com/timescale/promscale",
+            "subdir": "docs/mixin"
         }
     ]
 }
