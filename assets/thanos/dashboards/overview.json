@@ -2142,29 +2142,6 @@
             "query": "5m,10m,30m,1h,6h,12h",
             "refresh": 2,
             "type": "interval"
-         },
-         {
-            "allValue": null,
-            "current": {
-               "text": "all",
-               "value": "$__all"
-            },
-            "datasource": "$datasource",
-            "hide": 0,
-            "includeAll": true,
-            "label": "job",
-            "multi": false,
-            "name": "job",
-            "options": [ ],
-            "query": "label_values(up{job=~\".*thanos-store.*\"}, job)",
-            "refresh": 1,
-            "regex": "",
-            "sort": 2,
-            "tagValuesQuery": "",
-            "tags": [ ],
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
          }
       ]
    },
