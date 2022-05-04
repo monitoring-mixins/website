@@ -474,4 +474,5 @@ Following dashboards are generated from mixins and hosted on github:
 
 - [node-cluster-rsrc-use](https://github.com/monitoring-mixins/website/blob/master/assets/node-exporter/dashboards/node-cluster-rsrc-use.json)
 - [node-rsrc-use](https://github.com/monitoring-mixins/website/blob/master/assets/node-exporter/dashboards/node-rsrc-use.json)
+- [nodes-darwin](https://github.com/monitoring-mixins/website/blob/master/assets/node-exporter/dashboards/nodes-darwin.json)
 - [nodes](https://github.com/monitoring-mixins/website/blob/master/assets/node-exporter/dashboards/nodes.json)

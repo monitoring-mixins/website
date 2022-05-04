@@ -246,36 +246,43 @@
                "seriesOverrides": [ ],
                "spaceLength": 10,
                "span": 9,
-               "stack": true,
+               "stack": false,
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "(\n  node_memory_MemTotal_bytes{job=\"node\", instance=\"$instance\"}\n-\n  node_memory_MemFree_bytes{job=\"node\", instance=\"$instance\"}\n-\n  node_memory_Buffers_bytes{job=\"node\", instance=\"$instance\"}\n-\n  node_memory_Cached_bytes{job=\"node\", instance=\"$instance\"}\n)\n",
+                     "expr": "node_memory_total_bytes{job=\"node\", instance=\"$instance\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "memory used",
+                     "legendFormat": "Physical Memory",
                      "refId": "A"
                   },
                   {
-                     "expr": "node_memory_Buffers_bytes{job=\"node\", instance=\"$instance\"}",
+                     "expr": "(\n    node_memory_internal_bytes{job=\"node\", instance=\"$instance\"} -\n    node_memory_purgeable_bytes{job=\"node\", instance=\"$instance\"} +\n    node_memory_wired_bytes{job=\"node\", instance=\"$instance\"} +\n    node_memory_compressed_bytes{job=\"node\", instance=\"$instance\"}\n)\n",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "memory buffers",
+                     "legendFormat": "Memory Used",
                      "refId": "B"
                   },
                   {
-                     "expr": "node_memory_Cached_bytes{job=\"node\", instance=\"$instance\"}",
+                     "expr": "(\n    node_memory_internal_bytes{job=\"node\", instance=\"$instance\"} -\n    node_memory_purgeable_bytes{job=\"node\", instance=\"$instance\"}\n)\n",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "memory cached",
+                     "legendFormat": "App Memory",
                      "refId": "C"
                   },
                   {
-                     "expr": "node_memory_MemFree_bytes{job=\"node\", instance=\"$instance\"}",
+                     "expr": "node_memory_wired_bytes{job=\"node\", instance=\"$instance\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "memory free",
+                     "legendFormat": "Wired Memory",
                      "refId": "D"
+                  },
+                  {
+                     "expr": "node_memory_compressed_bytes{job=\"node\", instance=\"$instance\"}",
+                     "format": "time_series",
+                     "intervalFactor": 2,
+                     "legendFormat": "Compressed",
+                     "refId": "E"
                   }
                ],
                "thresholds": [ ],
@@ -344,7 +351,7 @@
                "span": 3,
                "targets": [
                   {
-                     "expr": "100 -\n(\n  avg(node_memory_MemAvailable_bytes{job=\"node\", instance=\"$instance\"}) /\n  avg(node_memory_MemTotal_bytes{job=\"node\", instance=\"$instance\"})\n* 100\n)\n",
+                     "expr": "(\n    (\n      avg(node_memory_internal_bytes{job=\"node\", instance=\"$instance\"}) -\n      avg(node_memory_purgeable_bytes{job=\"node\", instance=\"$instance\"}) +\n      avg(node_memory_wired_bytes{job=\"node\", instance=\"$instance\"}) +\n      avg(node_memory_compressed_bytes{job=\"node\", instance=\"$instance\"})\n    ) /\n    avg(node_memory_total_bytes{job=\"node\", instance=\"$instance\"})\n)\n*\n100\n",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": ""
@@ -784,7 +791,7 @@
             "multi": false,
             "name": "instance",
             "options": [ ],
-            "query": "label_values(node_uname_info{job=\"node\", sysname!=\"Darwin\"}, instance)",
+            "query": "label_values(node_uname_info{job=\"node\", sysname=\"Darwin\"}, instance)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -826,6 +833,6 @@
       ]
    },
    "timezone": "utc",
-   "title": "Node Exporter / Nodes",
+   "title": "Node Exporter / MacOS",
    "version": 0
 }
