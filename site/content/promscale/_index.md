@@ -283,14 +283,14 @@ labels:
  
 ### promscale-database-connection
 
-##### PromscaleStorageHighErrorRate
+##### PromscaleDBHighErrorRate
 
 {{< code lang="yaml" >}}
-alert: PromscaleStorageHighErrorRate
+alert: PromscaleDBHighErrorRate
 annotations:
   description: Promscale connection with the database has an error of {{ $value |
     humanizePercentage }}.
-  runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleStorageHighErrorRate.md
+  runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleDBHighErrorRate.md
   summary: Promscale experiences a high error rate when connecting to the database
 expr: |
   (
