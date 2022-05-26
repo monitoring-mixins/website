@@ -101,7 +101,7 @@ annotations:
     to reconcile {{ $labels.controller }} resources.
   summary: Prometheus operator not ready
 expr: |
-  min by(namespace, controller) (max_over_time(prometheus_operator_ready{job="prometheus-operator"}[5m]) == 0)
+  min by (controller,namespace) (max_over_time(prometheus_operator_ready{job="prometheus-operator"}[5m]) == 0)
 for: 5m
 labels:
   severity: warning
