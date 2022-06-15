@@ -58,7 +58,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(promtail_targets_active_total{cluster=~\"$cluster\", namespace=~\"$namespace\"})",
+                     "expr": "sum(promtail_targets_active_total{cluster~\"$cluster\", namespace=~\"$namespace\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Active Targets",
@@ -134,7 +134,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(promtail_files_active_total{cluster=~\"$cluster\", namespace=~\"$namespace\"})",
+                     "expr": "sum(promtail_files_active_total{cluster~\"$cluster\", namespace=~\"$namespace\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Active Targets",
@@ -222,7 +222,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(promtail_read_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[1m]))",
+                     "expr": "sum(rate(promtail_read_bytes_total{cluster~\"$cluster\", namespace=~\"$namespace\"}[1m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "logs read",
@@ -298,7 +298,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(promtail_read_lines_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[1m]))",
+                     "expr": "sum(rate(promtail_read_lines_total{cluster~\"$cluster\", namespace=~\"$namespace\"}[1m]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "lines read",
@@ -394,7 +394,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(promtail_request_duration_seconds_count{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
+                     "expr": "sum by (status) (\n  label_replace(label_replace(rate(promtail_request_duration_seconds_count{cluster~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]),\n  \"status\", \"${1}xx\", \"status_code\", \"([0-9])..\"),\n  \"status\", \"${1}\", \"status_code\", \"([a-z]+)\"))\n",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{status}}",
