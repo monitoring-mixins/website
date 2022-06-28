@@ -23,9 +23,9 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 {{< code lang="yaml" >}}
 alert: PromscaleDown
 annotations:
-  description: No Promscale instance was found.
+  description: '{{ $labels.instance }} of job {{ $labels.job }} is down.'
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleDown.md
-  summary: Promscale is down
+  summary: Promscale is down.
 expr: absent(up{job=~".*promscale.*"})
 labels:
   severity: critical
@@ -41,7 +41,7 @@ annotations:
   description: Promscale ingestion is having a {{ $value | humanizePercentage }} error
     rate.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleIngestHighErrorRate.md
-  summary: High error rate in Promscale ingestion
+  summary: High error rate in Promscale ingestion.
 expr: |
   (
     sum by (job, instance, type) (
@@ -64,7 +64,7 @@ annotations:
   description: Promscale ingestion is having a {{ $value | humanizePercentage }} error
     rate.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleIngestHighErrorRate.md
-  summary: High error rate in Promscale ingestion
+  summary: High error rate in Promscale ingestion.
 expr: |
   (
     sum by (job, instance, type) (
@@ -87,7 +87,7 @@ annotations:
   description: Slowest 10% of ingestion batch took more than {{ $value }} seconds
     to ingest.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleIngestHighLatency.md
-  summary: Slow Promscale ingestion
+  summary: Slow Promscale ingestion.
 expr: |
   (
     histogram_quantile(
@@ -114,7 +114,7 @@ annotations:
   description: Slowest 10% of ingestion batch took more than {{ $value }} seconds
     to ingest.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleIngestHighLatency.md
-  summary: Slow Promscale ingestion
+  summary: Slow Promscale ingestion.
 expr: |
   (
     histogram_quantile(
@@ -143,7 +143,7 @@ annotations:
   description: Evaluating queries via Promscale has {{ $value | humanizePercentage
     }} error rate.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleQueryHighErrorRate.md
-  summary: High error rate in querying Promscale
+  summary: High error rate in querying Promscale.
 expr: |
   (
     sum by (job, instance, type) (
@@ -166,7 +166,7 @@ annotations:
   description: Evaluating queries via Promscale had {{ $value | humanizePercentage
     }} error rate.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleQueryHighErrorRate.md
-  summary: High error rate in querying Promscale
+  summary: High error rate in querying Promscale.
 expr: |
   (
     sum by (job, instance, type) (
@@ -188,7 +188,7 @@ alert: PromscaleQueryHighLatency
 annotations:
   description: Slowest 10% of the queries took more than {{ $value }} seconds to evaluate.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleQueryHighLatency.md
-  summary: Slow Promscale querying
+  summary: Slow Promscale querying.
 expr: |
   (
     histogram_quantile(
@@ -214,7 +214,7 @@ alert: PromscaleQueryHighLatency
 annotations:
   description: Slowest 10% of the queries took {{ $value }} seconds to evaluate.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleQueryHighLatency.md
-  summary: Slow Promscale querying
+  summary: Slow Promscale querying.
 expr: |
   (
     histogram_quantile(
@@ -243,7 +243,7 @@ annotations:
   description: Promscale {{ $labels.name }} is evicting at {{ $value }} entries a
     second.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleCacheHighNumberOfEvictions.md
-  summary: High cache eviction in Promscale
+  summary: High cache eviction in Promscale.
 expr: |
   (
     sum by (job, instance, name, type) (
@@ -266,7 +266,7 @@ annotations:
   description: Promscale {{ $labels.name }} has a hit ratio of {{ $value | humanizePercentage
     }}.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleCacheTooSmall.md
-  summary: High cache eviction in Promscale
+  summary: High cache eviction in Promscale.
 expr: |
   (
     sum by (job, instance, type, name) (
@@ -291,7 +291,7 @@ annotations:
   description: Promscale connection with the database has an error of {{ $value |
     humanizePercentage }}.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleDBHighErrorRate.md
-  summary: Promscale experiences a high error rate when connecting to the database
+  summary: Promscale experiences a high error rate when connecting to the database.
 expr: |
   (
     sum by (job) (
@@ -315,7 +315,7 @@ annotations:
   description: Slowest 10% of database requests are taking more than {{ $value }}
     seconds to respond.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleStorageHighLatency.md
-  summary: Slow database response
+  summary: Slow database response.
 expr: |
   (
     histogram_quantile(0.9,
@@ -342,7 +342,7 @@ annotations:
   description: Promscale connection with the database has an error of {{ $value |
     humanizePercentage }}.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleStorageUnhealthy.md
-  summary: Promscale database is unhealthy
+  summary: Promscale database is unhealthy.
 expr: |
   (
     sum by (job) (
@@ -365,7 +365,7 @@ annotations:
   description: Promscale Database is taking {{ $value }} seconds to respond to Promscale's
     requests.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleMaintenanceJobRunningTooLong.md
-  summary: Promscale maintenance jobs taking too long to complete
+  summary: Promscale maintenance jobs taking too long to complete.
 expr: |
   (
     (
@@ -389,9 +389,10 @@ labels:
 {{< code lang="yaml" >}}
 alert: PromscaleMaintenanceJobFailures
 annotations:
-  description: Promscale maintenance job failed to successfully execute.
+  description: Maintenance job for Promscale instance {{ $labels.instance }} failed
+    to successfully execute.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleMaintenanceJobFailures.md
-  summary: Promscale maintenance job failed
+  summary: Promscale maintenance job failed.
 expr: promscale_sql_database_worker_maintenance_job_failed == 1
 labels:
   severity: warning
@@ -405,7 +406,7 @@ annotations:
   description: High uncompressed data in Promscale, on average, {{ $value }} uncompressed
     chunks per metric.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleCompressionLow.md
-  summary: High uncompressed data
+  summary: High uncompressed data.
 expr: |
   (
     (
