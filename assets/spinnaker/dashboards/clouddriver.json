@@ -29,7 +29,7 @@
          "collapsed": false,
          "panels": [
             {
-               "content": "This srvice is the main integration point for Spinnaker cloud providers like AWS, Azure, CloudFoundry, GCP, Kubernetes, etc.",
+               "content": "This service is the main integration point for Spinnaker cloud providers like AWS, Azure, CloudFoundry, GCP, Kubernetes, etc.",
                "datasource": null,
                "gridPos": { },
                "id": 2,
@@ -345,10 +345,10 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(controller_invocations_total{job=~\"$job\", instance=~\"$Instance\",account=~\"$Account\"}[$__rate_interval])) by (controller, method)",
+                     "expr": "sum(rate(operations_seconds_sum{success!=\"true\"}[$__rate_interval])) by (OperationType)\n/\nsum(rate(operations_seconds_count[$__rate_interval])) by (OperationType)",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{controller}}/{{method}}",
+                     "legendFormat": "{{OperationType}}",
                      "refId": "A"
                   }
                ],
@@ -426,18 +426,11 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(operations_seconds_sum{success!=\"true\"}[$__rate_interval])) by (OperationType)\n/\nsum(rate(operations_seconds_count[$__rate_interval])) by (OperationType)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{OperationType}}",
-                     "refId": "A"
-                  },
-                  {
                      "expr": "sum(rate(controller_invocations_seconds_sum{job=~\"$job\", instance=~\"$Instance\",account=~\"$Account\"}[$__rate_interval])) by (controller, method) \n/\nsum(rate(controller_invocations_seconds_count{job=~\"$job\", instance=~\"$Instance\",account=~\"$Account\"}[$__rate_interval])) by (controller, method)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{controller}}/{{method}}",
-                     "refId": "B"
+                     "refId": "A"
                   }
                ],
                "thresholds": [ ],
