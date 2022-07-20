@@ -369,7 +369,7 @@ annotations:
     capacity in its query engine for the last 15 minutes.
   summary: Prometheus is reaching its maximum capacity serving concurrent requests.
 expr: |
-  avg_over_time(prometheus_engine_queries{job="prometheus-k8s"}[5m]) / max_over_time(prometheus_engine_queries_concurrent_max{job="prometheus-k8s"}[5m]) > 0.8
+  avg_over_time(prometheus_engine_queries{job="prometheus"}[5m]) / max_over_time(prometheus_engine_queries_concurrent_max{job="prometheus"}[5m]) > 0.8
 for: 15m
 labels:
   severity: warning
