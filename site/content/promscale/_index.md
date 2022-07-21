@@ -246,37 +246,10 @@ annotations:
   summary: High cache eviction in Promscale.
 expr: |
   (
-    sum by (job, instance, name, type) (
-      rate(promscale_cache_evictions_total[5m])
-    )
-  /
-    sum by (job, instance, name, type) (
-      promscale_cache_capacity_elements
-    )
+    rate(promscale_cache_evictions_total[5m])
+    /
+    promscale_cache_capacity_elements
   ) > 0.2
-labels:
-  severity: warning
-{{< /code >}}
- 
-##### PromscaleCacheTooSmall
-
-{{< code lang="yaml" >}}
-alert: PromscaleCacheTooSmall
-annotations:
-  description: Promscale {{ $labels.name }} has a hit ratio of {{ $value | humanizePercentage
-    }}.
-  runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleCacheTooSmall.md
-  summary: High cache eviction in Promscale.
-expr: |
-  (
-    sum by (job, instance, type, name) (
-      rate(promscale_cache_query_hits_total[5m])
-    )
-  /
-    sum by (job, instance, type, name) (
-      rate(promscale_cache_queries_total[5m])
-    )
-  ) < 0.9
 labels:
   severity: warning
 {{< /code >}}

@@ -143,7 +143,7 @@ groups:
     for: 10m
     labels:
       severity: warning
-  - alert: etcdBackendQuotaLowSpace
+  - alert: etcdDatabaseQuotaLowSpace
     annotations:
       description: 'etcd cluster "{{ $labels.job }}": database size exceeds the defined
         quota on etcd instance {{ $labels.instance }}, please defrag or increase the

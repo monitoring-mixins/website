@@ -217,10 +217,10 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### etcdBackendQuotaLowSpace
+##### etcdDatabaseQuotaLowSpace
 
 {{< code lang="yaml" >}}
-alert: etcdBackendQuotaLowSpace
+alert: etcdDatabaseQuotaLowSpace
 annotations:
   description: 'etcd cluster "{{ $labels.job }}": database size exceeds the defined
     quota on etcd instance {{ $labels.instance }}, please defrag or increase the quota
