@@ -244,15 +244,15 @@ annotations:
   summary: Clock skew detected.
 expr: |
   (
-    node_timex_offset_seconds > 0.05
+    node_timex_offset_seconds{job="node"} > 0.05
   and
-    deriv(node_timex_offset_seconds[5m]) >= 0
+    deriv(node_timex_offset_seconds{job="node"}[5m]) >= 0
   )
   or
   (
-    node_timex_offset_seconds < -0.05
+    node_timex_offset_seconds{job="node"} < -0.05
   and
-    deriv(node_timex_offset_seconds[5m]) <= 0
+    deriv(node_timex_offset_seconds{job="node"}[5m]) <= 0
   )
 for: 10m
 labels:
@@ -268,9 +268,9 @@ annotations:
     configured on this host.
   summary: Clock not synchronising.
 expr: |
-  min_over_time(node_timex_sync_status[5m]) == 0
+  min_over_time(node_timex_sync_status{job="node"}[5m]) == 0
   and
-  node_timex_maxerror_seconds >= 16
+  node_timex_maxerror_seconds{job="node"} >= 16
 for: 10m
 labels:
   severity: warning
@@ -286,7 +286,7 @@ annotations:
     to fix issue automatically.
   summary: RAID Array is degraded
 expr: |
-  node_md_disks_required - ignoring (state) (node_md_disks{state="active"}) > 0
+  node_md_disks_required{job="node",device!=""} - ignoring (state) (node_md_disks{state="active",job="node",device!=""}) > 0
 for: 15m
 labels:
   severity: critical
@@ -301,7 +301,7 @@ annotations:
     Array '{{ $labels.device }}' needs attention and possibly a disk swap.
   summary: Failed device in RAID array
 expr: |
-  node_md_disks{state="failed"} > 0
+  node_md_disks{state="failed",job="node",device!=""} > 0
 labels:
   severity: warning
 {{< /code >}}
