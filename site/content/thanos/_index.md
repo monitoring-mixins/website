@@ -258,6 +258,28 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### ThanosQueryOverload
+https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosqueryoverload
+
+{{< code lang="yaml" >}}
+alert: ThanosQueryOverload
+annotations:
+  description: Thanos Query {{$labels.job}} has been overloaded for more than 15 minutes.
+    This may be a symptom of excessive simultanous complex requests, low performance
+    of the Prometheus API, or failures within these components. Assess the health
+    of the Thanos query instances, the connnected Prometheus instances, look for potential
+    senders of these requests and then contact support.
+  runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosqueryoverload
+  summary: Thanos query reaches its maximum capacity serving concurrent requests.
+expr: |
+  (
+    max_over_time(thanos_query_concurrent_gate_queries_max[5m]) - avg_over_time(thanos_query_concurrent_gate_queries_in_flight[5m]) < 1
+  )
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ### thanos-receive
 
 ##### ThanosReceiveHttpRequestErrorRateHigh
