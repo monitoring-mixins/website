@@ -318,7 +318,7 @@ annotations:
   description: HPA {{ $labels.namespace }}/{{ $labels.horizontalpodautoscaler  }}
     has not matched the desired number of replicas for longer than 15 minutes.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubehpareplicasmismatch
-  summary: HPA has not matched descired number of replicas.
+  summary: HPA has not matched desired number of replicas.
 expr: |
   (kube_horizontalpodautoscaler_status_desired_replicas{job="kube-state-metrics"}
     !=
