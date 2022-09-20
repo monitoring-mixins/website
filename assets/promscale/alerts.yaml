@@ -271,6 +271,23 @@ groups:
       )
     labels:
       severity: warning
+  - alert: PromscaleMaintenanceJobNotKeepingup
+    annotations:
+      description: The amount of work for the promscale maintenance {{ $labels.name
+        }} job is not decreasing for long time.
+      runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleMaintenanceJobRunningTooLong.md
+      summary: Promscale maintenance jobs are not keeping up.
+    expr: "(\n    (\n      min_over_time(promscale_sql_database_chunks_metrics_uncompressed_count[1h])
+      > 10\n    )\n  and\n    (\n      delta(promscale_sql_database_chunks_metrics_uncompressed_count[10m])
+      > 0\n    )\n)\nor\n(\n    (\n      min_over_time(promscale_sql_database_chunks_metrics_expired_count[1h])
+      > 10\n    )\n  and\n    (\n      delta(promscale_sql_database_chunks_metrics_expired_count[10m])
+      > 0\n    )\n)      \nor\n(\n    (\n      min_over_time(promscale_sql_database_chunks_traces_uncompressed_count[1h])
+      > 10\n    )\n  and\n    (\n      delta(promscale_sql_database_chunks_traces_uncompressed_count[10m])
+      > 0\n    )\n)      \nor\n(\n    (\n      min_over_time(promscale_sql_database_chunks_traces_expired_count[1h])
+      > 10\n    )\n  and\n    (\n      delta(promscale_sql_database_chunks_traces_expired_count[10m])
+      > 0\n    )\n)      \n"
+    labels:
+      severity: warning
   - alert: PromscaleMaintenanceJobFailures
     annotations:
       description: Maintenance job for Promscale instance {{ $labels.instance }} failed

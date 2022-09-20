@@ -357,6 +357,67 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### PromscaleMaintenanceJobNotKeepingup
+
+{{< code lang="yaml" >}}
+alert: PromscaleMaintenanceJobNotKeepingup
+annotations:
+  description: The amount of work for the promscale maintenance {{ $labels.name }}
+    job is not decreasing for long time.
+  runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleMaintenanceJobRunningTooLong.md
+  summary: Promscale maintenance jobs are not keeping up.
+expr: "(
+    (
+      min_over_time(promscale_sql_database_chunks_metrics_uncompressed_count[1h])
+  > 10
+    )
+  and
+    (
+      delta(promscale_sql_database_chunks_metrics_uncompressed_count[10m])
+  > 0
+    )
+)
+or
+(
+    (
+      min_over_time(promscale_sql_database_chunks_metrics_expired_count[1h])
+  > 10
+    )
+  and
+    (
+      delta(promscale_sql_database_chunks_metrics_expired_count[10m])
+  > 0
+    )
+)      
+or
+(
+    (
+      min_over_time(promscale_sql_database_chunks_traces_uncompressed_count[1h])
+  > 10
+    )
+  and
+    (
+      delta(promscale_sql_database_chunks_traces_uncompressed_count[10m])
+  > 0
+    )
+)      
+or
+(
+    (
+      min_over_time(promscale_sql_database_chunks_traces_expired_count[1h])
+  > 10
+    )
+  and
+    (
+      delta(promscale_sql_database_chunks_traces_expired_count[10m])
+  > 0
+    )
+)      
+"
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### PromscaleMaintenanceJobFailures
 
 {{< code lang="yaml" >}}
