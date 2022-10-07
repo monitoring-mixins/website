@@ -786,6 +786,7 @@ annotations:
   summary: Client certificate is about to expire.
 expr: |
   apiserver_client_certificate_expiration_seconds_count{job="kube-apiserver"} > 0 and on(job) histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job="kube-apiserver"}[5m]))) < 604800
+for: 5m
 labels:
   severity: warning
 {{< /code >}}
@@ -802,6 +803,7 @@ annotations:
   summary: Client certificate is about to expire.
 expr: |
   apiserver_client_certificate_expiration_seconds_count{job="kube-apiserver"} > 0 and on(job) histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job="kube-apiserver"}[5m]))) < 86400
+for: 5m
 labels:
   severity: critical
 {{< /code >}}
