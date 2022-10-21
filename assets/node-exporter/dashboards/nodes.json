@@ -574,14 +574,14 @@
                "span": 6,
                "targets": [
                   {
-                     "expr": "max by (mountpoint) (node_filesystem_size_bytes{job=\"node\", instance=\"$instance\", fstype!=\"\"})\n",
+                     "expr": "max by (mountpoint) (node_filesystem_size_bytes{job=\"node\", instance=\"$instance\", fstype!=\"\", mountpoint!=\"\"})\n",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
                      "legendFormat": ""
                   },
                   {
-                     "expr": "max by (mountpoint) (node_filesystem_avail_bytes{job=\"node\", instance=\"$instance\", fstype!=\"\"})\n",
+                     "expr": "max by (mountpoint) (node_filesystem_avail_bytes{job=\"node\", instance=\"$instance\", fstype!=\"\", mountpoint!=\"\"})\n",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
