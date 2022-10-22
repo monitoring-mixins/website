@@ -44,11 +44,11 @@ annotations:
   summary: High error rate in Promscale ingestion.
 expr: |
   (
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
       rate(promscale_ingest_requests_total{code=~"5.."}[5m])
     )
   /
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
       rate(promscale_ingest_requests_total[5m])
     )
   ) > 0.05
@@ -67,11 +67,11 @@ annotations:
   summary: High error rate in Promscale ingestion.
 expr: |
   (
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
       rate(promscale_ingest_requests_total{code=~"5.."}[5m])
     )
   /
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
       rate(promscale_ingest_requests_total[5m])
     )
   ) > 0.1
@@ -92,12 +92,12 @@ expr: |
   (
     histogram_quantile(
       0.90,
-      sum by (job, instance, type, le) (
+      sum by (job, instance, namespace, type, le) (
         rate(promscale_ingest_duration_seconds_bucket[5m])
       )
     ) > 10
   and
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
         rate(promscale_ingest_duration_seconds_bucket[5m])
     )
   ) > 0
@@ -119,12 +119,12 @@ expr: |
   (
     histogram_quantile(
       0.90,
-      sum by (job, instance, type, le) (
+      sum by (job, instance, namespace, type, le) (
         rate(promscale_ingest_duration_seconds_bucket[5m])
       )
     ) > 30
   and
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
         rate(promscale_ingest_duration_seconds_bucket[5m])
     )
   ) > 0
@@ -146,11 +146,11 @@ annotations:
   summary: High error rate in querying Promscale.
 expr: |
   (
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
       rate(promscale_query_requests_total{code=~"5.."}[5m])
     )
   /
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
       rate(promscale_query_requests_total[5m])
     )
   ) > 0.05
@@ -169,11 +169,11 @@ annotations:
   summary: High error rate in querying Promscale.
 expr: |
   (
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
       rate(promscale_query_requests_total{code=~"5.."}[5m])
     )
   /
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
       rate(promscale_query_requests_total[5m])
     )
   ) > 0.1
@@ -193,12 +193,12 @@ expr: |
   (
     histogram_quantile(
       0.90,
-      sum by (job, instance, type, le) (
+      sum by (job, instance, namespace, type, le) (
         rate(promscale_query_duration_seconds_bucket[5m])
       )
     ) > 5
   and
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
       rate(promscale_query_duration_seconds_bucket[5m])
     ) > 0
   )
@@ -219,12 +219,12 @@ expr: |
   (
     histogram_quantile(
       0.90,
-      sum by (job, instance, type, le) (
+      sum by (job, instance, namespace, type, le) (
         rate(promscale_query_duration_seconds_bucket[5m])
       )
     ) > 10
   and
-    sum by (job, instance, type) (
+    sum by (job, instance, namespace, type) (
       rate(promscale_query_duration_seconds_bucket[5m])
     ) > 0
   )
@@ -267,12 +267,12 @@ annotations:
   summary: Promscale experiences a high error rate when connecting to the database.
 expr: |
   (
-    sum by (job) (
+    sum by (job, instance, namespace) (
       # Error counter exists for query, query_row & exec, and not for send_batch.
       rate(promscale_database_request_errors_total{method=~"query.*|exec"}[5m])
     )
   /
-    sum by (job) (
+    sum by (job, instance, namespace) (
       rate(promscale_database_requests_total{method=~"query.*|exec"}[5m])
     )
   ) > 0.05
@@ -292,12 +292,12 @@ annotations:
 expr: |
   (
     histogram_quantile(0.9,
-      sum by (le, job, type) (
+      sum by (job, instance, namespace, le) (
         rate(promscale_database_requests_duration_seconds_bucket[5m])
       )
     ) > 5
   and
-    sum by (job, type) (
+    sum by (job, instance, namespace) (
       rate(promscale_database_requests_duration_seconds_count[5m])
     ) > 0
   )
@@ -318,11 +318,11 @@ annotations:
   summary: Promscale database is unhealthy.
 expr: |
   (
-    sum by (job) (
+    sum by (job, instance, namespace) (
       rate(promscale_sql_database_health_check_errors_total[5m])
     )
   /
-    sum by (job) (
+    sum by (job, instance, namespace) (
       rate(promscale_sql_database_health_check_total[5m])
     )
   ) > 0.05
@@ -366,54 +366,46 @@ annotations:
     job is not decreasing for long time.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleMaintenanceJobRunningTooLong.md
   summary: Promscale maintenance jobs are not keeping up.
-expr: "(
-    (
-      min_over_time(promscale_sql_database_chunks_metrics_uncompressed_count[1h])
-  > 10
-    )
-  and
-    (
-      delta(promscale_sql_database_chunks_metrics_uncompressed_count[10m])
-  > 0
-    )
-)
-or
-(
-    (
-      min_over_time(promscale_sql_database_chunks_metrics_expired_count[1h])
-  > 10
-    )
-  and
-    (
-      delta(promscale_sql_database_chunks_metrics_expired_count[10m])
-  > 0
-    )
-)      
-or
-(
-    (
-      min_over_time(promscale_sql_database_chunks_traces_uncompressed_count[1h])
-  > 10
-    )
-  and
-    (
-      delta(promscale_sql_database_chunks_traces_uncompressed_count[10m])
-  > 0
-    )
-)      
-or
-(
-    (
-      min_over_time(promscale_sql_database_chunks_traces_expired_count[1h])
-  > 10
-    )
-  and
-    (
-      delta(promscale_sql_database_chunks_traces_expired_count[10m])
-  > 0
-    )
-)      
-"
+expr: |
+  (
+      (
+        min_over_time(promscale_sql_database_chunks_metrics_uncompressed_count[1h]) > 10
+      )
+    and
+      (
+        delta(promscale_sql_database_chunks_metrics_uncompressed_count[10m]) > 0
+      )
+  )
+  or
+  (
+      (
+        min_over_time(promscale_sql_database_chunks_metrics_expired_count[1h]) > 10
+      )
+    and
+      (
+        delta(promscale_sql_database_chunks_metrics_expired_count[10m]) > 0
+      )
+  )
+  or
+  (
+      (
+        min_over_time(promscale_sql_database_chunks_traces_uncompressed_count[1h]) > 10
+      )
+    and
+      (
+        delta(promscale_sql_database_chunks_traces_uncompressed_count[10m]) > 0
+      )
+  )
+  or
+  (
+      (
+        min_over_time(promscale_sql_database_chunks_traces_expired_count[1h]) > 10
+      )
+    and
+      (
+        delta(promscale_sql_database_chunks_traces_expired_count[10m]) > 0
+      )
+  )
 labels:
   severity: warning
 {{< /code >}}
