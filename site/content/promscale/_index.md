@@ -133,6 +133,21 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### PromscaleIngestHighDataDuplication
+
+{{< code lang="yaml" >}}
+alert: PromscaleIngestHighDataDuplication
+annotations:
+  description: More than {{ $value }} samples/sec are rejected as duplicates by promscale.
+  runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleIngestHighDataDuplication.md
+  summary: Duplicate data being inserted.
+expr: |
+  rate(promscale_ingest_duplicates_total{kind="sample"}[5m]) > 0
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ### promscale-query
 
 ##### PromscaleQueryHighErrorRate
