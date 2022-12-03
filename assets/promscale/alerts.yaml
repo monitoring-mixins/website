@@ -202,41 +202,40 @@ groups:
       severity: warning
 - name: promscale-database-connection
   rules:
-  - alert: PromscaleDBHighErrorRate
+  - alert: PromscaleStorageHighErrorRate
     annotations:
-      description: Promscale connection with the database has an error of {{ $value
-        | humanizePercentage }}.
+      description: Promscale connection with the database has an error rate of {{
+        $value | humanizePercentage }}.
       runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleDBHighErrorRate.md
       summary: Promscale experiences a high error rate when connecting to the database.
     expr: |
       (
-        sum by (job, instance, namespace) (
-          # Error counter exists for query, query_row & exec, and not for send_batch.
-          rate(promscale_database_request_errors_total{method=~"query.*|exec"}[5m])
+        sum by (job, instance, namespace, method) (
+          rate(promscale_database_request_errors_total[5m])
         )
       /
-        sum by (job, instance, namespace) (
-          rate(promscale_database_requests_total{method=~"query.*|exec"}[5m])
+        sum by (job, instance, namespace, method) (
+          rate(promscale_database_requests_total[5m])
         )
       ) > 0.05
     labels:
       severity: warning
   - alert: PromscaleStorageHighLatency
     annotations:
-      description: Slowest 10% of database requests are taking more than {{ $value
-        | humanizeDuration }} seconds to respond.
+      description: Slowest 10% of database requests with method {{ $labels.method
+        }} are taking more than {{ $value | humanizeDuration }} seconds to respond.
       runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleStorageHighLatency.md
       summary: Slow database response.
     expr: |
       (
         histogram_quantile(0.9,
-          sum by (job, instance, namespace, le) (
-            rate(promscale_database_requests_duration_seconds_bucket[5m])
+          sum by (job, instance, namespace, method, le) (
+            rate(promscale_database_requests_duration_seconds_bucket{method!="exec"}[5m])
           )
         ) > 5
       and
-        sum by (job, instance, namespace) (
-          rate(promscale_database_requests_duration_seconds_count[5m])
+        sum by (job, instance, namespace, method) (
+          rate(promscale_database_requests_duration_seconds_count{method!="exec"}[5m])
         ) > 0
       )
     labels:
