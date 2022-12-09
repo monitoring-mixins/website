@@ -124,6 +124,11 @@
             "name": "postgres-exporter",
             "source": "https://github.com/prometheus-community/postgres_exporter",
             "subdir": "postgres_mixin"
+        },
+        {
+            "name": "grafana",
+            "source": "https://github.com/grafana/grafana",
+            "subdir": "grafana-mixin"
         }
     ]
 }
