@@ -119,6 +119,11 @@
             "name": "promscale",
             "source": "https://github.com/timescale/promscale",
             "subdir": "docs/mixin"
+        },
+        {
+            "name": "postgres-exporter",
+            "source": "https://github.com/prometheus-community/postgres_exporter",
+            "subdir": "postgres_mixin"
         }
     ]
 }
