@@ -463,6 +463,27 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### PromscalePostgreSQLSharedBuffersLow
+
+{{< code lang="yaml" >}}
+alert: PromscalePostgreSQLSharedBuffersLow
+annotations:
+  description: Currently open chunks are {{ $value | humanizePercentage }} of PostgreSQL
+    shared_buffers. This will impact database performance.
+  runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscalePostgreSQLSharedBuffersLow.md
+  summary: Promscale database performance will be affected.
+expr: "(
+  ((promscale_sql_database_open_chunks_total_table_size + promscale_sql_database_open_chunks_total_index_size)
+  
+  / 
+  promscale_sql_database_shared_buffers_size)
+  > 1 )
+"
+for: 10m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 
