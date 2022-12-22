@@ -385,7 +385,7 @@ annotations:
 expr: |
   (
       (
-        min_over_time(promscale_sql_database_chunks_metrics_uncompressed_count[1h]) > 10
+        min_over_time(promscale_sql_database_chunks_metrics_uncompressed_count[1h]) > promscale_sql_database_metric_count
       )
     and
       (
@@ -395,7 +395,7 @@ expr: |
   or
   (
       (
-        min_over_time(promscale_sql_database_chunks_metrics_expired_count[1h]) > 10
+        min_over_time(promscale_sql_database_chunks_metrics_expired_count[1h]) > promscale_sql_database_metric_count
       )
     and
       (
@@ -405,7 +405,7 @@ expr: |
   or
   (
       (
-        min_over_time(promscale_sql_database_chunks_traces_uncompressed_count[1h]) > 10
+        min_over_time(promscale_sql_database_chunks_traces_uncompressed_count[1h]) > promscale_sql_database_metric_count
       )
     and
       (
@@ -415,7 +415,7 @@ expr: |
   or
   (
       (
-        min_over_time(promscale_sql_database_chunks_traces_expired_count[1h]) > 10
+        min_over_time(promscale_sql_database_chunks_traces_expired_count[1h]) > promscale_sql_database_metric_count
       )
     and
       (
