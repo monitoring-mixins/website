@@ -138,12 +138,13 @@ labels:
 {{< code lang="yaml" >}}
 alert: PromscaleIngestHighDataDuplication
 annotations:
-  description: More than {{ $value }} samples/sec are rejected as duplicates by promscale.
+  description: More than {{ $value | humanize }} samples/sec are rejected as duplicates
+    by promscale.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleIngestHighDataDuplication.md
   summary: Duplicate data being inserted.
 expr: |
-  rate(promscale_ingest_duplicates_total{kind="sample"}[5m]) > 0
-for: 5m
+  sum by (job, namespace) (rate(promscale_ingest_duplicates_total{kind="sample"}[15m])) > 0
+for: 30m
 labels:
   severity: warning
 {{< /code >}}
