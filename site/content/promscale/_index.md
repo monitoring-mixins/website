@@ -156,20 +156,43 @@ labels:
 {{< code lang="yaml" >}}
 alert: PromscaleQueryHighErrorRate
 annotations:
-  description: Evaluating queries via Promscale has {{ $value | humanizePercentage
-    }} error rate.
+  description: Evaluating queries via Promscale {{ $labels.handler }} endpoint has
+    {{ $value | humanizePercentage }} error rate.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleQueryHighErrorRate.md
   summary: High error rate in querying Promscale.
 expr: |
   (
-    sum by (job, instance, namespace, type) (
-      rate(promscale_query_requests_total{code=~"5.."}[5m])
+    sum by (job, instance, namespace, type, handler) (
+      rate(promscale_query_requests_total{code=~"5..",handler!="/api/v1/query_range",err!="canceled"}[5m])
     )
   /
-    sum by (job, instance, namespace, type) (
-      rate(promscale_query_requests_total[5m])
+    sum by (job, instance, namespace, type, handler) (
+      rate(promscale_query_requests_total{handler!="/api/v1/query_range",err!="canceled"}[5m])
     )
   ) > 0.05
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### PromscaleQueryHighErrorRate
+
+{{< code lang="yaml" >}}
+alert: PromscaleQueryHighErrorRate
+annotations:
+  description: Evaluating queries via Promscale {{ $labels.handler }} endpoint has
+    {{ $value | humanizePercentage }} error rate.
+  runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscaleQueryHighErrorRate.md
+  summary: High error rate in querying Promscale.
+expr: |
+  (
+    sum by (job, instance, namespace, type, handler) (
+      rate(promscale_query_requests_total{code=~"5..",handler="/api/v1/query_range",err!="canceled"}[5m])
+    )
+  /
+    sum by (job, instance, namespace, type, handler) (
+      rate(promscale_query_requests_total{handler="/api/v1/query_range",err!="canceled"}[5m])
+    )
+  ) > 0.1
 labels:
   severity: warning
 {{< /code >}}
@@ -186,7 +209,7 @@ annotations:
 expr: |
   (
     sum by (job, instance, namespace, type) (
-      rate(promscale_query_requests_total{code=~"5.."}[5m])
+      rate(promscale_query_requests_total{code=~"5..",err!="canceled"}[5m])
     )
   /
     sum by (job, instance, namespace, type) (
@@ -473,13 +496,12 @@ annotations:
     shared_buffers. This will impact database performance.
   runbook_url: https://github.com/timescale/promscale/blob/master/docs/runbooks/PromscalePostgreSQLSharedBuffersLow.md
   summary: Promscale database performance will be affected.
-expr: "(
-  ((promscale_sql_database_open_chunks_total_table_size + promscale_sql_database_open_chunks_total_index_size)
-  
-  / 
-  promscale_sql_database_shared_buffers_size)
-  > 1 )
-"
+expr: |
+  (
+    ((promscale_sql_database_open_chunks_total_table_size + promscale_sql_database_open_chunks_total_index_size)
+    /
+    promscale_sql_database_shared_buffers_size)
+    > 1 )
 for: 10m
 labels:
   severity: warning
