@@ -23,10 +23,8 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 {{< code lang="yaml" >}}
 alert: MemcachedDown
 annotations:
-  description: Memcached Instance {{ $labels.job }} / {{ $labels.instance }} is down
+  description: Memcached instance {{ $labels.job }} / {{ $labels.instance }} is down
     for more than 15 minutes.
-  message: |
-    Memcached Instance {{ $labels.job }} / {{ $labels.instance }} is down for more than 15 minutes.
   summary: Memcached instance is down.
 expr: |
   memcached_up == 0
@@ -40,10 +38,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: MemcachedConnectionLimitApproaching
 annotations:
-  description: Memcached Instance {{ $labels.job }} / {{ $labels.instance }} connection
+  description: Memcached instance {{ $labels.job }} / {{ $labels.instance }} connection
     usage is at {{ printf "%0.0f" $value }}% for at least 15 minutes.
-  message: |
-    Memcached Instance {{ $labels.job }} / {{ $labels.instance }} connection usage is at {{ printf "%0.0f" $value }}% for at least 15 minutes.
   summary: Memcached max connection limit is approaching.
 expr: |
   (memcached_current_connections / memcached_max_connections * 100) > 80
@@ -57,10 +53,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: MemcachedConnectionLimitApproaching
 annotations:
-  description: Memcached Instance {{ $labels.job }} / {{ $labels.instance }} connection
+  description: Memcached instance {{ $labels.job }} / {{ $labels.instance }} connection
     usage is at {{ printf "%0.0f" $value }}% for at least 15 minutes.
-  message: |
-    Memcached Instance {{ $labels.job }} / {{ $labels.instance }} connection usage is at {{ printf "%0.0f" $value }}% for at least 15 minutes.
   summary: Memcached connections at critical level.
 expr: |
   (memcached_current_connections / memcached_max_connections * 100) > 95
