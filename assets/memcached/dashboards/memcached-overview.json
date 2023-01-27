@@ -124,7 +124,7 @@
                      "expr": "topk(20,\n  max by (cluster, job, instance) (\n    memcached_current_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"} / memcached_max_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"}\n))\n",
                      "format": "time_series",
                      "intervalFactor": 2,
-                     "legendFormat": "{{cluster }} / {{ job }} / {{ instance }}",
+                     "legendFormat": "{{ cluster }} / {{ job }} / {{ instance }}",
                      "legendLink": null,
                      "step": 10
                   }
