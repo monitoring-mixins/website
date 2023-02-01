@@ -1777,8 +1777,8 @@ record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate
 {{< code lang="yaml" >}}
 expr: |
   container_memory_working_set_bytes{job="cadvisor", image!=""}
-  * on (namespace, pod) group_left(node) topk by(namespace, pod) (1,
-    max by(namespace, pod, node) (kube_pod_info{node!=""})
+  * on (cluster, namespace, pod) group_left(node) topk by(cluster, namespace, pod) (1,
+    max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
   )
 record: node_namespace_pod_container:container_memory_working_set_bytes
 {{< /code >}}
@@ -1788,8 +1788,8 @@ record: node_namespace_pod_container:container_memory_working_set_bytes
 {{< code lang="yaml" >}}
 expr: |
   container_memory_rss{job="cadvisor", image!=""}
-  * on (namespace, pod) group_left(node) topk by(namespace, pod) (1,
-    max by(namespace, pod, node) (kube_pod_info{node!=""})
+  * on (cluster, namespace, pod) group_left(node) topk by(cluster, namespace, pod) (1,
+    max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
   )
 record: node_namespace_pod_container:container_memory_rss
 {{< /code >}}
@@ -1799,8 +1799,8 @@ record: node_namespace_pod_container:container_memory_rss
 {{< code lang="yaml" >}}
 expr: |
   container_memory_cache{job="cadvisor", image!=""}
-  * on (namespace, pod) group_left(node) topk by(namespace, pod) (1,
-    max by(namespace, pod, node) (kube_pod_info{node!=""})
+  * on (cluster, namespace, pod) group_left(node) topk by(cluster, namespace, pod) (1,
+    max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
   )
 record: node_namespace_pod_container:container_memory_cache
 {{< /code >}}
@@ -1810,8 +1810,8 @@ record: node_namespace_pod_container:container_memory_cache
 {{< code lang="yaml" >}}
 expr: |
   container_memory_swap{job="cadvisor", image!=""}
-  * on (namespace, pod) group_left(node) topk by(namespace, pod) (1,
-    max by(namespace, pod, node) (kube_pod_info{node!=""})
+  * on (cluster, namespace, pod) group_left(node) topk by(cluster, namespace, pod) (1,
+    max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
   )
 record: node_namespace_pod_container:container_memory_swap
 {{< /code >}}
