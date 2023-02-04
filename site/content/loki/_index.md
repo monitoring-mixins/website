@@ -56,7 +56,7 @@ annotations:
   message: |
     {{ $labels.job }} {{ $labels.route }} is experiencing {{ printf "%.2f" $value }}s 99th percentile latency.
 expr: |
-  namespace_job_route:loki_request_duration_seconds:99quantile{route!~"(?i).*tail.*|/schedulerpb.SchedulerForQuerier/QuerierLoop"} > 1
+  cluster_namespace_job_route:loki_request_duration_seconds:99quantile{route!~"(?i).*tail.*|/schedulerpb.SchedulerForQuerier/QuerierLoop"} > 1
 for: 15m
 labels:
   severity: critical
@@ -84,140 +84,143 @@ Complete list of pregenerated recording rules is available [here](https://github
 
 ### loki_rules
 
-##### job:loki_request_duration_seconds:99quantile
+##### cluster_job:loki_request_duration_seconds:99quantile
 
 {{< code lang="yaml" >}}
 expr: histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m]))
-  by (le, job))
-record: job:loki_request_duration_seconds:99quantile
+  by (le, cluster, job))
+record: cluster_job:loki_request_duration_seconds:99quantile
 {{< /code >}}
  
-##### job:loki_request_duration_seconds:50quantile
+##### cluster_job:loki_request_duration_seconds:50quantile
 
 {{< code lang="yaml" >}}
 expr: histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m]))
-  by (le, job))
-record: job:loki_request_duration_seconds:50quantile
+  by (le, cluster, job))
+record: cluster_job:loki_request_duration_seconds:50quantile
 {{< /code >}}
  
-##### job:loki_request_duration_seconds:avg
+##### cluster_job:loki_request_duration_seconds:avg
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (job) / sum(rate(loki_request_duration_seconds_count[1m]))
-  by (job)
-record: job:loki_request_duration_seconds:avg
+expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job) / sum(rate(loki_request_duration_seconds_count[1m]))
+  by (cluster, job)
+record: cluster_job:loki_request_duration_seconds:avg
 {{< /code >}}
  
-##### job:loki_request_duration_seconds_bucket:sum_rate
+##### cluster_job:loki_request_duration_seconds_bucket:sum_rate
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job)
-record: job:loki_request_duration_seconds_bucket:sum_rate
+expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, cluster, job)
+record: cluster_job:loki_request_duration_seconds_bucket:sum_rate
 {{< /code >}}
  
-##### job:loki_request_duration_seconds_sum:sum_rate
+##### cluster_job:loki_request_duration_seconds_sum:sum_rate
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (job)
-record: job:loki_request_duration_seconds_sum:sum_rate
+expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job)
+record: cluster_job:loki_request_duration_seconds_sum:sum_rate
 {{< /code >}}
  
-##### job:loki_request_duration_seconds_count:sum_rate
+##### cluster_job:loki_request_duration_seconds_count:sum_rate
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_count[1m])) by (job)
-record: job:loki_request_duration_seconds_count:sum_rate
+expr: sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, job)
+record: cluster_job:loki_request_duration_seconds_count:sum_rate
 {{< /code >}}
  
-##### job_route:loki_request_duration_seconds:99quantile
+##### cluster_job_route:loki_request_duration_seconds:99quantile
 
 {{< code lang="yaml" >}}
 expr: histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m]))
-  by (le, job, route))
-record: job_route:loki_request_duration_seconds:99quantile
+  by (le, cluster, job, route))
+record: cluster_job_route:loki_request_duration_seconds:99quantile
 {{< /code >}}
  
-##### job_route:loki_request_duration_seconds:50quantile
+##### cluster_job_route:loki_request_duration_seconds:50quantile
 
 {{< code lang="yaml" >}}
 expr: histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m]))
-  by (le, job, route))
-record: job_route:loki_request_duration_seconds:50quantile
+  by (le, cluster, job, route))
+record: cluster_job_route:loki_request_duration_seconds:50quantile
 {{< /code >}}
  
-##### job_route:loki_request_duration_seconds:avg
+##### cluster_job_route:loki_request_duration_seconds:avg
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (job, route) / sum(rate(loki_request_duration_seconds_count[1m]))
-  by (job, route)
-record: job_route:loki_request_duration_seconds:avg
+expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job, route) /
+  sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, job, route)
+record: cluster_job_route:loki_request_duration_seconds:avg
 {{< /code >}}
  
-##### job_route:loki_request_duration_seconds_bucket:sum_rate
+##### cluster_job_route:loki_request_duration_seconds_bucket:sum_rate
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route)
-record: job_route:loki_request_duration_seconds_bucket:sum_rate
+expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, cluster, job, route)
+record: cluster_job_route:loki_request_duration_seconds_bucket:sum_rate
 {{< /code >}}
  
-##### job_route:loki_request_duration_seconds_sum:sum_rate
+##### cluster_job_route:loki_request_duration_seconds_sum:sum_rate
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (job, route)
-record: job_route:loki_request_duration_seconds_sum:sum_rate
+expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job, route)
+record: cluster_job_route:loki_request_duration_seconds_sum:sum_rate
 {{< /code >}}
  
-##### job_route:loki_request_duration_seconds_count:sum_rate
+##### cluster_job_route:loki_request_duration_seconds_count:sum_rate
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_count[1m])) by (job, route)
-record: job_route:loki_request_duration_seconds_count:sum_rate
+expr: sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, job, route)
+record: cluster_job_route:loki_request_duration_seconds_count:sum_rate
 {{< /code >}}
  
-##### namespace_job_route:loki_request_duration_seconds:99quantile
+##### cluster_namespace_job_route:loki_request_duration_seconds:99quantile
 
 {{< code lang="yaml" >}}
 expr: histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m]))
-  by (le, namespace, job, route))
-record: namespace_job_route:loki_request_duration_seconds:99quantile
+  by (le, cluster, namespace, job, route))
+record: cluster_namespace_job_route:loki_request_duration_seconds:99quantile
 {{< /code >}}
  
-##### namespace_job_route:loki_request_duration_seconds:50quantile
+##### cluster_namespace_job_route:loki_request_duration_seconds:50quantile
 
 {{< code lang="yaml" >}}
 expr: histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m]))
-  by (le, namespace, job, route))
-record: namespace_job_route:loki_request_duration_seconds:50quantile
+  by (le, cluster, namespace, job, route))
+record: cluster_namespace_job_route:loki_request_duration_seconds:50quantile
 {{< /code >}}
  
-##### namespace_job_route:loki_request_duration_seconds:avg
+##### cluster_namespace_job_route:loki_request_duration_seconds:avg
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (namespace, job, route)
-  / sum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, route)
-record: namespace_job_route:loki_request_duration_seconds:avg
+expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, namespace, job,
+  route) / sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, namespace,
+  job, route)
+record: cluster_namespace_job_route:loki_request_duration_seconds:avg
 {{< /code >}}
  
-##### namespace_job_route:loki_request_duration_seconds_bucket:sum_rate
+##### cluster_namespace_job_route:loki_request_duration_seconds_bucket:sum_rate
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, namespace, job,
+expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, cluster, namespace,
+  job, route)
+record: cluster_namespace_job_route:loki_request_duration_seconds_bucket:sum_rate
+{{< /code >}}
+ 
+##### cluster_namespace_job_route:loki_request_duration_seconds_sum:sum_rate
+
+{{< code lang="yaml" >}}
+expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, namespace, job,
   route)
-record: namespace_job_route:loki_request_duration_seconds_bucket:sum_rate
+record: cluster_namespace_job_route:loki_request_duration_seconds_sum:sum_rate
 {{< /code >}}
  
-##### namespace_job_route:loki_request_duration_seconds_sum:sum_rate
+##### cluster_namespace_job_route:loki_request_duration_seconds_count:sum_rate
 
 {{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (namespace, job, route)
-record: namespace_job_route:loki_request_duration_seconds_sum:sum_rate
-{{< /code >}}
- 
-##### namespace_job_route:loki_request_duration_seconds_count:sum_rate
-
-{{< code lang="yaml" >}}
-expr: sum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, route)
-record: namespace_job_route:loki_request_duration_seconds_count:sum_rate
+expr: sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, namespace, job,
+  route)
+record: cluster_namespace_job_route:loki_request_duration_seconds_count:sum_rate
 {{< /code >}}
  
 ## Dashboards
