@@ -599,7 +599,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_cache_hits{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) / sum(rate(cortex_cache_fetched_keys{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m]))",
+                     "expr": "sum(rate(cortex_cache_hits{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) / sum(rate(cortex_cache_fetched_keys{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) or\nsum(rate(cortex_cache_hits_total{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) / sum(rate(cortex_cache_fetched_keys_total{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m]))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -676,7 +676,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_cache_fetched_keys{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) - sum(rate(cortex_cache_hits{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m]))",
+                     "expr": "sum(rate(cortex_cache_fetched_keys{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) - sum(rate(cortex_cache_hits{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) or\nsum(rate(cortex_cache_fetched_keys_total{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m])) - sum(rate(cortex_cache_hits_total{name=~\"frontend.+\", cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\"}[1m]))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
@@ -1028,7 +1028,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(cortex_cache_fetched_keys{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\",name=\"chunksmemcache\"}[1m])) - sum(rate(cortex_cache_hits{cluster=~\"$cluster\", job=~\"($namespace)/(querier.*|cortex$)\",name=\"chunksmemcache\"}[1m]))",
+                     "expr": "sum(rate(cortex_cache_fetched_keys{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\",name=\"chunksmemcache\"}[1m])) - sum(rate(cortex_cache_hits{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\",name=\"chunksmemcache\"}[1m])) or\nsum(rate(cortex_cache_fetched_keys_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\",name=\"chunksmemcache\"}[1m])) - sum(rate(cortex_cache_hits_total{cluster=~\"$cluster\", job=~\"($namespace)/(query-frontend.*|cortex$)\",name=\"chunksmemcache\"}[1m]))\n",
                      "format": "time_series",
                      "interval": "15s",
                      "intervalFactor": 2,
