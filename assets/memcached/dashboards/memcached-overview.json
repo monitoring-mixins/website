@@ -784,7 +784,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Reads",
+               "title": "Bytes received",
                "tooltip": {
                   "shared": true,
                   "sort": 2,
@@ -860,7 +860,7 @@
                "thresholds": [ ],
                "timeFrom": null,
                "timeShift": null,
-               "title": "Writes",
+               "title": "Bytes transmitted",
                "tooltip": {
                   "shared": true,
                   "sort": 2,
