@@ -60,7 +60,7 @@ expr: |
   promtail_file_bytes_total unless promtail_read_bytes_total
 for: 15m
 labels:
-  severity: critical
+  severity: warning
 {{< /code >}}
  
 ## Recording rules
