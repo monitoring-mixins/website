@@ -681,9 +681,9 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclienterrors
   summary: Kubernetes API server client is experiencing errors.
 expr: |
-  (sum(rate(rest_client_requests_total{code=~"5.."}[5m])) by (cluster, instance, job, namespace)
+  (sum(rate(rest_client_requests_total{job="kube-apiserver",code=~"5.."}[5m])) by (cluster, instance, job, namespace)
     /
-  sum(rate(rest_client_requests_total[5m])) by (cluster, instance, job, namespace))
+  sum(rate(rest_client_requests_total{job="kube-apiserver"}[5m])) by (cluster, instance, job, namespace))
   > 0.01
 for: 15m
 labels:
@@ -944,7 +944,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodereadinessflapping
   summary: Node readiness status is flapping.
 expr: |
-  sum(changes(kube_node_status_condition{status="true",condition="Ready"}[15m])) by (cluster, node) > 2
+  sum(changes(kube_node_status_condition{job="kube-state-metrics",status="true",condition="Ready"}[15m])) by (cluster, node) > 2
 for: 15m
 labels:
   severity: warning
@@ -2152,7 +2152,7 @@ record: cluster:node_cpu:ratio_rate5m
 
 {{< code lang="yaml" >}}
 expr: |
-  histogram_quantile(0.99, sum(rate(kubelet_pleg_relist_duration_seconds_bucket[5m])) by (cluster, instance, le) * on(cluster, instance) group_left(node) kubelet_node_name{job="kubelet"})
+  histogram_quantile(0.99, sum(rate(kubelet_pleg_relist_duration_seconds_bucket{job="kubelet"}[5m])) by (cluster, instance, le) * on(cluster, instance) group_left(node) kubelet_node_name{job="kubelet"})
 labels:
   quantile: "0.99"
 record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
@@ -2162,7 +2162,7 @@ record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
 
 {{< code lang="yaml" >}}
 expr: |
-  histogram_quantile(0.9, sum(rate(kubelet_pleg_relist_duration_seconds_bucket[5m])) by (cluster, instance, le) * on(cluster, instance) group_left(node) kubelet_node_name{job="kubelet"})
+  histogram_quantile(0.9, sum(rate(kubelet_pleg_relist_duration_seconds_bucket{job="kubelet"}[5m])) by (cluster, instance, le) * on(cluster, instance) group_left(node) kubelet_node_name{job="kubelet"})
 labels:
   quantile: "0.9"
 record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
@@ -2172,7 +2172,7 @@ record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
 
 {{< code lang="yaml" >}}
 expr: |
-  histogram_quantile(0.5, sum(rate(kubelet_pleg_relist_duration_seconds_bucket[5m])) by (cluster, instance, le) * on(cluster, instance) group_left(node) kubelet_node_name{job="kubelet"})
+  histogram_quantile(0.5, sum(rate(kubelet_pleg_relist_duration_seconds_bucket{job="kubelet"}[5m])) by (cluster, instance, le) * on(cluster, instance) group_left(node) kubelet_node_name{job="kubelet"})
 labels:
   quantile: "0.5"
 record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
