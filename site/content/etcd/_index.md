@@ -261,7 +261,7 @@ annotations:
   runbook_url: https://etcd.io/docs/v3.5/op-guide/maintenance/#defragmentation
   summary: etcd database size in use is less than 50% of the actual allocated storage.
 expr: |
-  (last_over_time(etcd_mvcc_db_total_size_in_use_in_bytes[5m]) / last_over_time(etcd_mvcc_db_total_size_in_bytes[5m])) < 0.5
+  (last_over_time(etcd_mvcc_db_total_size_in_use_in_bytes[5m]) / last_over_time(etcd_mvcc_db_total_size_in_bytes[5m])) < 0.5 and etcd_mvcc_db_total_size_in_use_in_bytes > 104857600
 for: 10m
 labels:
   severity: warning
