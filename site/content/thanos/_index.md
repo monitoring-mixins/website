@@ -482,10 +482,10 @@ annotations:
   description: Thanos Store {{$labels.job}} is failing to handle {{$value | humanize}}%
     of requests.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosstoregrpcerrorrate
-  summary: Thanos Store is failing to handle qrpcd requests.
+  summary: Thanos Store is failing to handle gRPC requests.
 expr: |
   (
-    sum by (job) (rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable|DataLoss|DeadlineExceeded", job=~".*thanos-store.*"}[5m]))
+    sum by (job) (rate(grpc_server_handled_total{grpc_code=~"Unknown|Internal|Unavailable|DataLoss|DeadlineExceeded", job=~".*thanos-store.*"}[5m]))
   /
     sum by (job) (rate(grpc_server_started_total{job=~".*thanos-store.*"}[5m]))
   * 100 > 5
@@ -1084,7 +1084,7 @@ record: :thanos_receive_hashring_file_failure_per_refresh:sum_rate
 {{< code lang="yaml" >}}
 expr: |
   (
-    sum by (job) (rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable|DataLoss|DeadlineExceeded", job=~".*thanos-store.*", grpc_type="unary"}[5m]))
+    sum by (job) (rate(grpc_server_handled_total{grpc_code=~"Unknown|Internal|Unavailable|DataLoss|DeadlineExceeded", job=~".*thanos-store.*", grpc_type="unary"}[5m]))
   /
     sum by (job) (rate(grpc_server_started_total{job=~".*thanos-store.*", grpc_type="unary"}[5m]))
   )
@@ -1096,7 +1096,7 @@ record: :grpc_server_failures_per_unary:sum_rate
 {{< code lang="yaml" >}}
 expr: |
   (
-    sum by (job) (rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable|DataLoss|DeadlineExceeded", job=~".*thanos-store.*", grpc_type="server_stream"}[5m]))
+    sum by (job) (rate(grpc_server_handled_total{grpc_code=~"Unknown|Internal|Unavailable|DataLoss|DeadlineExceeded", job=~".*thanos-store.*", grpc_type="server_stream"}[5m]))
   /
     sum by (job) (rate(grpc_server_started_total{job=~".*thanos-store.*", grpc_type="server_stream"}[5m]))
   )
