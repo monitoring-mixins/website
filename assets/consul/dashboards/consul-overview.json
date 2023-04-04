@@ -53,7 +53,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "consul_up{job=\"$job\",instance=~\"$instance\"}",
+                     "expr": "consul_up{job=~\"$job\",instance=~\"$instance\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,
@@ -160,7 +160,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "(rate(consul_raft_leader_lastcontact_count{job=\"$job\",instance=~\"$instance\"}[$__rate_interval]) > bool 0)\n  or\n(consul_up{job=\"$job\",instance=~\"$instance\"} == bool 0)\n",
+                     "expr": "(rate(consul_raft_leader_lastcontact_count{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]) > bool 0)\n  or\n(consul_up{job=~\"$job\",instance=~\"$instance\"} == bool 0)\n",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,
@@ -267,7 +267,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "consul_raft_leader{job=\"$job\",instance=~\"$instance\"}",
+                     "expr": "consul_raft_leader{job=~\"$job\",instance=~\"$instance\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,
@@ -374,7 +374,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "consul_raft_peers{job=\"$job\",instance=~\"$instance\"}",
+                     "expr": "consul_raft_peers{job=~\"$job\",instance=~\"$instance\"}",
                      "format": "time_series",
                      "instant": true,
                      "intervalFactor": 2,
@@ -461,7 +461,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(consul_http_request_count{job=\"$job\"}[$__rate_interval])) by (instance)",
+                     "expr": "sum(rate(consul_http_request_count{job=~\"$job\"}[$__rate_interval])) by (instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
@@ -537,23 +537,23 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "max(consul_http_request{job=\"$job\", quantile=\"0.99\"})",
+                     "expr": "max(consul_http_request{job=~\"$job\", quantile=\"0.99\"}) by (instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
-                     "legendLink": null,
+                     "legendLink": "{{instance}}",
                      "step": 10
                   },
                   {
-                     "expr": "max(consul_http_request{job=\"$job\", quantile=\"0.5\"})",
+                     "expr": "max(consul_http_request{job=~\"$job\", quantile=\"0.5\"}) by (instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
-                     "legendLink": null,
+                     "legendLink": "{{instance}}",
                      "step": 10
                   },
                   {
-                     "expr": "sum(rate(consul_http_request{job=\"$job\"}[5m])) / sum(rate(consul_http_request{job=\"$job\"}[5m]))",
+                     "expr": "sum(rate(consul_http_request{job=~\"$job\"}[$__rate_interval])) by (instance) / sum(rate(consul_http_request{job=~\"$job\"}[$__rate_interval])) by (instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
@@ -626,16 +626,17 @@
             "type": "datasource"
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
-               "text": "prod",
-               "value": "prod"
+               "selected": true,
+               "text": "All",
+               "value": "$__all"
             },
             "datasource": "$datasource",
             "hide": 0,
-            "includeAll": false,
+            "includeAll": true,
             "label": "job",
-            "multi": false,
+            "multi": true,
             "name": "job",
             "options": [ ],
             "query": "label_values(consul_up, job)",
@@ -662,7 +663,7 @@
             "multi": true,
             "name": "instance",
             "options": [ ],
-            "query": "label_values(consul_up{job=\"$job\"}, instance)",
+            "query": "label_values(consul_up{job=~\"$job\"}, instance)",
             "refresh": 1,
             "regex": "",
             "sort": 2,
