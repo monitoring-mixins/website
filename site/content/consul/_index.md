@@ -24,7 +24,7 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 alert: ConsulUp
 annotations:
   description: Consul '{{ $labels.job }}' is not up.
-  summary: Consul '{{ $labels.job }}' is not up.
+  summary: Consul is not up.
 expr: |
   consul_up != 1
 for: 1m
@@ -38,7 +38,7 @@ labels:
 alert: ConsulMaster
 annotations:
   description: Consul '{{ $labels.job }}' has no master.
-  summary: Consul '{{ $labels.job }}' has no master.
+  summary: Consul has no master.
 expr: |
   consul_raft_leader != 1
 for: 1m
@@ -52,7 +52,7 @@ labels:
 alert: ConsulPeers
 annotations:
   description: Consul '{{ $labels.job }}' does not have 3 peers.
-  summary: Consul '{{ $labels.job }}' does not have 3 peers.
+  summary: Consul does not have peers.
 expr: |
   consul_raft_peers != 3
 for: 10m
