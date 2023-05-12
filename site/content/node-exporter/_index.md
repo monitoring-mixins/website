@@ -239,8 +239,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeClockSkewDetected
 annotations:
-  description: Clock on {{ $labels.instance }} is out of sync by more than 300s. Ensure
-    NTP is configured correctly on this host.
+  description: Clock on {{ $labels.instance }} is out of sync by more than 0.05s.
+    Ensure NTP is configured correctly on this host.
   summary: Clock skew detected.
 expr: |
   (
