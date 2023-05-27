@@ -103,6 +103,24 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### KubeDeploymentRolloutStuck
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubedeploymentrolloutstuck
+
+{{< code lang="yaml" >}}
+alert: KubeDeploymentRolloutStuck
+annotations:
+  description: Rollout of deployment {{ $labels.namespace }}/{{ $labels.deployment
+    }} is not progressing for longer than 15 minutes.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubedeploymentrolloutstuck
+  summary: Deployment rollout is not progressing.
+expr: |
+  kube_deployment_status_condition{condition="Progressing", status="false",job="kube-state-metrics"}
+  != 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### KubeStatefulSetReplicasMismatch
 https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubestatefulsetreplicasmismatch
 
