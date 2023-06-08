@@ -838,7 +838,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeaggregatedapierrors
   summary: Kubernetes aggregated API has reported errors.
 expr: |
-  sum by(name, namespace, cluster)(increase(aggregator_unavailable_apiservice_total[10m])) > 4
+  sum by(name, namespace, cluster)(increase(aggregator_unavailable_apiservice_total{job="kube-apiserver"}[10m])) > 4
 labels:
   severity: warning
 {{< /code >}}
@@ -854,7 +854,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeaggregatedapidown
   summary: Kubernetes aggregated API is down.
 expr: |
-  (1 - max by(name, namespace, cluster)(avg_over_time(aggregator_unavailable_apiservice[10m]))) * 100 < 85
+  (1 - max by(name, namespace, cluster)(avg_over_time(aggregator_unavailable_apiservice{job="kube-apiserver"}[10m]))) * 100 < 85
 for: 5m
 labels:
   severity: warning
@@ -1607,7 +1607,7 @@ record: code:apiserver_request_total:increase30d
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (cluster, verb, scope) (increase(apiserver_request_slo_duration_seconds_count[1h]))
+  sum by (cluster, verb, scope) (increase(apiserver_request_slo_duration_seconds_count{job="kube-apiserver"}[1h]))
 record: cluster_verb_scope:apiserver_request_slo_duration_seconds_count:increase1h
 {{< /code >}}
  

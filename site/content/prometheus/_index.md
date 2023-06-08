@@ -34,6 +34,21 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### PrometheusSDRefreshFailure
+
+{{< code lang="yaml" >}}
+alert: PrometheusSDRefreshFailure
+annotations:
+  description: Prometheus {{$labels.instance}} has failed to refresh SD with mechanism
+    {{$labels.mechanism}}.
+  summary: Failed Prometheus SD refresh.
+expr: |
+  increase(prometheus_sd_refresh_failures_total{job="prometheus"}[10m]) > 0
+for: 20m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### PrometheusNotificationQueueRunningFull
 Prometheus alert notification queue predicted to run full in less than
 
