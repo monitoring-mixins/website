@@ -1,4 +1,33 @@
 {
+   "_config": {
+      "certManagerCertExpiryDays": "21",
+      "certManagerJobLabel": "cert-manager",
+      "certManagerRunbookURLPattern": "https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#%s",
+      "dashboards": {
+         "certmanagerCertificateExpirationTimestampSecondsSelector": "",
+         "certmanagerCertificateReadyStatusSelector": "",
+         "certmanagerControllerSyncCallCountSelector": "",
+         "certmanagerHttpAcmeClientRequestCountSelector": "",
+         "certmanagerHttpAcmeClientRequestDurationSecondsCountSelector": "",
+         "certmanagerHttpAcmeClientRequestDurationSecondsSumSelector": "",
+         "clusterVariableSelector": "",
+         "containerCPUUsageSecondsTotalSelector": "container=\"cert-manager\"",
+         "containerCpuCfsPeriodsTotalSelector": "container=\"cert-manager\"",
+         "containerCpuCfsThrottledPeriodsTotalSelector": "container=\"cert-manager\"",
+         "containerMemoryUsageBytesSelector": "container=\"cert-manager\"",
+         "containerNetworkReceiveBytesTotalSelector": "namespace=\"cert-manager\"",
+         "containerNetworkTransmitBytesTotalSelector": "namespace=\"cert-manager\"",
+         "containerSelector": "container=\"cert-manager\"",
+         "defaultSelector": "",
+         "enableMultiCluster": false,
+         "kubePodContainerResourceLimitsCpuCoresSelector": "container=\"cert-manager\"",
+         "kubePodContainerResourceLimitsMemoryBytesSelector": "container=\"cert-manager\"",
+         "kubePodContainerResourceRequestsCpuCoresSelector": "container=\"cert-manager\"",
+         "kubePodContainerResourceRequestsMemoryBytesSelector": "container=\"cert-manager\"",
+         "namespaceSelector": "namespace=\"cert-manager\""
+      },
+      "grafanaExternalUrl": "https://grafana.example.com"
+   },
    "annotations": {
       "list": [
          {
@@ -89,9 +118,9 @@
          "pluginVersion": "7.4.5",
          "targets": [
             {
-               "expr": "sum by (condition) (certmanager_certificate_ready_status)",
+               "expr": "sum by (condition) (certmanager_certificate_ready_status{ })",
                "interval": "",
-               "legendFormat": "{{condition}}",
+               "legendFormat": "{ {condition } }",
                "refId": "A"
             }
          ],
@@ -153,7 +182,7 @@
          "pluginVersion": "7.4.5",
          "targets": [
             {
-               "expr": "min(certmanager_certificate_expiration_timestamp_seconds > 0) - time()",
+               "expr": "min(certmanager_certificate_expiration_timestamp_seconds{ } > 0) - time()",
                "hide": false,
                "instant": true,
                "interval": "",
@@ -267,7 +296,7 @@
          "pluginVersion": "7.4.5",
          "targets": [
             {
-               "expr": "label_join(avg by (name, namespace, condition, exported_namespace) (certmanager_certificate_ready_status == 1), \"namespaced_name\", \"-\", \"namespace\", \"exported_namespace\", \"name\")",
+               "expr": "label_join(avg by (name, namespace, condition, exported_namespace) (certmanager_certificate_ready_status{ } == 1), \"namespaced_name\", \"-\", \"namespace\", \"exported_namespace\", \"name\")",
                "format": "table",
                "instant": true,
                "interval": "",
@@ -275,7 +304,7 @@
                "refId": "A"
             },
             {
-               "expr": "label_join(avg by (name, namespace, exported_namespace) (certmanager_certificate_expiration_timestamp_seconds) * 1000, \"namespaced_name\", \"-\", \"namespace\", \"exported_namespace\", \"name\")",
+               "expr": "label_join(avg by (name, namespace, exported_namespace) (certmanager_certificate_expiration_timestamp_seconds{ }) * 1000, \"namespaced_name\", \"-\", \"namespace\", \"exported_namespace\", \"name\")",
                "format": "table",
                "instant": true,
                "interval": "",
@@ -392,9 +421,9 @@
          "steppedLine": false,
          "targets": [
             {
-               "expr": "sum by (controller) (\n  rate(certmanager_controller_sync_call_count[$__rate_interval])\n)",
+               "expr": "sum by (controller) (\n  rate(certmanager_controller_sync_call_count{ }[$__rate_interval ])\n)",
                "interval": "",
-               "legendFormat": "{{controller}}",
+               "legendFormat": "{ {controller } }",
                "refId": "A"
             }
          ],
@@ -493,9 +522,9 @@
          "steppedLine": false,
          "targets": [
             {
-               "expr": "sum by (method, path, status) (\n  rate(certmanager_http_acme_client_request_count[$__rate_interval])\n)",
+               "expr": "sum by (method, path, status) (\n  rate(certmanager_http_acme_client_request_count{ }[$__rate_interval ])\n)",
                "interval": "",
-               "legendFormat": "{{method}} {{path}} {{status}}",
+               "legendFormat": "{ {method } } { {path } } { {status } }",
                "refId": "A"
             }
          ],
@@ -594,9 +623,9 @@
          "steppedLine": false,
          "targets": [
             {
-               "expr": "sum by (method, path, status) (rate(certmanager_http_acme_client_request_duration_seconds_sum[$__rate_interval]))\n/\nsum by (method, path, status) (rate(certmanager_http_acme_client_request_duration_seconds_count[$__rate_interval]))",
+               "expr": "sum by (method, path, status) (rate(certmanager_http_acme_client_request_duration_seconds_sum{ }[$__rate_interval ]))\n/\nsum by (method, path, status) (rate(certmanager_http_acme_client_request_duration_seconds_count{ }[$__rate_interval ]))",
                "interval": "",
-               "legendFormat": "{{method}} {{path}} {{status}}",
+               "legendFormat": "{ {method } } { {path } } { {status } }",
                "refId": "A"
             }
          ],
@@ -712,30 +741,30 @@
          "steppedLine": false,
          "targets": [
             {
-               "expr": "avg by (pod) (rate(container_cpu_usage_seconds_total{container=\"cert-manager\"}[$__rate_interval]))",
+               "expr": "avg by (pod) (rate(container_cpu_usage_seconds_total{container=\"cert-manager\" }[$__rate_interval ]))",
                "format": "time_series",
                "hide": false,
                "interval": "",
                "intervalFactor": 2,
-               "legendFormat": "CPU {{pod}}",
+               "legendFormat": "CPU { {pod } }",
                "refId": "A"
             },
             {
-               "expr": "avg by (pod) (kube_pod_container_resource_limits_cpu_cores{container=\"cert-manager\"})",
+               "expr": "avg by (pod) (kube_pod_container_resource_limits_cpu_cores{container=\"cert-manager\" })",
                "format": "time_series",
                "hide": true,
                "interval": "",
                "intervalFactor": 1,
-               "legendFormat": "Limit {{pod}}",
+               "legendFormat": "Limit { {pod } }",
                "refId": "B"
             },
             {
-               "expr": "avg by (pod) (kube_pod_container_resource_requests_cpu_cores{container=\"cert-manager\"})",
+               "expr": "avg by (pod) (kube_pod_container_resource_requests_cpu_cores{container=\"cert-manager\" })",
                "format": "time_series",
                "hide": true,
                "interval": "",
                "intervalFactor": 1,
-               "legendFormat": "Request {{pod}}",
+               "legendFormat": "Request { {pod } }",
                "refId": "C"
             }
          ],
@@ -841,12 +870,12 @@
          "steppedLine": false,
          "targets": [
             {
-               "expr": "avg by (pod) (\n  rate(container_cpu_cfs_throttled_periods_total{container=\"cert-manager\"}[$__rate_interval])\n  /\n  rate(container_cpu_cfs_periods_total{container=\"cert-manager\"}[$__rate_interval])\n)",
+               "expr": "avg by (pod) (\n  rate(container_cpu_cfs_throttled_periods_total{container=\"cert-manager\" }[$__rate_interval ])\n  /\n  rate(container_cpu_cfs_periods_total{container=\"cert-manager\" }[$__rate_interval ])\n)",
                "format": "time_series",
                "hide": false,
                "interval": "",
                "intervalFactor": 2,
-               "legendFormat": "{{pod}}",
+               "legendFormat": "{ {pod } }",
                "refId": "A"
             }
          ],
@@ -962,28 +991,28 @@
          "steppedLine": false,
          "targets": [
             {
-               "expr": "avg by (pod) (container_memory_usage_bytes{container=\"cert-manager\"})",
+               "expr": "avg by (pod) (container_memory_usage_bytes{container=\"cert-manager\" })",
                "format": "time_series",
                "hide": false,
                "interval": "",
                "intervalFactor": 1,
-               "legendFormat": "Memory {{pod}}",
+               "legendFormat": "Memory { {pod } }",
                "refId": "A"
             },
             {
-               "expr": "avg by (pod) (kube_pod_container_resource_limits_memory_bytes{container=\"cert-manager\"})",
+               "expr": "avg by (pod) (kube_pod_container_resource_limits_memory_bytes{container=\"cert-manager\" })",
                "format": "time_series",
                "interval": "",
                "intervalFactor": 1,
-               "legendFormat": "Limit {{pod}}",
+               "legendFormat": "Limit { {pod } }",
                "refId": "B"
             },
             {
-               "expr": "avg by (pod) (kube_pod_container_resource_requests_memory_bytes{container=\"cert-manager\"})",
+               "expr": "avg by (pod) (kube_pod_container_resource_requests_memory_bytes{container=\"cert-manager\" })",
                "format": "time_series",
                "interval": "",
                "intervalFactor": 1,
-               "legendFormat": "Request {{pod}}",
+               "legendFormat": "Request { {pod } }",
                "refId": "C"
             }
          ],
@@ -1087,7 +1116,7 @@
          "steppedLine": false,
          "targets": [
             {
-               "expr": "avg(\n  sum without (interface) (\n    rate(container_network_receive_bytes_total{namespace=\"cert-manager\"}[$__rate_interval])\n  )\n)",
+               "expr": "avg(\n  sum without (interface) (\n    rate(container_network_receive_bytes_total{namespace=\"cert-manager\" }[$__rate_interval ])\n  )\n)",
                "format": "time_series",
                "hide": false,
                "interval": "",
@@ -1096,7 +1125,7 @@
                "refId": "A"
             },
             {
-               "expr": "avg(\n  sum without (interface) (\n    rate(container_network_transmit_bytes_total{namespace=\"cert-manager\"}[$__rate_interval])\n  )\n)",
+               "expr": "avg(\n  sum without (interface) (\n    rate(container_network_transmit_bytes_total{namespace=\"cert-manager\" }[$__rate_interval ])\n  )\n)",
                "format": "time_series",
                "hide": false,
                "interval": "",
@@ -1176,6 +1205,35 @@
             "regex": "",
             "skipUrlSync": false,
             "type": "datasource"
+         },
+         {
+            "current": {
+               "selected": false,
+               "text": "",
+               "value": ""
+            },
+            "datasource": {
+               "type": "prometheus",
+               "uid": "$datasource"
+            },
+            "definition": "",
+            "hide": 2,
+            "includeAll": false,
+            "multi": false,
+            "name": "cluster",
+            "options": [ ],
+            "query": {
+               "query": "label_values(certmanager_certificate_ready_status{ }, cluster)",
+               "refId": "Prometheus-cluster-Variable-Query"
+            },
+            "refresh": 2,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
          }
       ]
    },
