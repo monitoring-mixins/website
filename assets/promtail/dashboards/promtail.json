@@ -573,7 +573,7 @@
             "multi": false,
             "name": "cluster",
             "options": [ ],
-            "query": "label_values(loki_build_info, cluster)",
+            "query": "label_values(promtail_build_info, cluster)",
             "refresh": 1,
             "regex": "",
             "sort": 2,
