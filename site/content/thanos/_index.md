@@ -434,6 +434,40 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### ThanosReceiveLimitsConfigReloadFailure
+https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosreceivelimitsconfigreloadfailure
+
+{{< code lang="yaml" >}}
+alert: ThanosReceiveLimitsConfigReloadFailure
+annotations:
+  description: Thanos Receive {{$labels.job}} has not been able to reload the limits
+    configuration.
+  runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosreceivelimitsconfigreloadfailure
+  summary: Thanos Receive has not been able to reload the limits configuration.
+expr: sum by(job) (increase(thanos_receive_limits_config_reload_err_total{job=~".*thanos-receive.*"}[5m]))
+  > 0
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ThanosReceiveLimitsHighMetaMonitoringQueriesFailureRate
+https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosreceivelimitshighmetamonitoringqueriesfailurerate
+
+{{< code lang="yaml" >}}
+alert: ThanosReceiveLimitsHighMetaMonitoringQueriesFailureRate
+annotations:
+  description: Thanos Receive {{$labels.job}} is failing for {{$value | humanize}}%
+    of meta monitoring queries.
+  runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosreceivelimitshighmetamonitoringqueriesfailurerate
+  summary: Thanos Receive has not been able to update the number of head series.
+expr: (sum by(job) (increase(thanos_receive_metamonitoring_failed_queries_total{job=~".*thanos-receive.*"}[5m]))
+  / 20) * 100 > 20
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ### thanos-sidecar
 
 ##### ThanosSidecarBucketOperationsFailed
