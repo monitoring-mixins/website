@@ -468,6 +468,22 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### ThanosReceiveTenantLimitedByHeadSeries
+https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosreceivetenantlimitedbyheadseries
+
+{{< code lang="yaml" >}}
+alert: ThanosReceiveTenantLimitedByHeadSeries
+annotations:
+  description: Thanos Receive tenant {{$labels.tenant}} is limited by head series.
+  runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosreceivetenantlimitedbyheadseries
+  summary: A Thanos Receive tenant is limited by head series.
+expr: sum by(job, tenant) (increase(thanos_receive_head_series_limited_requests_total{job=~".*thanos-receive.*"}[5m]))
+  > 0
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ### thanos-sidecar
 
 ##### ThanosSidecarBucketOperationsFailed
