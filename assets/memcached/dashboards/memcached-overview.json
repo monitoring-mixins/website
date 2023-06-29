@@ -49,8 +49,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Hit Rate",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -125,8 +124,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{ cluster }} / {{ job }} / {{ instance }}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -213,8 +211,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{command}} {{status}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -289,8 +286,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -365,8 +361,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -453,8 +448,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -529,8 +523,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -605,8 +598,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -693,16 +685,14 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   },
                   {
                      "expr": "min(memcached_max_connections{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Max Connections (min setting across all instances)",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -777,8 +767,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -853,8 +842,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -929,8 +917,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -1112,8 +1099,7 @@
                      "instant": true,
                      "intervalFactor": 2,
                      "legendFormat": "",
-                     "refId": "A",
-                     "step": 10
+                     "refId": "A"
                   },
                   {
                      "expr": "max by (job, instance) (memcached_uptime_seconds{cluster=~\"$cluster\", job=~\"$job\", instance=~\"$instance\"})",
@@ -1121,8 +1107,7 @@
                      "instant": true,
                      "intervalFactor": 2,
                      "legendFormat": "",
-                     "refId": "B",
-                     "step": 10
+                     "refId": "B"
                   }
                ],
                "thresholds": [ ],

@@ -375,8 +375,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{$Volume}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -451,8 +450,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{$Volume}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -539,8 +537,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{thinpool_name}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -615,8 +612,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{thinpool_name}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -1855,8 +1851,7 @@
                      "instant": true,
                      "intervalFactor": 2,
                      "legendFormat": "",
-                     "refId": "A",
-                     "step": 10
+                     "refId": "A"
                   },
                   {
                      "expr": "",
@@ -1864,8 +1859,7 @@
                      "instant": true,
                      "intervalFactor": 2,
                      "legendFormat": "",
-                     "refId": "B",
-                     "step": 10
+                     "refId": "B"
                   }
                ],
                "thresholds": [ ],
@@ -1941,8 +1935,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -2017,8 +2010,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -2093,8 +2085,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -2169,8 +2160,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],

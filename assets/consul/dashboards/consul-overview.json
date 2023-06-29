@@ -465,8 +465,7 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
@@ -541,24 +540,21 @@
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
-                     "legendLink": "{{instance}}",
-                     "step": 10
+                     "legendLink": "{{instance}}"
                   },
                   {
                      "expr": "max(consul_http_request{job=~\"$job\", quantile=\"0.5\"}) by (instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
-                     "legendLink": "{{instance}}",
-                     "step": 10
+                     "legendLink": "{{instance}}"
                   },
                   {
                      "expr": "sum(rate(consul_http_request{job=~\"$job\"}[$__rate_interval])) by (instance) / sum(rate(consul_http_request{job=~\"$job\"}[$__rate_interval])) by (instance)",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "Average",
-                     "legendLink": null,
-                     "step": 10
+                     "legendLink": null
                   }
                ],
                "thresholds": [ ],
