@@ -23,8 +23,9 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 {{< code lang="yaml" >}}
 alert: NodeFilesystemSpaceFillingUp
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
-    {{ printf "%.2f" $value }}% available space left and is filling up.
+  description: Filesystem on {{ $labels.device }}, mounted on {{ $labels.mountpoint
+    }}, at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available space
+    left and is filling up.
   summary: Filesystem is predicted to run out of space within the next 24 hours.
 expr: |
   (
@@ -44,8 +45,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemSpaceFillingUp
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
-    {{ printf "%.2f" $value }}% available space left and is filling up fast.
+  description: Filesystem on {{ $labels.device }}, mounted on {{ $labels.mountpoint
+    }}, at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available space
+    left and is filling up fast.
   summary: Filesystem is predicted to run out of space within the next 4 hours.
 expr: |
   (
@@ -65,8 +67,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemAlmostOutOfSpace
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
-    {{ printf "%.2f" $value }}% available space left.
+  description: Filesystem on {{ $labels.device }}, mounted on {{ $labels.mountpoint
+    }}, at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available space
+    left.
   summary: Filesystem has less than 5% space left.
 expr: |
   (
@@ -84,8 +87,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemAlmostOutOfSpace
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
-    {{ printf "%.2f" $value }}% available space left.
+  description: Filesystem on {{ $labels.device }}, mounted on {{ $labels.mountpoint
+    }}, at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available space
+    left.
   summary: Filesystem has less than 3% space left.
 expr: |
   (
@@ -103,8 +107,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemFilesFillingUp
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
-    {{ printf "%.2f" $value }}% available inodes left and is filling up.
+  description: Filesystem on {{ $labels.device }}, mounted on {{ $labels.mountpoint
+    }}, at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available inodes
+    left and is filling up.
   summary: Filesystem is predicted to run out of inodes within the next 24 hours.
 expr: |
   (
@@ -124,8 +129,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemFilesFillingUp
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
-    {{ printf "%.2f" $value }}% available inodes left and is filling up fast.
+  description: Filesystem on {{ $labels.device }}, mounted on {{ $labels.mountpoint
+    }}, at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available inodes
+    left and is filling up fast.
   summary: Filesystem is predicted to run out of inodes within the next 4 hours.
 expr: |
   (
@@ -145,8 +151,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemAlmostOutOfFiles
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
-    {{ printf "%.2f" $value }}% available inodes left.
+  description: Filesystem on {{ $labels.device }}, mounted on {{ $labels.mountpoint
+    }}, at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available inodes
+    left.
   summary: Filesystem has less than 5% inodes left.
 expr: |
   (
@@ -164,8 +171,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeFilesystemAlmostOutOfFiles
 annotations:
-  description: Filesystem on {{ $labels.device }} at {{ $labels.instance }} has only
-    {{ printf "%.2f" $value }}% available inodes left.
+  description: Filesystem on {{ $labels.device }}, mounted on {{ $labels.mountpoint
+    }}, at {{ $labels.instance }} has only {{ printf "%.2f" $value }}% available inodes
+    left.
   summary: Filesystem has less than 3% inodes left.
 expr: |
   (
@@ -187,7 +195,7 @@ annotations:
     {{ printf "%.0f" $value }} receive errors in the last two minutes.'
   summary: Network interface is reporting many receive errors.
 expr: |
-  rate(node_network_receive_errs_total[2m]) / rate(node_network_receive_packets_total[2m]) > 0.01
+  rate(node_network_receive_errs_total{job="node"}[2m]) / rate(node_network_receive_packets_total{job="node"}[2m]) > 0.01
 for: 1h
 labels:
   severity: warning
@@ -202,7 +210,7 @@ annotations:
     {{ printf "%.0f" $value }} transmit errors in the last two minutes.'
   summary: Network interface is reporting many transmit errors.
 expr: |
-  rate(node_network_transmit_errs_total[2m]) / rate(node_network_transmit_packets_total[2m]) > 0.01
+  rate(node_network_transmit_errs_total{job="node"}[2m]) / rate(node_network_transmit_packets_total{job="node"}[2m]) > 0.01
 for: 1h
 labels:
   severity: warning
@@ -216,7 +224,7 @@ annotations:
   description: '{{ $value | humanizePercentage }} of conntrack entries are used.'
   summary: Number of conntrack are getting close to the limit.
 expr: |
-  (node_nf_conntrack_entries / node_nf_conntrack_entries_limit) > 0.75
+  (node_nf_conntrack_entries{job="node"} / node_nf_conntrack_entries_limit) > 0.75
 labels:
   severity: warning
 {{< /code >}}
@@ -226,7 +234,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeTextFileCollectorScrapeError
 annotations:
-  description: Node Exporter text file collector failed to scrape.
+  description: Node Exporter text file collector on {{ $labels.instance }} failed
+    to scrape.
   summary: Node Exporter text file collector failed to scrape.
 expr: |
   node_textfile_scrape_error{job="node"} == 1
@@ -239,7 +248,7 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeClockSkewDetected
 annotations:
-  description: Clock on {{ $labels.instance }} is out of sync by more than 0.05s.
+  description: Clock at {{ $labels.instance }} is out of sync by more than 0.05s.
     Ensure NTP is configured correctly on this host.
   summary: Clock skew detected.
 expr: |
@@ -264,7 +273,7 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeClockNotSynchronising
 annotations:
-  description: Clock on {{ $labels.instance }} is not synchronising. Ensure NTP is
+  description: Clock at {{ $labels.instance }} is not synchronising. Ensure NTP is
     configured on this host.
   summary: Clock not synchronising.
 expr: |
@@ -281,10 +290,10 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeRAIDDegraded
 annotations:
-  description: RAID array '{{ $labels.device }}' on {{ $labels.instance }} is in degraded
+  description: RAID array '{{ $labels.device }}' at {{ $labels.instance }} is in degraded
     state due to one or more disks failures. Number of spare drives is insufficient
     to fix issue automatically.
-  summary: RAID Array is degraded
+  summary: RAID Array is degraded.
 expr: |
   node_md_disks_required{job="node",device!=""} - ignoring (state) (node_md_disks{state="active",job="node",device!=""}) > 0
 for: 15m
@@ -297,9 +306,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeRAIDDiskFailure
 annotations:
-  description: At least one device in RAID array on {{ $labels.instance }} failed.
+  description: At least one device in RAID array at {{ $labels.instance }} failed.
     Array '{{ $labels.device }}' needs attention and possibly a disk swap.
-  summary: Failed device in RAID array
+  summary: Failed device in RAID array.
 expr: |
   node_md_disks{state="failed",job="node",device!=""} > 0
 labels:
@@ -338,6 +347,100 @@ expr: |
 for: 15m
 labels:
   severity: critical
+{{< /code >}}
+ 
+##### NodeCPUHighUsage
+
+{{< code lang="yaml" >}}
+alert: NodeCPUHighUsage
+annotations:
+  description: |
+    CPU usage at {{ $labels.instance }} has been above 90% for the last 15 minutes, is currently at {{ printf "%.2f" $value }}%.
+  summary: High CPU usage.
+expr: |
+  sum without(mode) (avg without (cpu) (rate(node_cpu_seconds_total{job="node", mode!="idle"}[2m]))) * 100 > 90
+for: 15m
+labels:
+  severity: info
+{{< /code >}}
+ 
+##### NodeSystemSaturation
+
+{{< code lang="yaml" >}}
+alert: NodeSystemSaturation
+annotations:
+  description: |
+    System load per core at {{ $labels.instance }} has been above 2 for the last 15 minutes, is currently at {{ printf "%.2f" $value }}.
+    This might indicate this instance resources saturation and can cause it becoming unresponsive.
+  summary: System saturated, load per core is very high.
+expr: |
+  node_load1{job="node"}
+  / count without (cpu, mode) (node_cpu_seconds_total{job="node", mode="idle"}) > 2
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### NodeMemoryMajorPagesFaults
+
+{{< code lang="yaml" >}}
+alert: NodeMemoryMajorPagesFaults
+annotations:
+  description: |
+    Memory major pages are occurring at very high rate at {{ $labels.instance }}, 500 major page faults per second for the last 15 minutes, is currently at {{ printf "%.2f" $value }}.
+    Please check that there is enough memory available at this instance.
+  summary: Memory major page faults are occurring at very high rate.
+expr: |
+  rate(node_vmstat_pgmajfault{job="node"}[5m]) > 500
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### NodeMemoryHighUtilization
+
+{{< code lang="yaml" >}}
+alert: NodeMemoryHighUtilization
+annotations:
+  description: |
+    Memory is filling up at {{ $labels.instance }}, has been above 90% for the last 15 minutes, is currently at {{ printf "%.2f" $value }}%.
+  summary: Host is running out of memory.
+expr: |
+  100 - (node_memory_MemAvailable_bytes{job="node"} / node_memory_MemTotal_bytes{job="node"} * 100) > 90
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### NodeDiskIOSaturation
+
+{{< code lang="yaml" >}}
+alert: NodeDiskIOSaturation
+annotations:
+  description: |
+    Disk IO queue (aqu-sq) is high on {{ $labels.device }} at {{ $labels.instance }}, has been above 10 for the last 15 minutes, is currently at {{ printf "%.2f" $value }}.
+    This symptom might indicate disk saturation.
+  summary: Disk IO queue is high.
+expr: |
+  rate(node_disk_io_time_weighted_seconds_total{job="node", device!=""}[5m]) > 10
+for: 30m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### NodeSystemdServiceFailed
+
+{{< code lang="yaml" >}}
+alert: NodeSystemdServiceFailed
+annotations:
+  description: Systemd service {{ $labels.name }} has entered failed state at {{ $labels.instance
+    }}
+  summary: Systemd service has entered failed state.
+expr: |
+  node_systemd_unit_state{job="node", state="failed"} == 1
+for: 5m
+labels:
+  severity: warning
 {{< /code >}}
  
 ## Recording rules
