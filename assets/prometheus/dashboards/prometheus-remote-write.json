@@ -1345,7 +1345,7 @@
             "multi": false,
             "name": "cluster",
             "options": [ ],
-            "query": "label_values(kube_pod_container_info{image=~\".*prometheus.*\"}, cluster)",
+            "query": "label_values(prometheus_build_info, cluster)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
