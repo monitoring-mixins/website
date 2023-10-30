@@ -7,7 +7,7 @@ title: cert-manager
 
 
 {{< panel style="danger" >}}
-Jsonnet source code is available at [gitlab.com/uneeq-oss/cert-manager-mixin.git](https://gitlab.com/uneeq-oss/cert-manager-mixin.git)
+Jsonnet source code is available at [github.com/imusmanmalik/cert-manager-mixin.git](https://github.com/imusmanmalik/cert-manager-mixin.git)
 {{< /panel >}}
 
 ## Alerts
@@ -25,8 +25,8 @@ alert: CertManagerAbsent
 annotations:
   description: New certificates will not be able to be minted, and existing ones can't
     be renewed until cert-manager is back.
-  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagerabsent
-  summary: Cert Manager has dissapeared from Prometheus service discovery.
+  runbook_url: https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#certmanagerabsent
+  summary: Cert Manager has disappeared from Prometheus service discovery.
 expr: absent(up{job="cert-manager"})
 for: 10m
 labels:
@@ -44,7 +44,7 @@ annotations:
   description: The domain that this cert covers will be unavailable after {{ $value
     | humanizeDuration }}. Clients using endpoints that this cert protects will start
     to fail in {{ $value | humanizeDuration }}.
-  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagercertexpirysoon
+  runbook_url: https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#certmanagercertexpirysoon
   summary: The cert `{{ $labels.name }}` is {{ $value | humanizeDuration }} from expiry,
     it should have renewed over a week ago.
 expr: |
@@ -65,7 +65,7 @@ annotations:
   description: This certificate has not been ready to serve traffic for at least 10m.
     If the cert is being renewed or there is another valid cert, the ingress controller
     _may_ be able to serve that instead.
-  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagercertnotready
+  runbook_url: https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#certmanagercertnotready
   summary: The cert `{{ $labels.name }}` is not ready to serve traffic.
 expr: |
   max by (name, exported_namespace, namespace, condition) (
@@ -84,7 +84,7 @@ annotations:
   dashboard_url: https://grafana.example.com/d/TvuRo2iMk/cert-manager
   description: Depending on the rate limit, cert-manager may be unable to generate
     certificates for up to a week.
-  runbook_url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/blob/master/RUNBOOK.md#certmanagerhittingratelimits
+  runbook_url: https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#certmanagerhittingratelimits
   summary: Cert manager hitting LetsEncrypt rate limits.
 expr: |
   sum by (host) (

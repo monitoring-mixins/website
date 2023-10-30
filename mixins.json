@@ -97,7 +97,7 @@
         },
         {
             "name": "cert-manager",
-            "source": "https://gitlab.com/uneeq-oss/cert-manager-mixin.git",
+            "source": "https://github.com/imusmanmalik/cert-manager-mixin.git",
             "subdir": ""
         },
         {
