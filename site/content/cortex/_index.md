@@ -7,7 +7,7 @@ title: cortex
 
 
 {{< panel style="danger" >}}
-Jsonnet source code is available at [github.com/grafana/cortex-jsonnet](https://github.com/grafana/cortex-jsonnet/tree/master/cortex-mixin)
+Jsonnet source code is available at [github.com/cortexproject/cortex-jsonnet](https://github.com/cortexproject/cortex-jsonnet/tree/master/cortex-mixin)
 {{< /panel >}}
 
 ## Alerts

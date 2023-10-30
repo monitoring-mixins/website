@@ -76,7 +76,7 @@
         },
         {
             "name": "cortex",
-            "source": "https://github.com/grafana/cortex-jsonnet",
+            "source": "https://github.com/cortexproject/cortex-jsonnet",
             "subdir": "cortex-mixin"
         },
         {
