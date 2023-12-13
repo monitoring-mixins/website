@@ -2119,7 +2119,7 @@ record: 'node_namespace_pod:kube_pod_info:'
 {{< code lang="yaml" >}}
 expr: |
   count by (cluster, node) (
-    node_cpu_seconds_total{mode="idle",job="node-exporter"}
+    node_cpu_seconds_total{mode="idle",job="node"}
     * on (namespace, pod) group_left(node)
     topk by(namespace, pod) (1, node_namespace_pod:kube_pod_info:)
   )
@@ -2131,12 +2131,12 @@ record: node:node_num_cpu:sum
 {{< code lang="yaml" >}}
 expr: |
   sum(
-    node_memory_MemAvailable_bytes{job="node-exporter"} or
+    node_memory_MemAvailable_bytes{job="node"} or
     (
-      node_memory_Buffers_bytes{job="node-exporter"} +
-      node_memory_Cached_bytes{job="node-exporter"} +
-      node_memory_MemFree_bytes{job="node-exporter"} +
-      node_memory_Slab_bytes{job="node-exporter"}
+      node_memory_Buffers_bytes{job="node"} +
+      node_memory_Cached_bytes{job="node"} +
+      node_memory_MemFree_bytes{job="node"} +
+      node_memory_Slab_bytes{job="node"}
     )
   ) by (cluster)
 record: :node_memory_MemAvailable_bytes:sum
@@ -2148,7 +2148,7 @@ record: :node_memory_MemAvailable_bytes:sum
 expr: |
   avg by (cluster, node) (
     sum without (mode) (
-      rate(node_cpu_seconds_total{mode!="idle",mode!="iowait",mode!="steal",job="node-exporter"}[5m])
+      rate(node_cpu_seconds_total{mode!="idle",mode!="iowait",mode!="steal",job="node"}[5m])
     )
   )
 record: node:node_cpu_utilization:ratio_rate5m
