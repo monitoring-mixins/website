@@ -1,0 +1,23 @@
+groups:
+- name: nsq
+  rules:
+  - alert: NsqTopicDepthIncreasing
+    annotations:
+      description: |
+        Topic {{ $labels.topic }} depth is higher than 100. The current queue is {{ $value }}.
+      summary: Topic depth is increasing.
+    expr: |
+      sum by (topic) (nsq_topic_depth) > 100
+    for: 5m
+    labels:
+      severity: critical
+  - alert: NsqChannelDepthIncreasing
+    annotations:
+      description: |
+        Channel {{ $labels.channel }} depth in topic {{ $labels.topic }} is higher than 100. The current queue is {{ $value }}.
+      summary: Topic channel depth is increasing.
+    expr: |
+      sum by (topic) (nsq_topic_channel_backend_depth) > 100
+    for: 5m
+    labels:
+      severity: critical

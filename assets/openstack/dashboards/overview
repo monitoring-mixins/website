@@ -1,0 +1,1156 @@
+{
+   "links": [
+      {
+         "keepTime": true,
+         "title": "OpenStack Cinder",
+         "type": "link",
+         "url": "/d/openstack-cinder"
+      },
+      {
+         "keepTime": true,
+         "title": "OpenStack logs",
+         "type": "link",
+         "url": "/d/openstack-logs"
+      },
+      {
+         "keepTime": true,
+         "title": "OpenStack Neutron",
+         "type": "link",
+         "url": "/d/openstack-neutron"
+      },
+      {
+         "keepTime": true,
+         "title": "OpenStack Nova",
+         "type": "link",
+         "url": "/d/openstack-nova"
+      }
+   ],
+   "panels": [
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "Reports the status of the Placement resource-scheduling service.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "red",
+                           "index": 1,
+                           "text": "Down"
+                        },
+                        "1": {
+                           "color": "green",
+                           "index": 0,
+                           "text": "Up"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "unit": "string"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 0,
+            "y": 0
+         },
+         "id": 1,
+         "options": {
+            "graphMode": "none"
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_up{job=~\"$job\",instance=~\"$instance\"}"
+            }
+         ],
+         "title": "Placement status",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "Reports the status of the Keystone identity service.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "red",
+                           "index": 1,
+                           "text": "Down"
+                        },
+                        "1": {
+                           "color": "green",
+                           "index": 0,
+                           "text": "Up"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "unit": "string"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 4,
+            "y": 0
+         },
+         "id": 2,
+         "options": {
+            "graphMode": "none"
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_up{job=~\"$job\",instance=~\"$instance\"}"
+            }
+         ],
+         "title": "Keystone status",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "Reports the status of the Nova compute service.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "red",
+                           "index": 1,
+                           "text": "Down"
+                        },
+                        "1": {
+                           "color": "green",
+                           "index": 0,
+                           "text": "Up"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "unit": "string"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 8,
+            "y": 0
+         },
+         "id": 3,
+         "options": {
+            "graphMode": "none"
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_up{job=~\"$job\",instance=~\"$instance\"}"
+            }
+         ],
+         "title": "Nova status",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "Reports the status of the Neutron networking service.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "red",
+                           "index": 1,
+                           "text": "Down"
+                        },
+                        "1": {
+                           "color": "green",
+                           "index": 0,
+                           "text": "Up"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "unit": "string"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 12,
+            "y": 0
+         },
+         "id": 4,
+         "options": {
+            "graphMode": "none"
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_up{job=~\"$job\",instance=~\"$instance\"}"
+            }
+         ],
+         "title": "Neutron status",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "Reports the status of the Cinder block storage service.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "red",
+                           "index": 1,
+                           "text": "Down"
+                        },
+                        "1": {
+                           "color": "green",
+                           "index": 0,
+                           "text": "Up"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "unit": "string"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 16,
+            "y": 0
+         },
+         "id": 5,
+         "options": {
+            "graphMode": "none"
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_up{job=~\"$job\",instance=~\"$instance\"}"
+            }
+         ],
+         "title": "Cinder status",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "Reports the status of the Glance image service.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "red",
+                           "index": 1,
+                           "text": "Down"
+                        },
+                        "1": {
+                           "color": "green",
+                           "index": 0,
+                           "text": "Up"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "unit": "string"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 20,
+            "y": 0
+         },
+         "id": 6,
+         "options": {
+            "graphMode": "none"
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_up{job=~\"$job\",instance=~\"$instance\"}"
+            }
+         ],
+         "title": "Glance status",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "description": "Panel to report on the status of firing alerts.",
+         "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 8
+         },
+         "id": 7,
+         "options": {
+            "alertInstanceLabelFilter": "job=~\"${job:regex}\""
+         },
+         "pluginVersion": "v10.0.0",
+         "title": "Alerts",
+         "type": "alertlist"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "Summary of the hardware resources available and used by OpenStack.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "align": "center"
+               }
+            },
+            "overrides": [
+               {
+                  "matcher": {
+                     "id": "byRegexp",
+                     "options": "/Disk/"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "decgbytes"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byRegexp",
+                     "options": "/Memory/"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "decmbytes"
+                     }
+                  ]
+               }
+            ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 16,
+            "x": 8,
+            "y": 8
+         },
+         "id": 8,
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_resource_total{job=~\"$job\",instance=~\"$instance\", resourcetype=\"DISK_GB\"}",
+               "format": "table",
+               "instant": true
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_resource_usage{job=~\"$job\",instance=~\"$instance\", resourcetype=\"DISK_GB\"}",
+               "format": "table",
+               "instant": true
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_resource_total{job=~\"$job\",instance=~\"$instance\", resourcetype=\"MEMORY_MB\"}",
+               "format": "table",
+               "instant": true
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_resource_usage{job=~\"$job\",instance=~\"$instance\", resourcetype=\"MEMORY_MB\"}",
+               "format": "table",
+               "instant": true
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_resource_total{job=~\"$job\",instance=~\"$instance\", resourcetype=\"VCPU\"}",
+               "format": "table",
+               "instant": true
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_resource_usage{job=~\"$job\",instance=~\"$instance\", resourcetype=\"VCPU\"}",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Total resources",
+         "transformations": [
+            {
+               "id": "joinByField",
+               "options": {
+                  "byField": "instance",
+                  "mode": "outer"
+               }
+            },
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true,
+                     "Time 1": true,
+                     "Time 3": true,
+                     "Time 4": true,
+                     "Time 5": true,
+                     "Time 6": true,
+                     "__name__ 1": true,
+                     "__name__ 2": true,
+                     "__name__ 3": true,
+                     "__name__ 4": true,
+                     "__name__ 5": true,
+                     "__name__ 6": true,
+                     "hostname 1": true,
+                     "hostname 2": true,
+                     "hostname 3": true,
+                     "hostname 4": true,
+                     "hostname 5": true,
+                     "hostname 6": true,
+                     "job": true,
+                     "job 1": true,
+                     "job 2": true,
+                     "job 3": true,
+                     "job 4": true,
+                     "job 5": true,
+                     "job 6": true,
+                     "resourcetype 1": true,
+                     "resourcetype 2": true,
+                     "resourcetype 3": true,
+                     "resourcetype 4": true,
+                     "resourcetype 5": true,
+                     "resourcetype 6": true
+                  },
+                  "includeByName": { },
+                  "indexByName": {
+                     "Time 1": 34,
+                     "Time 2": 9,
+                     "Time 3": 14,
+                     "Time 4": 19,
+                     "Time 5": 24,
+                     "Time 6": 29,
+                     "Value #A": 3,
+                     "Value #B": 4,
+                     "Value #C": 5,
+                     "Value #D": 6,
+                     "Value #E": 7,
+                     "Value #F": 8,
+                     "__name__ 1": 1,
+                     "__name__ 2": 10,
+                     "__name__ 3": 15,
+                     "__name__ 4": 20,
+                     "__name__ 5": 25,
+                     "__name__ 6": 30,
+                     "hostname 1": 35,
+                     "hostname 2": 11,
+                     "hostname 3": 16,
+                     "hostname 4": 21,
+                     "hostname 5": 26,
+                     "hostname 6": 31,
+                     "instance": 0,
+                     "job 1": 36,
+                     "job 2": 12,
+                     "job 3": 17,
+                     "job 4": 22,
+                     "job 5": 27,
+                     "job 6": 32,
+                     "resourcetype 1": 2,
+                     "resourcetype 2": 13,
+                     "resourcetype 3": 18,
+                     "resourcetype 4": 23,
+                     "resourcetype 5": 28,
+                     "resourcetype 6": 33
+                  },
+                  "renameByName": {
+                     "Time": "",
+                     "Value #A": "Disk available",
+                     "Value #B": "Disk used",
+                     "Value #C": "Memory avaliable",
+                     "Value #D": "Memory used",
+                     "Value #E": "VCPUs available",
+                     "Value #F": "VCPUs used",
+                     "hostname": "Hostname",
+                     "instance": "Instance",
+                     "openstack_placement_resource_total": "Total",
+                     "openstack_placement_resource_usage": "In use",
+                     "resourcetype": "Resource"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 0,
+            "x": 24,
+            "y": 16
+         },
+         "id": 9,
+         "title": "Keystone service",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "The number of domains for the OpenStack cloud.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               }
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 0,
+            "y": 17
+         },
+         "id": 10,
+         "options": {
+            "colorMode": "fixed",
+            "graphMode": "none",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ]
+            }
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_identity_domains{job=~\"$job\",instance=~\"$instance\"}"
+            }
+         ],
+         "title": "Domains",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "The number of projects for the OpenStack cloud.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               }
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 4,
+            "y": 17
+         },
+         "id": 11,
+         "options": {
+            "colorMode": "fixed",
+            "graphMode": "none",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ]
+            }
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_identity_projects{job=~\"$job\",instance=~\"$instance\"}"
+            }
+         ],
+         "title": "Projects",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "The number of regions for the OpenStack cloud.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               }
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 8,
+            "y": 17
+         },
+         "id": 12,
+         "options": {
+            "colorMode": "fixed",
+            "graphMode": "none",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ]
+            }
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_identity_regions{job=~\"$job\",instance=~\"$instance\"}"
+            }
+         ],
+         "title": "Regions",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "The number of users for the OpenStack cloud.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 30,
+                  "gradientMode": "opacity",
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "showPoints": "never"
+               },
+               "decimals": 0
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 17
+         },
+         "id": 13,
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list"
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_identity_users{job=~\"$job\",instance=~\"$instance\"}",
+               "interval": "1m",
+               "legendFormat": "{{instance}}"
+            }
+         ],
+         "title": "Users",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "Details for the projects in the OpenStack cloud.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "align": "center"
+               }
+            },
+            "overrides": [
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Enabled"
+                  },
+                  "properties": [
+                     {
+                        "id": "custom.displayMode",
+                        "value": "color-text"
+                     },
+                     {
+                        "id": "mappings",
+                        "value": [
+                           {
+                              "options": {
+                                 "false": {
+                                    "color": "red",
+                                    "index": 1,
+                                    "text": "False"
+                                 },
+                                 "true": {
+                                    "color": "green",
+                                    "index": 0,
+                                    "text": "True"
+                                 }
+                              },
+                              "type": "value"
+                           }
+                        ]
+                     }
+                  ]
+               }
+            ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 25
+         },
+         "id": 14,
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_identity_project_info{job=~\"$job\",instance=~\"$instance\"}",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Project details",
+         "transformations": [
+            {
+               "id": "joinByField",
+               "options": {
+                  "byField": "Time",
+                  "mode": "outer"
+               }
+            },
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true,
+                     "Value": true,
+                     "__name__": true,
+                     "description": true,
+                     "job": true,
+                     "parent_id": true
+                  },
+                  "includeByName": { },
+                  "indexByName": {
+                     "Time": 3,
+                     "Value": 11,
+                     "__name__": 4,
+                     "description": 5,
+                     "domain_id": 7,
+                     "enabled": 6,
+                     "id": 1,
+                     "instance": 2,
+                     "is_domain": 8,
+                     "job": 10,
+                     "name": 0,
+                     "parent_id": 9
+                  },
+                  "renameByName": {
+                     "domain_id": "Domain ID",
+                     "enabled": "Enabled",
+                     "id": "ID",
+                     "instance": "Instance",
+                     "is_domain": "Is domain",
+                     "name": "Name"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 0,
+            "x": 24,
+            "y": 33
+         },
+         "id": 15,
+         "title": "Glance service",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "Reports the status of the Glance image service.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "red",
+                           "index": 1,
+                           "text": "Down"
+                        },
+                        "1": {
+                           "color": "green",
+                           "index": 0,
+                           "text": "Up"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "unit": "string"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 34
+         },
+         "id": 16,
+         "options": {
+            "graphMode": "none"
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_placement_up{job=~\"$job\",instance=~\"$instance\"}"
+            }
+         ],
+         "title": "Glance status",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "The number of images present in Glance.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 30,
+                  "gradientMode": "opacity",
+                  "lineInterpolation": "smooth",
+                  "lineWidth": 2,
+                  "showPoints": "never"
+               },
+               "decimals": 0
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 18,
+            "x": 6,
+            "y": 34
+         },
+         "id": 17,
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list"
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_glance_images{job=~\"$job\",instance=~\"$instance\"}",
+               "interval": "1m",
+               "legendFormat": "{{instance}}"
+            }
+         ],
+         "title": "Image count",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus_datasource}"
+         },
+         "description": "Details for the images in Glance.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "align": "center"
+               }
+            },
+            "overrides": [
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Size"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "decbytes"
+                     }
+                  ]
+               }
+            ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 42
+         },
+         "id": 18,
+         "pluginVersion": "v10.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${prometheus_datasource}"
+               },
+               "expr": "openstack_glance_image_bytes{job=~\"$job\",instance=~\"$instance\"}",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Images",
+         "transformations": [
+            {
+               "id": "joinByField",
+               "options": {
+                  "byField": "Time",
+                  "mode": "outer"
+               }
+            },
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true,
+                     "__name__": true,
+                     "job": true
+                  },
+                  "includeByName": { },
+                  "indexByName": {
+                     "Time": 5,
+                     "Value": 2,
+                     "__name__": 6,
+                     "id": 1,
+                     "instance": 3,
+                     "job": 7,
+                     "name": 0,
+                     "tenant_id": 4
+                  },
+                  "renameByName": {
+                     "Value": "Size",
+                     "id": "ID",
+                     "instance": "Instance",
+                     "name": "Name",
+                     "tenant_id": "Tenant ID"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      }
+   ],
+   "refresh": "1m",
+   "schemaVersion": 36,
+   "tags": [
+      "openstack"
+   ],
+   "templating": {
+      "list": [
+         {
+            "label": "Data source",
+            "name": "prometheus_datasource",
+            "query": "prometheus",
+            "regex": "",
+            "type": "datasource"
+         },
+         {
+            "allValue": ".+",
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${prometheus_datasource}"
+            },
+            "includeAll": true,
+            "label": "Job",
+            "multi": true,
+            "name": "job",
+            "query": "label_values(openstack_identity_up{job=~\"integrations/openstack\"}, job)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "allValue": ".+",
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${prometheus_datasource}"
+            },
+            "includeAll": true,
+            "label": "Instance",
+            "multi": true,
+            "name": "instance",
+            "query": "label_values(openstack_identity_up{job=~\"integrations/openstack\",job=~\"$job\"}, instance)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "hide": 2,
+            "label": "Loki data source",
+            "name": "loki_datasource",
+            "query": "loki",
+            "regex": "(?!grafanacloud.+usage-insights|grafanacloud.+alert-state-history).+",
+            "type": "datasource"
+         }
+      ]
+   },
+   "time": {
+      "from": "now-30m",
+      "to": "now"
+   },
+   "timezone": "default",
+   "title": "OpenStack overview",
+   "uid": "openstack-overview"
+}

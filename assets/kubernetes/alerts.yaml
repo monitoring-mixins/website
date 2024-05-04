@@ -365,9 +365,9 @@ groups:
       runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-cputhrottlinghigh
       summary: Processes experience elevated CPU throttling.
     expr: |
-      sum(increase(container_cpu_cfs_throttled_periods_total{container!="", }[5m])) by (container, pod, namespace)
+      sum(increase(container_cpu_cfs_throttled_periods_total{container!="", }[5m])) by (cluster, container, pod, namespace)
         /
-      sum(increase(container_cpu_cfs_periods_total{}[5m])) by (container, pod, namespace)
+      sum(increase(container_cpu_cfs_periods_total{}[5m])) by (cluster, container, pod, namespace)
         > ( 25 / 100 )
     for: 15m
     labels:
@@ -377,8 +377,8 @@ groups:
   - alert: KubePersistentVolumeFillingUp
     annotations:
       description: The PersistentVolume claimed by {{ $labels.persistentvolumeclaim
-        }} in Namespace {{ $labels.namespace }} is only {{ $value | humanizePercentage
-        }} free.
+        }} in Namespace {{ $labels.namespace }} {{ with $labels.cluster -}} on Cluster
+        {{ . }} {{- end }} is only {{ $value | humanizePercentage }} free.
       runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumefillingup
       summary: PersistentVolume is filling up.
     expr: |
@@ -389,9 +389,9 @@ groups:
       ) < 0.03
       and
       kubelet_volume_stats_used_bytes{job="kubelet"} > 0
-      unless on(namespace, persistentvolumeclaim)
+      unless on(cluster, namespace, persistentvolumeclaim)
       kube_persistentvolumeclaim_access_mode{ access_mode="ReadOnlyMany"} == 1
-      unless on(namespace, persistentvolumeclaim)
+      unless on(cluster, namespace, persistentvolumeclaim)
       kube_persistentvolumeclaim_labels{label_excluded_from_alerts="true"} == 1
     for: 1m
     labels:
@@ -399,8 +399,9 @@ groups:
   - alert: KubePersistentVolumeFillingUp
     annotations:
       description: Based on recent sampling, the PersistentVolume claimed by {{ $labels.persistentvolumeclaim
-        }} in Namespace {{ $labels.namespace }} is expected to fill up within four
-        days. Currently {{ $value | humanizePercentage }} is available.
+        }} in Namespace {{ $labels.namespace }} {{ with $labels.cluster -}} on Cluster
+        {{ . }} {{- end }} is expected to fill up within four days. Currently {{ $value
+        | humanizePercentage }} is available.
       runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumefillingup
       summary: PersistentVolume is filling up.
     expr: |
@@ -413,9 +414,9 @@ groups:
       kubelet_volume_stats_used_bytes{job="kubelet"} > 0
       and
       predict_linear(kubelet_volume_stats_available_bytes{job="kubelet"}[6h], 4 * 24 * 3600) < 0
-      unless on(namespace, persistentvolumeclaim)
+      unless on(cluster, namespace, persistentvolumeclaim)
       kube_persistentvolumeclaim_access_mode{ access_mode="ReadOnlyMany"} == 1
-      unless on(namespace, persistentvolumeclaim)
+      unless on(cluster, namespace, persistentvolumeclaim)
       kube_persistentvolumeclaim_labels{label_excluded_from_alerts="true"} == 1
     for: 1h
     labels:
@@ -423,8 +424,8 @@ groups:
   - alert: KubePersistentVolumeInodesFillingUp
     annotations:
       description: The PersistentVolume claimed by {{ $labels.persistentvolumeclaim
-        }} in Namespace {{ $labels.namespace }} only has {{ $value | humanizePercentage
-        }} free inodes.
+        }} in Namespace {{ $labels.namespace }} {{ with $labels.cluster -}} on Cluster
+        {{ . }} {{- end }} only has {{ $value | humanizePercentage }} free inodes.
       runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeinodesfillingup
       summary: PersistentVolumeInodes are filling up.
     expr: |
@@ -435,9 +436,9 @@ groups:
       ) < 0.03
       and
       kubelet_volume_stats_inodes_used{job="kubelet"} > 0
-      unless on(namespace, persistentvolumeclaim)
+      unless on(cluster, namespace, persistentvolumeclaim)
       kube_persistentvolumeclaim_access_mode{ access_mode="ReadOnlyMany"} == 1
-      unless on(namespace, persistentvolumeclaim)
+      unless on(cluster, namespace, persistentvolumeclaim)
       kube_persistentvolumeclaim_labels{label_excluded_from_alerts="true"} == 1
     for: 1m
     labels:
@@ -445,8 +446,9 @@ groups:
   - alert: KubePersistentVolumeInodesFillingUp
     annotations:
       description: Based on recent sampling, the PersistentVolume claimed by {{ $labels.persistentvolumeclaim
-        }} in Namespace {{ $labels.namespace }} is expected to run out of inodes within
-        four days. Currently {{ $value | humanizePercentage }} of its inodes are free.
+        }} in Namespace {{ $labels.namespace }} {{ with $labels.cluster -}} on Cluster
+        {{ . }} {{- end }} is expected to run out of inodes within four days. Currently
+        {{ $value | humanizePercentage }} of its inodes are free.
       runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeinodesfillingup
       summary: PersistentVolumeInodes are filling up.
     expr: |
@@ -459,17 +461,17 @@ groups:
       kubelet_volume_stats_inodes_used{job="kubelet"} > 0
       and
       predict_linear(kubelet_volume_stats_inodes_free{job="kubelet"}[6h], 4 * 24 * 3600) < 0
-      unless on(namespace, persistentvolumeclaim)
+      unless on(cluster, namespace, persistentvolumeclaim)
       kube_persistentvolumeclaim_access_mode{ access_mode="ReadOnlyMany"} == 1
-      unless on(namespace, persistentvolumeclaim)
+      unless on(cluster, namespace, persistentvolumeclaim)
       kube_persistentvolumeclaim_labels{label_excluded_from_alerts="true"} == 1
     for: 1h
     labels:
       severity: warning
   - alert: KubePersistentVolumeErrors
     annotations:
-      description: The persistent volume {{ $labels.persistentvolume }} has status
-        {{ $labels.phase }}.
+      description: The persistent volume {{ $labels.persistentvolume }} {{ with $labels.cluster
+        -}} on Cluster {{ . }} {{- end }} has status {{ $labels.phase }}.
       runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeerrors
       summary: PersistentVolume is having issues with provisioning.
     expr: |
