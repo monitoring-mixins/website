@@ -129,6 +129,12 @@
             "name": "grafana",
             "source": "https://github.com/grafana/grafana",
             "subdir": "grafana-mixin"
+        },
+        {
+            "name": "opensearch-mixin",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "opensearch-mixin",
+            "description": "Opensearch mixin based on prometheus opensearch plugin."
         }
     ]
 }
