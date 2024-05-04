@@ -511,6 +511,11 @@
             "name": "wso2-streaming-integrator",
             "source": "https://github.com/grafana/jsonnet-libs",
             "subdir": "wso2-streaming-integrator-mixin"
+        },
+        {
+            "name": "gitea",
+            "source": "https://github.com/go-gitea/gitea",
+            "subdir": "contrib/gitea-monitoring-mixin"
         }
     ]
 }
