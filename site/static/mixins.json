@@ -129,6 +129,11 @@
             "name": "grafana",
             "source": "https://github.com/grafana/grafana",
             "subdir": "grafana-mixin"
+        },
+        {
+            "name": "windows",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "windows-mixin"
         }
     ]
 }
