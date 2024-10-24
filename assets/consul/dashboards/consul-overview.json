@@ -56,7 +56,6 @@
                      "expr": "consul_up{job=~\"$job\",instance=~\"$instance\"}",
                      "format": "time_series",
                      "instant": true,
-                     "intervalFactor": 2,
                      "refId": "A"
                   }
                ],
@@ -163,7 +162,6 @@
                      "expr": "(rate(consul_raft_leader_lastcontact_count{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]) > bool 0)\n  or\n(consul_up{job=~\"$job\",instance=~\"$instance\"} == bool 0)\n",
                      "format": "time_series",
                      "instant": true,
-                     "intervalFactor": 2,
                      "refId": "A"
                   }
                ],
@@ -270,7 +268,6 @@
                      "expr": "consul_raft_leader{job=~\"$job\",instance=~\"$instance\"}",
                      "format": "time_series",
                      "instant": true,
-                     "intervalFactor": 2,
                      "refId": "A"
                   }
                ],
@@ -377,7 +374,6 @@
                      "expr": "consul_raft_peers{job=~\"$job\",instance=~\"$instance\"}",
                      "format": "time_series",
                      "instant": true,
-                     "intervalFactor": 2,
                      "refId": "A"
                   }
                ],
@@ -463,7 +459,6 @@
                   {
                      "expr": "sum(rate(consul_http_request_count{job=~\"$job\"}[$__rate_interval])) by (instance)",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
                      "legendLink": null
                   }
@@ -538,21 +533,18 @@
                   {
                      "expr": "max(consul_http_request{job=~\"$job\", quantile=\"0.99\"}) by (instance)",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "99th Percentile",
                      "legendLink": "{{instance}}"
                   },
                   {
                      "expr": "max(consul_http_request{job=~\"$job\", quantile=\"0.5\"}) by (instance)",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "50th Percentile",
                      "legendLink": "{{instance}}"
                   },
                   {
                      "expr": "sum(rate(consul_http_request{job=~\"$job\"}[$__rate_interval])) by (instance) / sum(rate(consul_http_request{job=~\"$job\"}[$__rate_interval])) by (instance)",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "Average",
                      "legendLink": null
                   }
@@ -613,7 +605,7 @@
                "value": "default"
             },
             "hide": 0,
-            "label": "Data Source",
+            "label": "Data source",
             "name": "datasource",
             "options": [ ],
             "query": "prometheus",

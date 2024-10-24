@@ -65,7 +65,7 @@ expr: |
   (
     rate(alertmanager_notifications_failed_total{job="alertmanager"}[5m])
   /
-    rate(alertmanager_notifications_total{job="alertmanager"}[5m])
+    ignoring (reason) group_left rate(alertmanager_notifications_total{job="alertmanager"}[5m])
   )
   > 0.01
 for: 5m
@@ -87,7 +87,7 @@ expr: |
   min by (job, integration) (
     rate(alertmanager_notifications_failed_total{job="alertmanager", integration=~`.*`}[5m])
   /
-    rate(alertmanager_notifications_total{job="alertmanager", integration=~`.*`}[5m])
+    ignoring (reason) group_left rate(alertmanager_notifications_total{job="alertmanager", integration=~`.*`}[5m])
   )
   > 0.01
 for: 5m
@@ -109,7 +109,7 @@ expr: |
   min by (job, integration) (
     rate(alertmanager_notifications_failed_total{job="alertmanager", integration!~`.*`}[5m])
   /
-    rate(alertmanager_notifications_total{job="alertmanager", integration!~`.*`}[5m])
+    ignoring (reason) group_left rate(alertmanager_notifications_total{job="alertmanager", integration!~`.*`}[5m])
   )
   > 0.01
 for: 5m

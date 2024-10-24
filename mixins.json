@@ -129,6 +129,393 @@
             "name": "grafana",
             "source": "https://github.com/grafana/grafana",
             "subdir": "grafana-mixin"
+        },
+        {
+            "name": "mysql",
+            "source": "https://github.com/prometheus/mysqld_exporter",
+            "subdir": "mysqld-mixin"
+        },
+        {
+            "name": "blackbox_exporter",
+            "source": "https://github.com/adinhodovic/blackbox-exporter-mixin/",
+            "subdir": ""
+        },
+        {
+            "name": "aerospike",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "aerospike-mixin"
+        },
+        {
+            "name": "apache-activemq",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-activemq-mixin"
+        },
+        {
+            "name": "apache-airflow",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-airflow-mixin"
+        },
+        {
+            "name": "apache-cassandra",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-cassandra-mixin"
+        },
+        {
+            "name": "apache-camel",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-camel-mixin"
+        },
+        {
+            "name": "apache-couchdb",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-couchdb-mixin"
+        },
+        {
+            "name": "apache-hadoop",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-hadoop-mixin"
+        },
+        {
+            "name": "apache-hbase",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-hbase-mixin"
+        },
+        {
+            "name": "apache-http",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-http-mixin"
+        },
+        {
+            "name": "apache-mesos",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-mesos-mixin"
+        },
+        {
+            "name": "apache-solr",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-solr-mixin"
+        },
+        {
+            "name": "apache-tomcat",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "apache-tomcat-mixin"
+        },
+        {
+            "name": "argocd",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "argocd-mixin"
+        },
+        {
+            "name": "asterisk",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "asterisk-mixin"
+        },
+        {
+            "name": "awx",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "awx-mixin"
+        },
+        {
+            "name": "caddy",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "caddy-mixin"
+        },
+        {
+            "name": "cilium-enterprise",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "cilium-enterprise-mixin"
+        },
+        {
+            "name": "clickhouse",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "clickhouse-mixin"
+        },
+        {
+            "name": "cloudflare",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "cloudflare-mixin"
+        },
+        {
+            "name": "confluent-kafka",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "confluent-kafka-mixin"
+        },
+        {
+            "name": "couchbase",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "couchbase-mixin"
+        },
+        {
+            "name": "discourse",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "discourse-mixin"
+        },
+        {
+            "name": "docker",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "docker-mixin",
+            "description": "A set of Grafana dashboards for Docker (based on cadvisor)."
+        },
+        {
+            "name": "elasticsearch",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "dockelasticsearcher-mixin"
+        },
+        {
+            "name": "envoy",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "envoy-mixin"
+        },
+        {
+            "name": "f5-bigip",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "f5-bigip-mixin"
+        },
+        {
+            "name": "gitlab",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "gitlab-mixin"
+        },
+        {
+            "name": "go-runtime",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "go-runtime-mixin"
+        },
+        {
+            "name": "haproxy",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "haproxy-mixin"
+        },
+        {
+            "name": "harbor",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "harbor-mixin"
+        },
+        {
+            "name": "hass",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "hass-mixin"
+        },
+        {
+            "name": "ibm-mq",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "ibm-mq-mixin"
+        },
+        {
+            "name": "influxdb",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "influxdb-mixin"
+        },
+        {
+            "name": "istio",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "istio-2-mixin"
+        },
+        {
+            "name": "jenkins",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "jenkins-mixin"
+        },
+        {
+            "name": "jira",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "jira-mixin"
+        },
+        {
+            "name": "jvm",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "jvm-mixin"
+        },
+        {
+            "name": "kafka",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "kafka-mixin"
+        },
+        {
+            "name": "microsoft-iis",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "microsoft-iis-mixin"
+        },
+        {
+            "name": "mongodb",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "mongodb-mixin"
+        },
+        {
+            "name": "mongodb-atlas",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "mongodb-atlas-mixin"
+        },
+        {
+            "name": "MSSQL",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "mssql-mixin"
+        },
+        {
+            "name": "nginx",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "nginx-mixin"
+        },
+        {
+            "name": "nodejs",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "nodejs-mixin"
+        },
+        {
+            "name": "nomad",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "nomad-mixin"
+        },
+        {
+            "name": "nsq",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "nsq-mixin"
+        },
+        {
+            "name": "openldap",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "openldap-mixin"
+        },
+        {
+            "name": "opensearch",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "opensearch-mixin"
+        },
+        {
+            "name": "openstack",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "openstack-mixin"
+        },
+        {
+            "name": "oracledb",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "oracledb-mixin"
+        },
+        {
+            "name": "pgbouncer",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "pgbouncer-mixin"
+        },
+        {
+            "name": "presto",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "presto-mixin"
+        },
+        {
+            "name": "python-runtime",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "python-runtime-mixin"
+        },
+        {
+            "name": "rabbitmq",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "rabbitmq-mixin"
+        },
+        {
+            "name": "rclone",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "rclone-mixin"
+        },
+        {
+            "name": "redis",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "redis-mixin"
+        },
+        {
+            "name": "ruby",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "ruby-mixin"
+        },
+        {
+            "name": "sap-hana",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "sap-hana-mixin"
+        },
+        {
+            "name": "snmp",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "snmp-mixin"
+        },
+        {
+            "name": "spark",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "spark-mixin"
+        },
+        {
+            "name": "spring-boot",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "spring-boot-mixin"
+        },
+        {
+            "name": "squid",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "squid-mixin"
+        },
+        {
+            "name": "supabase",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "supabase-mixin"
+        },
+        {
+            "name": "tensorflow",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "tensorflow-mixin"
+        },
+        {
+            "name": "traefik",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "traefik-mixin"
+        },
+        {
+            "name": "ubnt-edgerouter",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "ubnt-edgerouter-mixin"
+        },
+        {
+            "name": "varnish",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "varnish-mixin"
+        },
+        {
+            "name": "vault",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "vault-mixin"
+        },
+        {
+            "name": "velero",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "velero-2-mixin"
+        },
+        {
+            "name": "wildfly",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "wildfly-mixin"
+        },
+        {
+            "name": "windows",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "windows-mixin",
+            "description": "Windows mixins based on flexible windows-observ-lib."
+        },
+        {
+            "name": "windows-active-directory",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "windows-active-directory-mixin"
+        },
+        {
+            "name": "wso2-enterprise-integrator",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "wso2-enterprise-integrator-mixin"
+        },
+        {
+            "name": "wso2-streaming-integrator",
+            "source": "https://github.com/grafana/jsonnet-libs",
+            "subdir": "wso2-streaming-integrator-mixin"
+        },
+        {
+            "name": "gitea",
+            "source": "https://github.com/go-gitea/gitea",
+            "subdir": "contrib/gitea-monitoring-mixin"
         }
     ]
 }

@@ -1,0 +1,1308 @@
+{
+   "__inputs": [ ],
+   "__requires": [ ],
+   "annotations": {
+      "list": [ ]
+   },
+   "editable": false,
+   "gnetId": null,
+   "graphTooltip": 1,
+   "hideControls": false,
+   "id": null,
+   "links": [
+      {
+         "asDropdown": false,
+         "icon": "external link",
+         "includeVars": true,
+         "keepTime": true,
+         "tags": [
+            "nsq"
+         ],
+         "targetBlank": false,
+         "title": "Other NSQ dashboards",
+         "type": "dashboards",
+         "url": ""
+      }
+   ],
+   "panels": [
+      {
+         "collapse": false,
+         "collapsed": false,
+         "gridPos": {
+            "h": 0,
+            "w": 0,
+            "x": 0,
+            "y": 0
+         },
+         "id": 2,
+         "panels": [ ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Topics",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "$datasource",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 0,
+                  "lineInterpolation": "smooth",
+                  "showPoints": "never"
+               },
+               "links": [
+                  {
+                     "title": "Show split by topics for ${__field.labels.instance}",
+                     "url": "d/nsq-topics?var-instance=${__field.labels.instance}&${datasource:queryparam}&${job:queryparam}&${__url_time_range}"
+                  }
+               ],
+               "unit": "ns"
+            }
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 3,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "percentage": false,
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "repeat": null,
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "avg by (instance) (nsq_topic_e2e_processing_latency_99{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\"})",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} p99",
+               "refId": "A"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeShift": null,
+         "title": "$topic topic end-to-end processing time",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "timeseries",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ]
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "$datasource",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 0,
+                  "lineInterpolation": "smooth",
+                  "showPoints": "never"
+               },
+               "links": [
+                  {
+                     "title": "Show split by topics for ${__field.labels.instance}",
+                     "url": "d/nsq-topics?var-instance=${__field.labels.instance}&${datasource:queryparam}&${job:queryparam}&${__url_time_range}"
+                  }
+               ],
+               "unit": "reqps"
+            }
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 6
+         },
+         "id": 4,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "percentage": false,
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "repeat": null,
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "avg by (instance) (rate(nsq_topic_message_count{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\"}[$__rate_interval]))",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} rps",
+               "refId": "A"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeShift": null,
+         "title": "$topic topic messages",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "timeseries",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ]
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "$datasource",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 0,
+                  "lineInterpolation": "smooth",
+                  "showPoints": "never"
+               },
+               "links": [
+                  {
+                     "title": "Show split by topics for ${__field.labels.instance}",
+                     "url": "d/nsq-topics?var-instance=${__field.labels.instance}&${datasource:queryparam}&${job:queryparam}&${__url_time_range}"
+                  }
+               ],
+               "unit": "short"
+            }
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 6
+         },
+         "id": 5,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "percentage": false,
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "repeat": null,
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum by (instance) (nsq_topic_depth{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\"})",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} depth",
+               "refId": "A"
+            },
+            {
+               "expr": "sum by (instance) (nsq_topic_backend_depth{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\"})",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} memory+disk depth",
+               "refId": "B"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeShift": null,
+         "title": "$topic topic depth",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "timeseries",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ]
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "gridPos": {
+            "h": 0,
+            "w": 0,
+            "x": 0,
+            "y": 14
+         },
+         "id": 6,
+         "panels": [ ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Channels",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "$datasource",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 0,
+                  "lineInterpolation": "smooth",
+                  "showPoints": "never"
+               },
+               "links": [
+                  {
+                     "title": "Show split by channels for ${__field.labels.instance}",
+                     "url": "d/nsq-topics?var-instance=${__field.labels.instance}&${datasource:queryparam}&${job:queryparam}&${__url_time_range}"
+                  }
+               ],
+               "unit": "ns"
+            }
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 14
+         },
+         "id": 7,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "percentage": false,
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "repeat": null,
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "avg by (instance) (nsq_topic_channel_e2e_processing_latency_99{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\",channel=~\"$channel\"})",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} p99",
+               "refId": "A"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeShift": null,
+         "title": "$channel channel end-to-end processing time",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "timeseries",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ]
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "$datasource",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 0,
+                  "lineInterpolation": "smooth",
+                  "showPoints": "never"
+               },
+               "links": [
+                  {
+                     "title": "Show split by channels for ${__field.labels.instance}",
+                     "url": "d/nsq-topics?var-instance=${__field.labels.instance}&${datasource:queryparam}&${job:queryparam}&${__url_time_range}"
+                  }
+               ]
+            }
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 20
+         },
+         "id": 8,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "percentage": false,
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "repeat": null,
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum by (instance) (nsq_topic_channel_clients{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\",channel=~\"$channel\"})",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }}",
+               "refId": "A"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeShift": null,
+         "title": "$channel channel clients",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "timeseries",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ]
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "$datasource",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 0,
+                  "lineInterpolation": "smooth",
+                  "showPoints": "never"
+               },
+               "links": [
+                  {
+                     "title": "Show split by channels for ${__field.labels.instance}",
+                     "url": "d/nsq-topics?var-instance=${__field.labels.instance}&${datasource:queryparam}&${job:queryparam}&${__url_time_range}"
+                  }
+               ],
+               "unit": "short"
+            }
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 20
+         },
+         "id": 9,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "percentage": false,
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "repeat": null,
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "sum by (instance) (nsq_topic_channel_depth{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\",channel=~\"$channel\"})",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} depth",
+               "refId": "A"
+            },
+            {
+               "expr": "sum by (instance) (nsq_topic_channel_backend_depth{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\",channel=~\"$channel\"})",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} memory+disk depth",
+               "refId": "B"
+            },
+            {
+               "expr": "sum by (instance) (nsq_topic_channel_in_flight_count{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\",channel=~\"$channel\"})",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} in-flight",
+               "refId": "C"
+            },
+            {
+               "expr": "avg by (instance) (rate(nsq_topic_channel_requeue_count{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\",channel=~\"$channel\"}[$__rate_interval]))",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} requeue",
+               "refId": "D"
+            },
+            {
+               "expr": "avg by (instance) (rate(nsq_topic_channel_timeout_count{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\",channel=~\"$channel\"}[$__rate_interval]))",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} timeout",
+               "refId": "E"
+            },
+            {
+               "expr": "sum by (instance) (nsq_topic_channel_deferred_count{job=~\"$job\", instance=~\"$instance\",topic=~\"$topic\",channel=~\"$channel\"})",
+               "format": "time_series",
+               "intervalFactor": 1,
+               "legendFormat": "{{ instance }} deferred",
+               "refId": "F"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeShift": null,
+         "title": "$channel channel stats",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "timeseries",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ]
+      },
+      {
+         "collapse": false,
+         "collapsed": false,
+         "gridPos": {
+            "h": 0,
+            "w": 0,
+            "x": 0,
+            "y": 28
+         },
+         "id": 10,
+         "panels": [ ],
+         "repeat": null,
+         "repeatIteration": null,
+         "repeatRowId": null,
+         "showTitle": true,
+         "title": "Memory",
+         "titleSize": "h6",
+         "type": "row"
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "$datasource",
+         "description": "Average memory usage if instance=All filter is selected",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 5,
+                  "lineInterpolation": "smooth",
+                  "showPoints": "never"
+               },
+               "unit": "decbytes"
+            }
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 28
+         },
+         "id": 11,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "percentage": false,
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "repeat": null,
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "avg by (job) (nsq_mem_heap_in_use_bytes{job=~\"$job\", instance=~\"$instance\"})",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "heap in use",
+               "refId": "A"
+            },
+            {
+               "expr": "avg by (job) (nsq_mem_heap_idle_bytes{job=~\"$job\", instance=~\"$instance\"})",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "heap idle bytes",
+               "refId": "B"
+            },
+            {
+               "expr": "avg by (job) (nsq_mem_heap_released_bytes{job=~\"$job\", instance=~\"$instance\"})",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "heap bytes released",
+               "refId": "C"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeShift": null,
+         "title": "Heap memory (avg)",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "timeseries",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ]
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "$datasource",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 5,
+                  "lineInterpolation": "smooth",
+                  "showPoints": "never"
+               },
+               "unit": "short"
+            }
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 28
+         },
+         "id": 12,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "percentage": false,
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "repeat": null,
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "nsq_mem_heap_objects{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "{{ instance }}",
+               "refId": "A"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeShift": null,
+         "title": "Heap objects",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "timeseries",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ]
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "$datasource",
+         "description": "The number used bytes at which the runtime plans to perform the next garbage collection",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 5,
+                  "lineInterpolation": "smooth",
+                  "showPoints": "never"
+               },
+               "unit": "decbytes"
+            }
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 36
+         },
+         "id": 13,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "percentage": false,
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "repeat": null,
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "nsq_mem_next_gc_bytes{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "{{ instance }}",
+               "refId": "A"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeShift": null,
+         "title": "Next GC in bytes",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "timeseries",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ]
+      },
+      {
+         "aliasColors": { },
+         "bars": false,
+         "dashLength": 10,
+         "dashes": false,
+         "datasource": "$datasource",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 5,
+                  "lineInterpolation": "smooth",
+                  "showPoints": "never"
+               },
+               "unit": "µs"
+            }
+         },
+         "fill": 1,
+         "fillGradient": 0,
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 36
+         },
+         "id": 14,
+         "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": null,
+            "total": false,
+            "values": false
+         },
+         "lines": true,
+         "linewidth": 1,
+         "links": [ ],
+         "nullPointMode": "null",
+         "options": {
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "percentage": false,
+         "pointradius": 5,
+         "points": false,
+         "renderer": "flot",
+         "repeat": null,
+         "seriesOverrides": [ ],
+         "spaceLength": 10,
+         "stack": false,
+         "steppedLine": false,
+         "targets": [
+            {
+               "expr": "nsq_mem_gc_pause_usec_100{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "hide": true,
+               "intervalFactor": 2,
+               "legendFormat": "p100 {{ instance }}",
+               "refId": "A"
+            },
+            {
+               "expr": "nsq_mem_gc_pause_usec_99{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "hide": false,
+               "intervalFactor": 2,
+               "legendFormat": "p99 {{ instance }}",
+               "refId": "B"
+            },
+            {
+               "expr": "nsq_mem_gc_pause_usec_95{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "hide": true,
+               "intervalFactor": 2,
+               "legendFormat": "p95 {{ instance }}",
+               "refId": "C"
+            }
+         ],
+         "thresholds": [ ],
+         "timeFrom": null,
+         "timeShift": null,
+         "title": "GC pause time",
+         "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+         },
+         "type": "timeseries",
+         "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": [ ]
+         },
+         "yaxes": [
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            },
+            {
+               "format": "short",
+               "label": null,
+               "logBase": 1,
+               "max": null,
+               "min": null,
+               "show": true
+            }
+         ]
+      }
+   ],
+   "refresh": "1m",
+   "rows": [ ],
+   "schemaVersion": 14,
+   "style": "dark",
+   "tags": [
+      "nsq"
+   ],
+   "templating": {
+      "list": [
+         {
+            "current": {
+               "text": "Prometheus",
+               "value": "Prometheus"
+            },
+            "hide": 0,
+            "label": "Data Source",
+            "name": "datasource",
+            "options": [ ],
+            "query": "prometheus",
+            "refresh": 1,
+            "regex": "",
+            "type": "datasource"
+         },
+         {
+            "allValue": ".+",
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": true,
+            "label": "job",
+            "multi": true,
+            "name": "job",
+            "options": [ ],
+            "query": "label_values(nsq_topic_message_count, job)",
+            "refresh": 1,
+            "regex": "",
+            "type": "query"
+         },
+         {
+            "allValue": ".+",
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": true,
+            "label": "instance",
+            "multi": true,
+            "name": "instance",
+            "options": [ ],
+            "query": "label_values(nsq_topic_message_count{job=~\"$job\"},instance)",
+            "refresh": 2,
+            "regex": "",
+            "type": "query"
+         },
+         {
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": true,
+            "name": "topic",
+            "options": [ ],
+            "query": "label_values(nsq_topic_message_count{job=~\"$job\",instance=~\"$instance\"},topic)",
+            "refresh": 2,
+            "regex": "",
+            "type": "query"
+         },
+         {
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": true,
+            "label": null,
+            "multi": true,
+            "name": "channel",
+            "options": [ ],
+            "query": "label_values(nsq_topic_channel_message_count{job=~\"$job\",instance=~\"$instance\",topic=~\"$topic\"},channel)",
+            "refresh": 2,
+            "regex": "",
+            "type": "query"
+         }
+      ]
+   },
+   "time": {
+      "from": "now-1h",
+      "to": "now"
+   },
+   "timepicker": {
+      "refresh_intervals": [
+         "5s",
+         "10s",
+         "30s",
+         "1m",
+         "5m",
+         "15m",
+         "30m",
+         "1h",
+         "2h",
+         "1d"
+      ],
+      "time_options": [
+         "5m",
+         "15m",
+         "1h",
+         "6h",
+         "12h",
+         "24h",
+         "2d",
+         "7d",
+         "30d"
+      ]
+   },
+   "timezone": "default",
+   "title": "NSQ Instances",
+   "uid": "nsq-instances",
+   "version": 0
+}
