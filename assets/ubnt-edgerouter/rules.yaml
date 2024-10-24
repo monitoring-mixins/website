@@ -1,0 +1,5 @@
+groups:
+- name: ubnt.rules
+  rules:
+  - expr: label_join(ifAdminStatus,"nicename", ":", "ifName", "ifAlias")
+    record: ifNiceName
