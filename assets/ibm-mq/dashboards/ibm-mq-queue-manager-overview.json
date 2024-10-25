@@ -1445,7 +1445,7 @@
                   "uid": "${loki_datasource}"
                },
                "editorMode": "code",
-               "expr": "{job=~\"$job\", filename=~\"/var/mqm/qmgrs/.*/errors/.*LOG\", qmgr=~\"$qmgr\"} |= ``",
+               "expr": "{job=~\"$job\", qmgr=~\"$qmgr\"} |= `` | (filename=~\"/var/mqm/qmgrs/.*/errors/.*LOG\" or log_type=\"mq-qmgr-error\")",
                "queryType": "range",
                "refId": "A"
             }

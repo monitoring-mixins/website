@@ -68,7 +68,7 @@
          "options": {
             "graphMode": "none"
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -116,7 +116,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -171,7 +171,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -237,7 +237,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -294,7 +294,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -350,7 +350,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -400,7 +400,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -578,7 +578,7 @@
             "label": "Loki data source",
             "name": "loki_datasource",
             "query": "loki",
-            "regex": "(?!grafanacloud.+usage-insights|grafanacloud.+alert-state-history).+",
+            "regex": "",
             "type": "datasource"
          }
       ]

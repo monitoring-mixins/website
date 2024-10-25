@@ -344,7 +344,7 @@
                   "uid": "${loki_datasource}"
                },
                "editorMode": "code",
-               "expr": "{job=~\"$job\", hadoop_cluster=~\"$hadoop_cluster\", instance=~\"$instance\", filename=~\".*/hadoop/logs/.*-datanode.*.log\"} |= ``",
+               "expr": "{job=~\"$job\", instance=~\"$instance\", hadoop_cluster=~\"$hadoop_cluster\"} |= `` | (filename=~\".*/hadoop/logs/.*-datanode.*.log\" or log_type=\"datanode\")",
                "queryType": "range",
                "refId": "A"
             }
@@ -400,6 +400,28 @@
             "refresh": 2,
             "regex": "",
             "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": ".*",
+            "current": { },
+            "datasource": {
+               "uid": "${prometheus_datasource}"
+            },
+            "hide": 2,
+            "includeAll": true,
+            "label": "Cluster",
+            "multi": true,
+            "name": "cluster",
+            "options": [ ],
+            "query": "label_values(hadoop_datanode_ramdiskblocksevictedwithoutread{job=~\"$job\"}, cluster)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 0,
             "tagValuesQuery": "",
             "tags": [ ],
             "tagsQuery": "",

@@ -29,6 +29,7 @@ annotations:
 expr: |
   100 - (avg without (mode, core) (rate(windows_cpu_time_total{job=~"integrations/windows_exporter", mode="idle"}[2m])) * 100) > 90
 for: 15m
+keep_firing_for: 5m
 labels:
   severity: warning
 {{< /code >}}
@@ -46,6 +47,7 @@ expr: |
   /
   windows_cs_physical_memory_bytes{job=~"integrations/windows_exporter"}) * 100) > 90
 for: 15m
+keep_firing_for: 5m
 labels:
   severity: critical
 {{< /code >}}
@@ -61,6 +63,7 @@ annotations:
 expr: |
   100 - ((windows_logical_disk_free_bytes{job=~"integrations/windows_exporter"} ) / (windows_logical_disk_size_bytes{job=~"integrations/windows_exporter"})) * 100  > 90
 for: 15m
+keep_firing_for: 5m
 labels:
   severity: critical
 {{< /code >}}
@@ -101,11 +104,12 @@ labels:
 alert: WindowsNTPClientDelay
 annotations:
   description: |
-    'Round-trip time of NTP client on instance {{ $labels.instance }} is greater than 1 second. Delay is {{ $value }} sec.'
+    Round-trip time of NTP client on instance {{ $labels.instance }} is greater than 1 second. Delay is {{ $value }} sec.
   summary: NTP client delay.
 expr: |
   windows_time_ntp_round_trip_delay_seconds{job=~"integrations/windows_exporter"} > 1
 for: 5m
+keep_firing_for: 5m
 labels:
   severity: warning
 {{< /code >}}
@@ -116,11 +120,12 @@ labels:
 alert: WindowsNTPTimeOffset
 annotations:
   description: |
-    'NTP time offset for instance {{ $labels.instance }} is greater than 1 second. Offset is {{ $value }} sec.'
+    NTP time offset for instance {{ $labels.instance }} is greater than 1 second. Offset is {{ $value }} sec.
   summary: NTP time offset is too large.
 expr: |
   windows_time_computed_time_offset_seconds{job=~"integrations/windows_exporter"} > 1
 for: 5m
+keep_firing_for: 5m
 labels:
   severity: warning
 {{< /code >}}
@@ -139,6 +144,7 @@ expr: "windows_ad_replication_pending_operations{job=~\"integrations/windows_exp
   >= 50 
 "
 for: 10m
+keep_firing_for: 5m
 labels:
   severity: warning
 {{< /code >}}
@@ -157,6 +163,7 @@ expr: "increase(windows_ad_replication_sync_requests_schema_mismatch_failure_tot
   > 0 
 "
 for: 5m
+keep_firing_for: 5m
 labels:
   severity: critical
 {{< /code >}}
@@ -167,13 +174,15 @@ labels:
 alert: WindowsActiveDirectoryHighPasswordChanges
 annotations:
   description: The number of password changes on {{$labels.instance}} is {{ printf
-    "%.0f" $value }} which is greater than the threshold of 25
+    "%.0f" $value }} which is greater than the threshold of 25. This alert would resolve
+    itself if no new anomalies are detected within 24 hours.
   summary: There is a high number of password changes. This may indicate unauthorized
     changes or attacks.
 expr: |
   increase(windows_ad_sam_password_changes_total{job=~"integrations/windows_exporter"}[5m]) > 25
 for: 5m
 labels:
+  keep_firing_for: 24h
   severity: warning
 {{< /code >}}
  

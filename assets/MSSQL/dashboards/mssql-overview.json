@@ -183,7 +183,6 @@
             "y": 0
          },
          "id": 3,
-         "interval": "1m",
          "options": {
             "legend": {
                "calcs": [ ],
@@ -203,6 +202,7 @@
                },
                "expr": "rate(mssql_batch_requests_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
                "format": "time_series",
+               "interval": "1m",
                "intervalFactor": 2,
                "legendFormat": "{{instance}}"
             }
@@ -275,7 +275,6 @@
             "y": 8
          },
          "id": 4,
-         "interval": "1m",
          "options": {
             "legend": {
                "calcs": [ ],
@@ -293,8 +292,9 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "increase(mssql_kill_connection_errors_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "increase(mssql_kill_connection_errors_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval:])",
                "format": "time_series",
+               "interval": "1m",
                "intervalFactor": 2,
                "legendFormat": "{{instance}}"
             }
@@ -367,7 +367,6 @@
             "y": 8
          },
          "id": 5,
-         "interval": "1m",
          "options": {
             "legend": {
                "calcs": [ ],
@@ -387,6 +386,7 @@
                },
                "expr": "rate(mssql_deadlocks_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
                "format": "time_series",
+               "interval": "1m",
                "intervalFactor": 2,
                "legendFormat": "{{instance}}"
             }
@@ -758,7 +758,6 @@
             "y": 41
          },
          "id": 11,
-         "interval": "1m",
          "options": {
             "legend": {
                "calcs": [ ],
@@ -776,8 +775,9 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "increase(mssql_io_stall_seconds_total{job=~\"$job\", instance=~\"$instance\", db=~\"$database\", operation=\"write\"}[$__rate_interval])",
+               "expr": "increase(mssql_io_stall_seconds_total{job=~\"$job\", instance=~\"$instance\", db=~\"$database\", operation=\"write\"}[$__rate_interval:])",
                "format": "time_series",
+               "interval": "1m",
                "intervalFactor": 2,
                "legendFormat": "{{instance}} - {{db}}"
             }
@@ -846,7 +846,6 @@
             "y": 41
          },
          "id": 12,
-         "interval": "1m",
          "options": {
             "legend": {
                "calcs": [ ],
@@ -864,8 +863,9 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "increase(mssql_io_stall_seconds_total{job=~\"$job\", instance=~\"$instance\", db=~\"$database\", operation=\"read\"}[$__rate_interval])",
+               "expr": "increase(mssql_io_stall_seconds_total{job=~\"$job\", instance=~\"$instance\", db=~\"$database\", operation=\"read\"}[$__rate_interval:])",
                "format": "time_series",
+               "interval": "1m",
                "intervalFactor": 2,
                "legendFormat": "{{instance}} - {{db}}"
             }
@@ -938,7 +938,6 @@
             "y": 49
          },
          "id": 13,
-         "interval": "1m",
          "options": {
             "legend": {
                "calcs": [ ],
@@ -956,8 +955,9 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "increase(mssql_log_growths_total{job=~\"$job\", instance=~\"$instance\", db=~\"$database\"}[$__rate_interval])",
+               "expr": "increase(mssql_log_growths_total{job=~\"$job\", instance=~\"$instance\", db=~\"$database\"}[$__rate_interval:])",
                "format": "time_series",
+               "interval": "1m",
                "intervalFactor": 2,
                "legendFormat": "{{instance}} - {{db}}"
             }

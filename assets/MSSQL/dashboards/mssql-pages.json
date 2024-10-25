@@ -363,7 +363,6 @@
             "y": 8
          },
          "id": 5,
-         "interval": "1m",
          "options": {
             "legend": {
                "calcs": [ ],
@@ -381,8 +380,9 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "increase(mssql_page_fault_count_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "increase(mssql_page_fault_count_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval:])",
                "format": "time_series",
+               "interval": "1m",
                "intervalFactor": 2,
                "legendFormat": "{{instance}}"
             }

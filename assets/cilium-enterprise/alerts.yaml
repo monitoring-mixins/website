@@ -19,7 +19,7 @@ groups:
         This may cause problems for Pod scheduling
       summary: API calls to Cilium Agent API to create or update Endpoints are failing.
     expr: sum(rate(cilium_k8s_client_api_calls_total{method=~"(PUT|POST|PATCH)", endpoint="endpoint",return_code!~"2[0-9][0-9]"}[5m]))
-      by (pod, method, return_code)
+      by (pod, method, return_code) > 0
     for: 5m
     labels:
       severity: warning
@@ -31,7 +31,7 @@ groups:
       summary: Cilium Endpoint API endpoint rate limiter is reporting errors while
         doing endpoint create.
     expr: sum(rate(cilium_api_limiter_processed_requests_total{api_call=~"endpoint-create",
-      outcome="fail"}[1m])) by (pod, api_call)
+      outcome="fail"}[1m])) by (pod, api_call) > 0
     for: 5m
     labels:
       severity: info
@@ -43,7 +43,7 @@ groups:
         This could indicate issues with Ciliums ability to create endpoints which can result in failure to schedule Kubernetes Pods.
       summary: API calls to Cilium Endpoints API are failing due to server errors.
     expr: sum(rate(cilium_agent_api_process_time_seconds_count{return_code=~"5[0-9][0-9]",
-      path="/v1/endpoint"}[5m])) by (pod, return_code)
+      path="/v1/endpoint"}[5m])) by (pod, return_code) > 0
     for: 5m
     labels:
       severity: warning
@@ -133,7 +133,7 @@ groups:
         error rate for response code: {{$labels.response_code}} on endpoint {{$labels.endpoint}}.'
       summary: Cilium Agent API on Pod is experiencing a high error rate.
     expr: sum(rate(cilium_k8s_client_api_calls_total{endpoint!="metrics",return_code!~"2[0-9][0-9]"}[5m]))
-      by (pod, endpoint, return_code)
+      by (pod, endpoint, return_code) > 0
     for: 5m
     labels:
       severity: info
@@ -224,3 +224,52 @@ groups:
     for: 15m
     labels:
       severity: info
+- name: Cilium Clustermesh
+  rules:
+  - alert: CiliumAgentRemoteClusterNotReady
+    annotations:
+      description: Agent can't mesh with {{$labels.target_cluster}}
+      summary: Agent can't mesh with remote cluster.
+    expr: count(cilium_clustermesh_remote_cluster_readiness_status < 1) by (source_cluster,
+      target_cluster) > 0
+    for: 5m
+    labels:
+      severity: critical
+  - alert: CiliumAgentRemoteClusterFailing
+    annotations:
+      description: Agent fails to mesh with {{$labels.target_cluster}}
+      summary: Agent fails to mesh with remote cluster.
+    expr: sum(rate(cilium_clustermesh_remote_cluster_failures[5m])) by (source_cluster,
+      target_cluster) > 0
+    for: 5m
+    labels:
+      severity: critical
+- name: Cilium Kvstoremesh
+  rules:
+  - alert: CiliumKvstoremeshRemoteClusterNotReady
+    annotations:
+      description: Kvstoremesh can't mesh with {{$labels.target_cluster}}
+      summary: Kvstoremesh can't mesh with remote cluster.
+    expr: count(cilium_kvstoremesh_remote_cluster_readiness_status < 1) by (source_cluster,
+      target_cluster) > 0
+    for: 5m
+    labels:
+      severity: critical
+  - alert: CiliumKvstoremeshRemoteClusterFailing
+    annotations:
+      description: Kvstoremesh fails to mesh with {{$labels.target_cluster}}
+      summary: Kvstoremesh fails to mesh with remote cluster.
+    expr: sum(rate(cilium_kvstoremesh_remote_cluster_failures[5m])) by (source_cluster,
+      target_cluster) > 0
+    for: 5m
+    labels:
+      severity: critical
+  - alert: CiliumKvstoremeshErrors
+    annotations:
+      description: Kvstoremesh fails to mesh with {{$labels.target_cluster}}
+      summary: Kvstoremesh fails to mesh with remote cluster.
+    expr: sum(rate(cilium_kvstoremesh_kvstore_sync_errors_total[5m])) by (source_cluster)
+      > 0
+    for: 5m
+    labels:
+      severity: critical

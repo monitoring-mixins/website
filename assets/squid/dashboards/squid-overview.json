@@ -1590,7 +1590,7 @@
                   "uid": "${loki_datasource}"
                },
                "editorMode": "code",
-               "expr": "{filename=\"/var/log/squid/cache.log\", job=~\"$job\", instance=~\"$instance\"} |= ``",
+               "expr": "{job=~\"$job\", instance=~\"$instance\"} |= `` | (filename=\"/var/log/squid/cache.log\" or log_type=\"cache\")",
                "queryType": "range",
                "refId": "A"
             }
@@ -1626,7 +1626,7 @@
                   "uid": "${loki_datasource}"
                },
                "editorMode": "code",
-               "expr": "{filename=\"/var/log/squid/access.log\", job=~\"$job\", instance=~\"$instance\"} |= ``",
+               "expr": "{job=~\"$job\", instance=~\"$instance\"} |= `` | (filename=\"/var/log/squid/access.log\" or log_type=\"access\")",
                "queryType": "range",
                "refId": "A"
             }
@@ -1689,6 +1689,28 @@
             "useTags": false
          },
          {
+            "allValue": ".*",
+            "current": { },
+            "datasource": {
+               "uid": "${prometheus_datasource}"
+            },
+            "hide": 2,
+            "includeAll": true,
+            "label": "Cluster",
+            "multi": true,
+            "name": "cluster",
+            "options": [ ],
+            "query": "label_values(squid_server_http_requests_total{job=~\"$job\"}, cluster)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
             "allValue": "",
             "current": { },
             "datasource": {
@@ -1700,7 +1722,7 @@
             "multi": false,
             "name": "instance",
             "options": [ ],
-            "query": "label_values(squid_server_http_requests_total{job=~\"$job\"},instance)",
+            "query": "label_values(squid_server_http_requests_total{job=~\"$job\"}, instance)",
             "refresh": 2,
             "regex": "",
             "sort": 0,

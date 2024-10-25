@@ -29,6 +29,7 @@ annotations:
 expr: |
   100 - (avg without (mode, core) (rate(windows_cpu_time_total{job=~".*windows.*", mode="idle"}[2m])) * 100) > 90
 for: 15m
+keep_firing_for: 5m
 labels:
   severity: warning
 {{< /code >}}
@@ -46,6 +47,7 @@ expr: |
   /
   windows_cs_physical_memory_bytes{job=~".*windows.*"}) * 100) > 90
 for: 15m
+keep_firing_for: 5m
 labels:
   severity: critical
 {{< /code >}}
@@ -61,6 +63,7 @@ annotations:
 expr: |
   100 - ((windows_logical_disk_free_bytes{job=~".*windows.*"} ) / (windows_logical_disk_size_bytes{job=~".*windows.*"})) * 100  > 90
 for: 15m
+keep_firing_for: 5m
 labels:
   severity: critical
 {{< /code >}}
@@ -101,11 +104,12 @@ labels:
 alert: WindowsNTPClientDelay
 annotations:
   description: |
-    'Round-trip time of NTP client on instance {{ $labels.instance }} is greater than 1 second. Delay is {{ $value }} sec.'
+    Round-trip time of NTP client on instance {{ $labels.instance }} is greater than 1 second. Delay is {{ $value }} sec.
   summary: NTP client delay.
 expr: |
   windows_time_ntp_round_trip_delay_seconds{job=~".*windows.*"} > 1
 for: 5m
+keep_firing_for: 5m
 labels:
   severity: warning
 {{< /code >}}
@@ -116,11 +120,12 @@ labels:
 alert: WindowsNTPTimeOffset
 annotations:
   description: |
-    'NTP time offset for instance {{ $labels.instance }} is greater than 1 second. Offset is {{ $value }} sec.'
+    NTP time offset for instance {{ $labels.instance }} is greater than 1 second. Offset is {{ $value }} sec.
   summary: NTP time offset is too large.
 expr: |
   windows_time_computed_time_offset_seconds{job=~".*windows.*"} > 1
 for: 5m
+keep_firing_for: 5m
 labels:
   severity: warning
 {{< /code >}}

@@ -222,7 +222,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(promtail_read_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[1m]))",
+                     "expr": "sum(rate(promtail_read_bytes_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "logs read",
@@ -298,7 +298,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "sum(rate(promtail_read_lines_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[1m]))",
+                     "expr": "sum(rate(promtail_read_lines_total{cluster=~\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval]))",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "lines read",
@@ -470,7 +470,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "job:promtail_request_duration_seconds:99quantile{cluster=~\"$cluster\", job=~\"$namespace/promtail\"}",
+                     "expr": "job:promtail_request_duration_seconds:99quantile{cluster=~\"$cluster\", job=~\"$namespace/promtail.*\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "p99",
@@ -478,7 +478,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "job:promtail_request_duration_seconds:50quantile{cluster=~\"$cluster\", job=~\"$namespace/promtail\"}",
+                     "expr": "job:promtail_request_duration_seconds:50quantile{cluster=~\"$cluster\", job=~\"$namespace/promtail.*\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "p50",
@@ -486,7 +486,7 @@
                      "step": 10
                   },
                   {
-                     "expr": "job:promtail_request_duration_seconds:avg{cluster=~\"$cluster\", job=~\"$namespace/promtail\"}",
+                     "expr": "job:promtail_request_duration_seconds:avg{cluster=~\"$cluster\", job=~\"$namespace/promtail.*\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "avg",

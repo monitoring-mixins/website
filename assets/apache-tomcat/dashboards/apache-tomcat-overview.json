@@ -813,7 +813,7 @@
                   "uid": "${loki_datasource}"
                },
                "editorMode": "code",
-               "expr": "{filename=~\"/var/log/tomcat.*/catalina.out|/opt/tomcat/logs/catalina.out|/Program Files/Apache Software Foundation/Tomcat .*..*/logs/catalina.out\",job=~\"$job\", instance=~\"$instance\"} |= ``",
+               "expr": "{job=~\"$job\", instance=~\"$instance\"} |= `` | (filename=~\"/var/log/tomcat.*/catalina.out|/opt/tomcat/logs/catalina.out|/Program Files/Apache Software Foundation/Tomcat .*..*/logs/catalina.out\" or log_type=\"catalina.out\")",
                "queryType": "range",
                "refId": "A"
             }
@@ -876,19 +876,19 @@
             "useTags": false
          },
          {
-            "allValue": "",
+            "allValue": ".*",
             "current": { },
             "datasource": {
                "uid": "${prometheus_datasource}"
             },
-            "hide": 0,
-            "includeAll": false,
-            "label": "Instance",
-            "multi": false,
-            "name": "instance",
+            "hide": 2,
+            "includeAll": true,
+            "label": "Cluster",
+            "multi": true,
+            "name": "cluster",
             "options": [ ],
-            "query": "label_values(tomcat_bytesreceived_total, instance)",
-            "refresh": 1,
+            "query": "label_values(tomcat_bytesreceived_total{job=~\"$job\"}, cluster)",
+            "refresh": 2,
             "regex": "",
             "sort": 0,
             "tagValuesQuery": "",
@@ -898,7 +898,29 @@
             "useTags": false
          },
          {
-            "allValue": "",
+            "allValue": ".+",
+            "current": { },
+            "datasource": {
+               "uid": "${prometheus_datasource}"
+            },
+            "hide": 0,
+            "includeAll": true,
+            "label": "Instance",
+            "multi": true,
+            "name": "instance",
+            "options": [ ],
+            "query": "label_values(tomcat_bytesreceived_total{job=~\"$job\"}, instance)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": ".+",
             "current": { },
             "datasource": {
                "uid": "${prometheus_datasource}"
@@ -909,7 +931,7 @@
             "multi": true,
             "name": "protocol",
             "options": [ ],
-            "query": "label_values(tomcat_bytesreceived_total, protocol)",
+            "query": "label_values(tomcat_bytesreceived_total{job=~\"$job\"}, protocol)",
             "refresh": 1,
             "regex": "",
             "sort": 0,
@@ -920,7 +942,7 @@
             "useTags": false
          },
          {
-            "allValue": "",
+            "allValue": ".+",
             "current": { },
             "datasource": {
                "uid": "${prometheus_datasource}"
@@ -931,7 +953,7 @@
             "multi": true,
             "name": "port",
             "options": [ ],
-            "query": "label_values(tomcat_bytesreceived_total, port)",
+            "query": "label_values(tomcat_bytesreceived_total{job=~\"$job\"}, port)",
             "refresh": 1,
             "regex": "",
             "sort": 0,

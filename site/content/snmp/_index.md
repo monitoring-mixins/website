@@ -46,6 +46,20 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### SNMPRestarted
+
+{{< code lang="yaml" >}}
+alert: SNMPRestarted
+annotations:
+  description: The SNMP target on instance {{$labels.instance}} from job {{$labels.job}}
+    has restarted.
+  summary: SNMP target restarted.
+expr: sysUpTime < 300
+for: 5s
+labels:
+  severity: info
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 

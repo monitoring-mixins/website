@@ -1,5 +1,18 @@
 {
    "editable": false,
+   "links": [
+      {
+         "asDropdown": true,
+         "includeVars": true,
+         "keepTime": true,
+         "tags": [
+            "kubernetes-mixin"
+         ],
+         "targetBlank": false,
+         "title": "Kubernetes",
+         "type": "dashboards"
+      }
+   ],
    "panels": [
       {
          "datasource": {
@@ -22,7 +35,7 @@
          "options": {
             "colorMode": "none"
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -57,7 +70,7 @@
          "options": {
             "colorMode": "none"
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -92,7 +105,7 @@
          "options": {
             "colorMode": "none"
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -127,7 +140,7 @@
          "options": {
             "colorMode": "none"
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -229,7 +242,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -244,7 +257,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "scalar(kube_resourcequota{cluster=\"$cluster\", namespace=\"$namespace\", type=\"hard\",resource=\"requests.cpu\"})",
+               "expr": "scalar(max(kube_resourcequota{cluster=\"$cluster\", namespace=\"$namespace\", type=\"hard\",resource=\"requests.cpu\"}))",
                "legendFormat": "quota - requests"
             },
             {
@@ -252,7 +265,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "scalar(kube_resourcequota{cluster=\"$cluster\", namespace=\"$namespace\", type=\"hard\",resource=\"limits.cpu\"})",
+               "expr": "scalar(max(kube_resourcequota{cluster=\"$cluster\", namespace=\"$namespace\", type=\"hard\",resource=\"limits.cpu\"}))",
                "legendFormat": "quota - limits"
             }
          ],
@@ -304,7 +317,7 @@
             "y": 14
          },
          "id": 6,
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -487,7 +500,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -502,7 +515,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "scalar(kube_resourcequota{cluster=\"$cluster\", namespace=\"$namespace\", type=\"hard\",resource=\"requests.memory\"})",
+               "expr": "scalar(max(kube_resourcequota{cluster=\"$cluster\", namespace=\"$namespace\", type=\"hard\",resource=\"requests.memory\"}))",
                "legendFormat": "quota - requests"
             },
             {
@@ -510,7 +523,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "scalar(kube_resourcequota{cluster=\"$cluster\", namespace=\"$namespace\", type=\"hard\",resource=\"limits.memory\"})",
+               "expr": "scalar(max(kube_resourcequota{cluster=\"$cluster\", namespace=\"$namespace\", type=\"hard\",resource=\"limits.memory\"}))",
                "legendFormat": "quota - limits"
             }
          ],
@@ -565,7 +578,7 @@
             "y": 28
          },
          "id": 8,
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -755,7 +768,7 @@
             "y": 35
          },
          "id": 9,
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -899,7 +912,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -950,7 +963,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1001,7 +1014,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1052,7 +1065,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1103,7 +1116,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1154,7 +1167,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1205,7 +1218,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1256,7 +1269,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1327,7 +1340,7 @@
             "y": 70
          },
          "id": 18,
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1436,7 +1449,7 @@
       }
    ],
    "refresh": "10s",
-   "schemaVersion": 36,
+   "schemaVersion": 39,
    "tags": [
       "kubernetes-mixin"
    ],

@@ -49,6 +49,22 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### PrometheusKubernetesListWatchFailures
+
+{{< code lang="yaml" >}}
+alert: PrometheusKubernetesListWatchFailures
+annotations:
+  description: Kubernetes service discovery of Prometheus {{$labels.instance}} is
+    experiencing {{ printf "%.0f" $value }} failures with LIST/WATCH requests to the
+    Kubernetes API in the last 5 minutes.
+  summary: Requests in Kubernetes SD are failing.
+expr: |
+  increase(prometheus_sd_kubernetes_failures_total{job="prometheus"}[5m]) > 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### PrometheusNotificationQueueRunningFull
 Prometheus alert notification queue predicted to run full in less than
 
@@ -152,7 +168,7 @@ annotations:
   summary: Prometheus is not ingesting samples.
 expr: |
   (
-    rate(prometheus_tsdb_head_samples_appended_total{job="prometheus"}[5m]) <= 0
+    sum without(type) (rate(prometheus_tsdb_head_samples_appended_total{job="prometheus"}[5m])) <= 0
   and
     (
       sum without(scrape_job) (prometheus_target_metadata_cache_entries{job="prometheus"}) > 0

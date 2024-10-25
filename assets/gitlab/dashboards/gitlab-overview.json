@@ -819,7 +819,7 @@
             "useTags": false
          },
          {
-            "allValue": "",
+            "allValue": ".+",
             "current": { },
             "datasource": {
                "uid": "${prometheus_datasource}"

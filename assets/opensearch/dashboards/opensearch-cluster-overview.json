@@ -87,9 +87,9 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "max by (job,cluster,node,node,nodeid,role,primary_ip) (last_over_time(opensearch_node_role_bool{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"}[1d]))",
+               "expr": "max by (job,opensearch_cluster,node,node,nodeid,role,primary_ip) (last_over_time(opensearch_node_role_bool{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"}[1d]))",
                "instant": true,
                "legendFormat": "{{node}}"
             }
@@ -115,7 +115,6 @@
                   },
                   "indexByName": {
                      "Time": 0,
-                     "cluster": 3,
                      "cluster_manager": 108,
                      "data": 105,
                      "ingest": 106,
@@ -123,6 +122,7 @@
                      "master": 104,
                      "node": 3,
                      "nodeid": 3,
+                     "opensearch_cluster": 3,
                      "remote_cluster_client": 107
                   },
                   "renameByName": {
@@ -143,7 +143,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The overall health and availability of the OpenSearch cluster.",
          "fieldConfig": {
@@ -219,12 +219,12 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "min by(job,cluster) (opensearch_cluster_status{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})",
+               "expr": "min by(job,opensearch_cluster) (opensearch_cluster_status{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})",
                "format": "time_series",
                "intervalFactor": 2,
-               "legendFormat": "{{job}}/{{cluster}}"
+               "legendFormat": "{{job}}/{{opensearch_cluster}}"
             }
          ],
          "title": "Cluster status",
@@ -232,7 +232,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The number of running nodes across the OpenSearch cluster.",
          "fieldConfig": {
@@ -286,12 +286,12 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "min by(job,cluster) (opensearch_cluster_nodes_number{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})",
+               "expr": "min by(job,opensearch_cluster) (opensearch_cluster_nodes_number{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})",
                "format": "time_series",
                "intervalFactor": 2,
-               "legendFormat": "{{job}}/{{cluster}}"
+               "legendFormat": "{{job}}/{{opensearch_cluster}}"
             }
          ],
          "title": "Node count",
@@ -299,7 +299,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The number of data nodes in the OpenSearch cluster.",
          "fieldConfig": {
@@ -353,12 +353,12 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "min by(job,cluster) (opensearch_cluster_datanodes_number{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})",
+               "expr": "min by(job,opensearch_cluster) (opensearch_cluster_datanodes_number{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})",
                "format": "time_series",
                "intervalFactor": 2,
-               "legendFormat": "{{job}}/{{cluster}}"
+               "legendFormat": "{{job}}/{{opensearch_cluster}}"
             }
          ],
          "title": "Data node count",
@@ -366,7 +366,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The number of shards in the OpenSearch cluster across all indices.",
          "fieldConfig": {
@@ -420,12 +420,12 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "sum(max by (type) (opensearch_cluster_shards_number{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"}))",
+               "expr": "sum(max by (type) (opensearch_cluster_shards_number{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"}))",
                "format": "time_series",
                "intervalFactor": 2,
-               "legendFormat": "{{job}}/{{cluster}}"
+               "legendFormat": "{{job}}/{{opensearch_cluster}}"
             }
          ],
          "title": "Shard count",
@@ -433,7 +433,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Percent of active shards across the OpenSearch cluster.",
          "fieldConfig": {
@@ -492,12 +492,12 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "min by(job,cluster) (opensearch_cluster_shards_active_percent{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})",
+               "expr": "min by(job,opensearch_cluster) (opensearch_cluster_shards_active_percent{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})",
                "format": "time_series",
                "intervalFactor": 2,
-               "legendFormat": "{{job}}/{{cluster}}"
+               "legendFormat": "{{job}}/{{opensearch_cluster}}"
             }
          ],
          "title": "Active shards %",
@@ -562,41 +562,41 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "max by (node,role) (\n    max_over_time(opensearch_node_role_bool{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", role=\"data\"}[1m]) == 1\n) * 2\n",
+               "expr": "max by (node,role) (\n    max_over_time(opensearch_node_role_bool{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", role=\"data\"}[1m]) == 1\n) * 2\n",
                "legendFormat": "{{node}}"
             },
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "max by (node,role) (\n    max_over_time(opensearch_node_role_bool{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", role=\"master\"}[1m]) == 1\n) * 3\n",
+               "expr": "max by (node,role) (\n    max_over_time(opensearch_node_role_bool{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", role=\"master\"}[1m]) == 1\n) * 3\n",
                "legendFormat": "{{node}}"
             },
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "max by (node,role) (\n    max_over_time(opensearch_node_role_bool{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", role=\"ingest\"}[1m]) == 1\n) * 4\n",
+               "expr": "max by (node,role) (\n    max_over_time(opensearch_node_role_bool{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", role=\"ingest\"}[1m]) == 1\n) * 4\n",
                "legendFormat": "{{node}}"
             },
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "max by (node,role) (\n    max_over_time(opensearch_node_role_bool{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", role=\"cluster_manager\"}[1m]) == 1\n) * 5\n",
+               "expr": "max by (node,role) (\n    max_over_time(opensearch_node_role_bool{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", role=\"cluster_manager\"}[1m]) == 1\n) * 5\n",
                "legendFormat": "{{node}}"
             },
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "max by (node,role) (\n    max_over_time(opensearch_node_role_bool{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", role=\"remote_cluster_client\"}[1m]) == 1\n) * 6\n",
+               "expr": "max by (node,role) (\n    max_over_time(opensearch_node_role_bool{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", role=\"remote_cluster_client\"}[1m]) == 1\n) * 6\n",
                "legendFormat": "{{node}}"
             }
          ],
@@ -605,7 +605,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top nodes by OS CPU usage across the OpenSearch cluster.",
          "fieldConfig": {
@@ -658,9 +658,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, sort_desc(sum by(node, job,cluster) (opensearch_os_cpu_percent{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})))",
+               "expr": "topk(10, sort_desc(sum by(node, job,opensearch_cluster) (opensearch_os_cpu_percent{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})))",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{node}}"
@@ -671,7 +671,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The total count of circuit breakers tripped across the OpenSearch cluster.",
          "fieldConfig": {
@@ -722,9 +722,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "sum by(job,cluster, node) (increase(opensearch_circuitbreaker_tripped_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"}[$__interval:]))",
+               "expr": "sum by(job,opensearch_cluster, node) (increase(opensearch_circuitbreaker_tripped_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"}[$__interval:]))",
                "format": "time_series",
                "interval": "1m",
                "intervalFactor": 2,
@@ -736,7 +736,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Shard status counts across the Opensearch cluster.",
          "fieldConfig": {
@@ -787,9 +787,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "min by(type, job,cluster) (opensearch_cluster_shards_number{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})",
+               "expr": "min by(type, job,opensearch_cluster) (opensearch_cluster_shards_number{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{type}}"
@@ -800,7 +800,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top nodes by disk usage across the OpenSearch cluster.",
          "fieldConfig": {
@@ -853,9 +853,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, sort_desc((100 * (sum by(node, job,cluster) (opensearch_fs_path_total_bytes{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})- sum by(node, job,cluster) (opensearch_fs_path_free_bytes{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})) / sum by(node, job,cluster) (opensearch_fs_path_total_bytes{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"}))))",
+               "expr": "topk(10, sort_desc((100 * (sum by(node, job,opensearch_cluster) (opensearch_fs_path_total_bytes{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})- sum by(node, job,opensearch_cluster) (opensearch_fs_path_free_bytes{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})) / sum by(node, job,opensearch_cluster) (opensearch_fs_path_total_bytes{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"}))))",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{node}}"
@@ -866,7 +866,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The total count of documents indexed across the OpenSearch cluster.",
          "fieldConfig": {
@@ -940,12 +940,12 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "avg by(job,cluster) (opensearch_indices_indexing_index_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})",
+               "expr": "avg by(job,opensearch_cluster) (opensearch_indices_indexing_index_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})",
                "format": "time_series",
                "intervalFactor": 2,
-               "legendFormat": "{{job}}/{{cluster}}"
+               "legendFormat": "{{job}}/{{opensearch_cluster}}"
             }
          ],
          "title": "Total documents",
@@ -953,7 +953,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The number of tasks waiting to be executed across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1027,12 +1027,12 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "avg by(job,cluster) (opensearch_cluster_pending_tasks_number{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})",
+               "expr": "avg by(job,opensearch_cluster) (opensearch_cluster_pending_tasks_number{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})",
                "format": "time_series",
                "intervalFactor": 2,
-               "legendFormat": "{{job}}/{{cluster}}"
+               "legendFormat": "{{job}}/{{opensearch_cluster}}"
             }
          ],
          "title": "Pending tasks",
@@ -1040,7 +1040,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The total size of the store across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1114,12 +1114,12 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "avg by(job,cluster) (opensearch_indices_store_size_bytes{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})",
+               "expr": "avg by(job,opensearch_cluster) (opensearch_indices_store_size_bytes{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})",
                "format": "time_series",
                "intervalFactor": 2,
-               "legendFormat": "{{job}}/{{cluster}}"
+               "legendFormat": "{{job}}/{{opensearch_cluster}}"
             }
          ],
          "title": "Store size",
@@ -1127,7 +1127,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The max wait time for tasks to be executed across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1201,12 +1201,12 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "max by(job,cluster) (opensearch_cluster_task_max_waiting_time_seconds{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"})",
+               "expr": "max by(job,opensearch_cluster) (opensearch_cluster_task_max_waiting_time_seconds{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"})",
                "format": "time_series",
                "intervalFactor": 2,
-               "legendFormat": "{{job}}/{{cluster}}"
+               "legendFormat": "{{job}}/{{opensearch_cluster}}"
             }
          ],
          "title": "Max task wait time",
@@ -1215,7 +1215,7 @@
       {
          "collapsed": false,
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "gridPos": {
             "h": 1,
@@ -1230,7 +1230,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top indices by combined fetch, query, and scroll request rate across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1308,9 +1308,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, sort_desc(avg by(index, job,cluster) (\n  opensearch_index_search_fetch_current_number{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"} + \n  opensearch_index_search_query_current_number{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"} + \n  opensearch_index_search_scroll_current_number{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}\n)))\n",
+               "expr": "topk(10, sort_desc(avg by(index, job,opensearch_cluster) (\n  opensearch_index_search_fetch_current_number{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"} + \n  opensearch_index_search_query_current_number{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"} + \n  opensearch_index_search_scroll_current_number{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}\n)))\n",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{index}}"
@@ -1321,7 +1321,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top indices by combined fetch, query, and scroll latency across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1395,9 +1395,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, sort_desc(sum by(index, job,cluster) ((increase(opensearch_index_search_fetch_time_seconds{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}[$__interval:])\n+increase(opensearch_index_search_query_time_seconds{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}[$__interval:])\n+increase(opensearch_index_search_scroll_time_seconds{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}[$__interval:]))\n/ clamp_min(increase(opensearch_index_search_fetch_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}[$__interval:])\n+increase(opensearch_index_search_query_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}[$__interval:])\n+increase(opensearch_index_search_scroll_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}[$__interval:]), 1))))\n",
+               "expr": "topk(10, sort_desc(sum by(index, job,opensearch_cluster) ((increase(opensearch_index_search_fetch_time_seconds{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}[$__interval:])\n+increase(opensearch_index_search_query_time_seconds{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}[$__interval:])\n+increase(opensearch_index_search_scroll_time_seconds{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}[$__interval:]))\n/ clamp_min(increase(opensearch_index_search_fetch_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}[$__interval:])\n+increase(opensearch_index_search_query_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}[$__interval:])\n+increase(opensearch_index_search_scroll_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}[$__interval:]), 1))))\n",
                "format": "time_series",
                "interval": "1m",
                "intervalFactor": 2,
@@ -1409,7 +1409,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top indices by cache hit ratio for the combined request and query cache across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1487,9 +1487,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, sort_desc(avg by(index, job,cluster) (\n  100 * (opensearch_index_requestcache_hit_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"} + \n  opensearch_index_querycache_hit_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}) / \n  clamp_min((opensearch_index_requestcache_hit_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"} + \n  opensearch_index_querycache_hit_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"} + \n  opensearch_index_requestcache_miss_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"} + \n  opensearch_index_querycache_miss_number{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}), 1\n  ))))\n",
+               "expr": "topk(10, sort_desc(avg by(index, job,opensearch_cluster) (\n  100 * (opensearch_index_requestcache_hit_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"} + \n  opensearch_index_querycache_hit_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}) / \n  clamp_min((opensearch_index_requestcache_hit_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"} + \n  opensearch_index_querycache_hit_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"} + \n  opensearch_index_requestcache_miss_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"} + \n  opensearch_index_querycache_miss_number{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}), 1\n  ))))\n",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{index}}"
@@ -1500,7 +1500,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top nodes by rate of ingest across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1578,9 +1578,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, sum by(node, job,cluster) (rate(opensearch_ingest_total_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"}[$__rate_interval])))",
+               "expr": "topk(10, sum by(node, job,opensearch_cluster) (rate(opensearch_ingest_total_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"}[$__rate_interval])))",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{node}}"
@@ -1591,7 +1591,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top nodes by ingestion latency across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1669,9 +1669,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, sum by(job,cluster, node) (\n  increase(opensearch_ingest_total_time_seconds{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"}[$__interval:]) / \n  clamp_min(increase(opensearch_ingest_total_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"}[$__interval:]), 1)))\n",
+               "expr": "topk(10, sum by(job,opensearch_cluster, node) (\n  increase(opensearch_ingest_total_time_seconds{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"}[$__interval:]) / \n  clamp_min(increase(opensearch_ingest_total_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"}[$__interval:]), 1)))\n",
                "format": "time_series",
                "interval": "1m",
                "intervalFactor": 2,
@@ -1683,7 +1683,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top nodes by ingestion failures across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1757,9 +1757,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, sum by(job,cluster, node) (increase(opensearch_ingest_total_failed_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"}[$__interval:])))",
+               "expr": "topk(10, sum by(job,opensearch_cluster, node) (increase(opensearch_ingest_total_failed_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"}[$__interval:])))",
                "format": "time_series",
                "interval": "1m",
                "intervalFactor": 2,
@@ -1771,7 +1771,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top indices by rate of document indexing across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1845,9 +1845,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, avg by(job,cluster, index) (opensearch_index_indexing_index_current_number{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"}))",
+               "expr": "topk(10, avg by(job,opensearch_cluster, index) (opensearch_index_indexing_index_current_number{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"}))",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{index}}"
@@ -1858,7 +1858,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top indices by indexing latency across the OpenSearch cluster.",
          "fieldConfig": {
@@ -1932,9 +1932,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, avg by(job,cluster, index) \n(increase(opensearch_index_indexing_index_time_seconds{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}[$__interval:]) / \nclamp_min(increase(opensearch_index_indexing_index_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\", context=\"total\"}[$__interval:]), 1)))\n",
+               "expr": "topk(10, avg by(job,opensearch_cluster, index) \n(increase(opensearch_index_indexing_index_time_seconds{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}[$__interval:]) / \nclamp_min(increase(opensearch_index_indexing_index_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\", context=\"total\"}[$__interval:]), 1)))\n",
                "format": "time_series",
                "interval": "1m",
                "intervalFactor": 2,
@@ -1946,7 +1946,7 @@
       },
       {
          "datasource": {
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top indices by index document failures across the OpenSearch cluster.",
          "fieldConfig": {
@@ -2020,9 +2020,9 @@
          "targets": [
             {
                "datasource": {
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(10, avg by(job,cluster, index) (increase(opensearch_index_indexing_index_failed_count{cluster!=\"\",job=~\"$job\",cluster=~\"$cluster\"}[$__interval:])))",
+               "expr": "topk(10, avg by(job,opensearch_cluster, index) (increase(opensearch_index_indexing_index_failed_count{opensearch_cluster!=\"\",job=~\"$job\",opensearch_cluster=~\"$opensearch_cluster\"}[$__interval:])))",
                "format": "time_series",
                "interval": "1m",
                "intervalFactor": 2,
@@ -2041,8 +2041,8 @@
    "templating": {
       "list": [
          {
-            "label": "Data source",
-            "name": "datasource",
+            "label": "Prometheus data source",
+            "name": "prometheus_datasource",
             "query": "prometheus",
             "regex": "",
             "type": "datasource"
@@ -2051,13 +2051,13 @@
             "allValue": ".+",
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "includeAll": true,
             "label": "Job",
             "multi": true,
             "name": "job",
-            "query": "label_values(opensearch_cluster_status{cluster!=\"\"}, job)",
+            "query": "label_values(opensearch_cluster_status{opensearch_cluster!=\"\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -2066,13 +2066,13 @@
             "allValue": ".+",
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "includeAll": true,
-            "label": "Cluster",
+            "label": "Opensearch_cluster",
             "multi": true,
-            "name": "cluster",
-            "query": "label_values(opensearch_cluster_status{cluster!=\"\",job=~\"$job\"}, cluster)",
+            "name": "opensearch_cluster",
+            "query": "label_values(opensearch_cluster_status{opensearch_cluster!=\"\",job=~\"$job\"}, opensearch_cluster)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

@@ -227,7 +227,7 @@ annotations:
     as the writes to etcd will be disabled when it is full.'
   summary: etcd cluster database is running full.
 expr: |
-  (last_over_time(etcd_mvcc_db_total_size_in_bytes[5m]) / last_over_time(etcd_server_quota_backend_bytes[5m]))*100 > 95
+  (last_over_time(etcd_mvcc_db_total_size_in_bytes{job=~".*etcd.*"}[5m]) / last_over_time(etcd_server_quota_backend_bytes{job=~".*etcd.*"}[5m]))*100 > 95
 for: 10m
 labels:
   severity: critical
@@ -243,7 +243,7 @@ annotations:
     on etcd instance {{ $labels.instance }}, please check as it might be disruptive.'
   summary: etcd cluster database growing very fast.
 expr: |
-  predict_linear(etcd_mvcc_db_total_size_in_bytes[4h], 4*60*60) > etcd_server_quota_backend_bytes
+  predict_linear(etcd_mvcc_db_total_size_in_bytes{job=~".*etcd.*"}[4h], 4*60*60) > etcd_server_quota_backend_bytes{job=~".*etcd.*"}
 for: 10m
 labels:
   severity: warning
@@ -261,7 +261,7 @@ annotations:
   runbook_url: https://etcd.io/docs/v3.5/op-guide/maintenance/#defragmentation
   summary: etcd database size in use is less than 50% of the actual allocated storage.
 expr: |
-  (last_over_time(etcd_mvcc_db_total_size_in_use_in_bytes[5m]) / last_over_time(etcd_mvcc_db_total_size_in_bytes[5m])) < 0.5 and etcd_mvcc_db_total_size_in_use_in_bytes > 104857600
+  (last_over_time(etcd_mvcc_db_total_size_in_use_in_bytes{job=~".*etcd.*"}[5m]) / last_over_time(etcd_mvcc_db_total_size_in_bytes{job=~".*etcd.*"}[5m])) < 0.5 and etcd_mvcc_db_total_size_in_use_in_bytes{job=~".*etcd.*"} > 104857600
 for: 10m
 labels:
   severity: warning

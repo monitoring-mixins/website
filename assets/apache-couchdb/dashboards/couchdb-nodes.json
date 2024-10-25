@@ -1475,7 +1475,7 @@
                   "uid": "${loki_datasource}"
                },
                "editorMode": "code",
-               "expr": "{job=~\"$job\", couchdb_cluster=~\"$couchdb_cluster\", instance=~\"$instance\", filename=\"/var/log/couchdb/couchdb.log\"} |~ \"$log_level\"",
+               "expr": "{job=~\"$job\", couchdb_cluster=~\"$couchdb_cluster\", instance=~\"$instance\"} |= `` | (filename=~\"/var/log/couchdb/couchdb.log\" or log_type=\"couchdb\") |~ \"$log_level\"",
                "queryType": "range",
                "refId": "A"
             }

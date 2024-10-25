@@ -138,7 +138,7 @@
                            {
                               "targetBlank": false,
                               "title": "Drill down to ${__field.name} ${__value.text}",
-                              "url": "d/windows-overview?var-instance=${__data.fields.instance}&${__url_time_range}"
+                              "url": "d/windows-overview?var-instance=${__data.fields.instance}&${__url_time_range}&${datasource:queryparam}"
                            }
                         ]
                      }
@@ -160,7 +160,7 @@
                            {
                               "targetBlank": false,
                               "title": "Filter by ${__field.name}",
-                              "url": "d/windows-fleet?var-${__field.name}=${__value.text}&${__url_time_range}"
+                              "url": "d/windows-fleet?var-${__field.name}=${__value.text}&${__url_time_range}&${datasource:queryparam}"
                            }
                         ]
                      }
@@ -411,7 +411,7 @@
                "show": true
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -529,7 +529,7 @@
                "id": "filterFieldsByName",
                "options": {
                   "include": {
-                     "pattern": "job 1|instance|product|^hostname$|Value.+"
+                     "pattern": "job 1$|instance|product|^hostname$|Value.+"
                   }
                }
             },
@@ -641,7 +641,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -746,7 +746,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -851,7 +851,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -956,7 +956,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -1017,7 +1017,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {

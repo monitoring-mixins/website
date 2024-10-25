@@ -1265,6 +1265,28 @@
             "useTags": false
          },
          {
+            "allValue": ".*",
+            "current": { },
+            "datasource": {
+               "uid": "${prometheus_datasource}"
+            },
+            "hide": 2,
+            "includeAll": true,
+            "label": "Cluster",
+            "multi": true,
+            "name": "cluster",
+            "options": [ ],
+            "query": "label_values(airflow_scheduler_tasks_executable{job=~\"$job\"}, cluster)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
             "allValue": ".+",
             "current": { },
             "datasource": {

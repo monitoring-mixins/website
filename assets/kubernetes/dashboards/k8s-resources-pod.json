@@ -1,5 +1,18 @@
 {
    "editable": false,
+   "links": [
+      {
+         "asDropdown": true,
+         "includeVars": true,
+         "keepTime": true,
+         "tags": [
+            "kubernetes-mixin"
+         ],
+         "targetBlank": false,
+         "title": "Kubernetes",
+         "type": "dashboards"
+      }
+   ],
    "panels": [
       {
          "datasource": {
@@ -89,7 +102,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -195,7 +208,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -237,7 +250,7 @@
             "y": 14
          },
          "id": 3,
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -420,7 +433,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -481,7 +494,7 @@
             "y": 28
          },
          "id": 5,
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -651,7 +664,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -702,7 +715,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -753,7 +766,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -804,7 +817,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -855,7 +868,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -906,7 +919,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -957,7 +970,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1016,7 +1029,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1075,7 +1088,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1126,7 +1139,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1180,7 +1193,7 @@
             "y": 70
          },
          "id": 16,
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -1289,7 +1302,7 @@
       }
    ],
    "refresh": "10s",
-   "schemaVersion": 36,
+   "schemaVersion": 39,
    "tags": [
       "kubernetes-mixin"
    ],

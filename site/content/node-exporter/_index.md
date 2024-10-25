@@ -418,7 +418,7 @@ labels:
 alert: NodeDiskIOSaturation
 annotations:
   description: |
-    Disk IO queue (aqu-sq) is high on {{ $labels.device }} at {{ $labels.instance }}, has been above 10 for the last 15 minutes, is currently at {{ printf "%.2f" $value }}.
+    Disk IO queue (aqu-sq) is high on {{ $labels.device }} at {{ $labels.instance }}, has been above 10 for the last 30 minutes, is currently at {{ printf "%.2f" $value }}.
     This symptom might indicate disk saturation.
   summary: Disk IO queue is high.
 expr: |
@@ -438,6 +438,21 @@ annotations:
   summary: Systemd service has entered failed state.
 expr: |
   node_systemd_unit_state{job="node", state="failed"} == 1
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### NodeBondingDegraded
+
+{{< code lang="yaml" >}}
+alert: NodeBondingDegraded
+annotations:
+  description: Bonding interface {{ $labels.master }} on {{ $labels.instance }} is
+    in degraded state due to one or more slave failures.
+  summary: Bonding interface is degraded
+expr: |
+  (node_bonding_slaves - node_bonding_active) != 0
 for: 5m
 labels:
   severity: warning
@@ -577,5 +592,6 @@ Following dashboards are generated from mixins and hosted on github:
 
 - [node-cluster-rsrc-use](https://github.com/monitoring-mixins/website/blob/master/assets/node-exporter/dashboards/node-cluster-rsrc-use.json)
 - [node-rsrc-use](https://github.com/monitoring-mixins/website/blob/master/assets/node-exporter/dashboards/node-rsrc-use.json)
+- [nodes-aix](https://github.com/monitoring-mixins/website/blob/master/assets/node-exporter/dashboards/nodes-aix.json)
 - [nodes-darwin](https://github.com/monitoring-mixins/website/blob/master/assets/node-exporter/dashboards/nodes-darwin.json)
 - [nodes](https://github.com/monitoring-mixins/website/blob/master/assets/node-exporter/dashboards/nodes.json)

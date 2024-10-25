@@ -318,7 +318,7 @@
                   "uid": "$loki_datasource"
                },
                "editorMode": "builder",
-               "expr": "{filename=~\"/.*/.*/diag/rdbms/.*/.*/trace/alert_.*log\",job=~\"$job\", instance=~\"$instance\"}",
+               "expr": "{job=~\"$job\", instance=~\"$instance\"} |= `` | (filename=~\"/.*/.*/diag/rdbms/.*/.*/trace/alert_.*log\" or log_type=\"oracledb\")",
                "queryType": "range",
                "refId": "A"
             }

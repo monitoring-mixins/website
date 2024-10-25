@@ -203,8 +203,3 @@ expr: |
 record: gluster:volume_capacity_total_bytes:sum
 {{< /code >}}
  
-## Dashboards
-Following dashboards are generated from mixins and hosted on github:
-
-
-- [k8s-storage-resources-glusterfs-pv](https://github.com/monitoring-mixins/website/blob/master/assets/gluster/dashboards/k8s-storage-resources-glusterfs-pv.json)

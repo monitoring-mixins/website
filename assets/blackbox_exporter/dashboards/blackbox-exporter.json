@@ -1,7 +1,7 @@
 {
    "__inputs": [ ],
    "__requires": [ ],
-   "description": "A dashboard that monitors the Blackbox-exporter. It is created using the blackbox-exporter-mixin for the the (blackbox-exporter)[https://github.com/prometheus/blackbox-exporter].",
+   "description": "A dashboard that monitors the Blackbox-exporter. It is created using the [blackbox-exporter-mixin](https://github.com/adinhodovic/blackbox-exporter-mixin) for the the (blackbox-exporter)[https://github.com/prometheus/blackbox_exporter].",
    "editable": true,
    "panels": [
       {
@@ -70,7 +70,7 @@
             },
             "textMode": "value_and_name"
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -120,7 +120,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -173,7 +173,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -222,7 +222,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -259,7 +259,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -326,7 +326,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -379,7 +379,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -437,7 +437,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -491,7 +491,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -542,7 +542,7 @@
             },
             "textMode": "name"
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -590,7 +590,7 @@
             "colorMode": "background",
             "graphMode": "none"
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -643,7 +643,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -681,7 +681,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -720,7 +720,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -757,7 +757,7 @@
                ]
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -808,7 +808,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -871,7 +871,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.4.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -894,7 +894,7 @@
          "type": "timeseries"
       }
    ],
-   "schemaVersion": 36,
+   "schemaVersion": 39,
    "tags": [
       "blackbox-exporter",
       "blackbox-exporter-mixin"

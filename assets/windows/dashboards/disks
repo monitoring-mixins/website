@@ -118,7 +118,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -240,7 +240,7 @@
             "y": 1
          },
          "id": 3,
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -415,7 +415,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -496,7 +496,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -569,7 +569,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -641,7 +641,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {

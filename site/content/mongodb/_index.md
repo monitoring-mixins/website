@@ -29,7 +29,19 @@ annotations:
       LABELS = {{ $labels }}
   summary: MongoDB Instance is Down.
 expr: mongodb_up == 0
-for: 0m
+for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### MongodbReplicaMemberUnhealthy
+
+{{< code lang="yaml" >}}
+alert: MongodbReplicaMemberUnhealthy
+annotations:
+  description: Mongodb replica member unhealthy (instance {{ $labels.instance }})
+  summary: MongoDB replica member unhealthy.
+expr: mongodb_mongod_replset_member_health == 0
 labels:
   severity: critical
 {{< /code >}}
@@ -44,9 +56,8 @@ annotations:
       VALUE = {{ $value }}
       LABELS = {{ $labels }}
   summary: MongoDB replication lag is exceeding the threshold.
-expr: mongodb_mongod_replset_member_optime_date{state="PRIMARY"} - ON (set) mongodb_mongod_replset_member_optime_date{state="SECONDARY"}
-  > 10
-for: 0m
+expr: mongodb_mongod_replset_member_replication_lag{state="SECONDARY"} > 60
+for: 5m
 labels:
   severity: critical
 {{< /code >}}
@@ -64,7 +75,7 @@ annotations:
 expr: (avg(mongodb_mongod_replset_oplog_tail_timestamp - mongodb_mongod_replset_oplog_head_timestamp)
   - (avg(mongodb_mongod_replset_member_optime_date{state="PRIMARY"}) - avg(mongodb_mongod_replset_member_optime_date{state="SECONDARY"})))
   <= 0
-for: 0m
+for: 5m
 labels:
   severity: critical
 {{< /code >}}
@@ -131,6 +142,38 @@ annotations:
 expr: (sum(mongodb_memory{type="virtual"}) BY (instance) / sum(mongodb_memory{type="mapped"})
   BY (instance)) > 3
 for: 2m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### MongodbReadRequestsQueueingUp
+
+{{< code lang="yaml" >}}
+alert: MongodbReadRequestsQueueingUp
+annotations:
+  description: |-
+    MongoDB requests are queuing up
+      VALUE = {{ $value }}
+      LABELS = {{ $labels }}
+  summary: MongoDB read requests queuing up.
+expr: delta(mongodb_mongod_global_lock_current_queue{type="reader"}[1m]) > 0
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### MongodbWriteRequestsQueueingUp
+
+{{< code lang="yaml" >}}
+alert: MongodbWriteRequestsQueueingUp
+annotations:
+  description: |-
+    MongoDB write requests are queueing up
+      VALUE = {{ $value }}
+      LABELS = {{ $labels }}
+  summary: MongoDB write requests queuing up.
+expr: delta(mongodb_mongod_global_lock_current_queue{type="writer"}[1m]) > 0
+for: 5m
 labels:
   severity: warning
 {{< /code >}}

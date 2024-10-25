@@ -185,17 +185,19 @@
          },
          "gridPos": {
             "h": 6,
-            "w": 24
+            "w": 24,
+            "x": 0,
+            "y": 0
          },
          "id": 1,
-         "interval": "30s",
+         "maxDataPoints": 100,
          "options": {
             "tooltip": {
                "mode": "multi",
                "sort": "desc"
             }
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -225,7 +227,9 @@
          },
          "gridPos": {
             "h": 18,
-            "w": 24
+            "w": 24,
+            "x": 0,
+            "y": 18
          },
          "id": 2,
          "options": {
@@ -235,7 +239,7 @@
             "showTime": false,
             "wrapLogMessage": false
          },
-         "pluginVersion": "v10.0.0",
+         "pluginVersion": "v11.0.0",
          "targets": [
             {
                "datasource": {
@@ -250,7 +254,7 @@
       }
    ],
    "refresh": "1m",
-   "schemaVersion": 36,
+   "schemaVersion": 39,
    "tags": [
       "active-directory"
    ],

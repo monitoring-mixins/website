@@ -50,7 +50,6 @@
                   {
                      "expr": "sum(rate(jaeger_reporter_spans{result=~\"dropped|err\"}[1m]))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "error",
                      "refId": "A",
                      "step": 10
@@ -58,7 +57,6 @@
                   {
                      "expr": "sum(rate(jaeger_reporter_spans[1m])) - sum(rate(jaeger_reporter_spans{result=~\"dropped|err\"}[1m]))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "success",
                      "refId": "B",
                      "step": 10
@@ -134,7 +132,6 @@
                   {
                      "expr": "sum(rate(jaeger_reporter_spans{result=~\"dropped|err\"}[1m])) by (namespace) / scalar(sum(rate(jaeger_reporter_spans[1m])))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "{{namespace}}",
                      "legendLink": null
                   }
@@ -224,7 +221,6 @@
                   {
                      "expr": "sum(rate(jaeger_agent_reporter_batches_failures_total[1m]))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "error",
                      "refId": "A",
                      "step": 10
@@ -232,7 +228,6 @@
                   {
                      "expr": "sum(rate(jaeger_agent_reporter_batches_submitted_total[1m])) - sum(rate(jaeger_agent_reporter_batches_failures_total[1m]))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "success",
                      "refId": "B",
                      "step": 10
@@ -308,7 +303,6 @@
                   {
                      "expr": "sum(rate(jaeger_agent_reporter_batches_failures_total[1m])) by (cluster) / scalar(sum(rate(jaeger_agent_reporter_batches_submitted_total[1m])))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "{{cluster}}",
                      "legendLink": null
                   }
@@ -398,7 +392,6 @@
                   {
                      "expr": "sum(rate(jaeger_collector_spans_dropped_total[1m]))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "error",
                      "refId": "A",
                      "step": 10
@@ -406,7 +399,6 @@
                   {
                      "expr": "sum(rate(jaeger_collector_spans_received_total[1m])) - sum(rate(jaeger_collector_spans_dropped_total[1m]))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "success",
                      "refId": "B",
                      "step": 10
@@ -482,7 +474,6 @@
                   {
                      "expr": "sum(rate(jaeger_collector_spans_dropped_total[1m])) by (instance) / scalar(sum(rate(jaeger_collector_spans_received_total[1m])))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
                      "legendLink": null
                   }
@@ -569,7 +560,6 @@
                   {
                      "expr": "sum by (svc) (rate(jaeger_collector_traces_saved_by_svc_total[1m]))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "{{svc}}",
                      "legendLink": null
                   }
@@ -644,7 +634,6 @@
                   {
                      "expr": "sum by (svc) (rate(jaeger_collector_spans_saved_by_svc_total[1m]))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "{{svc}}",
                      "legendLink": null
                   }
@@ -731,7 +720,6 @@
                   {
                      "expr": "jaeger_collector_queue_length",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
                      "legendLink": null
                   }
@@ -806,7 +794,6 @@
                   {
                      "expr": "histogram_quantile(0.95, sum(rate(jaeger_collector_in_queue_latency_bucket[1m])) by (le, instance))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "{{instance}}",
                      "legendLink": null
                   }
@@ -896,7 +883,6 @@
                   {
                      "expr": "sum(rate(jaeger_cassandra_errors_total[1m]))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "error",
                      "refId": "A",
                      "step": 10
@@ -904,7 +890,6 @@
                   {
                      "expr": "sum(rate(jaeger_cassandra_attempts_total[1m])) - sum(rate(jaeger_cassandra_errors_total[1m]))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "success",
                      "refId": "B",
                      "step": 10
@@ -980,7 +965,6 @@
                   {
                      "expr": "histogram_quantile(0.95, sum by (job, le) (rate(jaeger_collector_save_latency_bucket[1m])))",
                      "format": "time_series",
-                     "intervalFactor": 2,
                      "legendFormat": "{{job}}",
                      "legendLink": null
                   }
@@ -1041,7 +1025,7 @@
                "value": "default"
             },
             "hide": 0,
-            "label": "Data Source",
+            "label": "Data source",
             "name": "datasource",
             "options": [ ],
             "query": "prometheus",

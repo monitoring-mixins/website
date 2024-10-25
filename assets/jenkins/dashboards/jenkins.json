@@ -1,1026 +1,1480 @@
 {
-   "__inputs": [ ],
-   "__requires": [ ],
    "annotations": {
-      "list": [ ]
+      "list": [
+         {
+            "builtIn": 1,
+            "datasource": {
+               "type": "grafana",
+               "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+         }
+      ]
    },
-   "editable": false,
-   "gnetId": null,
+   "editable": true,
+   "fiscalYearStartMonth": 0,
    "graphTooltip": 0,
-   "hideControls": false,
-   "id": null,
+   "id": 607,
    "links": [ ],
-   "refresh": "",
-   "rows": [
+   "panels": [
       {
-         "collapse": false,
          "collapsed": false,
-         "panels": [
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 14,
+         "panels": [ ],
+         "targets": [
             {
-               "cacheTimeout": null,
-               "colorBackground": false,
-               "colorValue": false,
-               "colors": [
-                  "#299c46",
-                  "rgba(237, 129, 40, 0.89)",
-                  "#d44a3a"
-               ],
-               "datasource": "$datasource",
-               "description": "Total number of job executors",
-               "format": "short",
-               "gauge": {
-                  "maxValue": 100,
-                  "minValue": 0,
-                  "show": false,
-                  "thresholdLabels": false,
-                  "thresholdMarkers": true
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
-               "gridPos": { },
-               "id": 2,
-               "interval": null,
-               "links": [ ],
-               "mappingType": 1,
-               "mappingTypes": [
-                  {
-                     "name": "value to text",
-                     "value": 1
-                  },
-                  {
-                     "name": "range to text",
-                     "value": 2
-                  }
-               ],
-               "maxDataPoints": 100,
-               "nullPointMode": "connected",
-               "nullText": null,
-               "postfix": "",
-               "postfixFontSize": "50%",
-               "prefix": "",
-               "prefixFontSize": "50%",
-               "rangeMaps": [
-                  {
-                     "from": "null",
-                     "text": "N/A",
-                     "to": "null"
-                  }
-               ],
-               "span": 2,
-               "sparkline": {
-                  "fillColor": "rgba(31, 118, 189, 0.18)",
-                  "full": false,
-                  "lineColor": "rgb(31, 120, 193)",
-                  "show": false
-               },
-               "tableColumn": "",
-               "targets": [
-                  {
-                     "expr": "jenkins_executor_count_value{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "A"
-                  }
-               ],
-               "thresholds": "",
-               "title": "Total Executors",
-               "type": "singlestat",
-               "valueFontSize": "80%",
-               "valueMaps": [
-                  {
-                     "op": "=",
-                     "text": "N/A",
-                     "value": "null"
-                  }
-               ],
-               "valueName": "avg"
-            },
-            {
-               "aliasColors": { },
-               "datasource": "$datasource",
-               "description": "Shows distribution of executors by their current state",
-               "gridPos": { },
-               "id": 3,
-               "legend": {
-                  "percentage": false,
-                  "show": true,
-                  "values": true
-               },
-               "legendType": "Under graph",
-               "pieType": "pie",
-               "span": 2,
-               "targets": [
-                  {
-                     "expr": "jenkins_executor_free_value{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "free",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "jenkins_executor_in_use_value{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "in-use",
-                     "refId": "B"
-                  }
-               ],
-               "title": "Executors By State",
-               "type": "piechart",
-               "valueName": "current"
-            },
-            {
-               "datasource": "$datasource",
-               "description": "Rate of jobs that are successful over the specified interval.",
-               "fieldConfig": {
-                  "defaults": {
-                     "links": [ ],
-                     "mappings": [ ],
-                     "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                           {
-                              "color": "purple",
-                              "value": 0
-                           }
-                        ]
-                     },
-                     "unit": "none"
-                  }
-               },
-               "gridPos": { },
-               "id": 4,
-               "links": [ ],
-               "options": {
-                  "colorMode": "background",
-                  "graphMode": "area",
-                  "justifyMode": "auto",
-                  "orientation": "auto",
-                  "reduceOptions": {
-                     "calcs": [
-                        "mean"
-                     ],
-                     "fields": "",
-                     "values": false
-                  },
-                  "textMode": "auto"
-               },
-               "pluginVersion": "7",
-               "span": 2,
-               "targets": [
-                  {
-                     "expr": "rate(jenkins_runs_success_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "A"
-                  }
-               ],
-               "title": "Job Success Rate",
-               "transparent": false,
-               "type": "stat"
-            },
-            {
-               "datasource": "$datasource",
-               "description": "Rate of jobs failing over the specified interval.",
-               "fieldConfig": {
-                  "defaults": {
-                     "links": [ ],
-                     "mappings": [ ],
-                     "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                           {
-                              "color": "red",
-                              "value": 0
-                           }
-                        ]
-                     },
-                     "unit": "none"
-                  }
-               },
-               "gridPos": { },
-               "id": 5,
-               "links": [ ],
-               "options": {
-                  "colorMode": "background",
-                  "graphMode": "area",
-                  "justifyMode": "auto",
-                  "orientation": "auto",
-                  "reduceOptions": {
-                     "calcs": [
-                        "mean"
-                     ],
-                     "fields": "",
-                     "values": false
-                  },
-                  "textMode": "auto"
-               },
-               "pluginVersion": "7",
-               "span": 2,
-               "targets": [
-                  {
-                     "expr": "rate(jenkins_runs_failure_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "A"
-                  }
-               ],
-               "title": "Job Falure Rate",
-               "transparent": false,
-               "type": "stat"
-            },
-            {
-               "cacheTimeout": null,
-               "colorBackground": false,
-               "colorValue": false,
-               "colors": [
-                  "red",
-                  "yellow",
-                  "green"
-               ],
-               "datasource": "$datasource",
-               "description": "Percentage of build nodes online",
-               "format": "percentunit",
-               "gauge": {
-                  "maxValue": 1,
-                  "minValue": 0,
-                  "show": true,
-                  "thresholdLabels": false,
-                  "thresholdMarkers": true
-               },
-               "gridPos": { },
-               "id": 6,
-               "interval": null,
-               "links": [ ],
-               "mappingType": 1,
-               "mappingTypes": [
-                  {
-                     "name": "value to text",
-                     "value": 1
-                  },
-                  {
-                     "name": "range to text",
-                     "value": 2
-                  }
-               ],
-               "maxDataPoints": 100,
-               "nullPointMode": "connected",
-               "nullText": null,
-               "postfix": "",
-               "postfixFontSize": "50%",
-               "prefix": "",
-               "prefixFontSize": "50%",
-               "rangeMaps": [
-                  {
-                     "from": "null",
-                     "text": "N/A",
-                     "to": "null"
-                  }
-               ],
-               "span": 2,
-               "sparkline": {
-                  "fillColor": "rgba(31, 118, 189, 0.18)",
-                  "full": false,
-                  "lineColor": "rgb(31, 120, 193)",
-                  "show": false
-               },
-               "tableColumn": "",
-               "targets": [
-                  {
-                     "expr": "jenkins_node_online_value{job=~\"$job\", instance=~\"$instance\"}/jenkins_node_count_value{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "",
-                     "refId": "A"
-                  }
-               ],
-               "thresholds": ".80,.90",
-               "title": "Build Nodes Online",
-               "type": "singlestat",
-               "valueFontSize": "80%",
-               "valueMaps": [
-                  {
-                     "op": "=",
-                     "text": "N/A",
-                     "value": "null"
-                  }
-               ],
-               "valueName": "avg"
-            },
-            {
-               "datasource": "$datasource",
-               "description": "Plugins grouped by different states.",
-               "fieldConfig": {
-                  "defaults": {
-                     "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                           {
-                              "color": "purple",
-                              "value": 0
-                           }
-                        ]
-                     },
-                     "unit": null
-                  }
-               },
-               "gridPos": { },
-               "id": 7,
-               "options": {
-                  "orientation": "horizontal"
-               },
-               "span": 2,
-               "targets": [
-                  {
-                     "expr": "jenkins_plugins_active{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "active",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "jenkins_plugins_inactive{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "inactive",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "jenkins_plugins_failed{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "failed",
-                     "refId": "C"
-                  },
-                  {
-                     "expr": "jenkins_plugins_withUpdate{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "instant": true,
-                     "intervalFactor": 2,
-                     "legendFormat": "with update",
-                     "refId": "D"
-                  }
-               ],
-               "title": "Plugins by State",
-               "type": "bargauge"
+               "refId": "A"
             }
          ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
          "title": "Overview",
-         "titleSize": "h6",
          "type": "row"
       },
       {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
-            {
-               "datasource": "$datasource",
-               "description": "Bottom 5 least healthiest jobs.",
-               "gridPos": { },
-               "id": 8,
-               "span": 4,
-               "styles": [
-                  {
-                     "alias": "Time",
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "pattern": "Time",
-                     "type": "hidden"
-                  },
-                  {
-                     "alias": "Health",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value #A",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "percent"
-                  },
-                  {
-                     "alias": "Failed",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value #B",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Successful",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value #C",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Total",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value #D",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "Job",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "jenkins_job",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "pattern": "/.*/",
-                     "thresholds": [ ],
-                     "type": "string",
-                     "unit": "short"
-                  }
-               ],
-               "targets": [
-                  {
-                     "expr": "bottomk(5, avg by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_health_score\", job=~\"$job\", instance=~\"$instance\"}))",
-                     "format": "table",
-                     "instant": true,
-                     "legendFormat": "",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "sum by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_failed_build_count\", job=~\"$job\", instance=~\"$instance\"}) and on (jenkins_job) bottomk(5, avg by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_health_score\", job=~\"$job\", instance=~\"$instance\"}))",
-                     "format": "table",
-                     "instant": true,
-                     "legendFormat": "",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "sum by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_success_build_count\", job=~\"$job\", instance=~\"$instance\"}) and on (jenkins_job) bottomk(5, avg by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_health_score\", job=~\"$job\", instance=~\"$instance\"}))",
-                     "format": "table",
-                     "instant": true,
-                     "legendFormat": "",
-                     "refId": "C"
-                  },
-                  {
-                     "expr": "sum by (jenkins_job) ({__name__=~\"$prefix\\\\_jenkins_builds_failed_build_count|$prefix\\\\_?jenkins_builds_success_build_count\", job=~\"$job\", instance=~\"$instance\"}) and on (jenkins_job) bottomk(5, avg by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_health_score\", job=~\"$job\", instance=~\"$instance\"}))",
-                     "format": "table",
-                     "instant": true,
-                     "legendFormat": "",
-                     "refId": "D"
-                  }
-               ],
-               "title": "Least Healthy Jobs",
-               "transform": "table",
-               "type": "table"
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "Latest duration of the jobs",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 9,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Total number of job executors",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
                },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 4,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
+               "mappings": [
                   {
-                     "expr": "max by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_last_build_duration_milliseconds\", job=~\"$job\", instance=~\"$instance\"})",
-                     "format": "time_series",
-                     "legendFormat": "{{jenkins_job}}",
-                     "legendLink": null
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Latest Build Duration by Job",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ms",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": false
-                  }
-               ]
-            },
-            {
-               "datasource": "$datasource",
-               "description": "List of the top 5 slowest jobs.",
-               "gridPos": { },
-               "id": 10,
-               "span": 2,
-               "styles": [
-                  {
-                     "alias": "Time",
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "pattern": "Time",
-                     "type": "hidden"
-                  },
-                  {
-                     "alias": "Duration",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "Value",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "ms"
-                  },
-                  {
-                     "alias": "Job Name",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "link": false,
-                     "linkTargetBlank": false,
-                     "linkTooltip": "Drill down",
-                     "linkUrl": "",
-                     "pattern": "jenkins_job",
-                     "thresholds": [ ],
-                     "type": "number",
-                     "unit": "short"
-                  },
-                  {
-                     "alias": "",
-                     "colorMode": null,
-                     "colors": [ ],
-                     "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                     "decimals": 2,
-                     "pattern": "/.*/",
-                     "thresholds": [ ],
-                     "type": "string",
-                     "unit": "short"
-                  }
-               ],
-               "targets": [
-                  {
-                     "expr": "topk(5, max by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_last_build_duration_milliseconds\", job=~\"$job\", instance=~\"$instance\"}))",
-                     "format": "table",
-                     "instant": true,
-                     "legendFormat": "",
-                     "refId": "A"
-                  }
-               ],
-               "title": "Top 5 Slowest Jobs",
-               "transform": "table",
-               "type": "table"
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "Queued jobs grouped by state.",
-               "fill": 5,
-               "fillGradient": 10,
-               "gridPos": { },
-               "id": 11,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "line": 1,
-               "lines": true,
-               "linewidth": 0,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 2,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "jenkins_queue_stuck_value{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "legendFormat": "Stuck",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "jenkins_queue_blocked_value{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "legendFormat": "Blocked",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "jenkins_queue_pending_value{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "legendFormat": "Pending",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "jenkins_queue_buildable_value{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "legendFormat": "Buildable",
-                     "legendLink": null
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Job Queue by State",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": 0,
-                     "show": true
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Jobs",
-         "titleSize": "h6",
-         "type": "row"
-      },
-      {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "Total web requests group by different HTTP status codes.",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 12,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": true,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "rate(http_responseCodes_ok_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "legendFormat": "200 {{instance}}",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "rate(http_responseCodes_created_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "legendFormat": "201 {{instance}}",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "rate(http_responseCodes_noContent_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "legendFormat": "204 {{instance}}",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "rate(http_responseCodes_notModified_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "legendFormat": "304 {{instance}}",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "rate(http_responseCodes_badRequest_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "legendFormat": "400 {{instance}}",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "rate(http_responseCodes_forbidden_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "legendFormat": "403 {{instance}}",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "rate(http_responseCodes_notFound_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "legendFormat": "404 {{instance}}",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "rate(http_responseCodes_serverError_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "legendFormat": "500 {{instance}}",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "rate(http_responseCodes_serviceUnavailable_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "legendFormat": "503 {{instance}}",
-                     "legendLink": null
-                  },
-                  {
-                     "expr": "rate(http_responseCodes_other_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
-                     "format": "time_series",
-                     "legendFormat": "other {{instance}}",
-                     "legendLink": null
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Web Request Rate by Status",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "short",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
-            },
-            {
-               "datasource": "$datasource",
-               "description": "Shows a distribution of HTTP request durations by quantile.",
-               "fieldConfig": {
-                  "defaults": {
-                     "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                           {
-                              "color": "blue",
-                              "value": 0
-                           }
-                        ]
+                     "options": {
+                        "match": "null",
+                        "result": {
+                           "text": "N/A"
+                        }
                      },
-                     "unit": "s"
-                  }
-               },
-               "gridPos": { },
-               "id": 13,
-               "options": {
-                  "reduceOptions": {
-                     "calcs": [
-                        "mean"
-                     ],
-                     "fields": "",
-                     "values": false
-                  }
-               },
-               "span": 6,
-               "targets": [
-                  {
-                     "expr": "http_requests{job=~\"$job\", instance=~\"$instance\"}",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{quantile}}",
-                     "refId": "A"
+                     "type": "special"
                   }
                ],
-               "title": "HTTP Request Duration by Quantile",
-               "type": "bargauge"
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     },
+                     {
+                        "color": "red",
+                        "value": 80
+                     }
+                  ]
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 4,
+            "x": 0,
+            "y": 1
+         },
+         "id": 2,
+         "maxDataPoints": 100,
+         "options": {
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+               "calcs": [
+                  "mean"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_executor_count_value{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "",
+               "refId": "A"
             }
          ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
-         "title": "Web UI",
-         "titleSize": "h6",
+         "title": "Total executors",
+         "type": "stat"
+      },
+      {
+         "aliasColors": { },
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Shows distribution of executors by their current state",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  }
+               },
+               "mappings": [ ]
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 4,
+            "x": 4,
+            "y": 1
+         },
+         "id": 3,
+         "legend": {
+            "percentage": false,
+            "show": true,
+            "values": true
+         },
+         "legendType": "Under graph",
+         "options": {
+            "legend": {
+               "displayMode": "list",
+               "placement": "bottom",
+               "showLegend": true
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "tooltip": {
+               "mode": "single",
+               "sort": "none"
+            }
+         },
+         "pieType": "pie",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_executor_free_value{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": 2,
+               "legendFormat": "free",
+               "refId": "A"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_executor_in_use_value{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": 2,
+               "legendFormat": "in-use",
+               "refId": "B"
+            }
+         ],
+         "title": "Executors by state",
+         "type": "piechart",
+         "valueName": "current"
+      },
+      {
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Rate of jobs that are successful over the specified interval.",
+         "fieldConfig": {
+            "defaults": {
+               "links": [ ],
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "purple",
+                        "value": null
+                     }
+                  ]
+               },
+               "unit": "none"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 4,
+            "x": 8,
+            "y": 1
+         },
+         "id": 4,
+         "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "mean"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(jenkins_runs_success_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Job success rate",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Rate of jobs failing over the specified interval.",
+         "fieldConfig": {
+            "defaults": {
+               "links": [ ],
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": null
+                     }
+                  ]
+               },
+               "unit": "none"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 4,
+            "x": 12,
+            "y": 1
+         },
+         "id": 5,
+         "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "mean"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(jenkins_runs_failure_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Job failure rate",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Percentage of build nodes online",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "match": "null",
+                        "result": {
+                           "text": "N/A"
+                        }
+                     },
+                     "type": "special"
+                  }
+               ],
+               "max": 1,
+               "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": null
+                     },
+                     {
+                        "color": "yellow",
+                        "value": 0.80000000000000004
+                     },
+                     {
+                        "color": "green",
+                        "value": 0.90000000000000002
+                     }
+                  ]
+               },
+               "unit": "percentunit"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 4,
+            "x": 16,
+            "y": 1
+         },
+         "id": 6,
+         "maxDataPoints": 100,
+         "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "horizontal",
+            "reduceOptions": {
+               "calcs": [
+                  "mean"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_node_online_value{job=~\"$job\", instance=~\"$instance\"}/jenkins_node_count_value{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": 2,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Build nodes online",
+         "type": "gauge"
+      },
+      {
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Plugins grouped by different states.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "purple",
+                        "value": null
+                     }
+                  ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 4,
+            "x": 20,
+            "y": 1
+         },
+         "id": 7,
+         "options": {
+            "displayMode": "gradient",
+            "maxVizHeight": 300,
+            "minVizHeight": 16,
+            "minVizWidth": 8,
+            "namePlacement": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showUnfilled": true,
+            "sizing": "auto",
+            "valueMode": "color"
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_plugins_active{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": 2,
+               "legendFormat": "active",
+               "refId": "A"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_plugins_inactive{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": 2,
+               "legendFormat": "inactive",
+               "refId": "B"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_plugins_failed{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": 2,
+               "legendFormat": "failed",
+               "refId": "C"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_plugins_withUpdate{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "instant": true,
+               "intervalFactor": 2,
+               "legendFormat": "with update",
+               "refId": "D"
+            }
+         ],
+         "title": "Plugins by state",
+         "type": "bargauge"
+      },
+      {
+         "collapsed": false,
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 8
+         },
+         "id": 15,
+         "panels": [ ],
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "refId": "A"
+            }
+         ],
+         "title": "Jobs",
          "type": "row"
+      },
+      {
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Bottom 5 least healthiest jobs.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "custom": {
+                  "align": "auto",
+                  "cellOptions": {
+                     "type": "auto"
+                  },
+                  "inspect": false
+               },
+               "decimals": 2,
+               "displayName": "",
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     },
+                     {
+                        "color": "red",
+                        "value": 80
+                     }
+                  ]
+               },
+               "unit": "short"
+            },
+            "overrides": [
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Time"
+                  },
+                  "properties": [
+                     {
+                        "id": "displayName",
+                        "value": "Time"
+                     },
+                     {
+                        "id": "custom.align"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Value #A"
+                  },
+                  "properties": [
+                     {
+                        "id": "displayName",
+                        "value": "Health"
+                     },
+                     {
+                        "id": "unit",
+                        "value": "percent"
+                     },
+                     {
+                        "id": "decimals",
+                        "value": 2
+                     },
+                     {
+                        "id": "custom.align"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Value #B"
+                  },
+                  "properties": [
+                     {
+                        "id": "displayName",
+                        "value": "Failed"
+                     },
+                     {
+                        "id": "unit",
+                        "value": "short"
+                     },
+                     {
+                        "id": "decimals",
+                        "value": 2
+                     },
+                     {
+                        "id": "custom.align"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Value #C"
+                  },
+                  "properties": [
+                     {
+                        "id": "displayName",
+                        "value": "Successful"
+                     },
+                     {
+                        "id": "unit",
+                        "value": "short"
+                     },
+                     {
+                        "id": "decimals",
+                        "value": 2
+                     },
+                     {
+                        "id": "custom.align"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Value #D"
+                  },
+                  "properties": [
+                     {
+                        "id": "displayName",
+                        "value": "Total"
+                     },
+                     {
+                        "id": "unit",
+                        "value": "short"
+                     },
+                     {
+                        "id": "decimals",
+                        "value": 2
+                     },
+                     {
+                        "id": "custom.align"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "jenkins_job"
+                  },
+                  "properties": [
+                     {
+                        "id": "displayName",
+                        "value": "Job"
+                     },
+                     {
+                        "id": "unit",
+                        "value": "short"
+                     },
+                     {
+                        "id": "decimals",
+                        "value": 2
+                     },
+                     {
+                        "id": "custom.align"
+                     }
+                  ]
+               }
+            ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 0,
+            "y": 9
+         },
+         "id": 8,
+         "options": {
+            "cellHeight": "sm",
+            "footer": {
+               "countRows": false,
+               "fields": "",
+               "reducer": [
+                  "sum"
+               ],
+               "show": false
+            },
+            "showHeader": true
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "bottomk(5, avg by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_health_score\", job=~\"$job\", instance=~\"$instance\"}))",
+               "format": "table",
+               "instant": true,
+               "legendFormat": "",
+               "refId": "A"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "sum by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_failed_build_count\", job=~\"$job\", instance=~\"$instance\"}) and on (jenkins_job) bottomk(5, avg by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_health_score\", job=~\"$job\", instance=~\"$instance\"}))",
+               "format": "table",
+               "instant": true,
+               "legendFormat": "",
+               "refId": "B"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "sum by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_success_build_count\", job=~\"$job\", instance=~\"$instance\"}) and on (jenkins_job) bottomk(5, avg by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_health_score\", job=~\"$job\", instance=~\"$instance\"}))",
+               "format": "table",
+               "instant": true,
+               "legendFormat": "",
+               "refId": "C"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "sum by (jenkins_job) ({__name__=~\"$prefix\\\\_jenkins_builds_failed_build_count|$prefix\\\\_?jenkins_builds_success_build_count\", job=~\"$job\", instance=~\"$instance\"}) and on (jenkins_job) bottomk(5, avg by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_health_score\", job=~\"$job\", instance=~\"$instance\"}))",
+               "format": "table",
+               "instant": true,
+               "legendFormat": "",
+               "refId": "D"
+            }
+         ],
+         "title": "Least healthy jobs",
+         "transformations": [
+            {
+               "id": "seriesToRows",
+               "options": {
+                  "reducers": [ ]
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Latest duration of the jobs",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 10,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     },
+                     {
+                        "color": "red",
+                        "value": 80
+                     }
+                  ]
+               },
+               "unit": "ms"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 8,
+            "y": 9
+         },
+         "id": 9,
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom",
+               "showLegend": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "none"
+            }
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "max by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_last_build_duration_milliseconds\", job=~\"$job\", instance=~\"$instance\"})",
+               "format": "time_series",
+               "legendFormat": "{{jenkins_job}}",
+               "refId": "A"
+            }
+         ],
+         "title": "Latest build duration by job",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "List of the top 5 slowest jobs.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "custom": {
+                  "align": "auto",
+                  "cellOptions": {
+                     "type": "auto"
+                  },
+                  "inspect": false
+               },
+               "decimals": 2,
+               "displayName": "",
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     },
+                     {
+                        "color": "red",
+                        "value": 80
+                     }
+                  ]
+               },
+               "unit": "short"
+            },
+            "overrides": [
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Time"
+                  },
+                  "properties": [
+                     {
+                        "id": "displayName",
+                        "value": "Time"
+                     },
+                     {
+                        "id": "custom.align"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Value"
+                  },
+                  "properties": [
+                     {
+                        "id": "displayName",
+                        "value": "Duration"
+                     },
+                     {
+                        "id": "unit",
+                        "value": "ms"
+                     },
+                     {
+                        "id": "decimals",
+                        "value": 2
+                     },
+                     {
+                        "id": "custom.align"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "jenkins_job"
+                  },
+                  "properties": [
+                     {
+                        "id": "displayName",
+                        "value": "Job Name"
+                     },
+                     {
+                        "id": "unit",
+                        "value": "short"
+                     },
+                     {
+                        "id": "decimals",
+                        "value": 2
+                     },
+                     {
+                        "id": "custom.align"
+                     }
+                  ]
+               }
+            ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 4,
+            "x": 16,
+            "y": 9
+         },
+         "id": 10,
+         "options": {
+            "cellHeight": "sm",
+            "footer": {
+               "countRows": false,
+               "fields": "",
+               "reducer": [
+                  "sum"
+               ],
+               "show": false
+            },
+            "showHeader": true
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "topk(5, max by (jenkins_job) ({__name__=~\"$prefix\\\\_?jenkins_builds_last_build_duration_milliseconds\", job=~\"$job\", instance=~\"$instance\"}))",
+               "format": "table",
+               "instant": true,
+               "legendFormat": "",
+               "refId": "A"
+            }
+         ],
+         "title": "Top 5 slowest jobs",
+         "transformations": [
+            {
+               "id": "merge",
+               "options": {
+                  "reducers": [ ]
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Queued jobs grouped by state.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 100,
+                  "gradientMode": "opacity",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "linear",
+                  "lineWidth": 0,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "normal"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     },
+                     {
+                        "color": "red",
+                        "value": 80
+                     }
+                  ]
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 4,
+            "x": 20,
+            "y": 9
+         },
+         "id": 11,
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom",
+               "showLegend": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "none"
+            }
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_queue_stuck_value{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "legendFormat": "Stuck",
+               "refId": "A"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_queue_blocked_value{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "legendFormat": "Blocked",
+               "refId": "B"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_queue_pending_value{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "legendFormat": "Pending",
+               "refId": "C"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "jenkins_queue_buildable_value{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "legendFormat": "Buildable",
+               "refId": "D"
+            }
+         ],
+         "title": "Job queue by state",
+         "type": "timeseries"
+      },
+      {
+         "collapsed": false,
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 16
+         },
+         "id": 16,
+         "panels": [ ],
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "refId": "A"
+            }
+         ],
+         "title": "Web UI",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Total web requests group by different HTTP status codes.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisBorderShow": false,
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 10,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 5,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     },
+                     {
+                        "color": "red",
+                        "value": 80
+                     }
+                  ]
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 17
+         },
+         "id": 12,
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "list",
+               "placement": "bottom",
+               "showLegend": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "none"
+            }
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(http_responseCodes_ok_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "200 {{instance}}",
+               "refId": "A"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(http_responseCodes_created_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "201 {{instance}}",
+               "refId": "B"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(http_responseCodes_noContent_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "204 {{instance}}",
+               "refId": "C"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(http_responseCodes_notModified_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "304 {{instance}}",
+               "refId": "D"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(http_responseCodes_badRequest_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "400 {{instance}}",
+               "refId": "E"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(http_responseCodes_forbidden_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "403 {{instance}}",
+               "refId": "F"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(http_responseCodes_notFound_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "404 {{instance}}",
+               "refId": "G"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(http_responseCodes_serverError_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "500 {{instance}}",
+               "refId": "H"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(http_responseCodes_serviceUnavailable_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "503 {{instance}}",
+               "refId": "I"
+            },
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "rate(http_responseCodes_other_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "format": "time_series",
+               "legendFormat": "other {{instance}}",
+               "refId": "J"
+            }
+         ],
+         "title": "Web request rate by status",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "uid": "$datasource"
+         },
+         "description": "Shows a distribution of HTTP request durations by quantile.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "blue",
+                        "value": null
+                     }
+                  ]
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 17
+         },
+         "id": 13,
+         "options": {
+            "displayMode": "gradient",
+            "maxVizHeight": 300,
+            "minVizHeight": 16,
+            "minVizWidth": 8,
+            "namePlacement": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+               "calcs": [
+                  "mean"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showUnfilled": true,
+            "sizing": "auto",
+            "valueMode": "color"
+         },
+         "pluginVersion": "10.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "uid": "$datasource"
+               },
+               "expr": "http_requests{job=~\"$job\", instance=~\"$instance\"}",
+               "format": "time_series",
+               "intervalFactor": 2,
+               "legendFormat": "{{quantile}}",
+               "refId": "A"
+            }
+         ],
+         "title": "HTTP request duration by quantile",
+         "type": "bargauge"
       }
    ],
-   "schemaVersion": 14,
-   "style": "dark",
+   "refresh": "",
+   "schemaVersion": 39,
    "tags": [ ],
    "templating": {
       "list": [
          {
             "current": {
+               "selected": true,
                "text": "default",
                "value": "default"
             },
             "hide": 0,
-            "label": "Data Source",
+            "includeAll": false,
+            "label": "Data source",
+            "multi": false,
             "name": "datasource",
             "options": [ ],
             "query": "prometheus",
+            "queryValue": "",
             "refresh": 1,
             "regex": "",
+            "skipUrlSync": false,
             "type": "datasource"
          },
          {
             "allValue": ".+",
-            "current": { },
-            "datasource": "$datasource",
+            "current": {
+               "selected": false,
+               "text": "All",
+               "value": "$__all"
+            },
+            "datasource": {
+               "type": "prometheus",
+               "uid": "$datasource"
+            },
+            "definition": "",
             "hide": 0,
             "includeAll": true,
-            "label": "job",
+            "label": "Job",
             "multi": true,
             "name": "job",
             "options": [ ],
             "query": "label_values(up, job)",
             "refresh": 1,
             "regex": "",
+            "skipUrlSync": false,
             "sort": 1,
             "tagValuesQuery": "",
-            "tags": [ ],
             "tagsQuery": "",
             "type": "query",
             "useTags": false
          },
          {
             "allValue": ".+",
-            "current": { },
-            "datasource": "$datasource",
+            "current": {
+               "selected": false,
+               "text": "All",
+               "value": "$__all"
+            },
+            "datasource": {
+               "type": "prometheus",
+               "uid": "$datasource"
+            },
+            "definition": "",
             "hide": 0,
             "includeAll": true,
-            "label": "instance",
+            "label": "Instance",
             "multi": true,
             "name": "instance",
             "options": [ ],
             "query": "label_values(up{job=~\"$job\"}, instance)",
             "refresh": 1,
             "regex": "",
+            "skipUrlSync": false,
             "sort": 1,
             "tagValuesQuery": "",
-            "tags": [ ],
             "tagsQuery": "",
             "type": "query",
             "useTags": false
@@ -1031,10 +1485,8 @@
                "text": "",
                "value": "default"
             },
-            "description": null,
-            "error": null,
             "hide": 0,
-            "label": null,
+            "label": "Prefix",
             "name": "prefix",
             "options": [
                {
@@ -1050,7 +1502,7 @@
       ]
    },
    "time": {
-      "from": "now-6h",
+      "from": "now-1h",
       "to": "now"
    },
    "timepicker": {
@@ -1081,5 +1533,6 @@
    "timezone": "browser",
    "title": "Jenkins",
    "uid": "2UJijx65J",
-   "version": 0
+   "version": 4,
+   "weekStart": ""
 }

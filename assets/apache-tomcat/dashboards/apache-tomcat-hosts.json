@@ -370,7 +370,7 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "sum(rate(tomcat_servlet_requestcount_total{instance=~\"$instance\", job=~\"$job\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__rate_interval])) by (job, instance)",
+               "expr": "sum(rate(tomcat_servlet_requestcount_total{job=~\"$job\", instance=~\"$instance\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__rate_interval])) by (job, instance)",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{instance}} - total requests"
@@ -379,7 +379,7 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "sum(rate(tomcat_servlet_errorcount_total{instance=~\"$instance\", job=~\"$job\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__rate_interval])) by (job, instance)",
+               "expr": "sum(rate(tomcat_servlet_errorcount_total{job=~\"$job\", instance=~\"$instance\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__rate_interval])) by (job, instance)",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{instance}} - total errors"
@@ -388,7 +388,7 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(tomcat_servlet_requestcount_total{instance=~\"$instance\", job=~\"$job\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__rate_interval])",
+               "expr": "rate(tomcat_servlet_requestcount_total{job=~\"$job\", instance=~\"$instance\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__rate_interval])",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{instance}} - {{module}}{{servlet}} - requests"
@@ -397,7 +397,7 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(tomcat_servlet_errorcount_total{instance=~\"$instance\", job=~\"$job\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__rate_interval])",
+               "expr": "rate(tomcat_servlet_errorcount_total{job=~\"$job\", instance=~\"$instance\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__rate_interval])",
                "format": "time_series",
                "intervalFactor": 2,
                "legendFormat": "{{instance}} - {{module}}{{servlet}} - errors"
@@ -488,7 +488,7 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "sum(increase(tomcat_servlet_processingtime_total{instance=~\"$instance\", job=~\"$job\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__interval:] offset -$__interval) / clamp_min(increase(tomcat_servlet_requestcount_total{instance=~\"$instance\", job=~\"$job\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__interval:] offset -$__interval), 1)) by (job, instance)",
+               "expr": "sum(increase(tomcat_servlet_processingtime_total{job=~\"$job\", instance=~\"$instance\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__interval:] offset -$__interval) / clamp_min(increase(tomcat_servlet_requestcount_total{job=~\"$job\", instance=~\"$instance\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__interval:] offset -$__interval), 1)) by (job, instance)",
                "format": "time_series",
                "interval": "1m",
                "intervalFactor": 2,
@@ -498,7 +498,7 @@
                "datasource": {
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "increase(tomcat_servlet_processingtime_total{instance=~\"$instance\", job=~\"$job\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__interval:] offset -$__interval) / clamp_min(increase(tomcat_servlet_requestcount_total{instance=~\"$instance\", job=~\"$job\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__interval:] offset -$__interval), 1)",
+               "expr": "increase(tomcat_servlet_processingtime_total{job=~\"$job\", instance=~\"$instance\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__interval:] offset -$__interval) / clamp_min(increase(tomcat_servlet_requestcount_total{job=~\"$job\", instance=~\"$instance\", module=~\"$host$context\", servlet=~\"$servlet\"}[$__interval:] offset -$__interval), 1)",
                "format": "time_series",
                "interval": "1m",
                "intervalFactor": 2,
@@ -552,6 +552,28 @@
             "useTags": false
          },
          {
+            "allValue": ".*",
+            "current": { },
+            "datasource": {
+               "uid": "${prometheus_datasource}"
+            },
+            "hide": 2,
+            "includeAll": true,
+            "label": "Cluster",
+            "multi": true,
+            "name": "cluster",
+            "options": [ ],
+            "query": "label_values(tomcat_bytesreceived_total{job=~\"$job\"}, cluster)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
             "allValue": "",
             "current": { },
             "datasource": {
@@ -563,7 +585,7 @@
             "multi": false,
             "name": "instance",
             "options": [ ],
-            "query": "label_values(tomcat_bytesreceived_total, instance)",
+            "query": "label_values(tomcat_bytesreceived_total{job=~\"$job\"}, instance)",
             "refresh": 1,
             "regex": "",
             "sort": 0,
@@ -585,7 +607,7 @@
             "multi": true,
             "name": "host",
             "options": [ ],
-            "query": "label_values(tomcat_session_sessioncounter_total{instance=~\"$instance\"}, host)",
+            "query": "label_values(tomcat_session_sessioncounter_total{job=~\"$job\"}, host)",
             "refresh": 1,
             "regex": "",
             "sort": 0,
@@ -607,7 +629,7 @@
             "multi": true,
             "name": "context",
             "options": [ ],
-            "query": "label_values(tomcat_session_sessioncounter_total{host=~\"$host\"}, context)",
+            "query": "label_values(tomcat_session_sessioncounter_total{job=~\"$job\", host=~\"$host\"}, context)",
             "refresh": 1,
             "regex": "",
             "sort": 0,
@@ -629,7 +651,7 @@
             "multi": true,
             "name": "servlet",
             "options": [ ],
-            "query": "label_values(tomcat_servlet_requestcount_total{module=~\"$host$context\"}, servlet)",
+            "query": "label_values(tomcat_servlet_requestcount_total{job=~\"$job\", module=~\"$host$context\"}, servlet)",
             "refresh": 1,
             "regex": "",
             "sort": 0,

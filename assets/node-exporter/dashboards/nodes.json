@@ -54,7 +54,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "(\n  (1 - sum without (mode) (rate(node_cpu_seconds_total{job=\"node\", mode=~\"idle|iowait|steal\", instance=\"$instance\"}[$__rate_interval])))\n/ ignoring(cpu) group_left\n  count without (cpu, mode) (node_cpu_seconds_total{job=\"node\", mode=\"idle\", instance=\"$instance\"})\n)\n",
+                     "expr": "(\n  (1 - sum without (mode) (rate(node_cpu_seconds_total{job=\"node\", mode=~\"idle|iowait|steal\", instance=\"$instance\", cluster=\"$cluster\"}[$__rate_interval])))\n/ ignoring(cpu) group_left\n  count without (cpu, mode) (node_cpu_seconds_total{job=\"node\", mode=\"idle\", instance=\"$instance\", cluster=\"$cluster\"})\n)\n",
                      "format": "time_series",
                      "intervalFactor": 5,
                      "legendFormat": "{{cpu}}",
@@ -135,28 +135,28 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "node_load1{job=\"node\", instance=\"$instance\"}",
+                     "expr": "node_load1{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "1m load average",
                      "refId": "A"
                   },
                   {
-                     "expr": "node_load5{job=\"node\", instance=\"$instance\"}",
+                     "expr": "node_load5{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "5m load average",
                      "refId": "B"
                   },
                   {
-                     "expr": "node_load15{job=\"node\", instance=\"$instance\"}",
+                     "expr": "node_load15{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "15m load average",
                      "refId": "C"
                   },
                   {
-                     "expr": "count(node_cpu_seconds_total{job=\"node\", instance=\"$instance\", mode=\"idle\"})",
+                     "expr": "count(node_cpu_seconds_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", mode=\"idle\"})",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "logical cores",
@@ -250,28 +250,28 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "(\n  node_memory_MemTotal_bytes{job=\"node\", instance=\"$instance\"}\n-\n  node_memory_MemFree_bytes{job=\"node\", instance=\"$instance\"}\n-\n  node_memory_Buffers_bytes{job=\"node\", instance=\"$instance\"}\n-\n  node_memory_Cached_bytes{job=\"node\", instance=\"$instance\"}\n)\n",
+                     "expr": "(\n  node_memory_MemTotal_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}\n-\n  node_memory_MemFree_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}\n-\n  node_memory_Buffers_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}\n-\n  node_memory_Cached_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}\n)\n",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "memory used",
                      "refId": "A"
                   },
                   {
-                     "expr": "node_memory_Buffers_bytes{job=\"node\", instance=\"$instance\"}",
+                     "expr": "node_memory_Buffers_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "memory buffers",
                      "refId": "B"
                   },
                   {
-                     "expr": "node_memory_Cached_bytes{job=\"node\", instance=\"$instance\"}",
+                     "expr": "node_memory_Cached_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "memory cached",
                      "refId": "C"
                   },
                   {
-                     "expr": "node_memory_MemFree_bytes{job=\"node\", instance=\"$instance\"}",
+                     "expr": "node_memory_MemFree_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": "memory free",
@@ -344,7 +344,7 @@
                "span": 3,
                "targets": [
                   {
-                     "expr": "100 -\n(\n  avg(node_memory_MemAvailable_bytes{job=\"node\", instance=\"$instance\"}) /\n  avg(node_memory_MemTotal_bytes{job=\"node\", instance=\"$instance\"})\n* 100\n)\n",
+                     "expr": "100 -\n(\n  avg(node_memory_MemAvailable_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}) /\n  avg(node_memory_MemTotal_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"})\n* 100\n)\n",
                      "format": "time_series",
                      "intervalFactor": 2,
                      "legendFormat": ""
@@ -414,21 +414,21 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(node_disk_read_bytes_total{job=\"node\", instance=\"$instance\", device!=\"\"}[$__rate_interval])",
+                     "expr": "rate(node_disk_read_bytes_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", device!=\"\"}[$__rate_interval])",
                      "format": "time_series",
                      "intervalFactor": 1,
                      "legendFormat": "{{device}} read",
                      "refId": "A"
                   },
                   {
-                     "expr": "rate(node_disk_written_bytes_total{job=\"node\", instance=\"$instance\", device!=\"\"}[$__rate_interval])",
+                     "expr": "rate(node_disk_written_bytes_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", device!=\"\"}[$__rate_interval])",
                      "format": "time_series",
                      "intervalFactor": 1,
                      "legendFormat": "{{device}} written",
                      "refId": "B"
                   },
                   {
-                     "expr": "rate(node_disk_io_time_seconds_total{job=\"node\", instance=\"$instance\", device!=\"\"}[$__rate_interval])",
+                     "expr": "rate(node_disk_io_time_seconds_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", device!=\"\"}[$__rate_interval])",
                      "format": "time_series",
                      "intervalFactor": 1,
                      "legendFormat": "{{device}} io time",
@@ -574,14 +574,14 @@
                "span": 6,
                "targets": [
                   {
-                     "expr": "max by (mountpoint) (node_filesystem_size_bytes{job=\"node\", instance=\"$instance\", fstype!=\"\", mountpoint!=\"\"})\n",
+                     "expr": "max by (mountpoint) (node_filesystem_size_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", fstype!=\"\", mountpoint!=\"\"})\n",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
                      "legendFormat": ""
                   },
                   {
-                     "expr": "max by (mountpoint) (node_filesystem_avail_bytes{job=\"node\", instance=\"$instance\", fstype!=\"\", mountpoint!=\"\"})\n",
+                     "expr": "max by (mountpoint) (node_filesystem_avail_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", fstype!=\"\", mountpoint!=\"\"})\n",
                      "format": "table",
                      "instant": true,
                      "intervalFactor": 2,
@@ -728,7 +728,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(node_network_receive_bytes_total{job=\"node\", instance=\"$instance\", device!=\"lo\"}[$__rate_interval]) * 8",
+                     "expr": "rate(node_network_receive_bytes_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", device!=\"lo\"}[$__rate_interval]) * 8",
                      "format": "time_series",
                      "intervalFactor": 1,
                      "legendFormat": "{{device}}",
@@ -810,7 +810,7 @@
                "steppedLine": false,
                "targets": [
                   {
-                     "expr": "rate(node_network_transmit_bytes_total{job=\"node\", instance=\"$instance\", device!=\"lo\"}[$__rate_interval]) * 8",
+                     "expr": "rate(node_network_transmit_bytes_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", device!=\"lo\"}[$__rate_interval]) * 8",
                      "format": "time_series",
                      "intervalFactor": 1,
                      "legendFormat": "{{device}}",
@@ -888,13 +888,33 @@
             "allValue": null,
             "current": { },
             "datasource": "$datasource",
+            "hide": 2,
+            "includeAll": false,
+            "label": "Cluster",
+            "multi": false,
+            "name": "cluster",
+            "options": [ ],
+            "query": "label_values(node_uname_info{job=\"node\", sysname!=\"Darwin\"}, cluster)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [ ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+         },
+         {
+            "allValue": null,
+            "current": { },
+            "datasource": "$datasource",
             "hide": 0,
             "includeAll": false,
             "label": "Instance",
             "multi": false,
             "name": "instance",
             "options": [ ],
-            "query": "label_values(node_uname_info{job=\"node\", sysname!=\"Darwin\"}, instance)",
+            "query": "label_values(node_uname_info{job=\"node\", cluster=\"$cluster\", sysname!=\"Darwin\"}, instance)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -937,5 +957,6 @@
    },
    "timezone": "utc",
    "title": "Node Exporter / Nodes",
+   "uid": "7d57716318ee0dddbac5a7f451fb7753",
    "version": 0
 }

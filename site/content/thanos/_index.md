@@ -265,9 +265,9 @@ https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanos
 alert: ThanosQueryOverload
 annotations:
   description: Thanos Query {{$labels.job}} has been overloaded for more than 15 minutes.
-    This may be a symptom of excessive simultanous complex requests, low performance
+    This may be a symptom of excessive simultaneous complex requests, low performance
     of the Prometheus API, or failures within these components. Assess the health
-    of the Thanos query instances, the connnected Prometheus instances, look for potential
+    of the Thanos query instances, the connected Prometheus instances, look for potential
     senders of these requests and then contact support.
   runbook_url: https://github.com/thanos-io/thanos/tree/main/mixin/runbook.md#alert-name-thanosqueryoverload
   summary: Thanos query reaches its maximum capacity serving concurrent requests.
@@ -1043,7 +1043,7 @@ record: :api_range_query_duration_seconds:histogram_quantile
  
 ### thanos-receive.rules
 
-##### :grpc_server_failures_per_unary:sum_rate
+##### :thanos_query_receive_grpc_server_failures_per_unary:sum_rate
 
 {{< code lang="yaml" >}}
 expr: |
@@ -1052,10 +1052,10 @@ expr: |
   /
     sum by (job) (rate(grpc_server_started_total{job=~".*thanos-receive.*", grpc_type="unary"}[5m]))
   )
-record: :grpc_server_failures_per_unary:sum_rate
+record: :thanos_query_receive_grpc_server_failures_per_unary:sum_rate
 {{< /code >}}
  
-##### :grpc_server_failures_per_stream:sum_rate
+##### :thanos_query_receive_grpc_server_failures_per_stream:sum_rate
 
 {{< code lang="yaml" >}}
 expr: |
@@ -1064,7 +1064,7 @@ expr: |
   /
     sum by (job) (rate(grpc_server_started_total{job=~".*thanos-receive.*", grpc_type="server_stream"}[5m]))
   )
-record: :grpc_server_failures_per_stream:sum_rate
+record: :thanos_query_receive_grpc_server_failures_per_stream:sum_rate
 {{< /code >}}
  
 ##### :http_failure_per_request:sum_rate
@@ -1129,7 +1129,7 @@ record: :thanos_receive_hashring_file_failure_per_refresh:sum_rate
  
 ### thanos-store.rules
 
-##### :grpc_server_failures_per_unary:sum_rate
+##### :thanos_query_store_grpc_server_failures_per_unary:sum_rate
 
 {{< code lang="yaml" >}}
 expr: |
@@ -1138,10 +1138,10 @@ expr: |
   /
     sum by (job) (rate(grpc_server_started_total{job=~".*thanos-store.*", grpc_type="unary"}[5m]))
   )
-record: :grpc_server_failures_per_unary:sum_rate
+record: :thanos_query_store_grpc_server_failures_per_unary:sum_rate
 {{< /code >}}
  
-##### :grpc_server_failures_per_stream:sum_rate
+##### :thanos_query_store_grpc_server_failures_per_stream:sum_rate
 
 {{< code lang="yaml" >}}
 expr: |
@@ -1150,7 +1150,7 @@ expr: |
   /
     sum by (job) (rate(grpc_server_started_total{job=~".*thanos-store.*", grpc_type="server_stream"}[5m]))
   )
-record: :grpc_server_failures_per_stream:sum_rate
+record: :thanos_query_store_grpc_server_failures_per_stream:sum_rate
 {{< /code >}}
  
 ##### :thanos_objstore_bucket_failures_per_operation:sum_rate

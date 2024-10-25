@@ -23,8 +23,9 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 {{< code lang="yaml" >}}
 alert: PromtailRequestsErrors
 annotations:
-  message: |
+  description: |
     {{ $labels.job }} {{ $labels.route }} is experiencing {{ printf "%.2f" $value }}% errors.
+  summary: Promtail request error rate is high.
 expr: |
   100 * sum(rate(promtail_request_duration_seconds_count{status_code=~"5..|failed"}[1m])) by (namespace, job, route, instance)
     /
@@ -40,8 +41,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: PromtailRequestLatency
 annotations:
-  message: |
+  description: |
     {{ $labels.job }} {{ $labels.route }} is experiencing {{ printf "%.2f" $value }}s 99th percentile latency.
+  summary: Promtail request latency P99 is high.
 expr: |
   job_status_code_namespace:promtail_request_duration_seconds:99quantile > 1
 for: 15m
@@ -54,8 +56,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: PromtailFileMissing
 annotations:
-  message: |
+  description: |
     {{ $labels.instance }} {{ $labels.job }} {{ $labels.path }} matches the glob but is not being tailed.
+  summary: Promtail cannot find a file it should be tailing.
 expr: |
   promtail_file_bytes_total unless promtail_read_bytes_total
 for: 15m

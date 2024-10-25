@@ -14,4 +14,5 @@ Jsonnet source code is available at [github.com/grafana/jsonnet-libs](https://gi
 Following dashboards are generated from mixins and hosted on github:
 
 
-- [nginx-overview](https://github.com/monitoring-mixins/website/blob/master/assets/nginx/dashboards/nginx-overview.json)
+- [nginx-logs](https://github.com/monitoring-mixins/website/blob/master/assets/nginx/dashboards/nginx-logs.json)
+- [nginx-metrics](https://github.com/monitoring-mixins/website/blob/master/assets/nginx/dashboards/nginx-metrics.json)

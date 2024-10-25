@@ -1303,7 +1303,7 @@
             "multi": true,
             "name": "cluster",
             "options": [ ],
-            "query": "label_values(cassandra_cache_size{job=~\"$job\"}, cluster)",
+            "query": "label_values(solr_metrics_core_errors_total{job=~\"$job\"}, cluster)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
