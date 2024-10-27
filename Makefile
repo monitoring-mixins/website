@@ -12,7 +12,7 @@ all: generate
 
 .PHONY: generate
 generate: $(JB_BIN) $(GOJSONTOYAML_BIN) $(JSONNET_BIN)
-	./hack/generate.sh
+	cd hack && ./generate.sh
 
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
