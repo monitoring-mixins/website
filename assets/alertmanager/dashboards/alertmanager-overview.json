@@ -1,400 +1,264 @@
 {
-   "__inputs": [ ],
-   "__requires": [ ],
-   "annotations": {
-      "list": [ ]
-   },
-   "editable": false,
-   "gnetId": null,
    "graphTooltip": 1,
-   "hideControls": false,
-   "id": null,
-   "links": [ ],
-   "refresh": "30s",
-   "rows": [
+   "panels": [
       {
-         "collapse": false,
          "collapsed": false,
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "current set of alerts stored in the Alertmanager",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 2,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": false,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(alertmanager_alerts{job=~\"$job\"}) by (job,instance)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}}",
-                     "refId": "A"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Alerts",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "none",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "none",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
-            },
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "rate of successful and invalid alerts received by the Alertmanager",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 3,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": false,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": null,
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "span": 6,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(rate(alertmanager_alerts_received_total{job=~\"$job\"}[$__rate_interval])) by (job,instance)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} Received",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "sum(rate(alertmanager_alerts_invalid_total{job=~\"$job\"}[$__rate_interval])) by (job,instance)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} Invalid",
-                     "refId": "B"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "Alerts receive rate",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ops",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "ops",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
-            }
-         ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 1,
+         "panels": [ ],
          "title": "Alerts",
-         "titleSize": "h6",
          "type": "row"
       },
       {
-         "collapse": false,
-         "collapsed": false,
-         "panels": [
-            {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "rate of successful and invalid notifications sent by the Alertmanager",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 4,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": false,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
-               },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": "integration",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "stack": true,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "sum(rate(alertmanager_notifications_total{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (integration,job,instance)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} Total",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "sum(rate(alertmanager_notifications_failed_total{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (integration,job,instance)",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} Failed",
-                     "refId": "B"
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "current set of alerts stored in the Alertmanager",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10,
+                  "showPoints": "never",
+                  "stacking": {
+                     "mode": "normal"
                   }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "$integration: Notifications Send Rate",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
                },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "ops",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "ops",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
+               "unit": "none"
+            }
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 1
+         },
+         "id": 2,
+         "options": {
+            "legend": {
+               "showLegend": false
             },
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "targets": [
             {
-               "aliasColors": { },
-               "bars": false,
-               "dashLength": 10,
-               "dashes": false,
-               "datasource": "$datasource",
-               "description": "latency of notifications sent by the Alertmanager",
-               "fill": 1,
-               "fillGradient": 0,
-               "gridPos": { },
-               "id": 5,
-               "legend": {
-                  "alignAsTable": false,
-                  "avg": false,
-                  "current": false,
-                  "max": false,
-                  "min": false,
-                  "rightSide": false,
-                  "show": false,
-                  "sideWidth": null,
-                  "total": false,
-                  "values": false
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
-               "lines": true,
-               "linewidth": 1,
-               "links": [ ],
-               "nullPointMode": "null",
-               "percentage": false,
-               "pointradius": 5,
-               "points": false,
-               "renderer": "flot",
-               "repeat": "integration",
-               "seriesOverrides": [ ],
-               "spaceLength": 10,
-               "stack": false,
-               "steppedLine": false,
-               "targets": [
-                  {
-                     "expr": "histogram_quantile(0.99,\n  sum(rate(alertmanager_notification_latency_seconds_bucket{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (le,job,instance)\n) \n",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} 99th Percentile",
-                     "refId": "A"
-                  },
-                  {
-                     "expr": "histogram_quantile(0.50,\n  sum(rate(alertmanager_notification_latency_seconds_bucket{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (le,job,instance)\n) \n",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} Median",
-                     "refId": "B"
-                  },
-                  {
-                     "expr": "sum(rate(alertmanager_notification_latency_seconds_sum{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (job,instance)\n/\nsum(rate(alertmanager_notification_latency_seconds_count{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (job,instance)\n",
-                     "format": "time_series",
-                     "intervalFactor": 2,
-                     "legendFormat": "{{instance}} Average",
-                     "refId": "C"
-                  }
-               ],
-               "thresholds": [ ],
-               "timeFrom": null,
-               "timeShift": null,
-               "title": "$integration: Notification Duration",
-               "tooltip": {
-                  "shared": true,
-                  "sort": 0,
-                  "value_type": "individual"
-               },
-               "type": "graph",
-               "xaxis": {
-                  "buckets": null,
-                  "mode": "time",
-                  "name": null,
-                  "show": true,
-                  "values": [ ]
-               },
-               "yaxes": [
-                  {
-                     "format": "s",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  },
-                  {
-                     "format": "s",
-                     "label": null,
-                     "logBase": 1,
-                     "max": null,
-                     "min": null,
-                     "show": true
-                  }
-               ]
+               "expr": "sum(alertmanager_alerts{job=~\"$job\"}) by (job,instance)",
+               "intervalFactor": 2,
+               "legendFormat": "{{instance}}"
             }
          ],
-         "repeat": null,
-         "repeatIteration": null,
-         "repeatRowId": null,
-         "showTitle": true,
+         "title": "Alerts",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "rate of successful and invalid alerts received by the Alertmanager",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10,
+                  "showPoints": "never",
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
+            }
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 1
+         },
+         "id": 3,
+         "options": {
+            "legend": {
+               "showLegend": false
+            },
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(rate(alertmanager_alerts_received_total{job=~\"$job\"}[$__rate_interval])) by (job,instance)",
+               "intervalFactor": 2,
+               "legendFormat": "{{instance}} Received"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(rate(alertmanager_alerts_invalid_total{job=~\"$job\"}[$__rate_interval])) by (job,instance)",
+               "intervalFactor": 2,
+               "legendFormat": "{{instance}} Invalid"
+            }
+         ],
+         "title": "Alerts receive rate",
+         "type": "timeseries"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 8
+         },
+         "id": 4,
+         "panels": [ ],
          "title": "Notifications",
-         "titleSize": "h6",
          "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "rate of successful and invalid notifications sent by the Alertmanager",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10,
+                  "showPoints": "never",
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
+            }
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 9
+         },
+         "id": 5,
+         "options": {
+            "legend": {
+               "showLegend": false
+            },
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "repeat": "integration",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(rate(alertmanager_notifications_total{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (integration,job,instance)",
+               "intervalFactor": 2,
+               "legendFormat": "{{instance}} Total"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(rate(alertmanager_notifications_failed_total{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (integration,job,instance)",
+               "intervalFactor": 2,
+               "legendFormat": "{{instance}} Failed"
+            }
+         ],
+         "title": "$integration: Notifications Send Rate",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "latency of notifications sent by the Alertmanager",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10,
+                  "showPoints": "never",
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "s"
+            }
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 9
+         },
+         "id": 6,
+         "options": {
+            "legend": {
+               "showLegend": false
+            },
+            "tooltip": {
+               "mode": "multi"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "repeat": "integration",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "histogram_quantile(0.99,\n  sum(rate(alertmanager_notification_latency_seconds_bucket{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (le,job,instance)\n)\n",
+               "intervalFactor": 2,
+               "legendFormat": "{{instance}} 99th Percentile"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "histogram_quantile(0.50,\n  sum(rate(alertmanager_notification_latency_seconds_bucket{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (le,job,instance)\n)\n",
+               "intervalFactor": 2,
+               "legendFormat": "{{instance}} Median"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(rate(alertmanager_notification_latency_seconds_sum{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (job,instance)\n/\nsum(rate(alertmanager_notification_latency_seconds_count{job=~\"$job\", integration=\"$integration\"}[$__rate_interval])) by (job,instance)\n",
+               "intervalFactor": 2,
+               "legendFormat": "{{instance}} Average"
+            }
+         ],
+         "title": "$integration: Notification Duration",
+         "type": "timeseries"
       }
    ],
-   "schemaVersion": 14,
-   "style": "dark",
+   "schemaVersion": 39,
    "tags": [
       "alertmanager-mixin"
    ],
@@ -402,63 +266,51 @@
       "list": [
          {
             "current": {
+               "selected": false,
                "text": "Prometheus",
                "value": "Prometheus"
             },
             "hide": 0,
             "label": "Data Source",
             "name": "datasource",
-            "options": [ ],
             "query": "prometheus",
-            "refresh": 1,
-            "regex": "",
             "type": "datasource"
          },
          {
-            "allValue": null,
             "current": {
+               "selected": false,
                "text": "",
                "value": ""
             },
-            "datasource": "$datasource",
-            "hide": 0,
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
             "includeAll": false,
             "label": "job",
-            "multi": false,
             "name": "job",
-            "options": [ ],
             "query": "label_values(alertmanager_alerts, job)",
             "refresh": 2,
-            "regex": "",
             "sort": 1,
-            "tagValuesQuery": "",
-            "tags": [ ],
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
+            "type": "query"
          },
          {
-            "allValue": null,
             "current": {
-               "text": "all",
+               "selected": false,
+               "text": "$__all",
                "value": "$__all"
             },
-            "datasource": "$datasource",
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
             "hide": 2,
             "includeAll": true,
-            "label": null,
-            "multi": false,
             "name": "integration",
-            "options": [ ],
             "query": "label_values(alertmanager_notifications_total{integration=~\".*\"}, integration)",
             "refresh": 2,
-            "regex": "",
             "sort": 1,
-            "tagValuesQuery": "",
-            "tags": [ ],
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
+            "type": "query"
          }
       ]
    },
@@ -468,31 +320,10 @@
    },
    "timepicker": {
       "refresh_intervals": [
-         "5s",
-         "10s",
-         "30s",
-         "1m",
-         "5m",
-         "15m",
-         "30m",
-         "1h",
-         "2h",
-         "1d"
-      ],
-      "time_options": [
-         "5m",
-         "15m",
-         "1h",
-         "6h",
-         "12h",
-         "24h",
-         "2d",
-         "7d",
-         "30d"
+         "30s"
       ]
    },
    "timezone": "utc",
    "title": "Alertmanager / Overview",
-   "uid": "alertmanager-overview",
-   "version": 0
+   "uid": "alertmanager-overview"
 }
