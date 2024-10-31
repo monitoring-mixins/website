@@ -1,0 +1,594 @@
+{
+   "__inputs": [ ],
+   "__requires": [ ],
+   "description": "A dashboard that monitors Ingress-nginx. It is created using the (Ingress-Nginx-mixin)[https://github.com/adinhodovic/ingress-nginx-mixin]",
+   "editable": true,
+   "links": [
+      {
+         "tags": [
+            "ingress-nginx",
+            "ingress-nginx-mixin"
+         ],
+         "targetBlank": true,
+         "title": "Ingress Nginx Dashboards",
+         "type": "dashboards"
+      }
+   ],
+   "panels": [
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 1,
+         "title": "Ingress Response Times",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "spanNulls": false
+               },
+               "unit": "s"
+            }
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 1
+         },
+         "id": 2,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "histogram_quantile(\n  0.5,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_request_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "legendFormat": ".5 - {{ ingress }}/{{ exported_namespace }}"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "histogram_quantile(\n  0.95,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_request_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "legendFormat": ".95 - {{ ingress }}/{{ exported_namespace }}"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "histogram_quantile(\n  0.99,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_request_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "legendFormat": ".99 - {{ ingress }}/{{ exported_namespace }}"
+            }
+         ],
+         "title": "Total Request Time",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "spanNulls": false
+               },
+               "unit": "s"
+            }
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 1
+         },
+         "id": 3,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "histogram_quantile(\n  0.5,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "legendFormat": ".5 - {{ ingress }}/{{ exported_namespace }}"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "histogram_quantile(\n  0.95,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "legendFormat": ".95 - {{ ingress }}/{{ exported_namespace }}"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "histogram_quantile(\n  0.99,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "legendFormat": ".99 - {{ ingress }}/{{ exported_namespace }}"
+            }
+         ],
+         "title": "Upstream Response Time",
+         "type": "timeseries"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 7
+         },
+         "id": 4,
+         "title": "Ingress Paths",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 100,
+                  "spanNulls": false,
+                  "stacking": {
+                     "mode": "value"
+                  }
+               },
+               "unit": "reqps"
+            }
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 8
+         },
+         "id": 5,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum by (path, ingress, exported_namespace)(\n  rate(\n    nginx_ingress_controller_request_duration_seconds_count{\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress =~ \"$ingress\"\n    }[$__rate_interval]\n  )\n)\n",
+               "legendFormat": "{{ path }} - {{ ingress }}/{{ exported_namespace }}"
+            }
+         ],
+         "title": "Request Volume",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "spanNulls": false
+               },
+               "unit": "s"
+            }
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 8
+         },
+         "id": 6,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "histogram_quantile(\n  .5,\n  sum by (le, path, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "legendFormat": "{{ path }} - {{ ingress }}/{{ exported_namespace }}"
+            }
+         ],
+         "title": "Median upstream response time",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 100,
+                  "spanNulls": false,
+                  "stacking": {
+                     "mode": "value"
+                  }
+               },
+               "unit": "percentunit"
+            }
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 14
+         },
+         "id": 7,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum by (path, ingress, exported_namespace) (\n  rate(\n    nginx_ingress_controller_requests{\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\",\n      status=~\"[$error_codes].*\"\n    }[$__rate_interval]\n  )\n)\n/\nsum by (path, ingress, exported_namespace) (\n  rate(\n    nginx_ingress_controller_requests{\n      job=~\"$job\",\n      exported_namespace =~ \"$exported_namespace\",\n      ingress =~ \"$ingress\"\n    }[$__rate_interval]\n  )\n)\n",
+               "legendFormat": "{{ path }} - {{ ingress }}/{{ exported_namespace }}"
+            }
+         ],
+         "title": "Response error rate",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "spanNulls": false
+               },
+               "unit": "s"
+            }
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 14
+         },
+         "id": 8,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum by (path, ingress, exported_namespace) (\n  rate(\n    nginx_ingress_controller_response_duration_seconds_sum{\n      job=~\"$job\",\n      exported_namespace =~ \"$exported_namespace\",\n      ingress =~ \"$ingress\"\n    }[$__rate_interval]\n  )\n)\n",
+               "legendFormat": "{{ path }} - {{ ingress }}/{{ exported_namespace }}"
+            }
+         ],
+         "title": "Upstream time consumed",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 100,
+                  "spanNulls": false,
+                  "stacking": {
+                     "mode": "value"
+                  }
+               },
+               "unit": "reqps"
+            }
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 20
+         },
+         "id": 9,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum (\n  rate(\n    nginx_ingress_controller_request_duration_seconds_count{\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\",\n      status=~\"[$error_codes].*\"\n    }[$__rate_interval]\n  )\n) by(path, ingress, exported_namespace, status)\n",
+               "legendFormat": "{{ status }} {{ path }} - {{ ingress }}/{{ exported_namespace }}"
+            }
+         ],
+         "title": "Response error volume",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 100,
+                  "spanNulls": false,
+                  "stacking": {
+                     "mode": "value"
+                  }
+               },
+               "unit": "decbytes"
+            }
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 20
+         },
+         "id": 10,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.1.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum (\n  rate (\n    nginx_ingress_controller_response_size_sum {\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\"\n    }[$__rate_interval]\n  )\n)  by (path, ingress, exported_namespace)\n/\nsum (\n  rate(\n    nginx_ingress_controller_response_size_count {\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\",\n    }[$__rate_interval]\n  )\n) by (path, ingress, exported_namespace)\n",
+               "legendFormat": "{{ path }} - {{ ingress }}/{{ exported_namespace }}"
+            }
+         ],
+         "title": "Average response size",
+         "type": "timeseries"
+      }
+   ],
+   "schemaVersion": 39,
+   "tags": [
+      "ingress-nginx",
+      "ingress-nginx-mixin"
+   ],
+   "templating": {
+      "list": [
+         {
+            "label": "Data source",
+            "name": "datasource",
+            "query": "prometheus",
+            "type": "datasource"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": false,
+            "label": "Job",
+            "multi": false,
+            "name": "job",
+            "query": "label_values(nginx_ingress_controller_config_hash{}, job)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Ingress Namespace",
+            "multi": true,
+            "name": "exported_namespace",
+            "query": "label_values(nginx_ingress_controller_requests{job=\"$job\"}, exported_namespace)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": false,
+            "label": "Ingress",
+            "multi": true,
+            "name": "ingress",
+            "query": "label_values(nginx_ingress_controller_requests{job=\"$job\", exported_namespace=~\"$exported_namespace\"}, ingress)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "allValue": "4-5",
+            "current": {
+               "selected": false,
+               "text": [
+                  "All"
+               ],
+               "value": [
+                  "$__all"
+               ]
+            },
+            "description": "4 represents all 4xx codes, 5 represents all 5xx codes",
+            "includeAll": true,
+            "label": "Error Codes",
+            "multi": true,
+            "name": "error_codes",
+            "options": [
+               {
+                  "selected": true,
+                  "text": "4",
+                  "value": "4"
+               },
+               {
+                  "selected": false,
+                  "text": "5",
+                  "value": "5"
+               }
+            ],
+            "query": "4 : 4,5 : 5",
+            "type": "custom"
+         }
+      ]
+   },
+   "time": {
+      "from": "now-1h",
+      "to": "now"
+   },
+   "timezone": "utc",
+   "title": "Ingress Nginx / Request Handling Performance",
+   "uid": "ingress-nginx-request-handling-jqkw"
+}
