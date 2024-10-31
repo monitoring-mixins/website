@@ -214,8 +214,12 @@
                   },
                   "properties": [
                      {
-                        "id": "custom.displayMode",
-                        "value": "basic"
+                        "id": "custom.cellOptions",
+                        "value": {
+                           "mode": "basic",
+                           "type": "gauge",
+                           "valueDisplayMode": "text"
+                        }
                      },
                      {
                         "id": "max",
