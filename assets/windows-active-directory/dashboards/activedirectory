@@ -159,7 +159,7 @@
          },
          "id": 3,
          "options": {
-            "alertInstanceLabelFilter": "job=~\"${job:regex}\",instance=~\"${instance:regex}\""
+            "alertInstanceLabelFilter": "job=~\"integrations/windows_exporter\",job=~\"${job:regex}\",instance=~\"${instance:regex}\""
          },
          "pluginVersion": "v10.0.0",
          "title": "Windows Active Directory alerts",
