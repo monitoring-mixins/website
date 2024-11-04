@@ -516,6 +516,31 @@
             "name": "gitea",
             "source": "https://github.com/go-gitea/gitea",
             "subdir": "contrib/gitea-monitoring-mixin"
+        },
+        {
+          "name": "django",
+          "source": "https://github.com/adinhodovic/django-mixin",
+          "subdir": ""
+        },
+        {
+          "name": "celery",
+          "source": "https://github.com/danihodovic/celery-exporter",
+          "subdir": "celery-mixin"
+        },
+        {
+          "name": "argo-cd-2",
+          "source": "https://github.com/adinhodovic/argo-cd-mixin",
+          "subdir": ""
+        },
+        {
+          "name": "ingress-nginx-mixin",
+          "source": "https://github.com/adinhodovic/ingress-nginx-mixin",
+          "subdir": ""
+        },
+        {
+          "name": "kubernetes-autoscaling",
+          "source": "https://github.com/adinhodovic/kubernetes-autoscaling-mixin",
+          "subdir": ""
         }
     ]
 }
