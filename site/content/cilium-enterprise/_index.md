@@ -68,8 +68,10 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 Following dashboards are generated from mixins and hosted on github:
 
 
-- [cilium-agent](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-agent.json)
+- [cilium-L3-policy](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-L3-policy.json)
+- [cilium-L7-proxy](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-L7-proxy.json)
 - [cilium-agent-overview](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-agent-overview.json)
+- [cilium-agent](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-agent.json)
 - [cilium-api](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-api.json)
 - [cilium-bpf](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-bpf.json)
 - [cilium-conntrack](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-conntrack.json)
@@ -78,8 +80,6 @@ Following dashboards are generated from mixins and hosted on github:
 - [cilium-fqdn-proxy](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-fqdn-proxy.json)
 - [cilium-identities](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-identities.json)
 - [cilium-kubernetes](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-kubernetes.json)
-- [cilium-L3-policy](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-L3-policy.json)
-- [cilium-L7-proxy](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-L7-proxy.json)
 - [cilium-network](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-network.json)
 - [cilium-nodes](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-nodes.json)
 - [cilium-operator](https://github.com/monitoring-mixins/website/blob/master/assets/cilium-enterprise/dashboards/cilium-operator.json)
