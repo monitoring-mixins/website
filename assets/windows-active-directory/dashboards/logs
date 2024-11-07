@@ -7,7 +7,7 @@
                "uid": "${loki_datasource}"
             },
             "enable": true,
-            "expr": "{job=~\"integrations/windows_exporter\",job=~\"$job\",instance=~\"$instance\", channel=\"System\", level=\"Critical\"} | json",
+            "expr": "{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\", channel=\"System\", level=\"Critical\"} | json",
             "hide": true,
             "iconColor": "light-purple",
             "name": "Critical system event",
@@ -21,7 +21,7 @@
                "uid": "${datasource}"
             },
             "enable": true,
-            "expr": "windows_system_system_up_time{job=~\"integrations/windows_exporter\",job=~\"$job\",instance=~\"$instance\"}*1000 > $__from < $__to",
+            "expr": "windows_system_system_up_time{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*1000 > $__from < $__to",
             "hide": true,
             "iconColor": "light-yellow",
             "name": "Reboot",
@@ -35,7 +35,7 @@
                "uid": "${loki_datasource}"
             },
             "enable": true,
-            "expr": "{job=~\"integrations/windows_exporter\",job=~\"$job\",instance=~\"$instance\", source=\"Service Control Manager\", level=\"Error\"} |= \"terminated\" | json",
+            "expr": "{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\", source=\"Service Control Manager\", level=\"Error\"} |= \"terminated\" | json",
             "hide": true,
             "iconColor": "light-orange",
             "name": "Service failed",
@@ -51,7 +51,7 @@
          "includeVars": true,
          "keepTime": true,
          "tags": [
-            "active-directory"
+            "windows"
          ],
          "title": "All Windows Active Directory dashboards",
          "type": "dashboards"
@@ -204,7 +204,7 @@
                   "type": "loki",
                   "uid": "${loki_datasource}"
                },
-               "expr": "sum by (level) (count_over_time({job=~\"integrations/windows_exporter\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\",keywords=~\"$keywords\",level=~\"$level\"}\n|~ \"$regex_search\"\n| json | __error__=``\n[$__interval]))\n",
+               "expr": "sum by (level) (count_over_time({job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\",keywords=~\"$keywords\",level=~\"$level\"}\n|~ \"$regex_search\"\n| json | __error__=``\n[$__interval]))\n",
                "legendFormat": "{{ level }}"
             }
          ],
@@ -246,7 +246,7 @@
                   "type": "loki",
                   "uid": "${loki_datasource}"
                },
-               "expr": "{job=~\"integrations/windows_exporter\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\",keywords=~\"$keywords\",level=~\"$level\"} \n|~ \"$regex_search\"\n| json | __error__=``\n| label_format timestamp=\"{{__timestamp__}}\"\n| drop channel_extracted,source_extracted,computer_extracted,level_extracted,keywords_extracted\n| line_format `{{ if eq \"[[instance]]\" \".*\" }}{{ alignLeft 25 .instance}}|{{end}}{{alignLeft 12 .channel }}| {{ alignLeft 25 .source}}| {{ .message }}`\n\n"
+               "expr": "{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\",keywords=~\"$keywords\",level=~\"$level\"} \n|~ \"$regex_search\"\n| json | __error__=``\n| label_format timestamp=\"{{__timestamp__}}\"\n| drop channel_extracted,source_extracted,computer_extracted,level_extracted,keywords_extracted\n| line_format `{{ if eq \"[[instance]]\" \".*\" }}{{ alignLeft 25 .instance}}|{{end}}{{alignLeft 12 .channel }}| {{ alignLeft 25 .source}}| {{ .message }}`\n\n"
             }
          ],
          "title": "Logs",
@@ -256,7 +256,7 @@
    "refresh": "1m",
    "schemaVersion": 39,
    "tags": [
-      "active-directory"
+      "windows"
    ],
    "templating": {
       "list": [
@@ -277,7 +277,7 @@
             "label": "Job",
             "multi": true,
             "name": "job",
-            "query": "label_values({job=~\"integrations/windows_exporter\"}, job)",
+            "query": "label_values({job=~\".*windows.*\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -292,7 +292,7 @@
             "label": "Instance",
             "multi": true,
             "name": "instance",
-            "query": "label_values({job=~\"integrations/windows_exporter\",job=~\"$job\"}, instance)",
+            "query": "label_values({job=~\".*windows.*\",job=~\"$job\"}, instance)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -307,7 +307,7 @@
             "label": "Channel",
             "multi": true,
             "name": "channel",
-            "query": "label_values({job=~\"integrations/windows_exporter\",job=~\"$job\",instance=~\"$instance\"}, channel)",
+            "query": "label_values({job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}, channel)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -322,7 +322,7 @@
             "label": "Source",
             "multi": true,
             "name": "source",
-            "query": "label_values({job=~\"integrations/windows_exporter\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\"}, source)",
+            "query": "label_values({job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\"}, source)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -337,7 +337,7 @@
             "label": "Keywords",
             "multi": true,
             "name": "keywords",
-            "query": "label_values({job=~\"integrations/windows_exporter\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\"}, keywords)",
+            "query": "label_values({job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\"}, keywords)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -352,7 +352,7 @@
             "label": "Level",
             "multi": true,
             "name": "level",
-            "query": "label_values({job=~\"integrations/windows_exporter\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\",keywords=~\"$keywords\"}, level)",
+            "query": "label_values({job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\",keywords=~\"$keywords\"}, level)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

@@ -314,7 +314,8 @@
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
-               }
+               },
+               "unit": "short"
             }
          },
          "gridPos": {
@@ -362,7 +363,8 @@
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
-               }
+               },
+               "unit": "short"
             }
          },
          "gridPos": {
@@ -530,7 +532,7 @@
                   "showPoints": "never"
                },
                "noValue": "No data. Please check that \"time\" collector is enabled.",
-               "unit": "seconds"
+               "unit": "s"
             }
          },
          "gridPos": {

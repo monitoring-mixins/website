@@ -27,7 +27,7 @@ annotations:
     CPU usage on host {{ $labels.instance }} is above 90%. The current value is {{ $value | printf "%.2f" }}%.
   summary: High CPU usage on Windows host.
 expr: |
-  100 - (avg without (mode, core) (rate(windows_cpu_time_total{job=~"integrations/windows_exporter", mode="idle"}[2m])) * 100) > 90
+  100 - (avg without (mode, core) (rate(windows_cpu_time_total{job=~".*windows.*", mode="idle"}[2m])) * 100) > 90
 for: 15m
 keep_firing_for: 5m
 labels:
@@ -43,9 +43,9 @@ annotations:
     Memory usage on host {{ $labels.instance }} is above 90%. The current value is {{ $value | printf "%.2f" }}%.
   summary: High memory usage on Windows host.
 expr: |
-  100 - ((windows_os_physical_memory_free_bytes{job=~"integrations/windows_exporter"}
+  100 - ((windows_os_physical_memory_free_bytes{job=~".*windows.*"}
   /
-  windows_cs_physical_memory_bytes{job=~"integrations/windows_exporter"}) * 100) > 90
+  windows_cs_physical_memory_bytes{job=~".*windows.*"}) * 100) > 90
 for: 15m
 keep_firing_for: 5m
 labels:
@@ -61,7 +61,7 @@ annotations:
     Volume {{ $labels.volume }} is almost full on host {{ $labels.instance }}, more than 90% of space is used. The current volume utilization is {{ $value | printf "%.2f" }}%.
   summary: Disk is almost full on Windows host.
 expr: |
-  100 - ((windows_logical_disk_free_bytes{job=~"integrations/windows_exporter"} ) / (windows_logical_disk_size_bytes{job=~"integrations/windows_exporter"})) * 100  > 90
+  100 - ((windows_logical_disk_free_bytes{job=~".*windows.*"} ) / (windows_logical_disk_size_bytes{job=~".*windows.*"})) * 100  > 90
 for: 15m
 keep_firing_for: 5m
 labels:
@@ -77,7 +77,7 @@ annotations:
     Windows service {{ $labels.name }} is not in healthy state, currently in '{{ $labels.status }}'.
   summary: Windows service is not healthy.
 expr: |
-  windows_service_status{job=~"integrations/windows_exporter", status!~"starting|stopping|ok"} > 0
+  windows_service_status{job=~".*windows.*", status!~"starting|stopping|ok"} > 0
 for: 5m
 labels:
   severity: critical
@@ -92,7 +92,7 @@ annotations:
     Windows disk {{ $labels.name }} is not in healthy state, currently in '{{ $labels.status }}' status.
   summary: Windows physical disk is not healthy.
 expr: |
-  windows_disk_drive_status{job=~"integrations/windows_exporter", status="OK"} != 1
+  windows_disk_drive_status{job=~".*windows.*", status="OK"} != 1
 for: 5m
 labels:
   severity: critical
@@ -107,7 +107,7 @@ annotations:
     Round-trip time of NTP client on instance {{ $labels.instance }} is greater than 1 second. Delay is {{ $value }} sec.
   summary: NTP client delay.
 expr: |
-  windows_time_ntp_round_trip_delay_seconds{job=~"integrations/windows_exporter"} > 1
+  windows_time_ntp_round_trip_delay_seconds{job=~".*windows.*"} > 1
 for: 5m
 keep_firing_for: 5m
 labels:
@@ -123,7 +123,7 @@ annotations:
     NTP time offset for instance {{ $labels.instance }} is greater than 1 second. Offset is {{ $value }} sec.
   summary: NTP time offset is too large.
 expr: |
-  windows_time_computed_time_offset_seconds{job=~"integrations/windows_exporter"} > 1
+  windows_time_computed_time_offset_seconds{job=~".*windows.*"} > 1
 for: 5m
 keep_firing_for: 5m
 labels:
@@ -140,8 +140,7 @@ annotations:
   summary: There is a high number of pending replication operations in Active Directory.
     A high number of pending operations sustained over a period of time can indicate
     a problem with replication.
-expr: "windows_ad_replication_pending_operations{job=~\"integrations/windows_exporter\"}
-  >= 50 
+expr: "windows_ad_replication_pending_operations{job=~\".*windows.*\"} >= 50 
 "
 for: 10m
 keep_firing_for: 5m
@@ -159,7 +158,7 @@ annotations:
   summary: There are a number of replication synchronization request failures. These
     can cause authentication failures, outdated information being propagated across
     domain controllers, and potentially data loss or inconsistencies.
-expr: "increase(windows_ad_replication_sync_requests_schema_mismatch_failure_total{job=~\"integrations/windows_exporter\"}[5m])
+expr: "increase(windows_ad_replication_sync_requests_schema_mismatch_failure_total{job=~\".*windows.*\"}[5m])
   > 0 
 "
 for: 5m
@@ -179,7 +178,7 @@ annotations:
   summary: There is a high number of password changes. This may indicate unauthorized
     changes or attacks.
 expr: |
-  increase(windows_ad_sam_password_changes_total{job=~"integrations/windows_exporter"}[5m]) > 25
+  increase(windows_ad_sam_password_changes_total{job=~".*windows.*"}[5m]) > 25
 for: 5m
 labels:
   keep_firing_for: 24h

@@ -162,7 +162,7 @@
                "calcs": [
                   "lastNotNull"
                ],
-               "fields": "/^hostname$/"
+               "fields": "/^instance$/"
             }
          },
          "pluginVersion": "v11.0.0",
@@ -280,7 +280,8 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
-               }
+               },
+               "unit": "none"
             }
          },
          "gridPos": {
