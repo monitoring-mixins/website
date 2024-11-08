@@ -37,8 +37,8 @@
         },
         {
             "name": "ceph",
-            "source": "https://github.com/ceph/ceph-mixins",
-            "subdir": "",
+            "source": "https://github.com/ceph/ceph",
+            "subdir": "monitoring/ceph-mixin",
             "description": "A set of Prometheus alerts for Ceph.\n\nThe scope of this project is to provide Ceph specific Prometheus rule files using Prometheus Mixins.\n"
         },
         {
