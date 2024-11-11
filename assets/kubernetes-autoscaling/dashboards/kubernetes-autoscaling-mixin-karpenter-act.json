@@ -1,7 +1,7 @@
 {
    "__inputs": [ ],
    "__requires": [ ],
-   "description": "A dashboard that monitors Karpenter and focuses on Karpenter deletion/creation activity. It is created using the [Kubernetes Autoscaling-mixin](https://github.com/adinhodovic/kubernetes-autoscaling-mixin).",
+   "description": "A dashboard that monitors Karpenter and focuses on Karpenter deletion/creation activity. It is created using the [kubernetes-autoscaling-mixin](https://github.com/adinhodovic/kubernetes-autoscaling-mixin).",
    "editable": true,
    "links": [
       {
