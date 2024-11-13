@@ -18,7 +18,7 @@
          {
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "enable": true,
             "expr": "windows_system_system_up_time{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*1000 > $__from < $__to",
@@ -377,8 +377,8 @@
          },
          {
             "hide": 2,
-            "label": "Data source",
-            "name": "datasource",
+            "label": "Prometheus datasource",
+            "name": "prometheus_datasource",
             "query": "prometheus",
             "regex": "Prometheus|Cortex|Mimir|grafanacloud-.+-prom",
             "type": "datasource"

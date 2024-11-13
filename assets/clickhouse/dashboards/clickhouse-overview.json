@@ -829,8 +829,8 @@
          {
             "allValue": ".+",
             "current": {
-               "text": "",
-               "value": ""
+               "text": "all",
+               "value": "$__all"
             },
             "datasource": "$prometheus_datasource",
             "hide": 0,
@@ -850,10 +850,10 @@
             "useTags": false
          },
          {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
-               "text": "",
-               "value": ""
+               "text": "all",
+               "value": "$__all"
             },
             "datasource": "$prometheus_datasource",
             "hide": 0,
@@ -873,8 +873,11 @@
             "useTags": false
          },
          {
-            "allValue": "",
-            "current": { },
+            "allValue": ".*",
+            "current": {
+               "text": "all",
+               "value": "$__all"
+            },
             "datasource": {
                "uid": "${prometheus_datasource}"
             },

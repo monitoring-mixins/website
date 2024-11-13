@@ -18,7 +18,7 @@
          {
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "enable": true,
             "expr": "windows_system_system_up_time{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*1000 > $__from < $__to",
@@ -85,7 +85,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Total CPU utilization percent is a metric that indicates the overall level of central processing unit (CPU) usage in a computer system.\nIt represents the combined load placed on all CPU cores or processors.\n\nFor instance, if the total CPU utilization percent is 50%, it means that,\non average, half of the CPU's processing capacity is being used to execute tasks. A higher percentage indicates that the CPU is working more intensively, potentially leading to system slowdowns if it remains consistently high.\n",
          "fieldConfig": {
@@ -120,7 +120,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100))",
                "legendFormat": "CPU usage"
@@ -132,7 +132,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Total CPU utilization percent is a metric that indicates the overall level of central processing unit (CPU) usage in a computer system.\nIt represents the combined load placed on all CPU cores or processors.\n\nFor instance, if the total CPU utilization percent is 50%, it means that,\non average, half of the CPU's processing capacity is being used to execute tasks. A higher percentage indicates that the CPU is working more intensively, potentially leading to system slowdowns if it remains consistently high.\n",
          "fieldConfig": {
@@ -175,7 +175,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100))",
                "legendFormat": "CPU usage"
@@ -187,7 +187,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "CPU usage by different modes.\n",
          "fieldConfig": {
@@ -291,7 +291,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "sum by(instance, mode) (irate(windows_cpu_time_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])) \n/ on(instance) \ngroup_left sum by (instance) ((irate(windows_cpu_time_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))) * 100\n",
                "legendFormat": "{{ mode }}"
@@ -303,7 +303,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The CPU average queue size in Windows, often referred to as the \"Processor Queue Length\" or \"CPU Queue Length,\" is a metric that measures the number of threads or tasks waiting to be processed by the central processing unit (CPU) at a given moment.\nIt is an essential performance indicator that reflects the workload and responsiveness of the CPU.\nWhen the CPU queue length is high, it indicates that there are more tasks in line for processing than the CPU can handle immediately.\n\nThis can lead to system slowdowns, decreased responsiveness, and potential performance issues. High CPU queue lengths are often associated with CPU saturation, where the CPU is struggling to keep up with the demands placed on it.\n",
          "fieldConfig": {
@@ -340,7 +340,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_system_processor_queue_length{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}\n",
                "legendFormat": "CPU average queue"
@@ -352,7 +352,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Context switches occur when the operating system switches from running one process to another. Interrupts are signals sent to the CPU by external devices to request its attention.\n\nA high number of context switches or interrupts can indicate that the system is overloaded or that there are problems with specific devices or processes.\n",
          "fieldConfig": {
@@ -389,7 +389,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "irate(windows_system_context_switches_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "Context switches"
@@ -397,7 +397,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "sum without (core) (irate(windows_cpu_interrupts_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))",
                "legendFormat": "Interrupts"
@@ -421,7 +421,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Current system timezone.",
          "fieldConfig": {
@@ -454,7 +454,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_os_timezone{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table"
@@ -466,7 +466,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Status of time synchronization.",
          "fieldConfig": {
@@ -507,7 +507,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "clamp_max(windows_time_ntp_client_time_sources{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}, 1)",
                "legendFormat": "NTP status"
@@ -519,7 +519,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "NTP trip delay: Total roundtrip delay experienced by the NTP client in receiving a response from the server for the most recent request,\nin seconds. This is the time elapsed on the NTP client between transmitting a request to the NTP server and receiving a valid response from the server.\n\nTime offset: Absolute time offset between the system clock and the chosen time source, in seconds.\n",
          "fieldConfig": {
@@ -557,7 +557,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_time_ntp_round_trip_delay_seconds{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "legendFormat": "NTP trip delay"
@@ -565,7 +565,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_time_computed_time_offset_seconds{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "legendFormat": "Time offset"
@@ -583,8 +583,8 @@
    "templating": {
       "list": [
          {
-            "label": "Data source",
-            "name": "datasource",
+            "label": "Prometheus datasource",
+            "name": "prometheus_datasource",
             "query": "prometheus",
             "regex": "Prometheus|Cortex|Mimir|grafanacloud-.+-prom",
             "type": "datasource"
@@ -593,7 +593,7 @@
             "allValue": ".+",
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "includeAll": true,
             "label": "Job",
@@ -608,7 +608,7 @@
             "allValue": ".+",
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "includeAll": false,
             "label": "Instance",

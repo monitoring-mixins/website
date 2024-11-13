@@ -18,7 +18,7 @@
          {
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "enable": true,
             "expr": "windows_system_system_up_time{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*1000 > $__from < $__to",
@@ -61,7 +61,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "All Windows instances' perfomance at a glance.",
          "fieldConfig": {
@@ -416,7 +416,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_os_info{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
@@ -426,7 +426,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "time() - windows_system_system_up_time{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
@@ -436,7 +436,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_cs_logical_processors{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
@@ -446,7 +446,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100))",
                "format": "table",
@@ -457,7 +457,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
@@ -468,7 +468,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "100 - windows_os_physical_memory_free_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} * 100",
                "format": "table",
@@ -478,7 +478,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_logical_disk_size_bytes{volume=\"C:\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
@@ -488,7 +488,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "100 - windows_logical_disk_free_bytes{volume=\"C:\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}/windows_logical_disk_size_bytes{volume=\"C:\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*100",
                "format": "table",
@@ -498,7 +498,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "count by (instance) (max_over_time(ALERTS{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\", alertstate=\"firing\", severity=\"critical\"}[1m])) * group by (instance) (windows_os_info{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"})",
                "format": "table",
@@ -508,7 +508,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "count by (instance) (max_over_time(ALERTS{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\", alertstate=\"firing\", severity=\"warning\"}[1m])) * group by (instance) (windows_os_info{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"})",
                "format": "table",
@@ -561,7 +561,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top 25",
          "fieldConfig": {
@@ -646,7 +646,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "topk(25,100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100)))",
                "legendFormat": "{{instance}}"
@@ -654,7 +654,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "avg(100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100)))",
                "legendFormat": "Mean"
@@ -666,7 +666,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top 25",
          "fieldConfig": {
@@ -751,7 +751,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "topk(25,100 - windows_os_physical_memory_free_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} * 100)",
                "legendFormat": "{{instance}}"
@@ -759,7 +759,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "avg(100 - windows_os_physical_memory_free_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} * 100)",
                "legendFormat": "Mean"
@@ -771,7 +771,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top 25",
          "fieldConfig": {
@@ -856,7 +856,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "topk(25,(1-clamp_max(irate(windows_logical_disk_idle_seconds_total{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]),1)) * 100)",
                "legendFormat": "{{instance}}: {{volume}}"
@@ -864,7 +864,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "avg((1-clamp_max(irate(windows_logical_disk_idle_seconds_total{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]),1)) * 100)",
                "legendFormat": "Mean"
@@ -876,7 +876,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top 25",
          "fieldConfig": {
@@ -961,7 +961,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "topk(25,100 - windows_logical_disk_free_bytes{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}/windows_logical_disk_size_bytes{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*100)",
                "legendFormat": "{{instance}}: {{volume}}"
@@ -969,7 +969,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "avg(100 - windows_logical_disk_free_bytes{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}/windows_logical_disk_size_bytes{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*100)",
                "legendFormat": "Mean"
@@ -981,7 +981,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Top 25.\n\n**Network errors**:\n\nNetwork errors refer to issues that occur during the transmission of data across a network. \n\nThese errors can result from various factors, including physical issues, jitter, collisions, noise and interference.\n\nMonitoring network errors is essential for diagnosing and resolving issues, as they can indicate problems with network hardware or environmental factors affecting network quality.\n\n**Dropped packets**:\n\nDropped packets occur when data packets traveling through a network are intentionally discarded or lost due to congestion, resource limitations, or network configuration issues. \n\nCommon causes include network congestion, buffer overflows, QoS settings, and network errors, as corrupted or incomplete packets may be discarded by receiving devices.\n\nDropped packets can impact network performance and lead to issues such as degraded voice or video quality in real-time applications.\n",
          "fieldConfig": {
@@ -1022,7 +1022,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "topk(25, irate(windows_net_packets_outbound_errors_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
                "legendFormat": "{{instance}}: {{ nic }} transmitted"
@@ -1030,7 +1030,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "topk(25, irate(windows_net_packets_received_errors_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
                "legendFormat": "{{instance}}: {{ nic }} received"
@@ -1038,7 +1038,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "topk(25, irate(windows_net_packets_received_unknown_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
                "legendFormat": "{{instance}}: {{ nic }} received (unknown)"
@@ -1046,7 +1046,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "topk(25, irate(windows_net_packets_outbound_discarded_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
                "legendFormat": "{{instance}}: {{ nic }} transmitted packets dropped"
@@ -1054,7 +1054,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "topk(25, irate(windows_net_packets_received_discarded_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
                "legendFormat": "{{instance}}: {{ nic }} received packets dropped"
@@ -1072,8 +1072,8 @@
    "templating": {
       "list": [
          {
-            "label": "Data source",
-            "name": "datasource",
+            "label": "Prometheus datasource",
+            "name": "prometheus_datasource",
             "query": "prometheus",
             "regex": "Prometheus|Cortex|Mimir|grafanacloud-.+-prom",
             "type": "datasource"
@@ -1082,7 +1082,7 @@
             "allValue": ".+",
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "includeAll": true,
             "label": "Job",
@@ -1097,7 +1097,7 @@
             "allValue": ".+",
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "includeAll": true,
             "label": "Instance",

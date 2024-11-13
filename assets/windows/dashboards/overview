@@ -18,7 +18,7 @@
          {
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "enable": true,
             "expr": "windows_system_system_up_time{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*1000 > $__from < $__to",
@@ -79,7 +79,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "The duration of time that has passed since the last reboot or system start.",
          "fieldConfig": {
@@ -126,7 +126,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "time() - windows_system_system_up_time{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}"
             }
@@ -137,7 +137,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "System's hostname.",
          "fieldConfig": {
@@ -170,7 +170,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_os_info{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table"
@@ -182,7 +182,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Version of Windows operating system.",
          "fieldConfig": {
@@ -215,7 +215,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_os_info{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table"
@@ -227,7 +227,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "OS family includes various versions and editions of the Windows operating system.",
          "fieldConfig": {
@@ -260,7 +260,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_os_info{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table"
@@ -272,7 +272,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "CPU count is the number of processor cores or central processing units (CPUs) in a computer,\ndetermining its processing capability and ability to handle tasks concurrently.\n",
          "fieldConfig": {
@@ -305,7 +305,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_cs_logical_processors{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}"
             }
@@ -316,7 +316,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Amount of random-access memory (RAM) installed.\nIt represents the system's available working memory that applications and the operating system use to perform tasks.\nA higher memory total generally leads to better system performance and the ability to run more demanding applications and processes simultaneously.\n",
          "fieldConfig": {
@@ -349,7 +349,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "legendFormat": "Memory total"
@@ -361,7 +361,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "A page file (also known as a \"paging file\") is an optional, hidden system file on a hard disk.\nPage files enable the system to remove infrequently accessed modified pages from physical memory to let the system use physical memory more efficiently for more frequently accessed pages.\n\nhttps://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/introduction-to-the-page-file\n",
          "fieldConfig": {
@@ -394,7 +394,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_os_paging_limit_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}"
             }
@@ -405,7 +405,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Total storage capacity on the primary hard drive (usually the system drive) of a computer running a Windows operating system.\n",
          "fieldConfig": {
@@ -438,7 +438,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_logical_disk_size_bytes{volume=\"C:\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}"
             }
@@ -461,7 +461,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Total CPU utilization percent is a metric that indicates the overall level of central processing unit (CPU) usage in a computer system.\nIt represents the combined load placed on all CPU cores or processors.\n\nFor instance, if the total CPU utilization percent is 50%, it means that,\non average, half of the CPU's processing capacity is being used to execute tasks. A higher percentage indicates that the CPU is working more intensively, potentially leading to system slowdowns if it remains consistently high.\n",
          "fieldConfig": {
@@ -496,7 +496,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100))",
                "legendFormat": "CPU usage"
@@ -508,7 +508,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Total CPU utilization percent is a metric that indicates the overall level of central processing unit (CPU) usage in a computer system.\nIt represents the combined load placed on all CPU cores or processors.\n\nFor instance, if the total CPU utilization percent is 50%, it means that,\non average, half of the CPU's processing capacity is being used to execute tasks. A higher percentage indicates that the CPU is working more intensively, potentially leading to system slowdowns if it remains consistently high.\n",
          "fieldConfig": {
@@ -551,7 +551,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100))",
                "legendFormat": "CPU usage"
@@ -575,7 +575,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "RAM (random-access memory) currently in use by the operating system and running applications, in percent.",
          "fieldConfig": {
@@ -610,7 +610,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "100 - windows_os_physical_memory_free_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} * 100"
             }
@@ -621,7 +621,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "RAM (random-access memory) currently in use by the operating system and running applications, in bytes.\n",
          "fieldConfig": {
@@ -690,7 +690,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} - windows_os_physical_memory_free_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "legendFormat": "Memory used"
@@ -698,7 +698,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "legendFormat": "Memory total"
@@ -722,7 +722,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Disk read/writes in bytes per second.",
          "fieldConfig": {
@@ -781,7 +781,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "irate(windows_logical_disk_read_bytes_total{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{ volume }} read"
@@ -789,7 +789,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "irate(windows_logical_disk_write_bytes_total{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{ volume }} written"
@@ -797,7 +797,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "(1-clamp_max(irate(windows_logical_disk_idle_seconds_total{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]),1)) * 100",
                "legendFormat": "{{ volume }} io util"
@@ -809,7 +809,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "This table provides information about total disk space, used space, available space, and usage percentages for each mounted file system on the system.\n",
          "fieldConfig": {
@@ -923,7 +923,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_logical_disk_size_bytes{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
@@ -933,7 +933,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "windows_logical_disk_free_bytes{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
@@ -1051,7 +1051,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "Network traffic (bits per sec) measures data transmitted and received.",
          "fieldConfig": {
@@ -1105,7 +1105,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "irate(windows_net_bytes_received_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*8",
                "legendFormat": "{{ nic }} received"
@@ -1113,7 +1113,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "irate(windows_net_bytes_sent_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*8",
                "legendFormat": "{{ nic }} transmitted"
@@ -1125,7 +1125,7 @@
       {
          "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${prometheus_datasource}"
          },
          "description": "**Network errors**:\n\nNetwork errors refer to issues that occur during the transmission of data across a network. \n\nThese errors can result from various factors, including physical issues, jitter, collisions, noise and interference.\n\nMonitoring network errors is essential for diagnosing and resolving issues, as they can indicate problems with network hardware or environmental factors affecting network quality.\n\n**Dropped packets**:\n\nDropped packets occur when data packets traveling through a network are intentionally discarded or lost due to congestion, resource limitations, or network configuration issues. \n\nCommon causes include network congestion, buffer overflows, QoS settings, and network errors, as corrupted or incomplete packets may be discarded by receiving devices.\n\nDropped packets can impact network performance and lead to issues such as degraded voice or video quality in real-time applications.\n",
          "fieldConfig": {
@@ -1180,7 +1180,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "irate(windows_net_packets_outbound_errors_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{ nic }} transmitted"
@@ -1188,7 +1188,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "irate(windows_net_packets_received_errors_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{ nic }} received"
@@ -1196,7 +1196,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "irate(windows_net_packets_received_unknown_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{ nic }} received (unknown)"
@@ -1204,7 +1204,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "irate(windows_net_packets_outbound_discarded_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{ nic }} transmitted packets dropped"
@@ -1212,7 +1212,7 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "${prometheus_datasource}"
                },
                "expr": "irate(windows_net_packets_received_discarded_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{ nic }} received packets dropped"
@@ -1230,8 +1230,8 @@
    "templating": {
       "list": [
          {
-            "label": "Data source",
-            "name": "datasource",
+            "label": "Prometheus datasource",
+            "name": "prometheus_datasource",
             "query": "prometheus",
             "regex": "Prometheus|Cortex|Mimir|grafanacloud-.+-prom",
             "type": "datasource"
@@ -1240,7 +1240,7 @@
             "allValue": ".+",
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "includeAll": true,
             "label": "Job",
@@ -1255,7 +1255,7 @@
             "allValue": ".+",
             "datasource": {
                "type": "prometheus",
-               "uid": "${datasource}"
+               "uid": "${prometheus_datasource}"
             },
             "includeAll": false,
             "label": "Instance",
