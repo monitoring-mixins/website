@@ -1446,6 +1446,38 @@ labels:
   type: ceph_default
 {{< /code >}}
  
+##### NVMeoFMissingListener
+
+{{< code lang="yaml" >}}
+alert: NVMeoFMissingListener
+annotations:
+  description: For every subsystem, each gateway should have a listener to balance
+    traffic between gateways.
+  summary: No listener added for {{ $labels.instance }} NVMe-oF Gateway to {{ $labels.nqn
+    }} subsystem
+expr: ceph_nvmeof_subsystem_listener_count == 0 and on(nqn) sum(ceph_nvmeof_subsystem_listener_count)
+  by (nqn) > 0
+for: 10m
+labels:
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
+##### NVMeoFZeroListenerSubsystem
+
+{{< code lang="yaml" >}}
+alert: NVMeoFZeroListenerSubsystem
+annotations:
+  description: NVMeoF gateway configuration incomplete; one of the subsystems have
+    zero listeners.
+  summary: No listeners added to {{ $labels.nqn }} subsystem
+expr: sum(ceph_nvmeof_subsystem_listener_count) by (nqn) == 0
+for: 10m
+labels:
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
 ##### NVMeoFHighHostCPU
 
 {{< code lang="yaml" >}}
