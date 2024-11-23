@@ -1882,7 +1882,7 @@
             "type": "custom"
          },
          {
-            "allValue": ".+",
+            "allValue": ".*",
             "current": { },
             "datasource": {
                "uid": "${prometheus_datasource}"

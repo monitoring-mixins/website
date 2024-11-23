@@ -268,7 +268,7 @@
             "type": "datasource"
          },
          {
-            "allValue": ".*",
+            "allValue": ".+",
             "datasource": {
                "type": "loki",
                "uid": "${loki_datasource}"
@@ -283,7 +283,7 @@
             "type": "query"
          },
          {
-            "allValue": ".*",
+            "allValue": ".+",
             "datasource": {
                "type": "loki",
                "uid": "${loki_datasource}"
@@ -298,7 +298,7 @@
             "type": "query"
          },
          {
-            "allValue": ".*",
+            "allValue": ".+",
             "datasource": {
                "type": "loki",
                "uid": "${loki_datasource}"
@@ -313,7 +313,7 @@
             "type": "query"
          },
          {
-            "allValue": ".*",
+            "allValue": ".+",
             "datasource": {
                "type": "loki",
                "uid": "${loki_datasource}"
@@ -328,7 +328,7 @@
             "type": "query"
          },
          {
-            "allValue": ".*",
+            "allValue": ".+",
             "datasource": {
                "type": "loki",
                "uid": "${loki_datasource}"
@@ -343,7 +343,7 @@
             "type": "query"
          },
          {
-            "allValue": ".*",
+            "allValue": ".+",
             "datasource": {
                "type": "loki",
                "uid": "${loki_datasource}"
