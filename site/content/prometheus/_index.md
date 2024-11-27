@@ -89,17 +89,17 @@ labels:
 {{< /code >}}
  
 ##### PrometheusErrorSendingAlertsToSomeAlertmanagers
-'{{ printf "%.1f" $value }}% errors while sending alerts from Prometheus
+'{{ printf "%.1f" $value }}% of alerts sent by Prometheus {{$labels.instance}}
 
-Prometheus has encountered more than 1% errors sending alerts to a specific
+More than 1% of alerts sent by Prometheus to a specific Alertmanager were
 
 {{< code lang="yaml" >}}
 alert: PrometheusErrorSendingAlertsToSomeAlertmanagers
 annotations:
-  description: '{{ printf "%.1f" $value }}% errors while sending alerts from Prometheus
-    {{$labels.instance}} to Alertmanager {{$labels.alertmanager}}.'
-  summary: Prometheus has encountered more than 1% errors sending alerts to a specific
-    Alertmanager.
+  description: '{{ printf "%.1f" $value }}% of alerts sent by Prometheus {{$labels.instance}}
+    to Alertmanager {{$labels.alertmanager}} were affected by errors.'
+  summary: More than 1% of alerts sent by Prometheus to a specific Alertmanager were
+    affected by errors.
 expr: |
   (
     rate(prometheus_notifications_errors_total{job="prometheus"}[5m])
