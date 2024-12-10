@@ -676,7 +676,7 @@
    "templating": {
       "list": [
          {
-            "label": "Prometheus datasource",
+            "label": "Prometheus data source",
             "name": "prometheus_datasource",
             "query": "prometheus",
             "regex": "Prometheus|Cortex|Mimir|grafanacloud-.+-prom",

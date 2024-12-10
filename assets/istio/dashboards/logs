@@ -166,7 +166,7 @@
                   "type": "loki",
                   "uid": "${loki_datasource}"
                },
-               "expr": "sum by (response_code) (count_over_time({job=~\"integrations/istio\",job=~\"$job\",cluster=~\"$cluster\",pod=~\"$pod\",log_type=~\"$log_type\",protocol=~\"$protocol\",request_method=~\"$request_method\",response_code=~\"$response_code\",level=~\"$level\"}\n|~ \"$regex_search\"\n\n[$__interval]))\n",
+               "expr": "sum by (response_code) (count_over_time({job=~\"integrations/istio\",job=~\"$job\",cluster=~\"$cluster\",pod=~\"$pod\",log_type=~\"$log_type\",protocol=~\"$protocol\",request_method=~\"$request_method\",response_code=~\"$response_code\",level=~\"$level\"}\n|~ \"$regex_search\"\n\n[$__auto]))\n",
                "legendFormat": "{{ response_code }}"
             }
          ],

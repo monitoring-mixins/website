@@ -216,7 +216,7 @@
                   "type": "loki",
                   "uid": "${loki_datasource}"
                },
-               "expr": "sum by (level) (count_over_time({job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\",keywords=~\"$keywords\",level=~\"$level\"}\n|~ \"$regex_search\"\n| json | __error__=``\n[$__interval]))\n",
+               "expr": "sum by (level) (count_over_time({job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\",keywords=~\"$keywords\",level=~\"$level\"}\n|~ \"$regex_search\"\n| json | __error__=``\n[$__auto]))\n",
                "legendFormat": "{{ level }}"
             }
          ],
@@ -389,7 +389,7 @@
          },
          {
             "hide": 2,
-            "label": "Prometheus datasource",
+            "label": "Prometheus data source",
             "name": "prometheus_datasource",
             "query": "prometheus",
             "regex": "Prometheus|Cortex|Mimir|grafanacloud-.+-prom",

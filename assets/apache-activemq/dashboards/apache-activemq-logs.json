@@ -161,7 +161,7 @@
                   "type": "loki",
                   "uid": "${loki_datasource}"
                },
-               "expr": "sum by (level) (count_over_time({job=~\"integrations/apache-activemq\",job=~\"$job\",activemq_cluster=~\"$activemq_cluster\",instance=~\"$instance\",level=~\"$level\"}\n|~ \"$regex_search\"\n\n[$__interval]))\n",
+               "expr": "sum by (level) (count_over_time({job=~\"integrations/apache-activemq\",job=~\"$job\",activemq_cluster=~\"$activemq_cluster\",instance=~\"$instance\",level=~\"$level\"}\n|~ \"$regex_search\"\n\n[$__auto]))\n",
                "legendFormat": "{{ level }}"
             }
          ],
