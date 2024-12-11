@@ -29,6 +29,7 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
+         "description": "Kafka active topics overview. ",
          "fieldConfig": {
             "overrides": [
                {
@@ -37,10 +38,6 @@
                      "options": "Topic start offset"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "none"
@@ -54,10 +51,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "none"
                      }
@@ -70,10 +63,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "mps"
                      }
@@ -85,10 +74,6 @@
                      "options": "Topic log size"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "decbytes"
@@ -208,10 +193,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "mps"
                      }
@@ -277,10 +258,6 @@
                      "options": "Topic bytes in"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "Bps"
@@ -348,10 +325,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "Bps"
                      }
@@ -418,10 +391,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "mps"
                      }
@@ -434,10 +403,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -449,10 +414,6 @@
                      "options": "Consumer group lag in ms"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "ms"
@@ -561,10 +522,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "mps"
                      }
@@ -629,10 +586,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -696,10 +649,6 @@
                      "options": "Consumer group lag in ms"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "ms"

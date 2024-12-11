@@ -595,13 +595,13 @@ groups:
       severity: critical
   - alert: KubeAggregatedAPIErrors
     annotations:
-      description: Kubernetes aggregated API {{ $labels.name }}/{{ $labels.namespace
-        }} has reported errors. It has appeared unavailable {{ $value | humanize }}
-        times averaged over the past 10m.
+      description: Kubernetes aggregated API {{ $labels.instance }}/{{ $labels.name
+        }} has reported {{ $labels.reason }} errors.
       runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeaggregatedapierrors
       summary: Kubernetes aggregated API has reported errors.
     expr: |
-      sum by(name, namespace, cluster)(increase(aggregator_unavailable_apiservice_total{job="kube-apiserver"}[10m])) > 4
+      sum by(cluster, instance, name, reason)(increase(aggregator_unavailable_apiservice_total{job="kube-apiserver"}[1m])) > 0
+    for: 10m
     labels:
       severity: warning
   - alert: KubeAggregatedAPIDown

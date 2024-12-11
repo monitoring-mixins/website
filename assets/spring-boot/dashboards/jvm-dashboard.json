@@ -131,10 +131,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -185,10 +181,6 @@
                      "options": "Classes loaded"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "short"
@@ -268,10 +260,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "dtdurations"
                      }
@@ -326,10 +314,6 @@
                      "options": "Process start time"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "dateTimeAsIso"
@@ -396,10 +380,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -411,10 +391,6 @@
                      "options": "CPU count"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "short"
@@ -527,10 +503,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "percent"
                      }
@@ -542,10 +514,6 @@
                      "options": "CPU usage (system)"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "percent"
@@ -694,10 +662,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": ""
                      }
@@ -709,10 +673,6 @@
                      "options": "Process files max"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": ""
@@ -803,10 +763,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -848,10 +804,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -863,10 +815,6 @@
                      "options": "JVM memory committed(heap)"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "bytes"
@@ -958,10 +906,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -1003,10 +947,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -1018,10 +958,6 @@
                      "options": "JVM memory committed(nonheap)"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "bytes"
@@ -1125,10 +1061,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -1170,10 +1102,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -1185,10 +1113,6 @@
                      "options": "Eden Space (committed)"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "bytes"
@@ -1278,10 +1202,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -1323,10 +1243,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -1338,10 +1254,6 @@
                      "options": "Survival space (committed)"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "bytes"
@@ -1431,10 +1343,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -1476,10 +1384,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -1491,10 +1395,6 @@
                      "options": "Tenured space (committed)"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "bytes"
@@ -1563,7 +1463,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
          },
-         "description": "Major and minor garbage collection",
+         "description": "Major and minor garbage collections",
          "fieldConfig": {
             "defaults": {
                "custom": {
@@ -1581,10 +1481,6 @@
                      "options": "Garbage collections"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "ops"
@@ -1631,6 +1527,7 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
+         "description": "Major and minor garbage collections",
          "fieldConfig": {
             "defaults": {
                "custom": {
@@ -1649,10 +1546,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "s"
                      }
@@ -1664,10 +1557,6 @@
                      "options": "GC time (max)"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "s"
@@ -1725,6 +1614,7 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
+         "description": "'Allocated' is the size increase of the young generation memory pool after one GC and before the next. It reflects minor GC.\n'Promoted' is the size increase of the old generation memory pool after GC. It reflects full GC.\n",
          "fieldConfig": {
             "defaults": {
                "custom": {
@@ -1774,10 +1664,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -1789,10 +1675,6 @@
                      "options": "Promoted"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "bytes"
@@ -1881,10 +1763,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -1897,10 +1775,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -1912,10 +1786,6 @@
                      "options": "Threads (peak)"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "short"
@@ -2032,10 +1902,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -2114,10 +1980,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -2129,10 +1991,6 @@
                      "options": "Direct buffer capacity"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "bytes"
@@ -2240,10 +2098,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bytes"
                      }
@@ -2255,10 +2109,6 @@
                      "options": "Mapped buffer capacity"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "bytes"
@@ -2370,10 +2220,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "short"
                            }
@@ -2425,12 +2271,8 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
-                              "value": "/s"
+                              "value": "short"
                            }
                         ]
                      }
@@ -2483,10 +2325,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "short"
                            }
@@ -2499,10 +2337,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "short"
                            }
@@ -2514,10 +2348,6 @@
                            "options": "Connections (pending) "
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "short"
@@ -2609,10 +2439,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "s"
                            }
@@ -2681,10 +2507,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "s"
                            }
@@ -2752,10 +2574,6 @@
                            "options": "Connections acquire time (avg)"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "s"
@@ -2834,12 +2652,8 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
-                              "value": "/s"
+                              "value": "short"
                            }
                         ]
                      }

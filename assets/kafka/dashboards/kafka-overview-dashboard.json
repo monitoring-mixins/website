@@ -45,10 +45,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -108,10 +104,6 @@
                      "options": "Brokers count"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "short"
@@ -173,10 +165,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -227,10 +215,6 @@
                      "options": "Preferred replica inbalance"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "short"
@@ -301,10 +285,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "Bps"
                      }
@@ -316,10 +296,6 @@
                      "options": "Cluster bytes out"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "Bps"
@@ -397,10 +373,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "mps"
                      }
@@ -462,10 +434,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -516,10 +484,6 @@
                      "options": "Offline partitions"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "short"
@@ -572,10 +536,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -626,10 +586,6 @@
                      "options": "Under min ISR partitions"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "short"
@@ -869,10 +825,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "Bps"
                      }
@@ -884,10 +836,6 @@
                      "options": "Broker bytes out"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "Bps"
@@ -965,10 +913,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "mps"
                      }
@@ -1045,10 +989,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -1121,10 +1061,6 @@
                      "options": "Offline partitions"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "short"
@@ -1200,10 +1136,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -1278,10 +1210,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -1347,10 +1275,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "short"
                      }
@@ -1414,10 +1338,6 @@
                      "options": "ISR expands"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "short"
@@ -1495,10 +1415,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "ms"
                            }
@@ -1510,10 +1426,6 @@
                            "options": "Produce follower local time"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "ms"
@@ -1527,10 +1439,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "ms"
                            }
@@ -1543,10 +1451,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "ms"
                            }
@@ -1558,10 +1462,6 @@
                            "options": "Produce follower response time"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "ms"
@@ -1676,10 +1576,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "ms"
                            }
@@ -1691,10 +1587,6 @@
                            "options": "Fetch-follower local time"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "ms"
@@ -1708,10 +1600,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "ms"
                            }
@@ -1724,10 +1612,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "ms"
                            }
@@ -1739,10 +1623,6 @@
                            "options": "Fetch-follower response time"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "ms"
@@ -1857,10 +1737,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "ms"
                            }
@@ -1872,10 +1748,6 @@
                            "options": "Fetch-consumer local time"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "ms"
@@ -1889,10 +1761,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "ms"
                            }
@@ -1905,10 +1773,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "ms"
                            }
@@ -1920,10 +1784,6 @@
                            "options": "Fetch-consumer response time"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "ms"
@@ -2048,10 +1908,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "mps"
                            }
@@ -2115,10 +1971,6 @@
                            "options": "Message conversion (consumer)"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "mps"
@@ -2197,10 +2049,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "ms"
                            }
@@ -2265,12 +2113,8 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
-                              "value": "/s"
+                              "value": "short"
                            }
                         ]
                      },
@@ -2281,12 +2125,8 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
-                              "value": "/s"
+                              "value": "short"
                            }
                         ]
                      },
@@ -2297,12 +2137,8 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
-                              "value": "/s"
+                              "value": "short"
                            }
                         ]
                      },
@@ -2313,12 +2149,8 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
-                              "value": "/s"
+                              "value": "short"
                            }
                         ]
                      }
@@ -2442,10 +2274,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "dtdurations"
                      }
@@ -2500,10 +2328,6 @@
                      "options": "Process start time"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "dateTimeAsIso"
@@ -2647,10 +2471,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "percent"
                      }
@@ -2716,10 +2536,6 @@
                      "options": "Process memory used (rss)"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "bytes"
@@ -2814,10 +2630,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": ""
                      }
@@ -2829,10 +2641,6 @@
                      "options": "Process files max"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": ""
@@ -3013,10 +2821,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "short"
                            }
@@ -3067,10 +2871,6 @@
                            "options": "Classes loaded"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "short"
@@ -3141,10 +2941,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "bytes"
                            }
@@ -3186,10 +2982,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "bytes"
                            }
@@ -3201,10 +2993,6 @@
                            "options": "JVM memory committed(heap)"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "bytes"
@@ -3296,10 +3084,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "bytes"
                            }
@@ -3341,10 +3125,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "bytes"
                            }
@@ -3356,10 +3136,6 @@
                            "options": "JVM memory committed(nonheap)"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "bytes"
@@ -3462,10 +3238,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "short"
                            }
@@ -3478,10 +3250,6 @@
                         },
                         "properties": [
                            {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
-                           {
                               "id": "unit",
                               "value": "short"
                            }
@@ -3493,10 +3261,6 @@
                            "options": "Threads (peak)"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "short"
@@ -3538,10 +3302,6 @@
                            "options": "Threads (deadlocked)"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "short"
@@ -3639,10 +3399,6 @@
                            "options": "Threads states"
                         },
                         "properties": [
-                           {
-                              "id": "mappings",
-                              "value": [ ]
-                           },
                            {
                               "id": "unit",
                               "value": "short"

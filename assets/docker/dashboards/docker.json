@@ -46,10 +46,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": ""
                      }
@@ -101,10 +97,6 @@
                      "options": "Images"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": ""
@@ -161,10 +153,6 @@
                      "options": "CPU usage"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "percent"
@@ -242,10 +230,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "percent"
                      }
@@ -321,10 +305,6 @@
                      "options": "Memory used"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "percent"
@@ -419,10 +399,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "percent"
                      }
@@ -492,10 +468,6 @@
                      "options": "Memory usage"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "decbytes"
@@ -623,10 +595,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "bps"
                      }
@@ -638,10 +606,6 @@
                      "options": "transmitted"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "bps"
@@ -725,10 +689,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "pps"
                      }
@@ -740,10 +700,6 @@
                      "options": "drops transmitted"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "pps"
@@ -757,10 +713,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "pps"
                      }
@@ -772,10 +724,6 @@
                      "options": "errors transmitted"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "pps"
@@ -890,10 +838,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "decbytes"
                      }
@@ -974,10 +918,6 @@
                   },
                   "properties": [
                      {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
-                     {
                         "id": "unit",
                         "value": "reqps"
                      }
@@ -989,10 +929,6 @@
                      "options": "Disk writes"
                   },
                   "properties": [
-                     {
-                        "id": "mappings",
-                        "value": [ ]
-                     },
                      {
                         "id": "unit",
                         "value": "reqps"
