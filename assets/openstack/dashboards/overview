@@ -573,8 +573,8 @@
          },
          "fieldConfig": {
             "defaults": {
-               "max": "150",
-               "min": "0",
+               "max": 150,
+               "min": 0,
                "thresholds": {
                   "steps": [
                      {
@@ -617,8 +617,8 @@
          },
          "fieldConfig": {
             "defaults": {
-               "max": "150",
-               "min": "0",
+               "max": 150,
+               "min": 0,
                "thresholds": {
                   "steps": [
                      {

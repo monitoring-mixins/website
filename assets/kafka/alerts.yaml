@@ -6,7 +6,7 @@ groups:
       description: 'Kafka lag keeps increasing over the last 15 minutes for consumer
         group: {{$labels.consumergroup}}, topic: {{$labels.topic}}.'
       summary: Kafka lag keeps increasing.
-    expr: sum by (job,kafka_cluster, topic, consumergroup) (delta(kafka_consumergroup_uncommitted_offsets{job="integrations/kafka",topic!="__consumer_offsets",consumergroup!=""}[5m]))
+    expr: sum by (job,kafka_cluster, topic, consumergroup) (delta(kafka_consumergroup_uncommitted_offsets{topic!="__consumer_offsets",consumergroup!="",job="integrations/kafka"}[5m]))
       > 0
     for: 15m
     keep_firing_for: 10m
@@ -17,7 +17,7 @@ groups:
       description: 'Total kafka lag across all partitions is too high ({{ printf "%.0f"
         $value }}) for consumer group: {{$labels.consumergroup}}, topic: {{$labels.topic}}.'
       summary: Kafka lag is too high.
-    expr: sum by (job,kafka_cluster, topic, consumergroup) (kafka_consumergroup_uncommitted_offsets{job="integrations/kafka",topic!="__consumer_offsets",consumergroup!=""})
+    expr: sum by (job,kafka_cluster, topic, consumergroup) (kafka_consumergroup_uncommitted_offsets{topic!="__consumer_offsets",consumergroup!="",job="integrations/kafka"})
       > 100
     for: 15m
     keep_firing_for: 5m
@@ -118,8 +118,8 @@ groups:
       description: Kafka broker {{ $labels.instance }} in cluster {{ $labels.kafka_cluster
         }} has disconected from Zookeeper.
       summary: Kafka Zookeeper sync disconected.
-    expr: avg by(job,kafka_cluster,instance) (rate(kafka_server_sessionexpirelistener_zookeepersyncconnectspersec{job="integrations/kafka",
-      quantile="0.95"}[5m])) < 0
+    expr: avg by(job,kafka_cluster,instance) (rate(kafka_server_sessionexpirelistener_zookeepersyncconnectspersec{quantile="0.95",job="integrations/kafka"}[5m]))
+      < 0
     for: 5m
     labels:
       severity: critical

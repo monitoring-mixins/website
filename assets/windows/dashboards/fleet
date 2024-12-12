@@ -7,7 +7,7 @@
                "uid": "${loki_datasource}"
             },
             "enable": true,
-            "expr": "{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\", channel=\"System\", level=\"Critical\"} | json",
+            "expr": "{job=~\"$job\",instance=~\"$instance\", channel=\"System\", level=\"Critical\"} | json",
             "hide": true,
             "iconColor": "light-purple",
             "name": "Critical system event",
@@ -21,7 +21,7 @@
                "uid": "${prometheus_datasource}"
             },
             "enable": true,
-            "expr": "windows_system_system_up_time{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*1000 > $__from < $__to",
+            "expr": "windows_system_system_up_time{job=~\"$job\",instance=~\"$instance\"}*1000 > $__from < $__to",
             "hide": true,
             "iconColor": "light-yellow",
             "name": "Reboot",
@@ -35,7 +35,7 @@
                "uid": "${loki_datasource}"
             },
             "enable": true,
-            "expr": "{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\", source=\"Service Control Manager\", level=\"Error\"} |= \"terminated\" | json",
+            "expr": "{job=~\"$job\",instance=~\"$instance\", source=\"Service Control Manager\", level=\"Error\"} |= \"terminated\" | json",
             "hide": true,
             "iconColor": "light-orange",
             "name": "Service failed",
@@ -418,7 +418,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "windows_os_info{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
+               "expr": "windows_os_info{job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
                "instant": true,
                "refId": "OS Info"
@@ -428,7 +428,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "time() - windows_system_system_up_time{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
+               "expr": "time() - windows_system_system_up_time{job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
                "instant": true,
                "refId": "Uptime"
@@ -438,7 +438,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "windows_cs_logical_processors{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
+               "expr": "windows_cs_logical_processors{job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
                "instant": true,
                "refId": "Cores"
@@ -448,7 +448,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100))",
+               "expr": "100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100))",
                "format": "table",
                "instant": true,
                "legendFormat": "CPU usage",
@@ -459,7 +459,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
+               "expr": "windows_cs_physical_memory_bytes{job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
                "instant": true,
                "legendFormat": "Memory total",
@@ -470,7 +470,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "100 - windows_os_physical_memory_free_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} * 100",
+               "expr": "100 - windows_os_physical_memory_free_bytes{job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\"$job\",instance=~\"$instance\"} * 100",
                "format": "table",
                "instant": true,
                "refId": "Memory usage"
@@ -480,7 +480,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "windows_logical_disk_size_bytes{volume=\"C:\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}",
+               "expr": "windows_logical_disk_size_bytes{volume=\"C:\", job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
                "instant": true,
                "refId": "Disk C: total"
@@ -490,7 +490,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "100 - windows_logical_disk_free_bytes{volume=\"C:\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}/windows_logical_disk_size_bytes{volume=\"C:\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*100",
+               "expr": "100 - windows_logical_disk_free_bytes{volume=\"C:\", job=~\"$job\",instance=~\"$instance\"}/windows_logical_disk_size_bytes{volume=\"C:\", job=~\"$job\",instance=~\"$instance\"}*100",
                "format": "table",
                "instant": true,
                "refId": "Disk C: used"
@@ -500,7 +500,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "count by (instance) (max_over_time(ALERTS{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\", alertstate=\"firing\", severity=\"critical\"}[1m])) * group by (instance) (windows_os_info{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"})",
+               "expr": "count by (instance) (max_over_time(ALERTS{job=~\"$job\",instance=~\"$instance\", alertstate=\"firing\", severity=\"critical\"}[1m])) * group by (instance) (windows_os_info{job=~\"$job\",instance=~\"$instance\"})",
                "format": "table",
                "instant": true,
                "refId": "CRITICAL"
@@ -510,7 +510,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "count by (instance) (max_over_time(ALERTS{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\", alertstate=\"firing\", severity=\"warning\"}[1m])) * group by (instance) (windows_os_info{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"})",
+               "expr": "count by (instance) (max_over_time(ALERTS{job=~\"$job\",instance=~\"$instance\", alertstate=\"firing\", severity=\"warning\"}[1m])) * group by (instance) (windows_os_info{job=~\"$job\",instance=~\"$instance\"})",
                "format": "table",
                "instant": true,
                "refId": "WARNING"
@@ -648,7 +648,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(25,100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100)))",
+               "expr": "topk(25,100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100)))",
                "legendFormat": "{{instance}}"
             },
             {
@@ -656,7 +656,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "avg(100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100)))",
+               "expr": "avg(100 - (avg without (mode,core) (rate(windows_cpu_time_total{mode=\"idle\", job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])*100)))",
                "legendFormat": "Mean"
             }
          ],
@@ -753,7 +753,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(25,100 - windows_os_physical_memory_free_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} * 100)",
+               "expr": "topk(25,100 - windows_os_physical_memory_free_bytes{job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\"$job\",instance=~\"$instance\"} * 100)",
                "legendFormat": "{{instance}}"
             },
             {
@@ -761,7 +761,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "avg(100 - windows_os_physical_memory_free_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"} * 100)",
+               "expr": "avg(100 - windows_os_physical_memory_free_bytes{job=~\"$job\",instance=~\"$instance\"} / windows_cs_physical_memory_bytes{job=~\"$job\",instance=~\"$instance\"} * 100)",
                "legendFormat": "Mean"
             }
          ],
@@ -858,7 +858,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(25,(1-clamp_max(irate(windows_logical_disk_idle_seconds_total{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]),1)) * 100)",
+               "expr": "topk(25,(1-clamp_max(irate(windows_logical_disk_idle_seconds_total{volume!~\"HarddiskVolume.*\", job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]),1)) * 100)",
                "legendFormat": "{{instance}}: {{volume}}"
             },
             {
@@ -866,7 +866,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "avg((1-clamp_max(irate(windows_logical_disk_idle_seconds_total{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]),1)) * 100)",
+               "expr": "avg((1-clamp_max(irate(windows_logical_disk_idle_seconds_total{volume!~\"HarddiskVolume.*\", job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]),1)) * 100)",
                "legendFormat": "Mean"
             }
          ],
@@ -963,7 +963,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(25,100 - windows_logical_disk_free_bytes{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}/windows_logical_disk_size_bytes{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*100)",
+               "expr": "topk(25,100 - windows_logical_disk_free_bytes{volume!~\"HarddiskVolume.*\", job=~\"$job\",instance=~\"$instance\"}/windows_logical_disk_size_bytes{volume!~\"HarddiskVolume.*\", job=~\"$job\",instance=~\"$instance\"}*100)",
                "legendFormat": "{{instance}}: {{volume}}"
             },
             {
@@ -971,7 +971,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "avg(100 - windows_logical_disk_free_bytes{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}/windows_logical_disk_size_bytes{volume!~\"HarddiskVolume.*\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*100)",
+               "expr": "avg(100 - windows_logical_disk_free_bytes{volume!~\"HarddiskVolume.*\", job=~\"$job\",instance=~\"$instance\"}/windows_logical_disk_size_bytes{volume!~\"HarddiskVolume.*\", job=~\"$job\",instance=~\"$instance\"}*100)",
                "legendFormat": "Mean"
             }
          ],
@@ -1024,7 +1024,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(25, irate(windows_net_packets_outbound_errors_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
+               "expr": "topk(25, irate(windows_net_packets_outbound_errors_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
                "legendFormat": "{{instance}}: {{ nic }} transmitted"
             },
             {
@@ -1032,7 +1032,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(25, irate(windows_net_packets_received_errors_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
+               "expr": "topk(25, irate(windows_net_packets_received_errors_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
                "legendFormat": "{{instance}}: {{ nic }} received"
             },
             {
@@ -1040,7 +1040,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(25, irate(windows_net_packets_received_unknown_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
+               "expr": "topk(25, irate(windows_net_packets_received_unknown_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
                "legendFormat": "{{instance}}: {{ nic }} received (unknown)"
             },
             {
@@ -1048,7 +1048,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(25, irate(windows_net_packets_outbound_discarded_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
+               "expr": "topk(25, irate(windows_net_packets_outbound_discarded_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
                "legendFormat": "{{instance}}: {{ nic }} transmitted packets dropped"
             },
             {
@@ -1056,7 +1056,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "topk(25, irate(windows_net_packets_received_discarded_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
+               "expr": "topk(25, irate(windows_net_packets_received_discarded_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))>0.5",
                "legendFormat": "{{instance}}: {{ nic }} received packets dropped"
             }
          ],
@@ -1088,7 +1088,7 @@
             "label": "Job",
             "multi": true,
             "name": "job",
-            "query": "label_values(windows_os_info{job=~\".*windows.*\"}, job)",
+            "query": "label_values(windows_os_info{}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -1103,7 +1103,7 @@
             "label": "Instance",
             "multi": true,
             "name": "instance",
-            "query": "label_values(windows_os_info{job=~\".*windows.*\",job=~\"$job\"}, instance)",
+            "query": "label_values(windows_os_info{job=~\"$job\"}, instance)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

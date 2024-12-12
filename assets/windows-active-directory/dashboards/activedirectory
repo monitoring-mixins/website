@@ -7,7 +7,7 @@
                "uid": "${loki_datasource}"
             },
             "enable": true,
-            "expr": "{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\", channel=\"System\", level=\"Critical\"} | json",
+            "expr": "{job=~\"$job\",instance=~\"$instance\", channel=\"System\", level=\"Critical\"} | json",
             "hide": true,
             "iconColor": "light-purple",
             "name": "Critical system event",
@@ -21,7 +21,7 @@
                "uid": "${prometheus_datasource}"
             },
             "enable": true,
-            "expr": "windows_system_system_up_time{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}*1000 > $__from < $__to",
+            "expr": "windows_system_system_up_time{job=~\"$job\",instance=~\"$instance\"}*1000 > $__from < $__to",
             "hide": true,
             "iconColor": "light-yellow",
             "name": "Reboot",
@@ -35,7 +35,7 @@
                "uid": "${loki_datasource}"
             },
             "enable": true,
-            "expr": "{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\", source=\"Service Control Manager\", level=\"Error\"} |= \"terminated\" | json",
+            "expr": "{job=~\"$job\",instance=~\"$instance\", source=\"Service Control Manager\", level=\"Error\"} |= \"terminated\" | json",
             "hide": true,
             "iconColor": "light-orange",
             "name": "Service failed",
@@ -95,7 +95,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "sum(windows_ad_replication_pending_operations{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"})",
+               "expr": "sum(windows_ad_replication_pending_operations{job=~\"$job\",instance=~\"$instance\"})",
                "legendFormat": "Operations"
             }
          ],
@@ -139,7 +139,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "sum(windows_ad_directory_service_threads{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"})",
+               "expr": "sum(windows_ad_directory_service_threads{job=~\"$job\",instance=~\"$instance\"})",
                "legendFormat": "Directory service threads"
             }
          ],
@@ -159,7 +159,7 @@
          },
          "id": 3,
          "options": {
-            "alertInstanceLabelFilter": "job=~\".*windows.*\",job=~\"${job:regex}\",instance=~\"${instance:regex}\""
+            "alertInstanceLabelFilter": "job=~\"${job:regex}\",instance=~\"${instance:regex}\""
          },
          "pluginVersion": "v10.0.0",
          "title": "Windows Active Directory alerts",
@@ -202,7 +202,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "sum(windows_ad_replication_pending_synchronizations{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"})",
+               "expr": "sum(windows_ad_replication_pending_synchronizations{job=~\"$job\",instance=~\"$instance\"})",
                "legendFormat": "Operations"
             }
          ],
@@ -251,7 +251,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_binds_total{bind_method=~\"ldap\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(windows_ad_binds_total{bind_method=~\"ldap\", job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{instance}}"
             }
          ],
@@ -300,7 +300,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_directory_operations_total{origin=~\"ldap\", job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(windows_ad_directory_operations_total{origin=~\"ldap\", job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{instance}} - {{ operation }}"
             }
          ],
@@ -565,7 +565,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_binds_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(windows_ad_binds_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{instance}} - {{ operation }}"
             }
          ],
@@ -721,7 +721,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_replication_data_intrasite_bytes_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]) * 8",
+               "expr": "rate(windows_ad_replication_data_intrasite_bytes_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]) * 8",
                "legendFormat": "{{instance}} - {{ direction }}"
             }
          ],
@@ -776,7 +776,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_replication_data_intersite_bytes_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]) * 8",
+               "expr": "rate(windows_ad_replication_data_intersite_bytes_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]) * 8",
                "legendFormat": "{{instance}} - {{ direction }}"
             }
          ],
@@ -829,7 +829,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_replication_inbound_objects_updated_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(windows_ad_replication_inbound_objects_updated_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{instance}} objects"
             },
             {
@@ -837,7 +837,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_replication_inbound_properties_updated_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(windows_ad_replication_inbound_properties_updated_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{instance}} properties"
             }
          ],
@@ -972,7 +972,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_database_operations_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(windows_ad_database_operations_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{instance}} - {{ operation }}"
             }
          ],
@@ -1083,7 +1083,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_database_operations_total{job=~\".*windows.*\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(windows_ad_database_operations_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "legendFormat": "{{instance}} - {{ operation }}"
             }
          ],
@@ -1114,7 +1114,7 @@
             "label": "Job",
             "multi": true,
             "name": "job",
-            "query": "label_values(windows_ad_directory_service_threads{job=~\".*windows.*\"}, job)",
+            "query": "label_values(windows_ad_directory_service_threads{}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -1128,7 +1128,7 @@
             "label": "Instance",
             "multi": true,
             "name": "instance",
-            "query": "label_values(windows_ad_directory_service_threads{job=~\".*windows.*\",job=~\"$job\"}, instance)",
+            "query": "label_values(windows_ad_directory_service_threads{job=~\"$job\"}, instance)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

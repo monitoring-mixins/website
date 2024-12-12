@@ -26,8 +26,8 @@ annotations:
   description: JVM heap memory usage is at {{ printf "%.0f" $value }}% over the last
     5 minutes on {{$labels.instance}}, which is above the threshold of 80%.
   summary: JVM heap memory filling up.
-expr: ((sum without (id) (jvm_memory_used_bytes{area="heap", job!=""}))/(sum without
-  (id) (jvm_memory_max_bytes{area="heap", job!=""} != -1))) * 100 > 80
+expr: ((sum without (id) (jvm_memory_used_bytes{area="heap", }))/(sum without (id)
+  (jvm_memory_max_bytes{area="heap", } != -1))) * 100 > 80
 for: 5m
 keep_firing_for: 5m
 labels:
@@ -43,7 +43,7 @@ annotations:
     are in a cyclic dependency with each other. The restart is required to resolve
     the deadlock.'
   summary: JVM deadlock detected.
-expr: (jvm_threads_deadlocked{job!=""}) > 0
+expr: (jvm_threads_deadlocked{}) > 0
 for: 2m
 keep_firing_for: 5m
 labels:

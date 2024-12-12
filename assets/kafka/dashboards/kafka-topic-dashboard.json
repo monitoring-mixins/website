@@ -95,7 +95,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "max by (job,kafka_cluster,topic,partition) (\n  kafka_log_log_logstartoffset{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}\n)",
+               "expr": "max by (job,kafka_cluster,topic,partition) (\n  kafka_log_log_logstartoffset{topic!=\"__consumer_offsets\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ topic }}",
@@ -106,7 +106,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "max by (job,kafka_cluster,topic,partition) (\n  kafka_log_log_logendoffset{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}\n)",
+               "expr": "max by (job,kafka_cluster,topic,partition) (\n  kafka_log_log_logendoffset{topic!=\"__consumer_offsets\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ topic }}",
@@ -117,7 +117,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum by (job,kafka_cluster,topic,partition) (\n  rate(kafka_topic_partition_current_offset{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}[$__rate_interval])\n)",
+               "expr": "sum by (job,kafka_cluster,topic,partition) (\n  rate(kafka_topic_partition_current_offset{topic!=\"__consumer_offsets\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}[$__rate_interval])\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ topic }}",
@@ -128,7 +128,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "max by (job,kafka_cluster,topic,partition) (\n  kafka_log_log_size{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}\n)",
+               "expr": "max by (job,kafka_cluster,topic,partition) (\n  kafka_log_log_size{topic!=\"__consumer_offsets\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ topic }}",
@@ -223,7 +223,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum by (job,kafka_cluster,topic) (\n  rate(kafka_topic_partition_current_offset{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}[$__rate_interval])\n)",
+               "expr": "sum by (job,kafka_cluster,topic) (\n  rate(kafka_topic_partition_current_offset{topic!=\"__consumer_offsets\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}[$__rate_interval])\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ topic }}",
@@ -289,7 +289,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum by (job,kafka_cluster,topic) (\n  rate(kafka_server_brokertopicmetrics_bytesinpersec{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}[$__rate_interval])\n)",
+               "expr": "sum by (job,kafka_cluster,topic) (\n  rate(kafka_server_brokertopicmetrics_bytesinpersec{topic!=\"__consumer_offsets\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}[$__rate_interval])\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ topic }}",
@@ -355,7 +355,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum by (job,kafka_cluster,topic) (\n  rate(kafka_server_brokertopicmetrics_bytesoutpersec{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}[$__rate_interval])\n)",
+               "expr": "sum by (job,kafka_cluster,topic) (\n  rate(kafka_server_brokertopicmetrics_bytesoutpersec{topic!=\"__consumer_offsets\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}[$__rate_interval])\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ topic }}",
@@ -435,7 +435,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "avg by (job,kafka_cluster,consumergroup,topic) (\n  rate(kafka_consumergroup_current_offset{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",consumergroup!=\"\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}[$__rate_interval])\n)",
+               "expr": "avg by (job,kafka_cluster,consumergroup,topic) (\n  rate(kafka_consumergroup_current_offset{topic!=\"__consumer_offsets\",consumergroup!=\"\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}[$__rate_interval])\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ consumergroup }} ({{ topic }})",
@@ -446,7 +446,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum by (job,kafka_cluster,consumergroup,topic) (\n  kafka_consumergroup_uncommitted_offsets{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",consumergroup!=\"\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}\n)",
+               "expr": "sum by (job,kafka_cluster,consumergroup,topic) (\n  kafka_consumergroup_uncommitted_offsets{topic!=\"__consumer_offsets\",consumergroup!=\"\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ consumergroup }} ({{ topic }})",
@@ -457,7 +457,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "avg by (job,kafka_cluster,consumergroup,topic) (\n  kafka_consumer_lag_millis{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",consumergroup!=\"\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}\n)",
+               "expr": "avg by (job,kafka_cluster,consumergroup,topic) (\n  kafka_consumer_lag_millis{topic!=\"__consumer_offsets\",consumergroup!=\"\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ consumergroup }} ({{ topic }})",
@@ -552,7 +552,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "avg by (job,kafka_cluster,consumergroup,topic) (\n  rate(kafka_consumergroup_current_offset{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",consumergroup!=\"\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}[$__rate_interval])\n)",
+               "expr": "avg by (job,kafka_cluster,consumergroup,topic) (\n  rate(kafka_consumergroup_current_offset{topic!=\"__consumer_offsets\",consumergroup!=\"\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}[$__rate_interval])\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ consumergroup }} ({{ topic }})",
@@ -616,7 +616,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum by (job,kafka_cluster,consumergroup,topic) (\n  kafka_consumergroup_uncommitted_offsets{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",consumergroup!=\"\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}\n)",
+               "expr": "sum by (job,kafka_cluster,consumergroup,topic) (\n  kafka_consumergroup_uncommitted_offsets{topic!=\"__consumer_offsets\",consumergroup!=\"\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ consumergroup }} ({{ topic }})",
@@ -680,7 +680,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "avg by (job,kafka_cluster,consumergroup,topic) (\n  kafka_consumer_lag_millis{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",consumergroup!=\"\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}\n)",
+               "expr": "avg by (job,kafka_cluster,consumergroup,topic) (\n  kafka_consumer_lag_millis{topic!=\"__consumer_offsets\",consumergroup!=\"\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\",consumergroup=~\"$consumergroup\"}\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ consumergroup }} ({{ topic }})",
@@ -714,7 +714,7 @@
             "label": "Job",
             "multi": true,
             "name": "job",
-            "query": "label_values(kafka_log_log_logstartoffset{job=\"integrations/kafka\",topic!=\"__consumer_offsets\"}, job)",
+            "query": "label_values(kafka_log_log_logstartoffset{topic!=\"__consumer_offsets\",job=\"integrations/kafka\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -729,7 +729,7 @@
             "label": "Kafka_cluster",
             "multi": true,
             "name": "kafka_cluster",
-            "query": "label_values(kafka_log_log_logstartoffset{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",job=~\"$job\"}, kafka_cluster)",
+            "query": "label_values(kafka_log_log_logstartoffset{topic!=\"__consumer_offsets\",job=\"integrations/kafka\",job=~\"$job\"}, kafka_cluster)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -744,7 +744,7 @@
             "label": "Topic",
             "multi": true,
             "name": "topic",
-            "query": "label_values(kafka_log_log_logstartoffset{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\"}, topic)",
+            "query": "label_values(kafka_log_log_logstartoffset{topic!=\"__consumer_offsets\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\"}, topic)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -759,7 +759,7 @@
             "label": "Consumergroup",
             "multi": true,
             "name": "consumergroup",
-            "query": "label_values(kafka_consumergroup_uncommitted_offsets{job=\"integrations/kafka\",topic!=\"__consumer_offsets\",consumergroup!=\"\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}, consumergroup)",
+            "query": "label_values(kafka_consumergroup_uncommitted_offsets{topic!=\"__consumer_offsets\",consumergroup!=\"\",job=\"integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",topic=~\"$topic\"}, consumergroup)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
