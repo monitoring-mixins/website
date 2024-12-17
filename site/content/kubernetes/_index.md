@@ -1241,7 +1241,7 @@ record: cluster_verb_scope:apiserver_request_sli_duration_seconds_count:increase
 
 {{< code lang="yaml" >}}
 expr: |
-  sum by (cluster, verb, scope) (cluster_verb_scope_le:apiserver_request_sli_duration_seconds_bucket:increase30d{le="+Inf"} * 24 * 30)
+  sum by (cluster, verb, scope) (cluster_verb_scope_le:apiserver_request_sli_duration_seconds_bucket:increase30d{le="+Inf"})
 record: cluster_verb_scope:apiserver_request_sli_duration_seconds_count:increase30d
 {{< /code >}}
  
