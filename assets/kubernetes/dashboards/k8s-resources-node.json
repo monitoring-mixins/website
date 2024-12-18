@@ -342,6 +342,109 @@
                "legendFormat": "{{pod}}"
             }
          ],
+         "title": "Memory Usage (w/cache)",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10,
+                  "showPoints": "never",
+                  "spanNulls": true,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "bytes"
+            },
+            "overrides": [
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "max capacity"
+                  },
+                  "properties": [
+                     {
+                        "id": "color",
+                        "value": {
+                           "fixedColor": "red",
+                           "mode": "fixed"
+                        }
+                     },
+                     {
+                        "id": "custom.stacking",
+                        "value": {
+                           "mode": "none"
+                        }
+                     },
+                     {
+                        "id": "custom.hideFrom",
+                        "value": {
+                           "legend": false,
+                           "tooltip": true,
+                           "viz": false
+                        }
+                     },
+                     {
+                        "id": "custom.lineStyle",
+                        "value": {
+                           "dash": [
+                              10,
+                              10
+                           ],
+                           "fill": "dash"
+                        }
+                     }
+                  ]
+               }
+            ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 18
+         },
+         "id": 4,
+         "interval": "1m",
+         "options": {
+            "legend": {
+               "asTable": true,
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true
+            },
+            "tooltip": {
+               "mode": "single"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+               },
+               "expr": "sum(kube_node_status_capacity{cluster=\"$cluster\", job=\"kube-state-metrics\", node=~\"$node\", resource=\"memory\"})",
+               "legendFormat": "max capacity"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+               },
+               "expr": "sum(node_namespace_pod_container:container_memory_rss{cluster=\"$cluster\", node=~\"$node\", container!=\"\"}) by (pod)",
+               "legendFormat": "{{pod}}"
+            }
+         ],
          "title": "Memory Usage (w/o cache)",
          "type": "timeseries"
       },
@@ -390,9 +493,9 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 18
+            "y": 24
          },
-         "id": 4,
+         "id": 5,
          "pluginVersion": "v11.4.0",
          "targets": [
             {

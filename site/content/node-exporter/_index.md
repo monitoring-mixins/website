@@ -358,7 +358,7 @@ annotations:
     CPU usage at {{ $labels.instance }} has been above 90% for the last 15 minutes, is currently at {{ printf "%.2f" $value }}%.
   summary: High CPU usage.
 expr: |
-  sum without(mode) (avg without (cpu) (rate(node_cpu_seconds_total{job="node", mode!="idle"}[2m]))) * 100 > 90
+  sum without(mode) (avg without (cpu) (rate(node_cpu_seconds_total{job="node", mode!~"idle|iowait"}[2m]))) * 100 > 90
 for: 15m
 labels:
   severity: info

@@ -67,7 +67,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "count(container_last_seen{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\", id=~\"/system.slice/docker.+\", name!=\"\"})",
+               "expr": "count(container_last_seen{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\", name!=\"\"})",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{instance}}: Containers",
@@ -119,7 +119,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "count (sum by (image) (container_last_seen{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\", id=~\"/system.slice/docker.+\", name!=\"\"}))",
+               "expr": "count (sum by (image) (container_last_seen{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\", name!=\"\"}))",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{instance}}: Images",
@@ -183,7 +183,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "avg by (job,instance, name) (rate(container_cpu_usage_seconds_total{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\", id=~\"/system.slice/docker.+\", name!=\"\"}[$__rate_interval])) * 100",
+               "expr": "avg by (job,instance, name) (rate(container_cpu_usage_seconds_total{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\", name!=\"\"}[$__rate_interval])) * 100",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{instance}}",
@@ -259,7 +259,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum(\n  container_spec_memory_reservation_limit_bytes{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\", id=~\"/system.slice/docker.+\", name!=\"\"}\n  )\n/ \navg(\n    machine_memory_bytes{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\"}\n) * 100\n",
+               "expr": "sum(\n  container_spec_memory_reservation_limit_bytes{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\", name!=\"\"}\n  )\n/ \navg(\n    machine_memory_bytes{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\"}\n) * 100\n",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{instance}}: Memory reserved",
@@ -335,7 +335,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "avg(\n  sum by (instance) (container_memory_usage_bytes{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\", id=~\"/system.slice/docker.+\", name!=\"\"})\n  /\n  avg by (instance) (machine_memory_bytes{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\"})\n) * 100\n",
+               "expr": "avg(\n  sum by (instance) (container_memory_usage_bytes{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\", name!=\"\"})\n  /\n  avg by (instance) (machine_memory_bytes{job!=\"kubelet\",job=~\"$job\",instance=~\"$instance\"})\n) * 100\n",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{instance}}: Memory used",
@@ -430,7 +430,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "100 *\n  rate(container_cpu_usage_seconds_total{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])\n",
+               "expr": "100 *\n  rate(container_cpu_usage_seconds_total{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])\n",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}",
@@ -529,7 +529,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "container_memory_usage_bytes{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}",
+               "expr": "container_memory_usage_bytes{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}",
@@ -638,7 +638,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "8 *\n  rate(container_network_receive_bytes_total{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])\n",
+               "expr": "8 *\n  rate(container_network_receive_bytes_total{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])\n",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}/{{interface}} receive",
@@ -649,7 +649,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "8 *\n  rate(container_network_transmit_bytes_total{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])\n",
+               "expr": "8 *\n  rate(container_network_transmit_bytes_total{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])\n",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}/{{interface}} transmit",
@@ -756,7 +756,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "rate(container_network_receive_packets_dropped_total{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
+               "expr": "rate(container_network_receive_packets_dropped_total{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}/{{interface}} rx drops",
@@ -767,7 +767,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "rate(container_network_transmit_packets_dropped_total{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
+               "expr": "rate(container_network_transmit_packets_dropped_total{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}/{{interface}} tx drops",
@@ -778,7 +778,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "rate(container_network_receive_errors_total{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
+               "expr": "rate(container_network_receive_errors_total{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}/{{interface}} rx errors",
@@ -789,7 +789,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "rate(container_network_transmit_errors_total{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
+               "expr": "rate(container_network_transmit_errors_total{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}/{{interface}} tx errors",
@@ -869,7 +869,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "container_fs_usage_bytes{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}",
+               "expr": "container_fs_usage_bytes{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}/{{device}}",
@@ -961,7 +961,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "rate(container_fs_reads_total{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
+               "expr": "rate(container_fs_reads_total{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}/{{device}} read",
@@ -972,7 +972,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "rate(container_fs_writes_total{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
+               "expr": "rate(container_fs_writes_total{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\",name=~\"$name\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{name}}/{{device}} write",
@@ -1037,7 +1037,7 @@
             "label": "Name",
             "multi": true,
             "name": "name",
-            "query": "label_values(container_last_seen{job!=\"kubelet\", id=~\"/system.slice/docker.+\", name!=\"\",job=~\"$job\",instance=~\"$instance\"}, name)",
+            "query": "label_values(container_last_seen{job!=\"kubelet\", name!=\"\",job=~\"$job\",instance=~\"$instance\"}, name)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
