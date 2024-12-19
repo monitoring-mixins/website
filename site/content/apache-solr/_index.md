@@ -148,11 +148,3 @@ labels:
   severity: warning
 {{< /code >}}
  
-## Dashboards
-Following dashboards are generated from mixins and hosted on github:
-
-
-- [apache-solr-cluster-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-solr/dashboards/apache-solr-cluster-overview.json)
-- [apache-solr-logs-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-solr/dashboards/apache-solr-logs-overview.json)
-- [apache-solr-query-performance](https://github.com/monitoring-mixins/website/blob/master/assets/apache-solr/dashboards/apache-solr-query-performance.json)
-- [apache-solr-resource-monitoring](https://github.com/monitoring-mixins/website/blob/master/assets/apache-solr/dashboards/apache-solr-resource-monitoring.json)

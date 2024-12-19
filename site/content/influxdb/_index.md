@@ -116,10 +116,3 @@ labels:
   severity: warning
 {{< /code >}}
  
-## Dashboards
-Following dashboards are generated from mixins and hosted on github:
-
-
-- [influxdb-cluster-overview](https://github.com/monitoring-mixins/website/blob/master/assets/influxdb/dashboards/influxdb-cluster-overview.json)
-- [influxdb-instance-overview](https://github.com/monitoring-mixins/website/blob/master/assets/influxdb/dashboards/influxdb-instance-overview.json)
-- [influxdb-logs](https://github.com/monitoring-mixins/website/blob/master/assets/influxdb/dashboards/influxdb-logs.json)

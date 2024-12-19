@@ -79,11 +79,3 @@ labels:
   severity: critical
 {{< /code >}}
  
-## Dashboards
-Following dashboards are generated from mixins and hosted on github:
-
-
-- [clickhouse-latency](https://github.com/monitoring-mixins/website/blob/master/assets/clickhouse/dashboards/clickhouse-latency.json)
-- [clickhouse-logs](https://github.com/monitoring-mixins/website/blob/master/assets/clickhouse/dashboards/clickhouse-logs.json)
-- [clickhouse-overview](https://github.com/monitoring-mixins/website/blob/master/assets/clickhouse/dashboards/clickhouse-overview.json)
-- [clickhouse-replica](https://github.com/monitoring-mixins/website/blob/master/assets/clickhouse/dashboards/clickhouse-replica.json)

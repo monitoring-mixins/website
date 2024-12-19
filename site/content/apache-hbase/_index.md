@@ -98,10 +98,3 @@ labels:
   severity: warning
 {{< /code >}}
  
-## Dashboards
-Following dashboards are generated from mixins and hosted on github:
-
-
-- [apache-hbase-cluster-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-hbase/dashboards/apache-hbase-cluster-overview.json)
-- [apache-hbase-logs](https://github.com/monitoring-mixins/website/blob/master/assets/apache-hbase/dashboards/apache-hbase-logs.json)
-- [apache-hbase-regionserver-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-hbase/dashboards/apache-hbase-regionserver-overview.json)
