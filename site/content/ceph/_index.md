@@ -1319,6 +1319,23 @@ labels:
   type: ceph_default
 {{< /code >}}
  
+##### NVMeoFMultipleNamespacesOfRBDImage
+
+{{< code lang="yaml" >}}
+alert: NVMeoFMultipleNamespacesOfRBDImage
+annotations:
+  description: Each NVMeoF namespace must have a unique RBD pool and image, across
+    all different gateway groups.
+  summary: 'RBD image {{ $labels.pool_name }}/{{ $labels.rbd_name }} cannot be reused
+    for multiple NVMeoF namespace '
+expr: count by(pool_name, rbd_name) (count by(bdev_name, pool_name, rbd_name) (ceph_nvmeof_bdev_metadata
+  and on (bdev_name) ceph_nvmeof_subsystem_namespace_metadata)) > 1
+for: 1m
+labels:
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
 ##### NVMeoFTooManyGateways
 
 {{< code lang="yaml" >}}
