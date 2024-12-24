@@ -221,7 +221,8 @@ labels:
 {{< code lang="yaml" >}}
 alert: NodeHighNumberConntrackEntriesUsed
 annotations:
-  description: '{{ $value | humanizePercentage }} of conntrack entries are used.'
+  description: '{{ $labels.instance }} {{ $value | humanizePercentage }} of conntrack
+    entries are used.'
   summary: Number of conntrack are getting close to the limit.
 expr: |
   (node_nf_conntrack_entries{job="node"} / node_nf_conntrack_entries_limit) > 0.75
