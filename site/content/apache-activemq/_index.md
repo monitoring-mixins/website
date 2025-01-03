@@ -82,3 +82,12 @@ labels:
   severity: warning
 {{< /code >}}
  
+## Dashboards
+Following dashboards are generated from mixins and hosted on github:
+
+
+- [apache-activemq-cluster-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-activemq/dashboards/apache-activemq-cluster-overview.json)
+- [apache-activemq-instance-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-activemq/dashboards/apache-activemq-instance-overview.json)
+- [apache-activemq-logs](https://github.com/monitoring-mixins/website/blob/master/assets/apache-activemq/dashboards/apache-activemq-logs.json)
+- [apache-activemq-queue-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-activemq/dashboards/apache-activemq-queue-overview.json)
+- [apache-activemq-topic-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-activemq/dashboards/apache-activemq-topic-overview.json)

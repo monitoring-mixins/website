@@ -132,3 +132,11 @@ labels:
   severity: critical
 {{< /code >}}
  
+## Dashboards
+Following dashboards are generated from mixins and hosted on github:
+
+
+- [presto-coordinator](https://github.com/monitoring-mixins/website/blob/master/assets/presto/dashboards/presto-coordinator.json)
+- [presto-logs](https://github.com/monitoring-mixins/website/blob/master/assets/presto/dashboards/presto-logs.json)
+- [presto-overview](https://github.com/monitoring-mixins/website/blob/master/assets/presto/dashboards/presto-overview.json)
+- [presto-worker](https://github.com/monitoring-mixins/website/blob/master/assets/presto/dashboards/presto-worker.json)

@@ -145,3 +145,11 @@ labels:
   severity: warning
 {{< /code >}}
  
+## Dashboards
+Following dashboards are generated from mixins and hosted on github:
+
+
+- [aerospike-instance-overview](https://github.com/monitoring-mixins/website/blob/master/assets/aerospike/dashboards/aerospike-instance-overview.json)
+- [aerospike-logs](https://github.com/monitoring-mixins/website/blob/master/assets/aerospike/dashboards/aerospike-logs.json)
+- [aerospike-namespace-overview](https://github.com/monitoring-mixins/website/blob/master/assets/aerospike/dashboards/aerospike-namespace-overview.json)
+- [aerospike-overview](https://github.com/monitoring-mixins/website/blob/master/assets/aerospike/dashboards/aerospike-overview.json)
