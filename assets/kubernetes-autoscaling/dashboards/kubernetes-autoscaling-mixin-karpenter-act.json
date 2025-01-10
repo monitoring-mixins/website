@@ -178,12 +178,12 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      karpenter_voluntary_disruption_decisions_total{\n        job=~\"$job\",\n      }[$__rate_interval]\n    )\n  ) by (decision, reason, consolidation_type)\n)\n",
+               "expr": "round(\n  sum(\n    increase(\n      karpenter_voluntary_disruption_decisions_total{\n        job=~\"$job\",\n      }[$__rate_interval]\n    )\n  ) by (decision, reason)\n)\n",
                "interval": "1m",
-               "legendFormat": "{{ decision }} - {{ reason }} - {{ consolidation_type }}"
+               "legendFormat": "{{ decision }} - {{ reason }}"
             }
          ],
-         "title": "Node Disruption Decisions by Reason, Decision, and Consolidation Type",
+         "title": "Node Disruption Decisions by Reason and Decision",
          "type": "timeseries"
       },
       {
