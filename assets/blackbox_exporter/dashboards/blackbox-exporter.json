@@ -630,7 +630,7 @@
                      }
                   ]
                },
-               "unit": "s"
+               "unit": "dtdurations"
             }
          },
          "gridPos": {
