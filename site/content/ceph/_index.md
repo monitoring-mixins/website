@@ -1341,9 +1341,9 @@ labels:
 {{< code lang="yaml" >}}
 alert: NVMeoFTooManyGateways
 annotations:
-  description: You may create many gateways, but 4 is the tested limit
+  description: You may create many gateways, but 32 is the tested limit
   summary: Max supported gateways exceeded on cluster {{ $labels.cluster }}
-expr: count(ceph_nvmeof_gateway_info) by (cluster) > 4.00
+expr: count(ceph_nvmeof_gateway_info) by (cluster) > 32.00
 for: 1m
 labels:
   severity: warning
@@ -1355,11 +1355,11 @@ labels:
 {{< code lang="yaml" >}}
 alert: NVMeoFMaxGatewayGroupSize
 annotations:
-  description: You may create many gateways in a gateway group, but 4 is the tested
+  description: You may create many gateways in a gateway group, but 8 is the tested
     limit
   summary: Max gateways within a gateway group ({{ $labels.group }}) exceeded on cluster
     {{ $labels.cluster }}
-expr: count(ceph_nvmeof_gateway_info) by (cluster,group) > 4.00
+expr: count(ceph_nvmeof_gateway_info) by (cluster,group) > 8.00
 for: 1m
 labels:
   severity: warning
@@ -1442,7 +1442,7 @@ annotations:
   summary: The number of namespaces defined to the gateway exceeds supported values
     on cluster {{ $labels.cluster }}
 expr: sum by(gateway_host, cluster) (label_replace(ceph_nvmeof_subsystem_namespace_count,"gateway_host","$1","instance","(.*?)(?::.*)?"))
-  > 1024.00
+  > 2048.00
 for: 1m
 labels:
   severity: warning
@@ -1470,10 +1470,10 @@ labels:
 {{< code lang="yaml" >}}
 alert: NVMeoFHighClientCount
 annotations:
-  description: The supported limit for clients connecting to a subsystem is 32
+  description: The supported limit for clients connecting to a subsystem is 128
   summary: The number of clients connected to {{ $labels.nqn }} is too high on cluster
     {{ $labels.cluster }}
-expr: ceph_nvmeof_subsystem_host_count > 32.00
+expr: ceph_nvmeof_subsystem_host_count > 128.00
 for: 1m
 labels:
   severity: warning

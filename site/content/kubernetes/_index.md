@@ -698,7 +698,7 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 alert: KubeClientErrors
 annotations:
   description: Kubernetes API server client '{{ $labels.job }}/{{ $labels.instance
-    }}' is experiencing {{ $value | humanizePercentage }} errors.'
+    }}' is experiencing {{ $value | humanizePercentage }} errors.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclienterrors
   summary: Kubernetes API server client is experiencing errors.
 expr: |
@@ -946,12 +946,16 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubelettoomanypods
   summary: Kubelet is running at capacity.
 expr: |
-  count by(cluster, node) (
-    (kube_pod_status_phase{job="kube-state-metrics",phase="Running"} == 1) * on(instance,pod,namespace,cluster) group_left(node) topk by(instance,pod,namespace,cluster) (1, kube_pod_info{job="kube-state-metrics"})
+  count by (cluster, node) (
+    (kube_pod_status_phase{job="kube-state-metrics", phase="Running"} == 1)
+    * on (cluster, namespace, pod) group_left (node)
+    group by (cluster, namespace, pod, node) (
+      kube_pod_info{job="kube-state-metrics"}
+    )
   )
   /
-  max by(cluster, node) (
-    kube_node_status_capacity{job="kube-state-metrics",resource="pods"} != 1
+  max by (cluster, node) (
+    kube_node_status_capacity{job="kube-state-metrics", resource="pods"} != 1
   ) > 0.95
 for: 15m
 labels:
