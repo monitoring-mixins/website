@@ -420,6 +420,7 @@
                   "showPoints": "never"
                },
                "decimals": 1,
+               "noValue": "No traffic",
                "unit": "Bps"
             }
          },
