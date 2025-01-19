@@ -18,6 +18,28 @@ groups:
     for: 5m
     labels:
       severity: warning
+  - alert: KarpenterNodeClaimsTerminationDurationHigh
+    annotations:
+      dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-kact-jkwq/kubernetes-autoscaling-karpenter-activity
+      description: The average node claim termination duration in Karpenter has exceeded
+        20 minutes for more than 15 minutes in nodepool {{ $labels.nodepool }}. This
+        may indicate cloud provider issues or improper instance termination handling.
+      summary: Karpenter Node Claims Termination Duration is High.
+    expr: |
+      sum(
+        karpenter_nodeclaims_termination_duration_seconds_sum{
+          job=~"karpenter"
+        }
+      ) by (namespace, job, nodepool)
+      /
+      sum(
+        karpenter_nodeclaims_termination_duration_seconds_count{
+          job=~"karpenter"
+        }
+      ) by (namespace, job, nodepool) > 1200
+    for: 15m
+    labels:
+      severity: warning
   - alert: KarpenterNodepoolNearCapacity
     annotations:
       dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-kover-jkwq/kubernetes-autoscaling-karpenter-overview
