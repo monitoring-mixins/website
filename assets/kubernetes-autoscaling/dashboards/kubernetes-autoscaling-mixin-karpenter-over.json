@@ -26,6 +26,138 @@
             "y": 0
          },
          "id": 1,
+         "title": "Cluster Summary",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "spanNulls": false
+               },
+               "unit": "short"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 1
+         },
+         "id": 2,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "lastNotNull",
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Last *",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  karpenter_nodepools_usage{\n    job=~\"$job\",\n    nodepool=~\"$nodepool\",\n    resource_type=\"cpu\"\n  }\n)\n",
+               "legendFormat": "Allocatable"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  karpenter_nodes_total_pod_requests{\n    job=~\"$job\",\n    resource_type=\"cpu\",\n    region=~\"$region\",\n    zone=~\"$zone\",\n    arch=~\"$arch\",\n    os=~\"$os\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\",\n    nodepool=~\"$nodepool\"\n  }\n) +\nsum(\n  karpenter_nodes_total_daemon_requests{\n    job=~\"$job\",\n    resource_type=\"cpu\",\n    region=~\"$region\",\n    zone=~\"$zone\",\n    arch=~\"$arch\",\n    os=~\"$os\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\",\n    nodepool=~\"$nodepool\"\n  }\n)\n",
+               "legendFormat": "Requested"
+            }
+         ],
+         "title": "Cluster CPU Utilization",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "spanNulls": false
+               },
+               "unit": "bytes"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 1
+         },
+         "id": 3,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "lastNotNull",
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Last *",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  karpenter_nodepools_usage{\n    job=~\"$job\",\n    nodepool=~\"$nodepool\",\n    resource_type=\"memory\"\n  }\n)\n",
+               "legendFormat": "Allocatable"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  karpenter_nodes_total_pod_requests{\n    job=~\"$job\",\n    resource_type=\"memory\",\n    region=~\"$region\",\n    zone=~\"$zone\",\n    arch=~\"$arch\",\n    os=~\"$os\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\",\n    nodepool=~\"$nodepool\"\n  }\n) +\nsum(\n  karpenter_nodes_total_daemon_requests{\n    job=~\"$job\",\n    resource_type=\"memory\",\n    region=~\"$region\",\n    zone=~\"$zone\",\n    arch=~\"$arch\",\n    os=~\"$os\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\",\n    nodepool=~\"$nodepool\"\n  }\n)\n",
+               "legendFormat": "Requested"
+            }
+         ],
+         "title": "Cluster Memory Utilization",
+         "type": "timeseries"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 6
+         },
+         "id": 4,
          "title": "Node Pool Summary",
          "type": "row"
       },
@@ -55,9 +187,9 @@
             "h": 3,
             "w": 4,
             "x": 0,
-            "y": 1
+            "y": 7
          },
-         "id": 2,
+         "id": 5,
          "options": {
             "reduceOptions": {
                "calcs": [
@@ -104,9 +236,9 @@
             "h": 3,
             "w": 4,
             "x": 4,
-            "y": 1
+            "y": 7
          },
-         "id": 3,
+         "id": 6,
          "options": {
             "reduceOptions": {
                "calcs": [
@@ -153,9 +285,9 @@
             "h": 3,
             "w": 4,
             "x": 8,
-            "y": 1
+            "y": 7
          },
-         "id": 4,
+         "id": 7,
          "options": {
             "reduceOptions": {
                "calcs": [
@@ -202,9 +334,9 @@
             "h": 3,
             "w": 4,
             "x": 12,
-            "y": 1
+            "y": 7
          },
-         "id": 5,
+         "id": 8,
          "options": {
             "reduceOptions": {
                "calcs": [
@@ -251,9 +383,9 @@
             "h": 3,
             "w": 4,
             "x": 16,
-            "y": 1
+            "y": 7
          },
-         "id": 6,
+         "id": 9,
          "options": {
             "reduceOptions": {
                "calcs": [
@@ -300,9 +432,9 @@
             "h": 3,
             "w": 4,
             "x": 20,
-            "y": 1
+            "y": 7
          },
-         "id": 7,
+         "id": 10,
          "options": {
             "reduceOptions": {
                "calcs": [
@@ -328,13 +460,65 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "spanNulls": false
+               },
+               "unit": "percent"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 10
+         },
+         "id": 11,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "lastNotNull",
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Last *",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  karpenter_nodepools_usage{\n    job=~\"$job\",\n    nodepool=~\"$nodepool\",\n  }\n) by (nodepool, resource_type)\n/\nsum(\n  karpenter_nodepools_limit{\n    job=~\"$job\",\n    nodepool=~\"$nodepool\",\n  }\n) by (nodepool, resource_type) * 100\n",
+               "legendFormat": "{{ nodepool }} / {{ resource_type }}"
+            }
+         ],
+         "title": "Node Pool Usage % of Limit",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
          "gridPos": {
             "h": 5,
             "w": 8,
             "x": 0,
-            "y": 4
+            "y": 18
          },
-         "id": 8,
+         "id": 12,
          "options": {
             "legend": {
                "asTable": true,
@@ -372,9 +556,9 @@
             "h": 5,
             "w": 8,
             "x": 8,
-            "y": 4
+            "y": 18
          },
-         "id": 9,
+         "id": 13,
          "options": {
             "legend": {
                "asTable": true,
@@ -412,9 +596,9 @@
             "h": 5,
             "w": 8,
             "x": 16,
-            "y": 4
+            "y": 18
          },
-         "id": 10,
+         "id": 14,
          "options": {
             "legend": {
                "asTable": true,
@@ -452,9 +636,9 @@
             "h": 5,
             "w": 6,
             "x": 0,
-            "y": 9
+            "y": 23
          },
-         "id": 11,
+         "id": 15,
          "options": {
             "legend": {
                "asTable": true,
@@ -492,9 +676,9 @@
             "h": 5,
             "w": 6,
             "x": 6,
-            "y": 9
+            "y": 23
          },
-         "id": 12,
+         "id": 16,
          "options": {
             "legend": {
                "asTable": true,
@@ -532,9 +716,9 @@
             "h": 5,
             "w": 6,
             "x": 12,
-            "y": 9
+            "y": 23
          },
-         "id": 13,
+         "id": 17,
          "options": {
             "legend": {
                "asTable": true,
@@ -572,9 +756,9 @@
             "h": 5,
             "w": 6,
             "x": 18,
-            "y": 9
+            "y": 23
          },
-         "id": 14,
+         "id": 18,
          "options": {
             "legend": {
                "asTable": true,
@@ -609,9 +793,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 14
+            "y": 28
          },
-         "id": 15,
+         "id": 19,
          "title": "Pod Summary",
          "type": "row"
       },
@@ -641,9 +825,9 @@
             "h": 3,
             "w": 6,
             "x": 0,
-            "y": 15
+            "y": 29
          },
-         "id": 16,
+         "id": 20,
          "options": {
             "reduceOptions": {
                "calcs": [
@@ -690,9 +874,9 @@
             "h": 3,
             "w": 6,
             "x": 6,
-            "y": 15
+            "y": 29
          },
-         "id": 17,
+         "id": 21,
          "options": {
             "reduceOptions": {
                "calcs": [
@@ -739,9 +923,9 @@
             "h": 3,
             "w": 6,
             "x": 12,
-            "y": 15
+            "y": 29
          },
-         "id": 18,
+         "id": 22,
          "options": {
             "reduceOptions": {
                "calcs": [
@@ -788,9 +972,9 @@
             "h": 3,
             "w": 6,
             "x": 18,
-            "y": 15
+            "y": 29
          },
-         "id": 19,
+         "id": 23,
          "options": {
             "reduceOptions": {
                "calcs": [
@@ -820,9 +1004,9 @@
             "h": 5,
             "w": 8,
             "x": 0,
-            "y": 18
+            "y": 32
          },
-         "id": 20,
+         "id": 24,
          "options": {
             "legend": {
                "asTable": true,
@@ -860,9 +1044,9 @@
             "h": 5,
             "w": 8,
             "x": 8,
-            "y": 18
+            "y": 32
          },
-         "id": 21,
+         "id": 25,
          "options": {
             "legend": {
                "asTable": true,
@@ -900,9 +1084,9 @@
             "h": 5,
             "w": 8,
             "x": 16,
-            "y": 18
+            "y": 32
          },
-         "id": 22,
+         "id": 26,
          "options": {
             "legend": {
                "asTable": true,
@@ -937,9 +1121,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 23
+            "y": 36
          },
-         "id": 23,
+         "id": 27,
          "title": "Node Pools",
          "type": "row"
       },
@@ -1019,9 +1203,9 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 24
+            "y": 37
          },
-         "id": 24,
+         "id": 28,
          "options": {
             "footer": {
                "enablePagination": true
@@ -1198,9 +1382,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 31
+            "y": 45
          },
-         "id": 25,
+         "id": 29,
          "title": "Nodes",
          "type": "row"
       },
@@ -1316,9 +1500,9 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 32
+            "y": 46
          },
-         "id": 26,
+         "id": 30,
          "options": {
             "footer": {
                "enablePagination": true
