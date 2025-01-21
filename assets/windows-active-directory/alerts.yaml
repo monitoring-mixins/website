@@ -78,6 +78,17 @@ groups:
     keep_firing_for: 5m
     labels:
       severity: warning
+  - alert: WindowsNodeHasRebooted
+    annotations:
+      description: Node {{ $labels.instance }} has rebooted {{ $value | humanize }}
+        seconds ago.
+      summary: Node has rebooted.
+    expr: |
+      (time() - windows_system_system_up_time{}) < 600
+      and
+      (time() - (windows_system_system_up_time{} offset 10m)) > 600
+    labels:
+      severity: info
   - alert: WindowsActiveDirectoryHighPendingReplicationOperations
     annotations:
       description: The number of pending replication operations on {{$labels.instance}}

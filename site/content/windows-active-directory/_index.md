@@ -130,6 +130,22 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### WindowsNodeHasRebooted
+
+{{< code lang="yaml" >}}
+alert: WindowsNodeHasRebooted
+annotations:
+  description: Node {{ $labels.instance }} has rebooted {{ $value | humanize }} seconds
+    ago.
+  summary: Node has rebooted.
+expr: |
+  (time() - windows_system_system_up_time{}) < 600
+  and
+  (time() - (windows_system_system_up_time{} offset 10m)) > 600
+labels:
+  severity: info
+{{< /code >}}
+ 
 ##### WindowsActiveDirectoryHighPendingReplicationOperations
 
 {{< code lang="yaml" >}}

@@ -50,8 +50,3 @@ labels:
   severity: critical
 {{< /code >}}
  
-## Dashboards
-Following dashboards are generated from mixins and hosted on github:
-
-
-- [jvm-dashboard](https://github.com/monitoring-mixins/website/blob/master/assets/jvm/dashboards/jvm-dashboard.json)
