@@ -77,7 +77,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_success{\n  job=~\"$job\"\n}\n",
+               "expr": "max by (instance) (probe_success{\n  job=~\"$job\"\n})\n",
                "legendFormat": "{{instance}}"
             }
          ],
@@ -333,7 +333,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_success{\n  job=~\"$job\",\n  instance=~\"$instance\"\n}\n"
+               "expr": "max by (instance) (probe_success{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n"
             }
          ],
          "title": "Uptime",
@@ -440,7 +440,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_success{\n  job=~\"$job\",\n  instance=~\"$instance\"\n}\n",
+               "expr": "max by (instance) (probe_success{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
                "instant": true
             }
          ],
@@ -498,7 +498,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_http_status_code{\n  job=~\"$job\",\n  instance=~\"$instance\"\n}\n",
+               "expr": "max by (instance) (probe_http_status_code{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
                "instant": true
             }
          ],
@@ -552,7 +552,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_http_ssl{\n  job=~\"$job\",\n  instance=~\"$instance\"\n}\n",
+               "expr": "max by (instance) (probe_http_ssl{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
                "instant": true
             }
          ],
@@ -603,7 +603,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_tls_version_info{\n  job=~\"$job\",\n  instance=~\"$instance\"\n}\n",
+               "expr": "max by (instance,version) (probe_tls_version_info{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
                "instant": true,
                "legendFormat": "{{version}}"
             }
@@ -651,7 +651,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_ssl_earliest_cert_expiry{\n  job=~\"$job\",\n  instance=~\"$instance\"\n} - time()\n"
+               "expr": "min by (instance) (probe_ssl_earliest_cert_expiry{\n  job=~\"$job\",\n  instance=~\"$instance\"\n} - time())\n"
             }
          ],
          "title": "SSL Certificate Expiry",
@@ -704,7 +704,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_http_redirects{\n  job=~\"$job\",\n  instance=~\"$instance\"\n}\n",
+               "expr": "max by (instance) (probe_http_redirects{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
                "instant": true
             }
          ],
@@ -742,7 +742,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_http_version{\n  job=~\"$job\",\n  instance=~\"$instance\"\n}\n",
+               "expr": "max by (instance) (probe_http_version{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
                "instant": true,
                "legendFormat": "{{version}}"
             }
@@ -781,7 +781,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_duration_seconds{\n  job=~\"$job\",\n  instance=~\"$instance\"\n}\n"
+               "expr": "avg by (instance) (probe_duration_seconds{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n"
             }
          ],
          "title": "Average Latency",
@@ -818,7 +818,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "probe_dns_lookup_time_seconds{\n  job=~\"$job\",\n  instance=~\"$instance\"\n}\n"
+               "expr": "avg by (instance) (probe_dns_lookup_time_seconds{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n"
             }
          ],
          "title": "Average Latency",
@@ -869,7 +869,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  probe_http_duration_seconds{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n) by (instance)\n",
+               "expr": "sum by (instance) (\n  avg by (phase,instance) (\n    probe_http_duration_seconds{\n      job=~\"$job\",\n      instance=~\"$instance\"\n    }\n))\n",
                "legendFormat": "HTTP duration"
             },
             {
@@ -877,7 +877,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  probe_duration_seconds{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n) by (instance)\n",
+               "expr": "avg by (instance) (\n  probe_duration_seconds{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n",
                "legendFormat": "Total probe duration"
             }
          ],
@@ -932,7 +932,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  probe_http_duration_seconds{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n) by (phase)\n",
+               "expr": "avg(\n  probe_http_duration_seconds{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n) by (phase)\n",
                "legendFormat": "{{ phase }}"
             },
             {
@@ -940,7 +940,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  probe_icmp_duration_seconds{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n) by (phase)\n",
+               "expr": "avg(\n  probe_icmp_duration_seconds{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n) by (phase)\n",
                "legendFormat": "{{ phase }}"
             }
          ],
