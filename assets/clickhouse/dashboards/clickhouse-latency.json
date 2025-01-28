@@ -108,7 +108,7 @@
                   "uid": "${prometheus_datasource}"
                },
                "editorMode": "builder",
-               "expr": "increase(ClickHouseProfileEvents_DiskReadElapsedMicroseconds{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "increase(ClickHouseProfileEvents_DiskReadElapsedMicroseconds{job=~\"$job\", instance=~\"$instance\"}[$__interval] offset -$__interval)",
                "legendFormat": "{{ instance }} - disk read elapsed",
                "range": true,
                "refId": "A"
@@ -200,7 +200,7 @@
                   "uid": "${prometheus_datasource}"
                },
                "editorMode": "builder",
-               "expr": "increase(ClickHouseProfileEvents_DiskWriteElapsedMicroseconds{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "increase(ClickHouseProfileEvents_DiskWriteElapsedMicroseconds{job=~\"$job\", instance=~\"$instance\"}[$__interval] offset -$__interval)",
                "legendFormat": "{{ instance }} - disk write elapsed",
                "range": true,
                "refId": "A"
@@ -292,7 +292,7 @@
                   "uid": "${prometheus_datasource}"
                },
                "editorMode": "builder",
-               "expr": "increase(ClickHouseProfileEvents_NetworkReceiveElapsedMicroseconds{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "increase(ClickHouseProfileEvents_NetworkReceiveElapsedMicroseconds{job=~\"$job\", instance=~\"$instance\"}[$__interval] offset -$__interval)",
                "legendFormat": "{{ instance }} - network receive elapsed",
                "range": true,
                "refId": "A"
@@ -384,7 +384,7 @@
                   "uid": "${prometheus_datasource}"
                },
                "editorMode": "builder",
-               "expr": "increase(ClickHouseProfileEvents_NetworkSendElapsedMicroseconds{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "increase(ClickHouseProfileEvents_NetworkSendElapsedMicroseconds{job=~\"$job\", instance=~\"$instance\"}[$__interval] offset -$__interval)",
                "legendFormat": "{{ instance }} - network send elapsed",
                "range": true,
                "refId": "A"
@@ -476,7 +476,7 @@
                   "uid": "${prometheus_datasource}"
                },
                "editorMode": "builder",
-               "expr": "increase(ClickHouseProfileEvents_ZooKeeperWaitMicroseconds{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "increase(ClickHouseProfileEvents_ZooKeeperWaitMicroseconds{job=~\"$job\", instance=~\"$instance\"}[$__interval] offset -$__interval)",
                "legendFormat": "{{ instance }} - ZooKeeper wait",
                "range": true,
                "refId": "A"
