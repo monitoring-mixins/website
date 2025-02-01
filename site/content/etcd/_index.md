@@ -34,9 +34,9 @@ expr: |
     )
   )
   > 0
-for: 10m
+for: 20m
 labels:
-  severity: critical
+  severity: warning
 {{< /code >}}
  
 ##### etcdInsufficientMembers
