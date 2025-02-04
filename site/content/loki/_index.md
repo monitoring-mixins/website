@@ -286,3 +286,4 @@ Following dashboards are generated from mixins and hosted on github:
 - [loki-retention](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-retention.json)
 - [loki-writes-resources](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-writes-resources.json)
 - [loki-writes](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki-writes.json)
+- [loki_thanos_object_storage](https://github.com/monitoring-mixins/website/blob/master/assets/loki/dashboards/loki_thanos_object_storage.json)
