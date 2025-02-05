@@ -1366,6 +1366,20 @@ labels:
   type: ceph_default
 {{< /code >}}
  
+##### NVMeoFMaxGatewayGroups
+
+{{< code lang="yaml" >}}
+alert: NVMeoFMaxGatewayGroups
+annotations:
+  description: You may create many gateway groups, but 4 is the tested limit
+  summary: Max gateway groups exceeded on cluster {{ $labels.cluster }}
+expr: count(count by (group, cluster) (ceph_nvmeof_gateway_info)) by (cluster) > 4.00
+for: 1m
+labels:
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
 ##### NVMeoFSingleGatewayGroup
 
 {{< code lang="yaml" >}}
