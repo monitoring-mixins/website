@@ -444,6 +444,22 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### NodeSystemdServiceCrashlooping
+
+{{< code lang="yaml" >}}
+alert: NodeSystemdServiceCrashlooping
+annotations:
+  description: Systemd service {{ $labels.name }} has being restarted too many times
+    at {{ $labels.instance }} for the last 15 minutes. Please check if service is
+    crash looping.
+  summary: Systemd service keeps restaring, possibly crash looping.
+expr: |
+  increase(node_systemd_service_restart_total{job="node"}[5m]) > 2
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### NodeBondingDegraded
 
 {{< code lang="yaml" >}}
