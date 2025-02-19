@@ -72,7 +72,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      job=~\"$job\"\n    }\n  )\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n"
             }
          ],
          "title": "Total Nodes",
@@ -121,7 +121,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_max_nodes_count{\n      job=~\"$job\"\n    }\n  )\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_max_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n"
             }
          ],
          "title": "Max Nodes",
@@ -170,7 +170,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_node_groups_count{\n      job=~\"$job\"\n    }\n  )\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_node_groups_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n"
             }
          ],
          "title": "Node Groups",
@@ -219,7 +219,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      job=~\"$job\",\n      state=\"ready\"\n    }\n  ) /\n  sum(\n    cluster_autoscaler_nodes_count{\n      job=~\"$job\"\n    }\n  ) * 100\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      state=\"ready\"\n    }\n  ) /\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  ) * 100\n)\n"
             }
          ],
          "title": "Healthy Nodes",
@@ -283,7 +283,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_cluster_safe_to_autoscale{\n      job=~\"$job\"\n    }\n  )\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_cluster_safe_to_autoscale{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n"
             }
          ],
          "title": "Safe To Scale",
@@ -320,7 +320,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_unschedulable_pods_count{\n      job=~\"$job\"\n    }\n  )\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_unschedulable_pods_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n"
             }
          ],
          "title": "Unscheduled Pods",
@@ -365,7 +365,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "time() - sum(\n  cluster_autoscaler_last_activity{\n    job=~\"$job\",\n    activity=\"scaleDown\"\n  }\n)\n"
+               "expr": "time() - sum(\n  cluster_autoscaler_last_activity{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    activity=\"scaleDown\"\n  }\n)\n"
             }
          ],
          "title": "Last Scale Down",
@@ -410,7 +410,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "time() - sum(\n  cluster_autoscaler_last_activity{\n    job=~\"$job\",\n    activity=\"scaleUp\"\n  }\n)\n"
+               "expr": "time() - sum(\n  cluster_autoscaler_last_activity{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    activity=\"scaleUp\"\n  }\n)\n"
             }
          ],
          "title": "Last Scale Up",
@@ -460,7 +460,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_unschedulable_pods_count{\n        job=~\"$job\"\n      }[2m]\n    )\n  ) by (type)\n)\n",
+               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_unschedulable_pods_count{\n        cluster=\"$cluster\",\n        job=~\"$job\"\n      }[2m]\n    )\n  ) by (type)\n)\n",
                "legendFormat": "{{ type }}"
             },
             {
@@ -468,7 +468,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_evicted_pods_total{\n        job=~\"$job\"\n      }[2m]\n    )\n  )\n)\n",
+               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_evicted_pods_total{\n        cluster=\"$cluster\",\n        job=~\"$job\"\n      }[2m]\n    )\n  )\n)\n",
                "legendFormat": "Evicted Pods"
             }
          ],
@@ -520,7 +520,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      job=~\"$job\"\n    }\n  ) by (state)\n)\n",
+               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  ) by (state)\n)\n",
                "legendFormat": "{{ state }}"
             }
          ],
@@ -572,7 +572,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      job=~\"$job\"\n    }\n  )\n)\n",
+               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n",
                "legendFormat": "Total Nodes"
             },
             {
@@ -580,7 +580,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_unneeded_nodes_count{\n      job=~\"$job\"\n    }\n  )\n)\n",
+               "expr": "round(\n  sum(\n    cluster_autoscaler_unneeded_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n",
                "legendFormat": "Unneeded Nodes"
             },
             {
@@ -588,7 +588,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_scaled_up_nodes_total{\n        job=~\"$job\"\n      }[2m]\n    )\n  )\n)\n",
+               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_scaled_up_nodes_total{\n        cluster=\"$cluster\",\n        job=~\"$job\"\n      }[2m]\n    )\n  )\n)\n",
                "legendFormat": "Scaled Up Nodes"
             },
             {
@@ -596,7 +596,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_scaled_down_nodes_total{\n        job=~\"$job\"\n      }[2m]\n    )\n  )\n)\n",
+               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_scaled_down_nodes_total{\n        cluster=\"$cluster\",\n        job=~\"$job\"\n      }[2m]\n    )\n  )\n)\n",
                "legendFormat": "Scaled Down Nodes"
             }
          ],
@@ -624,9 +624,22 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
+            "hide": 2,
+            "label": "Cluster",
+            "name": "cluster",
+            "query": "label_values(kube_pod_info{job=~\"kube-state-metrics\"}, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
             "label": "Job",
             "name": "job",
-            "query": "label_values(cluster_autoscaler_last_activity{}, job)",
+            "query": "label_values(cluster_autoscaler_last_activity{cluster=\"$cluster\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
