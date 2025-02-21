@@ -261,3 +261,13 @@ labels:
   severity: critical
 {{< /code >}}
  
+## Dashboards
+Following dashboards are generated from mixins and hosted on github:
+
+
+- [connect-overview](https://github.com/monitoring-mixins/website/blob/master/assets/kafka/dashboards/connect-overview.json)
+- [kafka-ksqldb-overview](https://github.com/monitoring-mixins/website/blob/master/assets/kafka/dashboards/kafka-ksqldb-overview.json)
+- [kafka-overview-dashboard](https://github.com/monitoring-mixins/website/blob/master/assets/kafka/dashboards/kafka-overview-dashboard.json)
+- [kafka-topic-dashboard](https://github.com/monitoring-mixins/website/blob/master/assets/kafka/dashboards/kafka-topic-dashboard.json)
+- [schema-registry-overview](https://github.com/monitoring-mixins/website/blob/master/assets/kafka/dashboards/schema-registry-overview.json)
+- [zookeeper-overview](https://github.com/monitoring-mixins/website/blob/master/assets/kafka/dashboards/zookeeper-overview.json)
