@@ -60,3 +60,8 @@ labels:
   severity: critical
 {{< /code >}}
  
+## Dashboards
+Following dashboards are generated from mixins and hosted on github:
+
+
+- [consul-overview](https://github.com/monitoring-mixins/website/blob/master/assets/consul/dashboards/consul-overview.json)
