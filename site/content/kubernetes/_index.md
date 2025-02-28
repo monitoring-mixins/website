@@ -921,6 +921,25 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### KubeNodePressure
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodepressure
+
+{{< code lang="yaml" >}}
+alert: KubeNodePressure
+annotations:
+  description: '{{ $labels.node }} has active Condition {{ $labels.condition }}. This
+    is caused by resource usage exceeding eviction thresholds.'
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodepressure
+  summary: Node has as active Condition.
+expr: |
+  kube_node_status_condition{job="kube-state-metrics",condition=~"(MemoryPressure|DiskPressure|PIDPressure)",status="true"} == 1
+  and on (cluster, node)
+  kube_node_spec_unschedulable{job="kube-state-metrics"} == 0
+for: 10m
+labels:
+  severity: info
+{{< /code >}}
+ 
 ##### KubeNodeUnreachable
 https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodeunreachable
 
@@ -983,6 +1002,29 @@ expr: |
 for: 15m
 labels:
   severity: warning
+{{< /code >}}
+ 
+##### KubeNodeEviction
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodeeviction
+
+{{< code lang="yaml" >}}
+alert: KubeNodeEviction
+annotations:
+  description: Node {{ $labels.node }} is evicting Pods due to {{ $labels.eviction_signal
+    }}.  Eviction occurs when eviction thresholds are crossed, typically caused by
+    Pods exceeding RAM/ephemeral-storage limits.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodeeviction
+  summary: Node is evicting pods.
+expr: |
+  sum(rate(kubelet_evictions{job="kubelet"}[15m])) by(cluster, eviction_signal, instance)
+  * on (cluster, instance) group_left(node)
+  max by (cluster, instance, node) (
+    kubelet_node_name{job="kubelet"}
+  )
+  > 0
+for: 0s
+labels:
+  severity: info
 {{< /code >}}
  
 ##### KubeletPlegDurationHigh
