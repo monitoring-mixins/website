@@ -27,7 +27,7 @@ annotations:
     last 5 minutes on {{$labels.instance}}, which is above the threshold of 80 percent.
   summary: The instance has a CPU usage higher than the configured threshold.
 expr: |
-  sum by (job,instance) (jvm_process_cpu_load{job=~"integrations/tomcat"}) > 80
+  sum by (job,instance) (jvm_process_cpu_load{job="integrations/tomcat"}) > 80
 for: 5m
 labels:
   severity: critical
@@ -43,7 +43,7 @@ annotations:
     percent.
   summary: The instance has a higher memory usage than the configured threshold.
 expr: |
-  sum(jvm_memory_usage_used_bytes{job=~"integrations/tomcat"}) by (job,instance) / sum(jvm_physical_memory_bytes{job=~"integrations/tomcat"}) by (job,instance) * 100 > 80
+  sum(jvm_memory_usage_used_bytes{job="integrations/tomcat"}) by (job,instance) / sum(jvm_physical_memory_bytes{job="integrations/tomcat"}) by (job,instance) * 100 > 80
 for: 5m
 labels:
   severity: critical
@@ -59,7 +59,7 @@ annotations:
     threshold of 5 percent.
   summary: There are a high number of request errors.
 expr: |
-  sum by (job,instance) (increase(tomcat_errorcount_total{job=~"integrations/tomcat"}[5m]) / increase(tomcat_requestcount_total{job=~"integrations/tomcat"}[5m]) * 100) > 5
+  sum by (job,instance) (increase(tomcat_errorcount_total{job="integrations/tomcat"}[5m]) / increase(tomcat_requestcount_total{job="integrations/tomcat"}[5m]) * 100) > 5
 for: 5m
 labels:
   severity: critical
@@ -74,7 +74,7 @@ annotations:
     last 5 minutes on {{$labels.instance}}, which is above the threshold of 300ms.
   summary: The processing time has been moderately high.
 expr: |
-  sum by (job,instance) (increase(tomcat_processingtime_total{job=~"integrations/tomcat"}[5m]) / increase(tomcat_requestcount_total{job=~"integrations/tomcat"}[5m])) > 300
+  sum by (job,instance) (increase(tomcat_processingtime_total{job="integrations/tomcat"}[5m]) / increase(tomcat_requestcount_total{job="integrations/tomcat"}[5m])) > 300
 for: 5m
 labels:
   severity: warning
