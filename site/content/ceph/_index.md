@@ -1312,7 +1312,8 @@ annotations:
     alert means that no more namespaces can be added to {{ $labels.nqn }}
   summary: '{{ $labels.nqn }} subsystem has reached its maximum number of namespaces
     on cluster {{ $labels.cluster }}'
-expr: (count by(nqn, cluster) (ceph_nvmeof_subsystem_namespace_metadata)) >= ceph_nvmeof_subsystem_namespace_limit
+expr: (count by(nqn, cluster, instance) (ceph_nvmeof_subsystem_namespace_metadata))
+  >= on(nqn, instance) group_right(cluster) ceph_nvmeof_subsystem_namespace_limit
 for: 1m
 labels:
   severity: warning
