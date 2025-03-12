@@ -63,9 +63,9 @@ annotations:
   summary: An Alertmanager instance failed to send notifications.
 expr: |
   (
-    rate(alertmanager_notifications_failed_total{job="alertmanager"}[5m])
+    rate(alertmanager_notifications_failed_total{job="alertmanager"}[15m])
   /
-    ignoring (reason) group_left rate(alertmanager_notifications_total{job="alertmanager"}[5m])
+    ignoring (reason) group_left rate(alertmanager_notifications_total{job="alertmanager"}[15m])
   )
   > 0.01
 for: 5m
@@ -85,9 +85,9 @@ annotations:
     a critical integration.
 expr: |
   min by (job, integration) (
-    rate(alertmanager_notifications_failed_total{job="alertmanager", integration=~`.*`}[5m])
+    rate(alertmanager_notifications_failed_total{job="alertmanager", integration=~`.*`}[15m])
   /
-    ignoring (reason) group_left rate(alertmanager_notifications_total{job="alertmanager", integration=~`.*`}[5m])
+    ignoring (reason) group_left rate(alertmanager_notifications_total{job="alertmanager", integration=~`.*`}[15m])
   )
   > 0.01
 for: 5m
@@ -107,9 +107,9 @@ annotations:
     a non-critical integration.
 expr: |
   min by (job, integration) (
-    rate(alertmanager_notifications_failed_total{job="alertmanager", integration!~`.*`}[5m])
+    rate(alertmanager_notifications_failed_total{job="alertmanager", integration!~`.*`}[15m])
   /
-    ignoring (reason) group_left rate(alertmanager_notifications_total{job="alertmanager", integration!~`.*`}[5m])
+    ignoring (reason) group_left rate(alertmanager_notifications_total{job="alertmanager", integration!~`.*`}[15m])
   )
   > 0.01
 for: 5m

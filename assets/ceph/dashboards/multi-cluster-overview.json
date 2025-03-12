@@ -1786,6 +1786,7 @@
                   }
                },
                "pluginVersion": "9.1.3",
+               "seriesOverrides": [ ],
                "targets": [
                   {
                      "datasource": "$datasource",
@@ -1876,6 +1877,7 @@
                   }
                },
                "pluginVersion": "9.1.3",
+               "seriesOverrides": [ ],
                "targets": [
                   {
                      "datasource": "$datasource",
@@ -1966,6 +1968,7 @@
                   }
                },
                "pluginVersion": "9.1.3",
+               "seriesOverrides": [ ],
                "targets": [
                   {
                      "datasource": "$datasource",
