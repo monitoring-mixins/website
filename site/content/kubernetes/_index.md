@@ -527,7 +527,7 @@ annotations:
   summary: Processes experience elevated CPU throttling.
 expr: |
   sum(increase(container_cpu_cfs_throttled_periods_total{container!="", job="cadvisor", }[5m])) without (id, metrics_path, name, image, endpoint, job, node)
-    /
+    / on (cluster, namespace, pod, container, instance) group_left
   sum(increase(container_cpu_cfs_periods_total{job="cadvisor", }[5m])) without (id, metrics_path, name, image, endpoint, job, node)
     > ( 25 / 100 )
 for: 15m
