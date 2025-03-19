@@ -1381,10 +1381,10 @@ labels:
   type: ceph_default
 {{< /code >}}
  
-##### NVMeoFSingleGatewayGroup
+##### NVMeoFSingleGateway
 
 {{< code lang="yaml" >}}
-alert: NVMeoFSingleGatewayGroup
+alert: NVMeoFSingleGateway
 annotations:
   description: Although a single member gateway group is valid, it should only be
     used for test purposes
