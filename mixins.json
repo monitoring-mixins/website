@@ -434,7 +434,7 @@
         {
             "name": "snmp",
             "source": "https://github.com/grafana/jsonnet-libs",
-            "subdir": "snmp-mixin"
+            "subdir": "snmp-observ-lib"
         },
         {
             "name": "spark",
