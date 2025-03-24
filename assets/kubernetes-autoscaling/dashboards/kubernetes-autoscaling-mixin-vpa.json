@@ -26,7 +26,7 @@
             "y": 0
          },
          "id": 1,
-         "title": "$namespace Summary",
+         "title": "Namespace $namespace Summary",
          "type": "row"
       },
       {

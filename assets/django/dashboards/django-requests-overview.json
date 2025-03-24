@@ -421,7 +421,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             },
@@ -430,7 +430,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             },
@@ -439,12 +439,12 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             }
          ],
-         "title": "API & Other Views Request Latency",
+         "title": "API & Other Views Request Latency [1h]",
          "transformations": [
             {
                "id": "merge"
@@ -662,7 +662,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             },
@@ -671,7 +671,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             },
@@ -680,12 +680,12 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             }
          ],
-         "title": "Admin Request Latency",
+         "title": "Admin Request Latency [1h]",
          "transformations": [
             {
                "transformations": [
