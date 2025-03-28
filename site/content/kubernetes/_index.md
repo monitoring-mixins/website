@@ -1829,6 +1829,18 @@ record: cluster_quantile:apiserver_request_sli_duration_seconds:histogram_quanti
  
 ### k8s.rules.container_cpu_usage_seconds_total
 
+##### node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum by (cluster, namespace, pod, container) (
+    rate(container_cpu_usage_seconds_total{job="cadvisor", image!=""}[5m])
+  ) * on (cluster, namespace, pod) group_left(node) topk by (cluster, namespace, pod) (
+    1, max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
+  )
+record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate5m
+{{< /code >}}
+ 
 ##### node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate
 
 {{< code lang="yaml" >}}
