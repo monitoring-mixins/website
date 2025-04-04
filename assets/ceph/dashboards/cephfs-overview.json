@@ -71,6 +71,7 @@
       },
       {
          "datasource": "$datasource",
+         "description": "",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -83,7 +84,7 @@
                   "axisPlacement": "auto",
                   "barAlignment": 0,
                   "drawStyle": "line",
-                  "fillOpacity": 0,
+                  "fillOpacity": 8,
                   "gradientMode": "none",
                   "hideFrom": {
                      "legend": false,
@@ -162,6 +163,7 @@
       },
       {
          "datasource": "$datasource",
+         "description": "",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -174,7 +176,7 @@
                   "axisPlacement": "auto",
                   "barAlignment": 0,
                   "drawStyle": "line",
-                  "fillOpacity": 0,
+                  "fillOpacity": 8,
                   "gradientMode": "none",
                   "hideFrom": {
                      "legend": false,
