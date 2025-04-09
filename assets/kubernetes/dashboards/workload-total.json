@@ -35,6 +35,7 @@
             "y": 0
          },
          "id": 1,
+         "interval": "1m",
          "options": {
             "displayMode": "basic",
             "showUnfilled": false
@@ -74,6 +75,7 @@
             "y": 0
          },
          "id": 2,
+         "interval": "1m",
          "options": {
             "displayMode": "basic",
             "showUnfilled": false
@@ -113,6 +115,7 @@
             "y": 9
          },
          "id": 3,
+         "interval": "1m",
          "options": {
             "displayMode": "basic",
             "showUnfilled": false
@@ -152,6 +155,7 @@
             "y": 9
          },
          "id": 4,
+         "interval": "1m",
          "options": {
             "displayMode": "basic",
             "showUnfilled": false

@@ -2284,7 +2284,7 @@ record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
 {{< code lang="yaml" >}}
 expr: |
   count by (cluster) (
-    windows_system_system_up_time{job="kubernetes-windows-exporter"}
+    windows_system_boot_time_timestamp_seconds{job="kubernetes-windows-exporter"}
   )
 record: node:windows_node:sum
 {{< /code >}}

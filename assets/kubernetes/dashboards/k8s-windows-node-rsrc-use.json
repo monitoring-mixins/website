@@ -599,7 +599,7 @@
             "hide": 0,
             "label": "instance",
             "name": "instance",
-            "query": "label_values(windows_system_system_up_time{cluster=\"$cluster\"}, instance)",
+            "query": "label_values(windows_system_boot_time_timestamp_seconds{cluster=\"$cluster\"}, instance)",
             "refresh": 2,
             "type": "query"
          }

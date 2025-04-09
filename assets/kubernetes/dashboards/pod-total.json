@@ -53,6 +53,7 @@
             "y": 0
          },
          "id": 1,
+         "interval": "1m",
          "pluginVersion": "v11.4.0",
          "targets": [
             {
@@ -106,6 +107,7 @@
             "y": 0
          },
          "id": 2,
+         "interval": "1m",
          "pluginVersion": "v11.4.0",
          "targets": [
             {

@@ -51,7 +51,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_cluster_info{\n    namespace=~'$namespace',\n    job=~'$job'\n  }\n)\n"
+               "expr": "sum(\n  argocd_cluster_info{\n    cluster=\"$cluster\",\n    namespace=~'$namespace',\n    job=~'$job'\n  }\n)\n"
             }
          ],
          "title": "Clusters",
@@ -81,7 +81,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "count(\n  count(\n    argocd_app_info{\n      namespace=~'$namespace',\n      job=~'$job'\n    }\n  )\n  by (repo)\n)\n"
+               "expr": "count(\n  count(\n    argocd_app_info{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job'\n    }\n  )\n  by (repo)\n)\n"
             }
          ],
          "title": "Repositories",
@@ -111,7 +111,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    namespace=~'$namespace',\njob=~'$job',\ndest_server=~'$cluster',\nproject=~'$project',\n\n  }\n)\n"
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n)\n"
             }
          ],
          "title": "Applications",
@@ -201,7 +201,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    namespace=~'$namespace',\njob=~'$job',\ndest_server=~'$cluster',\nproject=~'$project',\n\n  }\n) by (health_status)\n",
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (health_status)\n",
                "instant": true,
                "legendFormat": "{{ health_status }}"
             }
@@ -293,7 +293,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    namespace=~'$namespace',\njob=~'$job',\ndest_server=~'$cluster',\nproject=~'$project',\n\n  }\n) by (sync_status)\n",
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (sync_status)\n",
                "instant": true,
                "legendFormat": "{{ sync_status }}"
             }
@@ -356,7 +356,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    namespace=~'$namespace',\njob=~'$job',\ndest_server=~'$cluster',\nproject=~'$project',\n\n  }\n) by (job, dest_server, project, name, health_status, sync_status)\n",
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (job, dest_server, project, name, health_status, sync_status)\n",
                "format": "table",
                "instant": true
             }
@@ -379,7 +379,7 @@
                      "sync_status": 3
                   },
                   "renameByName": {
-                     "dest_server": "Cluster",
+                     "dest_server": "Kubernetes Cluster",
                      "health_status": "Health Status",
                      "job": "Job",
                      "name": "Application",
@@ -448,7 +448,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        namespace=~'$namespace',\njob=~'$job',\ndest_server=~'$cluster',\nproject=~'$project',\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, name)\n",
+               "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, name)\n",
                "legendFormat": "{{ dest_server }}/{{ project }}/{{ name }}"
             }
          ],
@@ -500,7 +500,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        namespace=~'$namespace',\njob=~'$job',\ndest_server=~'$cluster',\nproject=~'$project',\n\n        phase=~\"Error|Failed\"\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, application, phase)\n",
+               "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n        phase=~\"Error|Failed\"\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, application, phase)\n",
                "legendFormat": "{{ dest_server }}/{{ project }}/{{ application }} - {{ phase }}"
             }
          ],
@@ -564,7 +564,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_app_reconcile_count{\n        namespace=~'$namespace',\n        job=~'$job',\n        dest_server=~'$cluster'\n      }[$__rate_interval]\n    )\n  )\n) by (namespace, job, dest_server)\n",
+               "expr": "sum(\n  round(\n    increase(\n      argocd_app_reconcile_count{\n        cluster=\"$cluster\",\n        namespace=~'$namespace',\n        job=~'$job',\n        dest_server=~'$kubernetes_cluster'\n      }[$__rate_interval]\n    )\n  )\n) by (namespace, job, dest_server)\n",
                "legendFormat": "{{ namespace }}/{{ dest_server }}"
             }
          ],
@@ -595,7 +595,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  increase(\n    argocd_app_reconcile_bucket{\n      namespace=~'$namespace',\n      job=~'$job',\n      dest_server=~'$cluster'\n    }[$__rate_interval]\n  )\n) by (le)\n",
+               "expr": "sum(\n  increase(\n    argocd_app_reconcile_bucket{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      dest_server=~'$kubernetes_cluster'\n    }[$__rate_interval]\n  )\n) by (le)\n",
                "format": "heatmap",
                "legendFormat": "{{ le }}"
             }
@@ -648,7 +648,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_app_k8s_request_total{\n        namespace=~'$namespace',\n        job=~'$job',\n        project=~'$project'\n      }[$__rate_interval]\n    )\n  )\n) by (job, server, project, verb, resource_kind)\n",
+               "expr": "sum(\n  round(\n    increase(\n      argocd_app_k8s_request_total{\n        cluster=\"$cluster\",\n        namespace=~'$namespace',\n        job=~'$job',\n        project=~'$project'\n      }[$__rate_interval]\n    )\n  )\n) by (job, server, project, verb, resource_kind)\n",
                "legendFormat": "{{ server }}/{{ project }} - {{ verb }}/{{ resource_kind }}"
             }
          ],
@@ -700,7 +700,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_kubectl_exec_pending{\n    namespace=~'$namespace',\n    job=~'$job'\n  }\n) by (job, command)\n",
+               "expr": "sum(\n  argocd_kubectl_exec_pending{\n    cluster=\"$cluster\",\n    namespace=~'$namespace',\n    job=~'$job'\n  }\n) by (job, command)\n",
                "legendFormat": "{{ dest_server }} - {{ command }}"
             }
          ],
@@ -764,7 +764,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_cluster_api_resource_objects{\n    namespace=~'$namespace',\n    job=~'$job',\n    server=~'$cluster'\n  }\n) by (namespace, job, server)\n",
+               "expr": "sum(\n  argocd_cluster_api_resource_objects{\n    cluster=\"$cluster\",\n    namespace=~'$namespace',\n    job=~'$job',\n    server=~'$kubernetes_cluster'\n  }\n) by (namespace, job, server)\n",
                "legendFormat": "{{ server }}"
             }
          ],
@@ -816,7 +816,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_cluster_api_resources{\n    namespace=~'$namespace',\n    job=~'$job',\n    server=~'$cluster'\n  }\n) by (namespace, job, server)\n",
+               "expr": "sum(\n  argocd_cluster_api_resources{\n    cluster=\"$cluster\",\n    namespace=~'$namespace',\n    job=~'$job',\n    server=~'$kubernetes_cluster'\n  }\n) by (namespace, job, server)\n",
                "legendFormat": "{{ server }}"
             }
          ],
@@ -868,7 +868,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  increase(\n    argocd_cluster_events_total{\n      namespace=~'$namespace',\n      job=~'$job',\n      server=~'$cluster'\n    }[$__rate_interval]\n  )\n) by (namespace, job, server)\n",
+               "expr": "sum(\n  increase(\n    argocd_cluster_events_total{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      server=~'$kubernetes_cluster'\n    }[$__rate_interval]\n  )\n) by (namespace, job, server)\n",
                "legendFormat": "{{ server }}"
             }
          ],
@@ -932,7 +932,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  increase(\n    argocd_git_request_total{\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
+               "expr": "sum(\n  increase(\n    argocd_git_request_total{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
                "legendFormat": "{{ namespace }} - {{ repo }}"
             }
          ],
@@ -984,7 +984,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  increase(\n    argocd_git_request_total{\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
+               "expr": "sum(\n  increase(\n    argocd_git_request_total{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
                "legendFormat": "{{ namespace }} - {{ repo }}"
             }
          ],
@@ -1015,7 +1015,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  increase(\n    argocd_git_request_duration_seconds_bucket{\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
+               "expr": "sum(\n  increase(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
                "format": "heatmap",
                "legendFormat": "{{ le }}"
             }
@@ -1047,7 +1047,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  increase(\n    argocd_git_request_duration_seconds_bucket{\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
+               "expr": "sum(\n  increase(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
                "format": "heatmap",
                "legendFormat": "{{ le }}"
             }
@@ -1064,6 +1064,11 @@
    "templating": {
       "list": [
          {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
@@ -1074,11 +1079,24 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
+            "hide": 2,
+            "label": "Cluster",
+            "name": "cluster",
+            "query": "label_values(argocd_app_info{}, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
             "includeAll": true,
             "label": "Namespace",
             "multi": true,
             "name": "namespace",
-            "query": "label_values(argocd_app_info{}, namespace)",
+            "query": "label_values(argocd_app_info{cluster=\"$cluster\"}, namespace)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -1105,10 +1123,10 @@
                "uid": "${datasource}"
             },
             "includeAll": true,
-            "label": "Cluster",
+            "label": "Kubernetes Cluster",
             "multi": true,
-            "name": "cluster",
-            "query": "label_values(argocd_app_info{namespace=~\"$namespace\", job=~\"$job\"}, dest_server)",
+            "name": "kubernetes_cluster",
+            "query": "label_values(argocd_app_info{cluster=\"$cluster\", namespace=~\"$namespace\", job=~\"$job\"}, dest_server)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -1122,7 +1140,7 @@
             "label": "Project",
             "multi": true,
             "name": "project",
-            "query": "label_values(argocd_app_info{namespace=~\"$namespace\", job=~\"$job\", dest_server=~\"$cluster\"}, project)",
+            "query": "label_values(argocd_app_info{cluster=\"$cluster\", namespace=~\"$namespace\", job=~\"$job\", dest_server=~\"$kubernetes_cluster\"}, project)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

@@ -71,7 +71,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(\n  0.5,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_request_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "expr": "histogram_quantile(\n  0.5,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_request_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
                "legendFormat": ".5 - {{ ingress }}/{{ exported_namespace }}"
             },
             {
@@ -79,7 +79,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(\n  0.95,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_request_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "expr": "histogram_quantile(\n  0.95,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_request_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
                "legendFormat": ".95 - {{ ingress }}/{{ exported_namespace }}"
             },
             {
@@ -87,7 +87,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(\n  0.99,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_request_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "expr": "histogram_quantile(\n  0.99,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_request_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
                "legendFormat": ".99 - {{ ingress }}/{{ exported_namespace }}"
             }
          ],
@@ -138,7 +138,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(\n  0.5,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "expr": "histogram_quantile(\n  0.5,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
                "legendFormat": ".5 - {{ ingress }}/{{ exported_namespace }}"
             },
             {
@@ -146,7 +146,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(\n  0.95,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "expr": "histogram_quantile(\n  0.95,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
                "legendFormat": ".95 - {{ ingress }}/{{ exported_namespace }}"
             },
             {
@@ -154,7 +154,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(\n  0.99,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "expr": "histogram_quantile(\n  0.99,\n  sum by (le, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
                "legendFormat": ".99 - {{ ingress }}/{{ exported_namespace }}"
             }
          ],
@@ -221,7 +221,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum by (path, ingress, exported_namespace)(\n  rate(\n    nginx_ingress_controller_request_duration_seconds_count{\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress =~ \"$ingress\"\n    }[$__rate_interval]\n  )\n)\n",
+               "expr": "sum by (path, ingress, exported_namespace)(\n  rate(\n    nginx_ingress_controller_request_duration_seconds_count{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress =~ \"$ingress\"\n    }[$__rate_interval]\n  )\n)\n",
                "legendFormat": "{{ path }} - {{ ingress }}/{{ exported_namespace }}"
             }
          ],
@@ -272,7 +272,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(\n  .5,\n  sum by (le, path, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "expr": "histogram_quantile(\n  .5,\n  sum by (le, path, ingress, exported_namespace)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        job=~\"$job\",\n        exported_namespace=~\"$exported_namespace\",\n        ingress =~ \"$ingress\"\n      }[$__rate_interval]\n    )\n  )\n)\n",
                "legendFormat": "{{ path }} - {{ ingress }}/{{ exported_namespace }}"
             }
          ],
@@ -327,7 +327,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum by (path, ingress, exported_namespace) (\n  rate(\n    nginx_ingress_controller_requests{\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\",\n      status=~\"[$error_codes].*\"\n    }[$__rate_interval]\n  )\n)\n/\nsum by (path, ingress, exported_namespace) (\n  rate(\n    nginx_ingress_controller_requests{\n      job=~\"$job\",\n      exported_namespace =~ \"$exported_namespace\",\n      ingress =~ \"$ingress\"\n    }[$__rate_interval]\n  )\n)\n",
+               "expr": "sum by (path, ingress, exported_namespace) (\n  rate(\n    nginx_ingress_controller_requests{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\",\n      status=~\"[$error_codes].*\"\n    }[$__rate_interval]\n  )\n)\n/\nsum by (path, ingress, exported_namespace) (\n  rate(\n    nginx_ingress_controller_requests{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      exported_namespace =~ \"$exported_namespace\",\n      ingress =~ \"$ingress\"\n    }[$__rate_interval]\n  )\n)\n",
                "legendFormat": "{{ path }} - {{ ingress }}/{{ exported_namespace }}"
             }
          ],
@@ -378,7 +378,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum by (path, ingress, exported_namespace) (\n  rate(\n    nginx_ingress_controller_response_duration_seconds_sum{\n      job=~\"$job\",\n      exported_namespace =~ \"$exported_namespace\",\n      ingress =~ \"$ingress\"\n    }[$__rate_interval]\n  )\n)\n",
+               "expr": "sum by (path, ingress, exported_namespace) (\n  rate(\n    nginx_ingress_controller_response_duration_seconds_sum{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      exported_namespace =~ \"$exported_namespace\",\n      ingress =~ \"$ingress\"\n    }[$__rate_interval]\n  )\n)\n",
                "legendFormat": "{{ path }} - {{ ingress }}/{{ exported_namespace }}"
             }
          ],
@@ -433,7 +433,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum (\n  rate(\n    nginx_ingress_controller_request_duration_seconds_count{\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\",\n      status=~\"[$error_codes].*\"\n    }[$__rate_interval]\n  )\n) by(path, ingress, exported_namespace, status)\n",
+               "expr": "sum (\n  rate(\n    nginx_ingress_controller_request_duration_seconds_count{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\",\n      status=~\"[$error_codes].*\"\n    }[$__rate_interval]\n  )\n) by(path, ingress, exported_namespace, status)\n",
                "legendFormat": "{{ status }} {{ path }} - {{ ingress }}/{{ exported_namespace }}"
             }
          ],
@@ -488,7 +488,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum (\n  rate (\n    nginx_ingress_controller_response_size_sum {\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\"\n    }[$__rate_interval]\n  )\n)  by (path, ingress, exported_namespace)\n/\nsum (\n  rate(\n    nginx_ingress_controller_response_size_count {\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\",\n    }[$__rate_interval]\n  )\n) by (path, ingress, exported_namespace)\n",
+               "expr": "sum (\n  rate (\n    nginx_ingress_controller_response_size_sum {\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\"\n    }[$__rate_interval]\n  )\n)  by (path, ingress, exported_namespace)\n/\nsum (\n  rate(\n    nginx_ingress_controller_response_size_count {\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      exported_namespace=~\"$exported_namespace\",\n      ingress=~\"$ingress\"\n    }[$__rate_interval]\n  )\n) by (path, ingress, exported_namespace)\n",
                "legendFormat": "{{ path }} - {{ ingress }}/{{ exported_namespace }}"
             }
          ],
@@ -504,6 +504,11 @@
    "templating": {
       "list": [
          {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
@@ -514,11 +519,24 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
+            "hide": 2,
+            "label": "Cluster",
+            "name": "cluster",
+            "query": "label_values(nginx_ingress_controller_config_hash{}, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
             "includeAll": false,
             "label": "Job",
             "multi": false,
             "name": "job",
-            "query": "label_values(nginx_ingress_controller_config_hash{}, job)",
+            "query": "label_values(nginx_ingress_controller_config_hash{cluster=\"$cluster\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -532,7 +550,7 @@
             "label": "Ingress Namespace",
             "multi": true,
             "name": "exported_namespace",
-            "query": "label_values(nginx_ingress_controller_requests{job=\"$job\"}, exported_namespace)",
+            "query": "label_values(nginx_ingress_controller_requests{cluster=\"$cluster\", job=\"$job\"}, exported_namespace)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -546,7 +564,7 @@
             "label": "Ingress",
             "multi": true,
             "name": "ingress",
-            "query": "label_values(nginx_ingress_controller_requests{job=\"$job\", exported_namespace=~\"$exported_namespace\"}, ingress)",
+            "query": "label_values(nginx_ingress_controller_requests{cluster=\"$cluster\", job=\"$job\", exported_namespace=~\"$exported_namespace\"}, ingress)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

@@ -71,7 +71,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_notifications_deliveries_total{\n        namespace=~'$namespace',\njob=~'$job',\n\n        exported_service=~\"$exported_service\",\n      }[$__rate_interval]\n    )\n  )\n) by (job, exported_service, succeeded)\n",
+               "expr": "sum(\n  round(\n    increase(\n      argocd_notifications_deliveries_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\n\n        exported_service=~\"$exported_service\",\n      }[$__rate_interval]\n    )\n  )\n) by (job, exported_service, succeeded)\n",
                "legendFormat": "{{ exported_service }} - Succeeded: {{ succeeded }}"
             }
          ],
@@ -122,7 +122,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_notifications_trigger_eval_total{\n        namespace=~'$namespace',\njob=~'$job',\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, name, triggered)\n",
+               "expr": "sum(\n  round(\n    increase(\n      argocd_notifications_trigger_eval_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, name, triggered)\n",
                "legendFormat": "{{ name }} - Triggered: {{ triggered }}"
             }
          ],
@@ -138,6 +138,11 @@
    "templating": {
       "list": [
          {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
@@ -148,11 +153,24 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
+            "hide": 2,
+            "label": "Cluster",
+            "name": "cluster",
+            "query": "label_values(argocd_notifications_deliveries_total{}, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
             "includeAll": true,
             "label": "Namespace",
             "multi": true,
             "name": "namespace",
-            "query": "label_values(argocd_notifications_deliveries_total{}, namespace)",
+            "query": "label_values(argocd_notifications_deliveries_total{cluster=\"$cluster\"}, namespace)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -167,7 +185,7 @@
             "label": "Job",
             "multi": true,
             "name": "job",
-            "query": "label_values(argocd_notifications_deliveries_total{namespace=~\"$namespace\"}, job)",
+            "query": "label_values(argocd_notifications_deliveries_total{cluster=\"$cluster\", namespace=~\"$namespace\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -181,7 +199,7 @@
             "label": "Notifications Service",
             "multi": true,
             "name": "exported_service",
-            "query": "label_values(argocd_notifications_deliveries_total{namespace=~\"$namespace\", job=~\"$job\"}, exported_service)",
+            "query": "label_values(argocd_notifications_deliveries_total{cluster=\"$cluster\", namespace=~\"$namespace\", job=~\"$job\"}, exported_service)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

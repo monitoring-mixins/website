@@ -40,7 +40,7 @@ expr: |
         }[10m]
       )
     )
-  ) by (job, dest_server, project, name, phase) > 0
+  ) by (cluster, job, dest_server, project, name, phase) > 0
 for: 1m
 labels:
   severity: warning
@@ -64,7 +64,7 @@ expr: |
       job=~".*",
       health_status!~"Healthy|Progressing"
     }
-  ) by (job, dest_server, project, name, health_status)
+  ) by (cluster, job, dest_server, project, name, health_status)
   > 0
 for: 15m
 labels:
@@ -89,7 +89,7 @@ expr: |
       job=~".*",
       sync_status!="Synced"
     }
-  ) by (job, dest_server, project, name, sync_status)
+  ) by (cluster, job, dest_server, project, name, sync_status)
   > 0
 for: 15m
 labels:
@@ -114,7 +114,7 @@ expr: |
       autosync_enabled!="true",
       name!~""
     }
-  ) by (job, dest_server, project, name, autosync_enabled)
+  ) by (cluster, job, dest_server, project, name, autosync_enabled)
   > 0
 for: 2h
 labels:
@@ -141,7 +141,7 @@ expr: |
         }[10m]
       )
     )
-  ) by (job, exported_service, succeeded) > 0
+  ) by (cluster, job, exported_service, succeeded) > 0
 for: 1m
 labels:
   severity: warning
