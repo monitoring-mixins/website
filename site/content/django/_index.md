@@ -32,7 +32,7 @@ expr: |
     django_migrations_unapplied_total{
       job=~"django"
     }
-  ) by (namespace, job)
+  ) by (cluster, namespace, job)
   > 0
 for: 15m
 labels:
@@ -56,7 +56,7 @@ expr: |
         job=~"django"
       }[10m]
     )
-  ) by (type, namespace, job)
+  ) by (cluster, type, namespace, job)
   > 0
 labels:
   severity: info
@@ -81,7 +81,7 @@ expr: |
         view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
       }[5m]
     )
-  )  by (namespace, job, view)
+  )  by (cluster, namespace, job, view)
   /
   sum(
     rate(
@@ -90,7 +90,7 @@ expr: |
         view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
       }[5m]
     )
-  )  by (namespace, job, view)
+  )  by (cluster, namespace, job, view)
   * 100 > 5
 for: 1m
 labels:
@@ -116,7 +116,7 @@ expr: |
         view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
       }[5m]
     )
-  )  by (namespace, job, view)
+  )  by (cluster, namespace, job, view)
   /
   sum(
     rate(
@@ -125,7 +125,7 @@ expr: |
         view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
       }[5m]
     )
-  )  by (namespace, job, view)
+  )  by (cluster, namespace, job, view)
   * 100 > 5
 for: 1m
 labels:

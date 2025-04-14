@@ -5,6 +5,9 @@
    "editable": true,
    "links": [
       {
+         "asDropdown": true,
+         "includeVars": true,
+         "keepTime": true,
          "tags": [
             "django",
             "django-mixin"
@@ -70,7 +73,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\"\n      }[$__rate_interval]\n    )\n  ), 0.001\n)\n"
+               "expr": "round(\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\"\n      }[$__rate_interval]\n    )\n  ), 0.001\n)\n"
             }
          ],
          "title": "Request Volume",
@@ -123,7 +126,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n      view=~\"$view\",\n      view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n      method=~\"$method\",\n      status!~\"[4-5].*\"\n    }[$__rate_interval]\n  )\n) /\nsum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n      view=~\"$view\",\n      view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n      method=~\"$method\"\n    }[$__rate_interval]\n  )\n)\n"
+               "expr": "sum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n      view=~\"$view\",\n      view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n      method=~\"$method\",\n      status!~\"[4-5].*\"\n    }[$__rate_interval]\n  )\n) /\nsum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n      view=~\"$view\",\n      view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n      method=~\"$method\"\n    }[$__rate_interval]\n  )\n)\n"
             }
          ],
          "title": "Success Rate (non 4-5xx responses)",
@@ -176,7 +179,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.95,\n  sum (\n    irate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n"
+               "expr": "histogram_quantile(0.95,\n  sum (\n    irate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n"
             }
          ],
          "title": "Request Latency (P95)",
@@ -229,7 +232,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.95,\n  sum (\n    rate (\n        django_http_requests_body_total_bytes_bucket {\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n        }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n"
+               "expr": "histogram_quantile(0.95,\n  sum (\n    rate (\n      django_http_requests_body_total_bytes_bucket {\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n"
             }
          ],
          "title": "Request Body Size (P95)",
@@ -342,7 +345,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"2.*\",\n        view!~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"2.*\",\n        view!~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
                "legendFormat": "{{ view }} / 2xx"
             },
             {
@@ -350,7 +353,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"4.*\",\n        view!~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"4.*\",\n        view!~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
                "legendFormat": "{{ view }} / 4xx"
             },
             {
@@ -358,7 +361,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"5.*\",\n        view!~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"5.*\",\n        view!~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
                "legendFormat": "{{ view }} / 5xx"
             }
          ],
@@ -421,7 +424,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             },
@@ -430,7 +433,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             },
@@ -439,7 +442,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view!~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             }
@@ -583,7 +586,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"2.*\",\n        view=~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"2.*\",\n        view=~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
                "legendFormat": "{{ view }} / 2xx"
             },
             {
@@ -591,7 +594,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"4.*\",\n        view=~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"4.*\",\n        view=~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
                "legendFormat": "{{ view }} / 4xx"
             },
             {
@@ -599,7 +602,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"5.*\",\n        view=~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        method=~\"$method\",\n        status=~\"5.*\",\n        view=~\"admin.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, view), 0.001\n)\n",
                "legendFormat": "{{ view }} / 5xx"
             }
          ],
@@ -662,7 +665,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             },
@@ -671,7 +674,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             },
@@ -680,7 +683,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view=~\"$view\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics|\",\n        view=~\"admin.*\",\n        method=~\"$method\"\n      }[1h]\n    ) > 0\n  ) by (namespace, job, view, le)\n)\n",
                "format": "table",
                "instant": true
             }
@@ -789,7 +792,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  topk(10,\n    sum by (namespace, job, view) (\n      increase(\n        django_http_exceptions_total_by_view_total{\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n          view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
+               "expr": "round(\n  topk(10,\n    sum by (namespace, job, view) (\n      increase(\n        django_http_exceptions_total_by_view_total{\n          cluster=\"$cluster\",\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n          view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
                "format": "table",
                "instant": true
             }
@@ -852,7 +855,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  topk(10,\n    sum by (namespace, job, type) (\n      increase(\n        django_http_exceptions_total_by_type_total{\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
+               "expr": "round(\n  topk(10,\n    sum by (namespace, job, type) (\n      increase(\n        django_http_exceptions_total_by_type_total{\n          cluster=\"$cluster\",\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
                "format": "table",
                "instant": true
             }
@@ -936,7 +939,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  topk(10,\n    sum by (namespace, job, view) (\n      increase(\n        django_http_responses_total_by_status_view_method_total{\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n          view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n          method=~\"$method\"\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
+               "expr": "round(\n  topk(10,\n    sum by (namespace, job, view) (\n      increase(\n        django_http_responses_total_by_status_view_method_total{\n          cluster=\"$cluster\",\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n          view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n          method=~\"$method\"\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
                "format": "table",
                "instant": true
             }
@@ -999,7 +1002,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "topk(10,\n  round(\n    sum by (namespace, job, templatename) (\n      increase(\n        django_http_responses_total_by_templatename_total{\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n          templatename!~\".*'health_check/index.html'.*|None\"\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
+               "expr": "topk(10,\n  round(\n    sum by (namespace, job, templatename) (\n      increase(\n        django_http_responses_total_by_templatename_total{\n          cluster=\"$cluster\",\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n          templatename!~\".*'health_check/index.html'.*|None\"\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
                "format": "table",
                "instant": true
             }
@@ -1036,6 +1039,11 @@
    "templating": {
       "list": [
          {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
@@ -1046,11 +1054,24 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
+            "hide": 2,
+            "label": "Cluster",
+            "name": "cluster",
+            "query": "label_values(django_http_responses_total_by_status_view_method_total{}, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
             "includeAll": false,
             "label": "Namespace",
             "multi": false,
             "name": "namespace",
-            "query": "label_values(django_http_responses_total_by_status_view_method_total{}, namespace)",
+            "query": "label_values(django_http_responses_total_by_status_view_method_total{cluster=\"$cluster\"}, namespace)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -1064,7 +1085,7 @@
             "label": "Job",
             "multi": false,
             "name": "job",
-            "query": "label_values(django_http_responses_total_by_status_view_method_total{namespace=~\"$namespace\"}, job)",
+            "query": "label_values(django_http_responses_total_by_status_view_method_total{cluster=\"$cluster\", namespace=~\"$namespace\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -1078,7 +1099,7 @@
             "label": "View",
             "multi": true,
             "name": "view",
-            "query": "label_values(django_http_responses_total_by_status_view_method_total{namespace=~\"$namespace\", job=~\"$job\", view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"}, view)",
+            "query": "label_values(django_http_responses_total_by_status_view_method_total{cluster=\"$cluster\", namespace=~\"$namespace\", job=~\"$job\", view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"}, view)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -1092,7 +1113,7 @@
             "label": "Method",
             "multi": true,
             "name": "method",
-            "query": "label_values(django_http_responses_total_by_status_view_method_total{namespace=~\"$namespace\", job=~\"$job\", view=~\"$view\"}, method)",
+            "query": "label_values(django_http_responses_total_by_status_view_method_total{cluster=\"$cluster\", namespace=~\"$namespace\", job=~\"$job\", view=~\"$view\"}, method)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

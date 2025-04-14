@@ -5,6 +5,9 @@
    "editable": true,
    "links": [
       {
+         "asDropdown": true,
+         "includeVars": true,
+         "keepTime": true,
          "tags": [
             "django",
             "django-mixin"
@@ -70,7 +73,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n      }[$__rate_interval]\n    )\n  ), 0.001\n)\n"
+               "expr": "round(\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n      }[$__rate_interval]\n    )\n  ), 0.001\n)\n"
             }
          ],
          "title": "Request Volume",
@@ -119,7 +122,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum (\n  rate (\n    django_db_execute_total {\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[$__rate_interval]\n  )\n) by (namespace, job)\n"
+               "expr": "sum (\n  rate (\n    django_db_execute_total {\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[$__rate_interval]\n  )\n) by (namespace, job)\n"
             }
          ],
          "title": "Database Ops",
@@ -168,7 +171,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum (\n  rate (\n    django_cache_get_hits_total {\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[30m]\n  )\n) by (namespace, job)\n/\nsum (\n  rate (\n    django_cache_get_total {\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[30m]\n  )\n) by (namespace, job)\n"
+               "expr": "sum (\n  rate (\n    django_cache_get_hits_total {\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[30m]\n  )\n) by (namespace, job)\n/\nsum (\n  rate (\n    django_cache_get_total {\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[30m]\n  )\n) by (namespace, job)\n"
             }
          ],
          "title": "Cache Hitrate [30m]",
@@ -285,7 +288,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"2.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"2.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "2xx"
             },
             {
@@ -293,7 +296,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"3.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"3.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "3xx"
             },
             {
@@ -301,7 +304,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"4.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"4.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "4xx"
             },
             {
@@ -309,7 +312,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"5.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"5.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "5xx"
             }
          ],
@@ -367,7 +370,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max (\n  django_migrations_applied_total {\n      namespace=\"$namespace\",\n      job=~\"$job\"\n  }\n) by (namespace, job)\n"
+               "expr": "max (\n  django_migrations_applied_total {\n    cluster=\"$cluster\",\n    namespace=\"$namespace\",\n    job=~\"$job\"\n  }\n) by (namespace, job)\n"
             }
          ],
          "title": "Migrations Applied",
@@ -416,7 +419,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max (\n  django_migrations_unapplied_total {\n      namespace=\"$namespace\",\n      job=~\"$job\"\n  }\n) by (namespace, job)\n"
+               "expr": "max (\n  django_migrations_unapplied_total {\n    cluster=\"$cluster\",\n    namespace=\"$namespace\",\n    job=~\"$job\"\n  }\n) by (namespace, job)\n"
             }
          ],
          "title": "Migrations Unapplied",
@@ -453,7 +456,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  topk(10,\n    sum by (type) (\n      increase(\n        django_db_errors_total{\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
+               "expr": "round(\n  topk(10,\n    sum by (type) (\n      increase(\n        django_db_errors_total{\n          cluster=\"$cluster\",\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
                "format": "table",
                "instant": true
             }
@@ -527,7 +530,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      django_db_new_connections_total{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, vendor)\n)\n",
+               "expr": "round(\n  sum(\n    increase(\n      django_db_new_connections_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, vendor)\n)\n",
                "legendFormat": "{{ vendor }}"
             }
          ],
@@ -580,7 +583,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.50,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
                "legendFormat": "50 - {{ vendor }}"
             },
             {
@@ -588,7 +591,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.95,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
                "legendFormat": "95 - {{ vendor }}"
             },
             {
@@ -596,7 +599,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.99,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
                "legendFormat": "99 - {{ vendor }}"
             },
             {
@@ -604,7 +607,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.999,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "expr": "histogram_quantile(0.999,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
                "legendFormat": "99.9 - {{ vendor }}"
             }
          ],
@@ -672,7 +675,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  rate(\n    django_cache_get_hits_total{\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[$__rate_interval]\n  ) > 0\n) by (namespace, job, backend)\n",
+               "expr": "sum(\n  rate(\n    django_cache_get_hits_total{\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[$__rate_interval]\n  ) > 0\n) by (namespace, job, backend)\n",
                "legendFormat": "Hit - {{ backend }}"
             },
             {
@@ -680,7 +683,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  rate(\n    django_cache_get_misses_total{\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[$__rate_interval]\n  ) > 0\n) by (namespace, job, backend)\n",
+               "expr": "sum(\n  rate(\n    django_cache_get_misses_total{\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[$__rate_interval]\n  ) > 0\n) by (namespace, job, backend)\n",
                "legendFormat": "Miss - {{ backend }}"
             }
          ],
@@ -696,6 +699,11 @@
    "templating": {
       "list": [
          {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
@@ -706,11 +714,24 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
+            "hide": 2,
+            "label": "Cluster",
+            "name": "cluster",
+            "query": "label_values(django_http_responses_total_by_status_view_method_total{}, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
             "includeAll": false,
             "label": "Namespace",
             "multi": false,
             "name": "namespace",
-            "query": "label_values(django_http_responses_total_by_status_view_method_total{}, namespace)",
+            "query": "label_values(django_http_responses_total_by_status_view_method_total{cluster=\"$cluster\"}, namespace)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -724,7 +745,7 @@
             "label": "Job",
             "multi": false,
             "name": "job",
-            "query": "label_values(django_http_responses_total_by_status_view_method_total{namespace=~\"$namespace\"}, job)",
+            "query": "label_values(django_http_responses_total_by_status_view_method_total{cluster=\"$cluster\", namespace=~\"$namespace\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
