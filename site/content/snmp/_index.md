@@ -197,22 +197,26 @@ annotations:
   description: |
     Memory usage on SNMP node {{ $labels.instance }} is above 90%. The current value is {{ $value | printf "%.2f" }}%.
   summary: High memory usage on SNMP node.
-expr: "avg by (job,instance) (# cisco CISCO-ENHANCED-MEMPOOL-MIB
-# cempMemPoolType=\"2\"
-  - processorMemory, cempMemPoolType=\"10\" - virtual memory, i.e in ASA(v).
+expr: "avg by (job,instance) (# NX-OS:
 (
-
-  \ 
+  cpmCPUMemoryUsed{}
+  /
+  (cpmCPUMemoryUsed{}
+  + cpmCPUMemoryFree{}) * 100
+)
+or
+# cisco CISCO-ENHANCED-MEMPOOL-MIB
+# cempMemPoolType=\"10\"
+  - virtual memory, i.e in ASA(v).
+(
   (
     cempMemPoolUsed{}
     /
-    (cempMemPoolUsed{} + cempMemPoolFree{})
-  * 100
-  ) * on (instance, cempMemPoolIndex) group_left () 
-        (
-          cempMemPoolType{}
-  == 2)/2 
-          or (cempMemPoolType{} == 10)/10 
+    (cempMemPoolUsed{}
+  + cempMemPoolFree{}) * 100
+  ) * on (instance, cempMemPoolIndex, entPhysicalIndex)
+  group_left () 
+        (cempMemPoolType{} == 10)/10
 )
 or
 # cisco firmwares that
