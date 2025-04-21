@@ -70,14 +70,14 @@
             },
             "textMode": "value_and_name"
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max by (instance) (probe_success{\n  job=~\"$job\"\n})\n",
+               "expr": "max by (instance) (\n  probe_success{\n    cluster=\"$cluster\",\n    job=~\"$job\"\n  }\n)\n",
                "legendFormat": "{{instance}}"
             }
          ],
@@ -120,14 +120,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "count(\n  probe_success{\n    job=~\"$job\"\n  }\n)\n"
+               "expr": "count(\n  probe_success{\n    cluster=\"$cluster\",\n    job=~\"$job\"\n  }\n)\n"
             }
          ],
          "title": "Probes",
@@ -173,14 +173,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "(\n  count(\n    probe_success{\n      job=~\"$job\"\n    } == 1\n  )\n  OR vector(0)\n) /\ncount(\n  probe_success{\n    job=~\"$job\"\n  }\n)\n"
+               "expr": "(\n  count(\n    probe_success{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    } == 1\n  )\n  OR vector(0)\n) /\ncount(\n  probe_success{\n    cluster=\"$cluster\",\n    job=~\"$job\"\n  }\n)\n"
             }
          ],
          "title": "Probes Success",
@@ -222,14 +222,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "count(\n  probe_http_ssl{\n    job=~\"$job\"\n  } == 1\n) /\ncount(\n  probe_http_version{\n    job=~\"$job\"\n  }\n)\n"
+               "expr": "count(\n  probe_http_ssl{\n    cluster=\"$cluster\",\n    job=~\"$job\"\n  } == 1\n) /\ncount(\n  probe_http_version{\n    cluster=\"$cluster\",\n    job=~\"$job\"\n  }\n)\n"
             }
          ],
          "title": "Probes SSL",
@@ -259,14 +259,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "avg(\n  probe_duration_seconds{\n    job=~\"$job\"\n  }\n)\n"
+               "expr": "avg(\n  probe_duration_seconds{\n    cluster=\"$cluster\",\n    job=~\"$job\"\n  }\n)\n"
             }
          ],
          "title": "Probe Average Duration",
@@ -326,14 +326,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max by (instance) (probe_success{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n"
+               "expr": "max by (instance) (\n  probe_success{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n"
             }
          ],
          "title": "Uptime",
@@ -380,14 +380,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "avg_over_time(\n  probe_success{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }[30d]\n)\n"
+               "expr": "avg_over_time(\n  probe_success{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }[30d]\n)\n"
             }
          ],
          "title": "Uptime 30d",
@@ -433,14 +433,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max by (instance) (probe_success{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
+               "expr": "max by (instance) (\n  probe_success{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n",
                "instant": true
             }
          ],
@@ -491,14 +491,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max by (instance) (probe_http_status_code{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
+               "expr": "max by (instance) (\n  probe_http_status_code{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n",
                "instant": true
             }
          ],
@@ -545,14 +545,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max by (instance) (probe_http_ssl{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
+               "expr": "max by (instance) (\n  probe_http_ssl{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n",
                "instant": true
             }
          ],
@@ -596,14 +596,14 @@
             },
             "textMode": "name"
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max by (instance,version) (probe_tls_version_info{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
+               "expr": "max by (instance,version) (\n  probe_tls_version_info{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n",
                "instant": true,
                "legendFormat": "{{version}}"
             }
@@ -644,14 +644,14 @@
             "colorMode": "background",
             "graphMode": "none"
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "min by (instance) (probe_ssl_earliest_cert_expiry{\n  job=~\"$job\",\n  instance=~\"$instance\"\n} - time())\n"
+               "expr": "min by (instance) (\n  probe_ssl_earliest_cert_expiry{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  } - time()\n)\n"
             }
          ],
          "title": "SSL Certificate Expiry",
@@ -697,14 +697,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max by (instance) (probe_http_redirects{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
+               "expr": "max by (instance) (\n  probe_http_redirects{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n",
                "instant": true
             }
          ],
@@ -735,14 +735,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max by (instance) (probe_http_version{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n",
+               "expr": "max by (instance) (\n  probe_http_version{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n",
                "instant": true,
                "legendFormat": "{{version}}"
             }
@@ -774,14 +774,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "avg by (instance) (probe_duration_seconds{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n"
+               "expr": "avg by (instance) (\n  probe_duration_seconds{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n"
             }
          ],
          "title": "Average Latency",
@@ -811,14 +811,14 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "avg by (instance) (probe_dns_lookup_time_seconds{\n  job=~\"$job\",\n  instance=~\"$instance\"\n})\n"
+               "expr": "avg by (instance) (\n  probe_dns_lookup_time_seconds{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n"
             }
          ],
          "title": "Average Latency",
@@ -862,14 +862,14 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum by (instance) (\n  avg by (phase,instance) (\n    probe_http_duration_seconds{\n      job=~\"$job\",\n      instance=~\"$instance\"\n    }\n))\n",
+               "expr": "sum by (instance) (\n  avg by (phase,instance) (\n    probe_http_duration_seconds{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      instance=~\"$instance\"\n    }\n  )\n)\n",
                "legendFormat": "HTTP duration"
             },
             {
@@ -877,7 +877,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "avg by (instance) (\n  probe_duration_seconds{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n",
+               "expr": "avg by (instance) (\n  probe_duration_seconds{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n)\n",
                "legendFormat": "Total probe duration"
             }
          ],
@@ -925,14 +925,14 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "avg(\n  probe_http_duration_seconds{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n) by (phase)\n",
+               "expr": "avg(\n  probe_http_duration_seconds{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n) by (phase)\n",
                "legendFormat": "{{ phase }}"
             },
             {
@@ -940,7 +940,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "avg(\n  probe_icmp_duration_seconds{\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n) by (phase)\n",
+               "expr": "avg(\n  probe_icmp_duration_seconds{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    instance=~\"$instance\"\n  }\n) by (phase)\n",
                "legendFormat": "{{ phase }}"
             }
          ],
@@ -956,6 +956,11 @@
    "templating": {
       "list": [
          {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
@@ -966,11 +971,24 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
+            "hide": 2,
+            "label": "Cluster",
+            "name": "cluster",
+            "query": "label_values(probe_success{}, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
             "includeAll": true,
             "label": "Job",
             "multi": true,
             "name": "job",
-            "query": "label_values(probe_success{}, job)",
+            "query": "label_values(probe_success{cluster=\"$cluster\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -984,7 +1002,7 @@
             "label": "Instance",
             "multi": false,
             "name": "instance",
-            "query": "label_values(probe_success{job=~\"$job\"}, instance)",
+            "query": "label_values(probe_success{cluster=\"$cluster\", job=~\"$job\"}, instance)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

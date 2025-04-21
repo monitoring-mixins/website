@@ -5,14 +5,16 @@
    "editable": true,
    "links": [
       {
+         "asDropdown": true,
+         "includeVars": true,
+         "keepTime": true,
          "tags": [
             "kubernetes",
             "autoscaling",
-            "kubernetes-autoscaling-mixin",
-            "karpenter"
+            "kubernetes-autoscaling-mixin"
          ],
          "targetBlank": true,
-         "title": "Kubernetes / Autoscaling / Karpenter",
+         "title": "Kubernetes / Autoscaling",
          "type": "dashboards"
       }
    ],
@@ -796,6 +798,11 @@
    "templating": {
       "list": [
          {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",

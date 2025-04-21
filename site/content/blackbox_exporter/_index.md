@@ -23,7 +23,7 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 {{< code lang="yaml" >}}
 alert: BlackboxProbeFailed
 annotations:
-  dashboard_url: https://grafana.com/d/blackbox-exporter-j4da/blackbox-exporter?instance={{
+  dashboard_url: https://grafana.com/d/blackbox-exporter-j4da/blackbox-exporter?var-instance={{
     $labels.instance }}
   description: The probe failed for the instance {{ $labels.instance }}.
   summary: Probe has failed for the past 1m interval.
@@ -39,7 +39,7 @@ labels:
 {{< code lang="yaml" >}}
 alert: BlackboxLowUptime30d
 annotations:
-  dashboard_url: https://grafana.com/d/blackbox-exporter-j4da/blackbox-exporter?instance={{
+  dashboard_url: https://grafana.com/d/blackbox-exporter-j4da/blackbox-exporter?var-instance={{
     $labels.instance }}
   description: The probe has a lower uptime than 99.9% the last 30 days for the instance
     {{ $labels.instance }}.
@@ -55,7 +55,7 @@ labels:
 {{< code lang="yaml" >}}
 alert: BlackboxSslCertificateWillExpireSoon
 annotations:
-  dashboard_url: https://grafana.com/d/blackbox-exporter-j4da/blackbox-exporter?instance={{
+  dashboard_url: https://grafana.com/d/blackbox-exporter-j4da/blackbox-exporter?var-instance={{
     $labels.instance }}
   description: |
     The SSL certificate of the instance {{ $labels.instance }} is expiring within 21 days.

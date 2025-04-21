@@ -5,14 +5,16 @@
    "editable": true,
    "links": [
       {
+         "asDropdown": true,
+         "includeVars": true,
+         "keepTime": true,
          "tags": [
             "kubernetes",
             "autoscaling",
-            "kubernetes-autoscaling-mixin",
-            "cluster-autoscaler"
+            "kubernetes-autoscaling-mixin"
          ],
          "targetBlank": true,
-         "title": "Kubernetes / Autoscaling / Cluster Autoscaler",
+         "title": "Kubernetes / Autoscaling",
          "type": "dashboards"
       }
    ],
@@ -614,6 +616,11 @@
    "templating": {
       "list": [
          {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",

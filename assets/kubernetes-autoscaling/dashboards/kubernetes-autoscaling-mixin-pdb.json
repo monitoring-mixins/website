@@ -5,11 +5,13 @@
    "editable": true,
    "links": [
       {
+         "asDropdown": true,
+         "includeVars": true,
+         "keepTime": true,
          "tags": [
             "kubernetes",
             "autoscaling",
-            "kubernetes-autoscaling-mixin",
-            "kubernetes-core"
+            "kubernetes-autoscaling-mixin"
          ],
          "targetBlank": true,
          "title": "Kubernetes / Autoscaling",
@@ -514,6 +516,11 @@
    "templating": {
       "list": [
          {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
