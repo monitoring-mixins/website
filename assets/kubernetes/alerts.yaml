@@ -262,6 +262,23 @@ groups:
     for: 15m
     labels:
       severity: warning
+  - alert: KubePdbNotEnoughHealthyPods
+    annotations:
+      description: PDB {{ $labels.namespace }}/{{ $labels.poddisruptionbudget }} expects
+        {{ $value }} more healthy pods. The desired number of healthy pods has not
+        been met for at least 15m.
+      runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepdbnotenoughhealthypods
+      summary: PDB does not have enough healthy pods.
+    expr: |
+      (
+        kube_poddisruptionbudget_status_desired_healthy{job="kube-state-metrics"}
+        -
+        kube_poddisruptionbudget_status_current_healthy{job="kube-state-metrics"}
+      )
+      > 0
+    for: 15m
+    labels:
+      severity: warning
 - name: kubernetes-resources
   rules:
   - alert: KubeCPUOvercommit

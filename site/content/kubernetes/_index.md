@@ -376,6 +376,29 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### KubePdbNotEnoughHealthyPods
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepdbnotenoughhealthypods
+
+{{< code lang="yaml" >}}
+alert: KubePdbNotEnoughHealthyPods
+annotations:
+  description: PDB {{ $labels.namespace }}/{{ $labels.poddisruptionbudget }} expects
+    {{ $value }} more healthy pods. The desired number of healthy pods has not been
+    met for at least 15m.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepdbnotenoughhealthypods
+  summary: PDB does not have enough healthy pods.
+expr: |
+  (
+    kube_poddisruptionbudget_status_desired_healthy{job="kube-state-metrics"}
+    -
+    kube_poddisruptionbudget_status_current_healthy{job="kube-state-metrics"}
+  )
+  > 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ### kubernetes-resources
 
 ##### KubeCPUOvercommit
@@ -2275,302 +2298,6 @@ expr: |
 labels:
   quantile: "0.5"
 record: node_quantile:kubelet_pleg_relist_duration_seconds:histogram_quantile
-{{< /code >}}
- 
-### windows.node.rules
-
-##### node:windows_node:sum
-
-{{< code lang="yaml" >}}
-expr: |
-  count by (cluster) (
-    windows_system_boot_time_timestamp_seconds{job="kubernetes-windows-exporter"}
-  )
-record: node:windows_node:sum
-{{< /code >}}
- 
-##### node:windows_node_num_cpu:sum
-
-{{< code lang="yaml" >}}
-expr: |
-  count by (cluster, instance) (sum by (cluster, instance, core) (
-    windows_cpu_time_total{job="kubernetes-windows-exporter"}
-  ))
-record: node:windows_node_num_cpu:sum
-{{< /code >}}
- 
-##### :windows_node_cpu_utilisation:avg1m
-
-{{< code lang="yaml" >}}
-expr: |
-  1 - avg by (cluster) (rate(windows_cpu_time_total{job="kubernetes-windows-exporter",mode="idle"}[1m]))
-record: :windows_node_cpu_utilisation:avg1m
-{{< /code >}}
- 
-##### node:windows_node_cpu_utilisation:avg1m
-
-{{< code lang="yaml" >}}
-expr: |
-  1 - avg by (cluster, instance) (
-    rate(windows_cpu_time_total{job="kubernetes-windows-exporter",mode="idle"}[1m])
-  )
-record: node:windows_node_cpu_utilisation:avg1m
-{{< /code >}}
- 
-##### ':windows_node_memory_utilisation:'
-
-{{< code lang="yaml" >}}
-expr: |
-  1 -
-  sum by (cluster) (windows_memory_available_bytes{job="kubernetes-windows-exporter"})
-  /
-  sum by (cluster) (windows_os_visible_memory_bytes{job="kubernetes-windows-exporter"})
-record: ':windows_node_memory_utilisation:'
-{{< /code >}}
- 
-##### :windows_node_memory_MemFreeCached_bytes:sum
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster) (windows_memory_available_bytes{job="kubernetes-windows-exporter"} + windows_memory_cache_bytes{job="kubernetes-windows-exporter"})
-record: :windows_node_memory_MemFreeCached_bytes:sum
-{{< /code >}}
- 
-##### node:windows_node_memory_totalCached_bytes:sum
-
-{{< code lang="yaml" >}}
-expr: |
-  (windows_memory_cache_bytes{job="kubernetes-windows-exporter"} + windows_memory_modified_page_list_bytes{job="kubernetes-windows-exporter"} + windows_memory_standby_cache_core_bytes{job="kubernetes-windows-exporter"} + windows_memory_standby_cache_normal_priority_bytes{job="kubernetes-windows-exporter"} + windows_memory_standby_cache_reserve_bytes{job="kubernetes-windows-exporter"})
-record: node:windows_node_memory_totalCached_bytes:sum
-{{< /code >}}
- 
-##### :windows_node_memory_MemTotal_bytes:sum
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster) (windows_os_visible_memory_bytes{job="kubernetes-windows-exporter"})
-record: :windows_node_memory_MemTotal_bytes:sum
-{{< /code >}}
- 
-##### node:windows_node_memory_bytes_available:sum
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, instance) (
-    (windows_memory_available_bytes{job="kubernetes-windows-exporter"})
-  )
-record: node:windows_node_memory_bytes_available:sum
-{{< /code >}}
- 
-##### node:windows_node_memory_bytes_total:sum
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, instance) (
-    windows_os_visible_memory_bytes{job="kubernetes-windows-exporter"}
-  )
-record: node:windows_node_memory_bytes_total:sum
-{{< /code >}}
- 
-##### node:windows_node_memory_utilisation:ratio
-
-{{< code lang="yaml" >}}
-expr: |
-  (node:windows_node_memory_bytes_total:sum - node:windows_node_memory_bytes_available:sum)
-  /
-  scalar(sum(node:windows_node_memory_bytes_total:sum))
-record: node:windows_node_memory_utilisation:ratio
-{{< /code >}}
- 
-##### 'node:windows_node_memory_utilisation:'
-
-{{< code lang="yaml" >}}
-expr: |
-  1 - (node:windows_node_memory_bytes_available:sum / node:windows_node_memory_bytes_total:sum)
-record: 'node:windows_node_memory_utilisation:'
-{{< /code >}}
- 
-##### node:windows_node_memory_swap_io_pages:irate
-
-{{< code lang="yaml" >}}
-expr: |
-  irate(windows_memory_swap_page_operations_total{job="kubernetes-windows-exporter"}[5m])
-record: node:windows_node_memory_swap_io_pages:irate
-{{< /code >}}
- 
-##### :windows_node_disk_utilisation:avg_irate
-
-{{< code lang="yaml" >}}
-expr: |
-  avg by (cluster) (irate(windows_logical_disk_read_seconds_total{job="kubernetes-windows-exporter"}[1m]) +
-      irate(windows_logical_disk_write_seconds_total{job="kubernetes-windows-exporter"}[1m])
-    )
-record: :windows_node_disk_utilisation:avg_irate
-{{< /code >}}
- 
-##### node:windows_node_disk_utilisation:avg_irate
-
-{{< code lang="yaml" >}}
-expr: |
-  avg by (cluster, instance) (
-    (irate(windows_logical_disk_read_seconds_total{job="kubernetes-windows-exporter"}[1m]) +
-     irate(windows_logical_disk_write_seconds_total{job="kubernetes-windows-exporter"}[1m]))
-  )
-record: node:windows_node_disk_utilisation:avg_irate
-{{< /code >}}
- 
-##### 'node:windows_node_filesystem_usage:'
-
-{{< code lang="yaml" >}}
-expr: |
-  max by (cluster,instance,volume)(
-    (windows_logical_disk_size_bytes{job="kubernetes-windows-exporter"}
-  - windows_logical_disk_free_bytes{job="kubernetes-windows-exporter"})
-  / windows_logical_disk_size_bytes{job="kubernetes-windows-exporter"}
-  )
-record: 'node:windows_node_filesystem_usage:'
-{{< /code >}}
- 
-##### 'node:windows_node_filesystem_avail:'
-
-{{< code lang="yaml" >}}
-expr: |
-  max by (cluster, instance, volume) (windows_logical_disk_free_bytes{job="kubernetes-windows-exporter"} / windows_logical_disk_size_bytes{job="kubernetes-windows-exporter"})
-record: 'node:windows_node_filesystem_avail:'
-{{< /code >}}
- 
-##### :windows_node_net_utilisation:sum_irate
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster) (irate(windows_net_bytes_total{job="kubernetes-windows-exporter"}[1m]))
-record: :windows_node_net_utilisation:sum_irate
-{{< /code >}}
- 
-##### node:windows_node_net_utilisation:sum_irate
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, instance) (
-    (irate(windows_net_bytes_total{job="kubernetes-windows-exporter"}[1m]))
-  )
-record: node:windows_node_net_utilisation:sum_irate
-{{< /code >}}
- 
-##### :windows_node_net_saturation:sum_irate
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster) (irate(windows_net_packets_received_discarded_total{job="kubernetes-windows-exporter"}[1m])) +
-  sum by (cluster) (irate(windows_net_packets_outbound_discarded_total{job="kubernetes-windows-exporter"}[1m]))
-record: :windows_node_net_saturation:sum_irate
-{{< /code >}}
- 
-##### node:windows_node_net_saturation:sum_irate
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, instance) (
-    (irate(windows_net_packets_received_discarded_total{job="kubernetes-windows-exporter"}[1m]) +
-    irate(windows_net_packets_outbound_discarded_total{job="kubernetes-windows-exporter"}[1m]))
-  )
-record: node:windows_node_net_saturation:sum_irate
-{{< /code >}}
- 
-### windows.pod.rules
-
-##### windows_pod_container_available
-
-{{< code lang="yaml" >}}
-expr: |
-  windows_container_available{job="kubernetes-windows-exporter", container_id != ""} * on(container_id, cluster) group_left(container, pod, namespace) max(kube_pod_container_info{job="kube-state-metrics", container_id != ""}) by(container, container_id, pod, namespace, cluster)
-record: windows_pod_container_available
-{{< /code >}}
- 
-##### windows_container_total_runtime
-
-{{< code lang="yaml" >}}
-expr: |
-  windows_container_cpu_usage_seconds_total{job="kubernetes-windows-exporter", container_id != ""} * on(container_id, cluster) group_left(container, pod, namespace) max(kube_pod_container_info{job="kube-state-metrics", container_id != ""}) by(container, container_id, pod, namespace, cluster)
-record: windows_container_total_runtime
-{{< /code >}}
- 
-##### windows_container_memory_usage
-
-{{< code lang="yaml" >}}
-expr: |
-  windows_container_memory_usage_commit_bytes{job="kubernetes-windows-exporter", container_id != ""} * on(container_id, cluster) group_left(container, pod, namespace) max(kube_pod_container_info{job="kube-state-metrics", container_id != ""}) by(container, container_id, pod, namespace, cluster)
-record: windows_container_memory_usage
-{{< /code >}}
- 
-##### windows_container_private_working_set_usage
-
-{{< code lang="yaml" >}}
-expr: |
-  windows_container_memory_usage_private_working_set_bytes{job="kubernetes-windows-exporter", container_id != ""} * on(container_id, cluster) group_left(container, pod, namespace) max(kube_pod_container_info{job="kube-state-metrics", container_id != ""}) by(container, container_id, pod, namespace, cluster)
-record: windows_container_private_working_set_usage
-{{< /code >}}
- 
-##### windows_container_network_received_bytes_total
-
-{{< code lang="yaml" >}}
-expr: |
-  windows_container_network_receive_bytes_total{job="kubernetes-windows-exporter", container_id != ""} * on(container_id, cluster) group_left(container, pod, namespace) max(kube_pod_container_info{job="kube-state-metrics", container_id != ""}) by(container, container_id, pod, namespace, cluster)
-record: windows_container_network_received_bytes_total
-{{< /code >}}
- 
-##### windows_container_network_transmitted_bytes_total
-
-{{< code lang="yaml" >}}
-expr: |
-  windows_container_network_transmit_bytes_total{job="kubernetes-windows-exporter", container_id != ""} * on(container_id, cluster) group_left(container, pod, namespace) max(kube_pod_container_info{job="kube-state-metrics", container_id != ""}) by(container, container_id, pod, namespace, cluster)
-record: windows_container_network_transmitted_bytes_total
-{{< /code >}}
- 
-##### kube_pod_windows_container_resource_memory_request
-
-{{< code lang="yaml" >}}
-expr: |
-  max by (cluster, namespace, pod, container) (
-    kube_pod_container_resource_requests{resource="memory",job="kube-state-metrics"}
-  ) * on(container,pod,namespace,cluster) (windows_pod_container_available)
-record: kube_pod_windows_container_resource_memory_request
-{{< /code >}}
- 
-##### kube_pod_windows_container_resource_memory_limit
-
-{{< code lang="yaml" >}}
-expr: |
-  kube_pod_container_resource_limits{resource="memory",job="kube-state-metrics"} * on(container,pod,namespace,cluster) (windows_pod_container_available)
-record: kube_pod_windows_container_resource_memory_limit
-{{< /code >}}
- 
-##### kube_pod_windows_container_resource_cpu_cores_request
-
-{{< code lang="yaml" >}}
-expr: |
-  max by (cluster, namespace, pod, container) (
-    kube_pod_container_resource_requests{resource="cpu",job="kube-state-metrics"}
-  ) * on(container,pod,namespace,cluster) (windows_pod_container_available)
-record: kube_pod_windows_container_resource_cpu_cores_request
-{{< /code >}}
- 
-##### kube_pod_windows_container_resource_cpu_cores_limit
-
-{{< code lang="yaml" >}}
-expr: |
-  kube_pod_container_resource_limits{resource="cpu",job="kube-state-metrics"} * on(container,pod,namespace,cluster) (windows_pod_container_available)
-record: kube_pod_windows_container_resource_cpu_cores_limit
-{{< /code >}}
- 
-##### namespace_pod_container:windows_container_cpu_usage_seconds_total:sum_rate
-
-{{< code lang="yaml" >}}
-expr: |
-  sum by (cluster, namespace, pod, container) (
-    rate(windows_container_total_runtime{}[5m])
-  )
-record: namespace_pod_container:windows_container_cpu_usage_seconds_total:sum_rate
 {{< /code >}}
  
 ## Dashboards
