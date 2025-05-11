@@ -34,7 +34,7 @@ expr: |
         job=~"karpenter"
       }[5m]
     )
-  ) by (namespace, job, provider, controller, method) > 0
+  ) by (cluster, namespace, job, provider, controller, method) > 0
 for: 5m
 labels:
   severity: warning
@@ -55,13 +55,13 @@ expr: |
     karpenter_nodeclaims_termination_duration_seconds_sum{
       job=~"karpenter"
     }
-  ) by (namespace, job, nodepool)
+  ) by (cluster, namespace, job, nodepool)
   /
   sum(
     karpenter_nodeclaims_termination_duration_seconds_count{
       job=~"karpenter"
     }
-  ) by (namespace, job, nodepool) > 1200
+  ) by (cluster, namespace, job, nodepool) > 1200
 for: 15m
 labels:
   severity: warning
@@ -79,11 +79,11 @@ annotations:
 expr: |
   sum (
     karpenter_nodepools_usage{job=~"karpenter"}
-  ) by (namespace, job, nodepool, resource_type)
+  ) by (cluster, namespace, job, nodepool, resource_type)
   /
   sum (
     karpenter_nodepools_limit{job=~"karpenter"}
-  ) by (namespace, job, nodepool, resource_type)
+  ) by (cluster, namespace, job, nodepool, resource_type)
   * 100 > 75
 for: 15m
 labels:
@@ -104,11 +104,11 @@ annotations:
 expr: |
   sum (
     cluster_autoscaler_nodes_count{job=~"cluster-autoscaler"}
-  ) by (namespace, job)
+  ) by (cluster, namespace, job)
   /
   sum (
     cluster_autoscaler_max_nodes_count{job=~"cluster-autoscaler"}
-  ) by (namespace, job)
+  ) by (cluster, namespace, job)
   * 100 > 75
 for: 15m
 labels:
@@ -127,7 +127,7 @@ annotations:
 expr: |
   sum (
     cluster_autoscaler_unschedulable_pods_count{job=~"cluster-autoscaler"}
-  ) by (namespace, job)
+  ) by (cluster, namespace, job)
   > 0
 for: 15m
 labels:
