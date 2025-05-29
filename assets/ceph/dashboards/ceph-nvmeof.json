@@ -300,6 +300,7 @@
                   }
                },
                "decimals": 0,
+               "mappings": [ ],
                "noValue": "0",
                "thresholds": {
                   "mode": "absolute",
@@ -1048,6 +1049,7 @@
                   }
                },
                "decimals": 0,
+               "mappings": [ ],
                "noValue": "0",
                "thresholds": {
                   "mode": "absolute",

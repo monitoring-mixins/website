@@ -107,6 +107,7 @@
                      "mode": "off"
                   }
                },
+               "mappings": [ ],
                "min": 0,
                "thresholds": {
                   "mode": "absolute",
@@ -199,6 +200,7 @@
                      "mode": "off"
                   }
                },
+               "mappings": [ ],
                "min": 0,
                "thresholds": {
                   "mode": "absolute",

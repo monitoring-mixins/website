@@ -1620,6 +1620,7 @@ Following dashboards are generated from mixins and hosted on github:
 - [ceph-nvmeof-performance](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/ceph-nvmeof-performance.json)
 - [ceph-nvmeof](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/ceph-nvmeof.json)
 - [cephfs-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/cephfs-overview.json)
+- [cephfsdashboard](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/cephfsdashboard.json)
 - [host-details](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/host-details.json)
 - [hosts-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/hosts-overview.json)
 - [multi-cluster-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/multi-cluster-overview.json)
