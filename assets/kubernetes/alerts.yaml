@@ -120,13 +120,13 @@ groups:
             unless
           kube_statefulset_status_update_revision{job="kube-state-metrics"}
         )
-          *
+          * on(namespace, statefulset, job, cluster)
         (
           kube_statefulset_replicas{job="kube-state-metrics"}
             !=
           kube_statefulset_status_replicas_updated{job="kube-state-metrics"}
         )
-      )  and (
+      )  and on(namespace, statefulset, job, cluster) (
         changes(kube_statefulset_status_replicas_updated{job="kube-state-metrics"}[5m])
           ==
         0
