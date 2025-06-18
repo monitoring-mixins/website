@@ -399,7 +399,7 @@
                   }
                },
                "min": 0,
-               "unit": "ms"
+               "unit": "short"
             }
          },
          "gridPos": {
