@@ -62,7 +62,8 @@ expr: |
   sum(
     argocd_app_info{
       job=~".*",
-      health_status!~"Healthy|Progressing"
+      health_status!~"Healthy|Progressing",
+      name!~""
     }
   ) by (cluster, job, dest_server, project, name, health_status)
   > 0
