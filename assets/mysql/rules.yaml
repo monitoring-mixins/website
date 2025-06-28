@@ -1,1 +1,9 @@
-null
+groups:
+- name: mysqld_rules
+  rules:
+  - expr: mysql_slave_status_seconds_behind_master - mysql_slave_status_sql_delay
+    record: instance:mysql_slave_lag_seconds
+  - expr: mysql_heartbeat_now_timestamp_seconds - mysql_heartbeat_stored_timestamp_seconds
+    record: instance:mysql_heartbeat_lag_seconds
+  - expr: sum without (command) (rate(mysql_global_status_commands_total{command=~"(commit|rollback)"}[5m]))
+    record: job:mysql_transactions:rate5m
