@@ -34,6 +34,22 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### JvmThreadsDeadlocked
+
+{{< code lang="yaml" >}}
+alert: JvmThreadsDeadlocked
+annotations:
+  description: 'JVM deadlock detected: Threads in the JVM application {{$labels.instance}}
+    are in a cyclic dependency with each other. The restart is required to resolve
+    the deadlock.'
+  summary: JVM deadlock detected.
+expr: (jvm_threads_deadlocked{job!=""}) > 0
+for: 2m
+keep_firing_for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 

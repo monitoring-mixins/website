@@ -568,10 +568,10 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "${datasource}"
          },
-         "description": "Process memory used (rss): Signal not found.",
+         "description": "Process resident memory size in bytes.",
          "fieldConfig": {
             "defaults": {
                "custom": {
@@ -585,6 +585,18 @@
                "unit": "bytes"
             },
             "overrides": [
+               {
+                  "matcher": {
+                     "id": "byFrameRefID",
+                     "options": "Process memory used (rss)"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "bytes"
+                     }
+                  ]
+               },
                {
                   "matcher": {
                      "id": "byRegexp",
@@ -623,7 +635,6 @@
             "y": 12
          },
          "options": {
-            "content": "",
             "legend": {
                "calcs": [ ],
                "displayMode": "list"
@@ -634,9 +645,21 @@
             }
          },
          "pluginVersion": "v11.0.0",
-         "title": "",
-         "transparent": true,
-         "type": "text"
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+               },
+               "expr": "avg by (job,instance) (\n  process_resident_memory_bytes{job!=\"\",job=~\"$job\",instance=~\"$instance\"}\n)",
+               "format": "time_series",
+               "instant": false,
+               "legendFormat": "{{instance}}: Process memory used (rss)",
+               "refId": "Process memory used (rss)"
+            }
+         ],
+         "title": "Process memory used (rss)",
+         "type": "timeseries"
       },
       {
          "datasource": {
@@ -1820,6 +1843,18 @@
                         }
                      }
                   ]
+               },
+               {
+                  "matcher": {
+                     "id": "byFrameRefID",
+                     "options": "Threads (deadlocked)"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "short"
+                     }
+                  ]
                }
             ]
          },
@@ -1873,6 +1908,17 @@
                "instant": false,
                "legendFormat": "{{job}}: Threads (peak)",
                "refId": "Threads (peak)"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+               },
+               "expr": "avg by (job) (\n  jvm_threads_deadlocked{job!=\"\",job=~\"$job\",instance=~\"$instance\"}\n)",
+               "format": "time_series",
+               "instant": false,
+               "legendFormat": "{{job}}: Threads (deadlocked)",
+               "refId": "Threads (deadlocked)"
             }
          ],
          "title": "Threads",

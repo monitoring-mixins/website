@@ -24,7 +24,7 @@
             "y": 0
          },
          "id": 1,
-         "title": "Summary by Kubernetes Cluster, Project",
+         "title": "Summary by Project",
          "type": "row"
       },
       {
@@ -41,8 +41,8 @@
             }
          },
          "gridPos": {
-            "h": 5,
-            "w": 9,
+            "h": 6,
+            "w": 12,
             "x": 0,
             "y": 1
          },
@@ -71,8 +71,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (job, dest_server, project, health_status)\n",
-               "legendFormat": "{{ dest_server }}/{{ project }} - {{ health_status }}"
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (job, project, health_status)\n",
+               "legendFormat": "{{ project }} - {{ health_status }}"
             }
          ],
          "title": "Application Health Status",
@@ -92,9 +92,9 @@
             }
          },
          "gridPos": {
-            "h": 5,
-            "w": 9,
-            "x": 9,
+            "h": 6,
+            "w": 12,
+            "x": 12,
             "y": 1
          },
          "id": 3,
@@ -122,8 +122,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (job, dest_server, project, sync_status)\n",
-               "legendFormat": "{{ dest_server }}/{{ project }} - {{ sync_status }}"
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (job, project, sync_status)\n",
+               "legendFormat": "{{ project }} - {{ sync_status }}"
             }
          ],
          "title": "Application Sync Status",
@@ -143,10 +143,10 @@
             }
          },
          "gridPos": {
-            "h": 5,
-            "w": 9,
+            "h": 6,
+            "w": 12,
             "x": 0,
-            "y": 6
+            "y": 7
          },
          "id": 4,
          "options": {
@@ -173,8 +173,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, phase)\n",
-               "legendFormat": "{{ dest_server }}/{{ project }} - {{ phase }}"
+               "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, project, phase)\n",
+               "legendFormat": "{{ project }} - {{ phase }}"
             }
          ],
          "title": "Application Syncs",
@@ -194,10 +194,10 @@
             }
          },
          "gridPos": {
-            "h": 5,
-            "w": 9,
-            "x": 9,
-            "y": 6
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 7
          },
          "id": 5,
          "options": {
@@ -224,32 +224,12 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (job, dest_server, project, autosync_enabled)\n",
-               "legendFormat": "{{ dest_server }}/{{ project }} - {{ autosync_enabled }}"
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (job, project, autosync_enabled)\n",
+               "legendFormat": "{{ project }} - {{ autosync_enabled }}"
             }
          ],
          "title": "Application Auto Sync Enabled",
          "type": "timeseries"
-      },
-      {
-         "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
-         },
-         "gridPos": {
-            "h": 10,
-            "w": 6,
-            "x": 18,
-            "y": 1
-         },
-         "id": 6,
-         "options": {
-            "content": "No applications defined",
-            "mode": "markdown"
-         },
-         "pluginVersion": "v11.4.0",
-         "title": "Application Badges",
-         "type": "text"
       },
       {
          "collapsed": false,
@@ -259,7 +239,7 @@
             "x": 0,
             "y": 11
          },
-         "id": 7,
+         "id": 6,
          "title": "Applications (Unhealthy/OutOfSync/AutoSyncDisabled) Summary",
          "type": "row"
       },
@@ -313,12 +293,12 @@
             ]
          },
          "gridPos": {
-            "h": 6,
+            "h": 8,
             "w": 12,
             "x": 0,
             "y": 12
          },
-         "id": 8,
+         "id": 7,
          "options": {
             "footer": {
                "enablePagination": true
@@ -419,12 +399,12 @@
             ]
          },
          "gridPos": {
-            "h": 6,
+            "h": 8,
             "w": 12,
             "x": 12,
             "y": 12
          },
-         "id": 9,
+         "id": 8,
          "options": {
             "footer": {
                "enablePagination": true
@@ -525,12 +505,12 @@
             ]
          },
          "gridPos": {
-            "h": 6,
+            "h": 8,
             "w": 12,
             "x": 0,
-            "y": 18
+            "y": 20
          },
-         "id": 10,
+         "id": 9,
          "options": {
             "footer": {
                "enablePagination": true
@@ -631,12 +611,12 @@
             ]
          },
          "gridPos": {
-            "h": 6,
+            "h": 8,
             "w": 12,
             "x": 12,
-            "y": 18
+            "y": 20
          },
-         "id": 11,
+         "id": 10,
          "options": {
             "footer": {
                "enablePagination": true
@@ -693,9 +673,10 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 23
+            "y": 25
          },
-         "id": 12,
+         "id": 11,
+         "repeat": "application",
          "title": "Application ($application)",
          "type": "row"
       },
@@ -716,7 +697,57 @@
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 24
+            "y": 27
+         },
+         "id": 12,
+         "interval": "5m",
+         "options": {
+            "legend": {
+               "calcs": [
+                  "last"
+               ],
+               "displayMode": "table",
+               "showLegend": true,
+               "sortBy": "Last",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n    name=~\"$application\",\n  }\n) by (namespace, job, dest_server, project, name, health_status)\n",
+               "legendFormat": "{{ project }}/{{ name }} - {{ health_status }}"
+            }
+         ],
+         "title": "Application Health Status",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "datasource",
+            "uid": "-- Mixed --"
+         },
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10
+               },
+               "unit": "short"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 27
          },
          "id": 13,
          "interval": "5m",
@@ -742,11 +773,11 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n    name=~\"$application\",\n  }\n) by (namespace, job, dest_server, project, name, health_status)\n",
-               "legendFormat": "{{ dest_server }}/{{ project }}/{{ name }} - {{ health_status }}"
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n    name=~\"$application\",\n  }\n) by (namespace, job, dest_server, project, name, sync_status)\n",
+               "legendFormat": "{{ project }}/{{ name }} - {{ sync_status }}"
             }
          ],
-         "title": "Application Health Status",
+         "title": "Application Sync Status",
          "type": "timeseries"
       },
       {
@@ -765,8 +796,8 @@
          "gridPos": {
             "h": 8,
             "w": 8,
-            "x": 8,
-            "y": 24
+            "x": 16,
+            "y": 27
          },
          "id": 14,
          "interval": "5m",
@@ -792,58 +823,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n    name=~\"$application\",\n  }\n) by (namespace, job, dest_server, project, name, sync_status)\n",
-               "legendFormat": "{{ dest_server }}/{{ project }}/{{ name }} - {{ sync_status }}"
-            }
-         ],
-         "title": "Application Sync Status",
-         "type": "timeseries"
-      },
-      {
-         "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
-         },
-         "fieldConfig": {
-            "defaults": {
-               "custom": {
-                  "fillOpacity": 10
-               },
-               "unit": "short"
-            }
-         },
-         "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 24
-         },
-         "id": 15,
-         "interval": "5m",
-         "options": {
-            "legend": {
-               "calcs": [
-                  "last"
-               ],
-               "displayMode": "table",
-               "showLegend": true,
-               "sortBy": "Last",
-               "sortDesc": true
-            },
-            "tooltip": {
-               "mode": "multi",
-               "sort": "desc"
-            }
-         },
-         "pluginVersion": "v11.4.0",
-         "targets": [
-            {
-               "datasource": {
-                  "type": "prometheus",
-                  "uid": "$datasource"
-               },
                "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n        name=~\"$application\",\n      }[$__rate_interval]\n    )\n  )\n) by (namespace, job, dest_server, project, name, phase)\n",
-               "legendFormat": "{{ dest_server }}/{{ project }}/{{ name }} - {{ phase }}"
+               "legendFormat": "{{ project }}/{{ name }} - {{ phase }}"
             }
          ],
          "title": "Application Sync Result",
