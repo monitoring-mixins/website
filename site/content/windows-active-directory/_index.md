@@ -42,8 +42,12 @@ annotations:
   description: |
     Memory usage on host {{ $labels.instance }} is critically high, with {{ printf "%.2f" $value }}% of total memory used.
     This exceeds the threshold of 90%.
-    Current memory free: {{ with printf `windows_os_physical_memory_free_bytes{}` | query | first | value | humanize }}{{ . }}{{ end }}.
-    Total memory: {{ with printf `windows_cs_physical_memory_bytes{}` | query | first | value | humanize }}{{ . }}{{ end }}.
+    Current memory free: {{ with printf `windows_memory_physical_free_bytes{}
+    or
+    windows_os_physical_memory_free_bytes{}` | query | first | value | humanize }}{{ . }}{{ end }}.
+    Total memory: {{ with printf `windows_cs_physical_memory_bytes{}
+    or
+    windows_memory_physical_total_bytes{}` | query | first | value | humanize }}{{ . }}{{ end }}.
     Consider investigating processes consuming high memory or increasing available memory.
   summary: High memory usage on Windows host.
 expr: |
@@ -72,21 +76,6 @@ expr: |
   (100 - windows_logical_disk_free_bytes{volume!~"HarddiskVolume.*", }/windows_logical_disk_size_bytes{volume!~"HarddiskVolume.*", }*100) > 90
 for: 15m
 keep_firing_for: 5m
-labels:
-  severity: critical
-{{< /code >}}
- 
-##### WindowsServiceNotHealthy
-
-{{< code lang="yaml" >}}
-alert: WindowsServiceNotHealthy
-annotations:
-  description: Windows service {{ $labels.name }} is not in healthy state, currently
-    in '{{ $labels.status }}'.
-  summary: Windows service is not healthy.
-expr: |
-  (windows_service_status{status!~"starting|stopping|ok", }) > 0
-for: 5m
 labels:
   severity: critical
 {{< /code >}}
@@ -158,69 +147,16 @@ labels:
   severity: info
 {{< /code >}}
  
-##### WindowsActiveDirectoryHighPendingReplicationOperations
+##### WindowsServiceNotHealthy
 
 {{< code lang="yaml" >}}
-alert: WindowsActiveDirectoryHighPendingReplicationOperations
+alert: WindowsServiceNotHealthy
 annotations:
-  description: |
-    The number of pending replication operations on {{$labels.instance}} is {{ printf "%.2f" $value }} which is above the threshold of 50.
-  summary: There is a high number of pending replication operations in Active Directory.
-    A high number of pending operations sustained over a period of time can indicate
-    a problem with replication.
+  description: Windows service {{ $labels.name }} is not in healthy state, currently
+    in '{{ $labels.status }}'.
+  summary: Windows service is not healthy.
 expr: |
-  (windows_ad_replication_pending_operations{}) >= 50
-for: 10m
-keep_firing_for: 5m
-labels:
-  severity: warning
-{{< /code >}}
- 
-##### WindowsActiveDirectoryHighReplicationSyncRequestFailures
-
-{{< code lang="yaml" >}}
-alert: WindowsActiveDirectoryHighReplicationSyncRequestFailures
-annotations:
-  description: |
-    The number of replication sync request failures on {{$labels.instance}} is {{ printf "%.2f" $value }} which is above the threshold of 0.
-  summary: There are a number of replication synchronization request failures. These
-    can cause authentication failures, outdated information being propagated across
-    domain controllers, and potentially data loss or inconsistencies.
-expr: |
-  (increase(windows_ad_replication_sync_requests_schema_mismatch_failure_total{}[5m:] offset -5m)) > 0
-for: 5m
-keep_firing_for: 5m
-labels:
-  severity: critical
-{{< /code >}}
- 
-##### WindowsActiveDirectoryHighPasswordChanges
-
-{{< code lang="yaml" >}}
-alert: WindowsActiveDirectoryHighPasswordChanges
-annotations:
-  description: |
-    The number of password changes on {{$labels.instance}} is {{ printf "%.2f" $value }} which is greater than the threshold of 25. This alert would resolve itself if no new anomalies are detected within 24 hours.
-  summary: There is a high number of password changes. This may indicate unauthorized
-    changes or attacks.
-expr: |
-  (increase(windows_ad_sam_password_changes_total{}[5m:] offset -5m)) > 25
-for: 5m
-labels:
-  keep_firing_for: 24h
-  severity: warning
-{{< /code >}}
- 
-##### WindowsActiveDirectoryMetricsDown
-
-{{< code lang="yaml" >}}
-alert: WindowsActiveDirectoryMetricsDown
-annotations:
-  description: There are no available metrics for Windows Active Directory integration
-    from instance {{$labels.instance}}.
-  summary: Windows Active Directory metrics are down.
-expr: |
-  (up{job="integrations/windows_exporter"}) == 0
+  (windows_service_status{status!~"starting|stopping|ok", }) > 0
 for: 5m
 labels:
   severity: critical

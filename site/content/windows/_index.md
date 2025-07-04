@@ -42,8 +42,12 @@ annotations:
   description: |
     Memory usage on host {{ $labels.instance }} is critically high, with {{ printf "%.2f" $value }}% of total memory used.
     This exceeds the threshold of 90%.
-    Current memory free: {{ with printf `windows_os_physical_memory_free_bytes{}` | query | first | value | humanize }}{{ . }}{{ end }}.
-    Total memory: {{ with printf `windows_cs_physical_memory_bytes{}` | query | first | value | humanize }}{{ . }}{{ end }}.
+    Current memory free: {{ with printf `windows_memory_physical_free_bytes{}
+    or
+    windows_os_physical_memory_free_bytes{}` | query | first | value | humanize }}{{ . }}{{ end }}.
+    Total memory: {{ with printf `windows_cs_physical_memory_bytes{}
+    or
+    windows_memory_physical_total_bytes{}` | query | first | value | humanize }}{{ . }}{{ end }}.
     Consider investigating processes consuming high memory or increasing available memory.
   summary: High memory usage on Windows host.
 expr: |
@@ -72,21 +76,6 @@ expr: |
   (100 - windows_logical_disk_free_bytes{volume!~"HarddiskVolume.*", }/windows_logical_disk_size_bytes{volume!~"HarddiskVolume.*", }*100) > 90
 for: 15m
 keep_firing_for: 5m
-labels:
-  severity: critical
-{{< /code >}}
- 
-##### WindowsServiceNotHealthy
-
-{{< code lang="yaml" >}}
-alert: WindowsServiceNotHealthy
-annotations:
-  description: Windows service {{ $labels.name }} is not in healthy state, currently
-    in '{{ $labels.status }}'.
-  summary: Windows service is not healthy.
-expr: |
-  (windows_service_status{status!~"starting|stopping|ok", }) > 0
-for: 5m
 labels:
   severity: critical
 {{< /code >}}
@@ -156,6 +145,21 @@ expr: |
   (time() - windows_system_system_up_time{} offset 10m)) > 600
 labels:
   severity: info
+{{< /code >}}
+ 
+##### WindowsServiceNotHealthy
+
+{{< code lang="yaml" >}}
+alert: WindowsServiceNotHealthy
+annotations:
+  description: Windows service {{ $labels.name }} is not in healthy state, currently
+    in '{{ $labels.status }}'.
+  summary: Windows service is not healthy.
+expr: |
+  (windows_service_status{status!~"starting|stopping|ok", }) > 0
+for: 5m
+labels:
+  severity: critical
 {{< /code >}}
  
 ## Dashboards
