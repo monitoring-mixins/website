@@ -1612,6 +1612,21 @@ labels:
   type: ceph_default
 {{< /code >}}
  
+##### NVMeoFHostKeepAliveTimeout
+
+{{< code lang="yaml" >}}
+alert: NVMeoFHostKeepAliveTimeout
+annotations:
+  description: Host was disconnected due to host keep alive timeout
+  summary: Host ({{ $labels.host_nqn }}) was disconnected {{ $value }} times from
+    subsystem ({{ $labels.nqn }}) in last 24 hours
+expr: ceil(changes(ceph_nvmeof_host_keepalive_timeout[24h:]) / 2) > 0
+for: 1m
+labels:
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 
