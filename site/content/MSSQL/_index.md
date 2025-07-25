@@ -25,7 +25,7 @@ alert: MSSQLHighNumberOfDeadlocks
 annotations:
   description: '{{ printf "%.2f" $value }} deadlocks have occurred over the last 5
     minutes on {{$labels.instance}}, which is above threshold of 10 deadlocks.'
-  summary: There are deadlocks ocurring in the database.
+  summary: There are deadlocks occurring in the database.
 expr: |
   increase(mssql_deadlocks_total{}[5m]) > 10
 for: 5m
@@ -97,5 +97,6 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
-- [mssql-overview](https://github.com/monitoring-mixins/website/blob/master/assets/MSSQL/dashboards/mssql-overview.json)
-- [mssql-pages](https://github.com/monitoring-mixins/website/blob/master/assets/MSSQL/dashboards/mssql-pages.json)
+- [logs](https://github.com/monitoring-mixins/website/blob/master/assets/MSSQL/dashboards/logs.json)
+- [mssql_overview](https://github.com/monitoring-mixins/website/blob/master/assets/MSSQL/dashboards/mssql_overview.json)
+- [mssql_pages](https://github.com/monitoring-mixins/website/blob/master/assets/MSSQL/dashboards/mssql_pages.json)
