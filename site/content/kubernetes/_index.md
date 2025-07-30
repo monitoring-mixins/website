@@ -1094,7 +1094,18 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletpodstartuplatencyhigh
   summary: Kubelet Pod startup latency is too high.
 expr: |
-  histogram_quantile(0.99, sum(rate(kubelet_pod_worker_duration_seconds_bucket{job="kubelet"}[5m])) by (cluster, instance, le)) * on(cluster, instance) group_left(node) kubelet_node_name{job="kubelet"} > 60
+  histogram_quantile(0.99,
+    sum by (cluster, instance, le) (
+      topk by (cluster, instance, le, operation_type) (1,
+        rate(kubelet_pod_worker_duration_seconds_bucket{job="kubelet"}[5m])
+      )
+    )
+  )
+  * on(cluster, instance) group_left(node)
+  topk by (cluster, instance, node) (1,
+    kubelet_node_name{job="kubelet"}
+  )
+  > 60
 for: 15m
 labels:
   severity: warning
