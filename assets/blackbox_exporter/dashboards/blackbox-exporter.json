@@ -964,6 +964,7 @@
             "label": "Data source",
             "name": "datasource",
             "query": "prometheus",
+            "regex": "",
             "type": "datasource"
          },
          {
