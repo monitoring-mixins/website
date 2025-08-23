@@ -31,7 +31,7 @@ expr: |
   sum(
     increase(
       karpenter_cloudprovider_errors_total{
-        job=~"karpenter",
+        job="karpenter",
         controller!~"nodeclaim.termination|node.termination",
         error!="NodeClaimNotFoundError"
       }[5m]
@@ -55,13 +55,13 @@ annotations:
 expr: |
   sum(
     karpenter_nodeclaims_termination_duration_seconds_sum{
-      job=~"karpenter"
+      job="karpenter"
     }
   ) by (cluster, namespace, job, nodepool)
   /
   sum(
     karpenter_nodeclaims_termination_duration_seconds_count{
-      job=~"karpenter"
+      job="karpenter"
     }
   ) by (cluster, namespace, job, nodepool) > 1200
 for: 15m
@@ -80,11 +80,11 @@ annotations:
   summary: Karpenter Nodepool near capacity.
 expr: |
   sum (
-    karpenter_nodepools_usage{job=~"karpenter"}
+    karpenter_nodepools_usage{job="karpenter"}
   ) by (cluster, namespace, job, nodepool, resource_type)
   /
   sum (
-    karpenter_nodepools_limit{job=~"karpenter"}
+    karpenter_nodepools_limit{job="karpenter"}
   ) by (cluster, namespace, job, nodepool, resource_type)
   * 100 > 75
 for: 15m
@@ -105,11 +105,15 @@ annotations:
   summary: Cluster Autoscaler Node Count near Capacity.
 expr: |
   sum (
-    cluster_autoscaler_nodes_count{job=~"cluster-autoscaler"}
+    cluster_autoscaler_nodes_count{
+      job="cluster-autoscaler"
+    }
   ) by (cluster, namespace, job)
   /
   sum (
-    cluster_autoscaler_max_nodes_count{job=~"cluster-autoscaler"}
+    cluster_autoscaler_max_nodes_count{
+      job="cluster-autoscaler"
+    }
   ) by (cluster, namespace, job)
   * 100 > 75
 for: 15m
@@ -128,10 +132,127 @@ annotations:
   summary: Pods Pending Scheduling - Cluster Node Group Scaling Required
 expr: |
   sum (
-    cluster_autoscaler_unschedulable_pods_count{job=~"cluster-autoscaler"}
+    cluster_autoscaler_unschedulable_pods_count{
+      job="cluster-autoscaler"
+    }
   ) by (cluster, namespace, job)
   > 0
 for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+### keda
+
+##### KedaScaledJobErrors
+
+{{< code lang="yaml" >}}
+alert: KedaScaledJobErrors
+annotations:
+  dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-kedasj-jkwq/kubernetes-autoscaling-keda-scaled-job?var-scaled_job={{
+    $labels.scaledObject }}&var-resource_namespace={{ $labels.exported_namespace }}
+  description: KEDA scaled jobs are experiencing errors. Check the scaled job {{ $labels.scaledObject
+    }} in the namespace {{ $labels.exported_namespace }}.
+  summary: Errors detected for KEDA scaled jobs.
+expr: |
+  sum(
+    increase(
+      keda_scaled_job_errors_total{
+        job="keda-operator"
+      }[10m]
+    )
+  ) by (cluster, job, exported_namespace, scaledObject) > 0
+for: 1m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### KedaScaledObjectErrors
+
+{{< code lang="yaml" >}}
+alert: KedaScaledObjectErrors
+annotations:
+  dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-kedaso-jkwq/kubernetes-autoscaling-keda-scaled-object?var-scaled_object={{
+    $labels.scaledObject }}&var-resource_namespace={{ $labels.exported_namespace }}
+  description: KEDA scaled objects are experiencing errors. Check the scaled object
+    {{ $labels.scaledObject }} in the namespace {{ $labels.exported_namespace }}.
+  summary: Errors detected for KEDA scaled objects.
+expr: |
+  sum(
+    increase(
+      keda_scaled_object_errors_total{
+        job="keda-operator"
+      }[10m]
+    )
+  ) by (cluster, job, exported_namespace, scaledObject) > 0
+for: 1m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### KedaScalerLatencyHigh
+
+{{< code lang="yaml" >}}
+alert: KedaScalerLatencyHigh
+annotations:
+  dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-kedaso-jkwq/kubernetes-autoscaling-keda-scaled-object?var-scaled_object={{
+    $labels.scaledObject }}&var-scaler={{ $labels.scaler }}
+  description: Metric latency for scaler {{ $labels.scaler }} for the object {{ $labels.scaledObject
+    }} has exceeded acceptable limits.
+  summary: High latency for KEDA scaler metrics.
+expr: |
+  avg(
+    keda_scaler_metrics_latency_seconds{
+      job="keda-operator"
+    }
+  ) by (cluster, job, exported_namespace, scaledObject, scaler) > 5
+for: 10m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### KedaScaledObjectPaused
+
+{{< code lang="yaml" >}}
+alert: KedaScaledObjectPaused
+annotations:
+  dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-kedaso-jkwq/kubernetes-autoscaling-keda-scaled-object?var-scaled_object={{
+    $labels.scaledObject }}&var-resource_namespace={{ $labels.exported_namespace }}
+  description: The scaled object {{ $labels.scaledObject }} in namespace {{ $labels.exported_namespace
+    }} is paused for longer than 25h. This may indicate a configuration issue or manual
+    intervention.
+  summary: KEDA scaled object is paused.
+expr: |
+  max(
+    keda_scaled_object_paused{
+      job="keda-operator"
+    }
+  ) by (cluster, job, exported_namespace, scaledObject) > 0
+for: 25h
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### KedaScalerDetailErrors
+
+{{< code lang="yaml" >}}
+alert: KedaScalerDetailErrors
+annotations:
+  dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-kedaso-jkwq/kubernetes-autoscaling-keda-scaled-object?var-scaler={{
+    $labels.scaler }}&var-scaled_object={{ $labels.scaledObject }}
+  description: Errors have occurred in the KEDA scaler {{ $labels.scaler }}. Investigate
+    the scaler for the {{ $labels.type }} {{ $labels.scaledObject }} in namespace
+    {{ $labels.exported_namespace }}.
+  summary: Errors detected in KEDA scaler.
+expr: |
+  sum(
+    increase(
+      keda_scaler_detail_errors_total{
+        job="keda-operator"
+      }[10m]
+    )
+  ) by (cluster, job, exported_namespace, scaledObject, type, scaler) > 0
+for: 1m
 labels:
   severity: warning
 {{< /code >}}
@@ -145,5 +266,7 @@ Following dashboards are generated from mixins and hosted on github:
 - [kubernetes-autoscaling-mixin-karpenter-act](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-karpenter-act.json)
 - [kubernetes-autoscaling-mixin-karpenter-over](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-karpenter-over.json)
 - [kubernetes-autoscaling-mixin-karpenter-perf](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-karpenter-perf.json)
+- [kubernetes-autoscaling-mixin-keda-sj](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-keda-sj.json)
+- [kubernetes-autoscaling-mixin-keda-so](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-keda-so.json)
 - [kubernetes-autoscaling-mixin-pdb](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-pdb.json)
 - [kubernetes-autoscaling-mixin-vpa](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-vpa.json)

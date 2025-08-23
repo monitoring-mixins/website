@@ -238,7 +238,7 @@
             }
          },
          "gridPos": {
-            "h": 6,
+            "h": 8,
             "w": 24,
             "x": 0,
             "y": 6
@@ -277,10 +277,10 @@
                   },
                   "indexByName": {
                      "Value #A": 4,
-                     "horizontalpodautoscaler": 1,
+                     "horizontalpodautoscaler": 0,
                      "metric_name": 2,
                      "metric_target_type": 3,
-                     "namespace": 0
+                     "namespace": 1
                   },
                   "renameByName": {
                      "Value #A": "Threshold",
@@ -293,6 +293,19 @@
             }
          ],
          "type": "table"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 14
+         },
+         "id": 7,
+         "repeat": "metric_target_type",
+         "title": "Target Type $metric_name / $metric_target_type",
+         "type": "row"
       },
       {
          "datasource": {
@@ -311,9 +324,9 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 12
+            "y": 15
          },
-         "id": 7,
+         "id": 8,
          "options": {
             "legend": {
                "calcs": [
@@ -339,19 +352,19 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    kube_horizontalpodautoscaler_status_target_metric{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      namespace=~\"$namespace\",\n      horizontalpodautoscaler=\"$hpa\",\n      metric_name=~\"$metric_name\",\n      metric_target_type=\"utilization\"\n    }\n  ) by (job, namespace, horizontalpodautoscaler, metric_name, metric_target_type)\n)\n",
-               "legendFormat": "Utilization / {{ metric_name }}"
+               "expr": "round(\n  sum(\n    kube_horizontalpodautoscaler_status_target_metric{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      namespace=~\"$namespace\",\n      horizontalpodautoscaler=\"$hpa\",\n      metric_name=~\"$metric_name\",\n      metric_target_type=~\"$metric_target_type\",\n    }\n  ) by (job, namespace, horizontalpodautoscaler, metric_name, metric_target_type)\n)\n",
+               "legendFormat": "{{ metric_target_type }} / {{ metric_name }}"
             },
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    kube_horizontalpodautoscaler_spec_target_metric{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      namespace=~\"$namespace\",\n      horizontalpodautoscaler=\"$hpa\",\n      metric_name=~\"$metric_name\",\n      metric_target_type=\"utilization\"\n    }\n  ) by (job, namespace, horizontalpodautoscaler, metric_name, metric_target_type)\n)\n",
+               "expr": "round(\n  sum(\n    kube_horizontalpodautoscaler_spec_target_metric{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      namespace=~\"$namespace\",\n      horizontalpodautoscaler=\"$hpa\",\n      metric_name=~\"$metric_name\",\n      metric_target_type=~\"$metric_target_type\",\n    }\n  ) by (job, namespace, horizontalpodautoscaler, metric_name, metric_target_type)\n)\n",
                "legendFormat": "Threshold / {{ metric_name }}"
             }
          ],
-         "title": "Utilization & Threshold",
+         "title": "Usage & Threshold",
          "type": "timeseries"
       },
       {
@@ -371,9 +384,9 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 18
+            "y": 21
          },
-         "id": 8,
+         "id": 9,
          "options": {
             "legend": {
                "calcs": [
@@ -481,8 +494,6 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
-            "label": "Namespace",
-            "multi": true,
             "name": "namespace",
             "query": "label_values(kube_horizontalpodautoscaler_metadata_generation{cluster=\"$cluster\", job=~\"$job\"}, namespace)",
             "refresh": 2,
@@ -506,11 +517,23 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
-            "includeAll": true,
             "label": "Metric Name",
-            "multi": true,
             "name": "metric_name",
             "query": "label_values(kube_horizontalpodautoscaler_spec_target_metric{cluster=\"$cluster\", job=~\"$job\", namespace=\"$namespace\", horizontalpodautoscaler=\"$hpa\"}, metric_name)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Metric Target Type",
+            "multi": true,
+            "name": "metric_target_type",
+            "query": "label_values(kube_horizontalpodautoscaler_spec_target_metric{cluster=\"$cluster\", job=~\"$job\", namespace=\"$namespace\", horizontalpodautoscaler=\"$hpa\", metric_name=~\"$metric_name\"}, metric_target_type)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
