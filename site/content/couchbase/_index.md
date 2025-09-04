@@ -89,4 +89,5 @@ Following dashboards are generated from mixins and hosted on github:
 
 - [couchbase-bucket-overview](https://github.com/monitoring-mixins/website/blob/master/assets/couchbase/dashboards/couchbase-bucket-overview.json)
 - [couchbase-cluster-overview](https://github.com/monitoring-mixins/website/blob/master/assets/couchbase/dashboards/couchbase-cluster-overview.json)
+- [couchbase-logs](https://github.com/monitoring-mixins/website/blob/master/assets/couchbase/dashboards/couchbase-logs.json)
 - [couchbase-node-overview](https://github.com/monitoring-mixins/website/blob/master/assets/couchbase/dashboards/couchbase-node-overview.json)
