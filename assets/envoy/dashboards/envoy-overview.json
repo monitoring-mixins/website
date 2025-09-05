@@ -881,7 +881,7 @@
             "multi": true,
             "name": "envoy_cluster",
             "options": [ ],
-            "query": "label_values(envoy_cluster_version{job=~\"$job\",instance=~\"$instance\",envoy_cluster_name!=\"envoy-admin\"}, envoy_cluster_name)",
+            "query": "label_values(envoy_cluster_warming_state{job=~\"$job\",instance=~\"$instance\",envoy_cluster_name!=\"envoy-admin\"}, envoy_cluster_name)",
             "refresh": 1,
             "regex": "",
             "sort": 2,
