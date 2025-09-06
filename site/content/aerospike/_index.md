@@ -16,7 +16,7 @@ Jsonnet source code is available at [github.com/grafana/jsonnet-libs](https://gi
 Complete list of pregenerated alerts is available [here](https://github.com/monitoring-mixins/website/blob/master/assets/aerospike/alerts.yaml).
 {{< /panel >}}
 
-### aerospike
+### aerospike.rules
 
 ##### AerospikeNodeHighMemoryUsage
 
@@ -107,7 +107,7 @@ annotations:
     on cluster {{$labels.aerospike_cluster}}, which is above the threshold of 25.'
   summary: There is a high rate of errors for client read transactions.
 expr: |
-  sum without(service) (rate(aerospike_namespace_client_read_error[5m])) / (clamp_min(sum without(service) (rate(aerospike_namespace_client_read_error[5m])) + sum without(service) (rate(aerospike_namespace_client_read_success[5m])), 1)) > 25
+  sum by(instance, aerospike_cluster, ns) (rate(aerospike_namespace_client_read_error[5m])) / (clamp_min(sum by(instance, aerospike_cluster, ns) (rate(aerospike_namespace_client_read_error[5m])) + sum by(instance, aerospike_cluster, ns) (rate(aerospike_namespace_client_read_success[5m])), 1)) > 25
 for: 5m
 labels:
   severity: warning
@@ -123,7 +123,7 @@ annotations:
     on cluster {{$labels.aerospike_cluster}}, which is above the threshold of 25.'
   summary: There is a high rate of errors for client write transactions.
 expr: |
-  sum without(service) (rate(aerospike_namespace_client_write_error[5m])) / (clamp_min(sum without(service) (rate(aerospike_namespace_client_write_error[5m])) + sum without(service) (rate(aerospike_namespace_client_write_success[5m])), 1)) > 25
+  sum by(instance, aerospike_cluster, ns) (rate(aerospike_namespace_client_write_error[5m])) / (clamp_min(sum by(instance, aerospike_cluster, ns) (rate(aerospike_namespace_client_write_error[5m])) + sum by(instance, aerospike_cluster, ns) (rate(aerospike_namespace_client_write_success[5m])), 1)) > 25
 for: 5m
 labels:
   severity: warning
@@ -139,7 +139,7 @@ annotations:
     on cluster {{$labels.aerospike_cluster}}, which is above the threshold of 25.'
   summary: There is a high rate of errors for client UDF transactions.
 expr: |
-  sum without(service) (rate(aerospike_namespace_client_udf_error[5m])) / (clamp_min(sum without(service) (rate(aerospike_namespace_client_udf_error[5m])) + sum without(service) (rate(aerospike_namespace_client_udf_complete[5m])), 1)) > 25
+  sum by(instance, aerospike_cluster, ns) (rate(aerospike_namespace_client_udf_error[5m])) / (clamp_min(sum by(instance, aerospike_cluster, ns) (rate(aerospike_namespace_client_udf_error[5m])) + sum by(instance, aerospike_cluster, ns) (rate(aerospike_namespace_client_udf_complete[5m])), 1)) > 25
 for: 5m
 labels:
   severity: warning
@@ -150,6 +150,6 @@ Following dashboards are generated from mixins and hosted on github:
 
 
 - [aerospike-instance-overview](https://github.com/monitoring-mixins/website/blob/master/assets/aerospike/dashboards/aerospike-instance-overview.json)
-- [aerospike-logs](https://github.com/monitoring-mixins/website/blob/master/assets/aerospike/dashboards/aerospike-logs.json)
+- [aerospike-logs-overview](https://github.com/monitoring-mixins/website/blob/master/assets/aerospike/dashboards/aerospike-logs-overview.json)
 - [aerospike-namespace-overview](https://github.com/monitoring-mixins/website/blob/master/assets/aerospike/dashboards/aerospike-namespace-overview.json)
 - [aerospike-overview](https://github.com/monitoring-mixins/website/blob/master/assets/aerospike/dashboards/aerospike-overview.json)

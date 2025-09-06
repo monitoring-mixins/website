@@ -69,4 +69,5 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
+- [logs](https://github.com/monitoring-mixins/website/blob/master/assets/oracledb/dashboards/logs.json)
 - [oracledb-overview](https://github.com/monitoring-mixins/website/blob/master/assets/oracledb/dashboards/oracledb-overview.json)
