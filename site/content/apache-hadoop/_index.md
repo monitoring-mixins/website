@@ -18,10 +18,10 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 
 ### apache-hadoop
 
-##### ApacheHadoopLowHDFSCapacity
+##### HadoopLowHDFSCapacity
 
 {{< code lang="yaml" >}}
-alert: ApacheHadoopLowHDFSCapacity
+alert: HadoopLowHDFSCapacity
 annotations:
   description: '{{ printf "%.0f" $value }} percent remaining HDFS usage on {{$labels.hadoop_cluster}}
     - {{$labels.instance}}, which is below the threshold of 20.'
@@ -34,10 +34,10 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### ApacheHadoopHDFSMissingBlocks
+##### HadoopHDFSMissingBlocks
 
 {{< code lang="yaml" >}}
-alert: ApacheHadoopHDFSMissingBlocks
+alert: HadoopHDFSMissingBlocks
 annotations:
   description: '{{ printf "%.0f" $value }} HDFS missing blocks on {{$labels.hadoop_cluster}}
     - {{$labels.instance}}, which is above the threshold of 0.'
@@ -50,10 +50,10 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### ApacheHadoopHDFSHighVolumeFailures
+##### HadoopHDFSHighVolumeFailures
 
 {{< code lang="yaml" >}}
-alert: ApacheHadoopHDFSHighVolumeFailures
+alert: HadoopHDFSHighVolumeFailures
 annotations:
   description: '{{ printf "%.0f" $value }} HDFS volume failures on {{$labels.hadoop_cluster}}
     - {{$labels.instance}}, which is above the threshold of 0.'
@@ -65,10 +65,10 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### ApacheHadoopHighDeadDataNodes
+##### HadoopHighDeadDataNodes
 
 {{< code lang="yaml" >}}
-alert: ApacheHadoopHighDeadDataNodes
+alert: HadoopHighDeadDataNodes
 annotations:
   description: '{{ printf "%.0f" $value }} dead HDFS volume failures on {{$labels.hadoop_cluster}}
     - {{$labels.instance}}, which is above the threshold of 0.'
@@ -81,10 +81,10 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### ApacheHadoopHighNodeManagerCPUUsage
+##### HadoopHighNodeManagerCPUUsage
 
 {{< code lang="yaml" >}}
-alert: ApacheHadoopHighNodeManagerCPUUsage
+alert: HadoopHighNodeManagerCPUUsage
 annotations:
   description: '{{ printf "%.0f" $value }} CPU usage on {{$labels.hadoop_cluster}}
     - {{$labels.instance}}, which is above the threshold of 80.'
@@ -96,10 +96,10 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### ApacheHadoopHighNodeManagerMemoryUsage
+##### HadoopHighNodeManagerMemoryUsage
 
 {{< code lang="yaml" >}}
-alert: ApacheHadoopHighNodeManagerMemoryUsage
+alert: HadoopHighNodeManagerMemoryUsage
 annotations:
   description: '{{ printf "%.0f" $value}} percent NodeManager memory usage on {{$labels.hadoop_cluster}}
     - {{$labels.instance}}, which is above the threshold of 80.'
@@ -111,10 +111,10 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### ApacheHadoopHighResourceManagerVirtualCoreCPUUsage
+##### HadoopHighResourceManagervCoreCPUUsage
 
 {{< code lang="yaml" >}}
-alert: ApacheHadoopHighResourceManagerVirtualCoreCPUUsage
+alert: HadoopHighResourceManagervCoreCPUUsage
 annotations:
   description: '{{ printf "%.0f" $value }} virtual core CPU usage on {{$labels.hadoop_cluster}}
     - {{$labels.instance}}, which is above the threshold of 80.'
@@ -127,10 +127,10 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### ApacheHadoopHighResourceManagerMemoryUsage
+##### HadoopHighResourceManagerMemoryUsage
 
 {{< code lang="yaml" >}}
-alert: ApacheHadoopHighResourceManagerMemoryUsage
+alert: HadoopHighResourceManagerMemoryUsage
 annotations:
   description: '{{ printf "%.0f" $value}} percent ResourceManager memory usage on
     {{$labels.hadoop_cluster}} - {{$labels.instance}}, which is above the threshold
@@ -148,6 +148,7 @@ Following dashboards are generated from mixins and hosted on github:
 
 
 - [apache-hadoop-datanode-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-hadoop/dashboards/apache-hadoop-datanode-overview.json)
+- [apache-hadoop-logs-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-hadoop/dashboards/apache-hadoop-logs-overview.json)
 - [apache-hadoop-namenode-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-hadoop/dashboards/apache-hadoop-namenode-overview.json)
 - [apache-hadoop-nodemanager-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-hadoop/dashboards/apache-hadoop-nodemanager-overview.json)
 - [apache-hadoop-resourcemanager-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-hadoop/dashboards/apache-hadoop-resourcemanager-overview.json)

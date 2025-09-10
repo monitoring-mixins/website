@@ -1,7 +1,7 @@
 groups:
 - name: apache-hadoop
   rules:
-  - alert: ApacheHadoopLowHDFSCapacity
+  - alert: HadoopLowHDFSCapacity
     annotations:
       description: '{{ printf "%.0f" $value }} percent remaining HDFS usage on {{$labels.hadoop_cluster}}
         - {{$labels.instance}}, which is below the threshold of 20.'
@@ -12,7 +12,7 @@ groups:
     for: 5m
     labels:
       severity: warning
-  - alert: ApacheHadoopHDFSMissingBlocks
+  - alert: HadoopHDFSMissingBlocks
     annotations:
       description: '{{ printf "%.0f" $value }} HDFS missing blocks on {{$labels.hadoop_cluster}}
         - {{$labels.instance}}, which is above the threshold of 0.'
@@ -23,7 +23,7 @@ groups:
     for: 5m
     labels:
       severity: critical
-  - alert: ApacheHadoopHDFSHighVolumeFailures
+  - alert: HadoopHDFSHighVolumeFailures
     annotations:
       description: '{{ printf "%.0f" $value }} HDFS volume failures on {{$labels.hadoop_cluster}}
         - {{$labels.instance}}, which is above the threshold of 0.'
@@ -33,7 +33,7 @@ groups:
     for: 5m
     labels:
       severity: critical
-  - alert: ApacheHadoopHighDeadDataNodes
+  - alert: HadoopHighDeadDataNodes
     annotations:
       description: '{{ printf "%.0f" $value }} dead HDFS volume failures on {{$labels.hadoop_cluster}}
         - {{$labels.instance}}, which is above the threshold of 0.'
@@ -44,7 +44,7 @@ groups:
     for: 5m
     labels:
       severity: critical
-  - alert: ApacheHadoopHighNodeManagerCPUUsage
+  - alert: HadoopHighNodeManagerCPUUsage
     annotations:
       description: '{{ printf "%.0f" $value }} CPU usage on {{$labels.hadoop_cluster}}
         - {{$labels.instance}}, which is above the threshold of 80.'
@@ -54,7 +54,7 @@ groups:
     for: 5m
     labels:
       severity: critical
-  - alert: ApacheHadoopHighNodeManagerMemoryUsage
+  - alert: HadoopHighNodeManagerMemoryUsage
     annotations:
       description: '{{ printf "%.0f" $value}} percent NodeManager memory usage on
         {{$labels.hadoop_cluster}} - {{$labels.instance}}, which is above the threshold
@@ -65,7 +65,7 @@ groups:
     for: 5m
     labels:
       severity: critical
-  - alert: ApacheHadoopHighResourceManagerVirtualCoreCPUUsage
+  - alert: HadoopHighResourceManagervCoreCPUUsage
     annotations:
       description: '{{ printf "%.0f" $value }} virtual core CPU usage on {{$labels.hadoop_cluster}}
         - {{$labels.instance}}, which is above the threshold of 80.'
@@ -76,7 +76,7 @@ groups:
     for: 5m
     labels:
       severity: critical
-  - alert: ApacheHadoopHighResourceManagerMemoryUsage
+  - alert: HadoopHighResourceManagerMemoryUsage
     annotations:
       description: '{{ printf "%.0f" $value}} percent ResourceManager memory usage
         on {{$labels.hadoop_cluster}} - {{$labels.instance}}, which is above the threshold
