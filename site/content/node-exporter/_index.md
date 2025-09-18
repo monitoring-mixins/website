@@ -467,9 +467,9 @@ alert: NodeBondingDegraded
 annotations:
   description: Bonding interface {{ $labels.master }} on {{ $labels.instance }} is
     in degraded state due to one or more slave failures.
-  summary: Bonding interface is degraded
+  summary: Bonding interface is degraded.
 expr: |
-  (node_bonding_slaves - node_bonding_active) != 0
+  (node_bonding_slaves{job="node"} - node_bonding_active{job="node"}) != 0
 for: 5m
 labels:
   severity: warning
