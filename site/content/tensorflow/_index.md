@@ -52,4 +52,5 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
+- [tensorflow-logs](https://github.com/monitoring-mixins/website/blob/master/assets/tensorflow/dashboards/tensorflow-logs.json)
 - [tensorflow-overview](https://github.com/monitoring-mixins/website/blob/master/assets/tensorflow/dashboards/tensorflow-overview.json)
