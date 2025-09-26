@@ -2,37 +2,21 @@
    "annotations": {
       "list": [ ]
    },
+   "editable": false,
+   "id": null,
    "links": [
       {
          "keepTime": true,
-         "title": "Apache ActiveMQ queue overview",
+         "title": "GitLab overview",
          "type": "link",
-         "url": "/d/apacheactivemq_queues"
-      },
-      {
-         "keepTime": true,
-         "title": "Apache ActiveMQ topic overview",
-         "type": "link",
-         "url": "/d/apacheactivemq_topics"
-      },
-      {
-         "keepTime": true,
-         "title": "Apache ActiveMQ cluster overview",
-         "type": "link",
-         "url": "/d/apacheactivemq_cluster_overview"
-      },
-      {
-         "keepTime": true,
-         "title": "Apache ActiveMQ instance overview",
-         "type": "link",
-         "url": "/d/apacheactivemq_instance_overview"
+         "url": "/d/gitlab_overview"
       },
       {
          "asDropdown": true,
          "includeVars": true,
          "keepTime": true,
          "tags": [
-            "apache-activemq"
+            "gitlab"
          ],
          "title": "All dashboards",
          "type": "dashboards"
@@ -185,7 +169,7 @@
                   "type": "loki",
                   "uid": "${loki_datasource}"
                },
-               "expr": "sum by (level) (count_over_time({job=~\"integrations/apache-activemq\",job=~\"$job\",cluster=~\"$cluster\",activemq_cluster=~\"$activemq_cluster\"}\n|~ \"$regex_search\"\n\n[$__auto]))\n",
+               "expr": "sum by (level) (count_over_time({job=\"integrations/gitlab\",job=~\"$job\",cluster=~\"$cluster\",level=~\"$level\",severity=~\"$severity\"}\n|~ \"$regex_search\"\n\n[$__auto]))\n",
                "legendFormat": "{{ level }}"
             }
          ],
@@ -227,17 +211,17 @@
                   "type": "loki",
                   "uid": "${loki_datasource}"
                },
-               "expr": "{job=~\"integrations/apache-activemq\",job=~\"$job\",cluster=~\"$cluster\",activemq_cluster=~\"$activemq_cluster\"} \n|~ \"$regex_search\"\n\n\n"
+               "expr": "{job=\"integrations/gitlab\",job=~\"$job\",cluster=~\"$cluster\",level=~\"$level\",severity=~\"$severity\"} \n|~ \"$regex_search\"\n\n\n"
             }
          ],
          "title": "Logs",
          "type": "logs"
       }
    ],
-   "refresh": "1m",
+   "refresh": "30s",
    "schemaVersion": 39,
    "tags": [
-      "apache-activemq"
+      "gitlab"
    ],
    "templating": {
       "list": [
@@ -245,7 +229,7 @@
             "label": "Loki data source",
             "name": "loki_datasource",
             "query": "loki",
-            "regex": "",
+            "regex": "(?!grafanacloud.+usage-insights|grafanacloud.+alert-state-history).+",
             "type": "datasource"
          },
          {
@@ -258,7 +242,7 @@
             "label": "Job",
             "multi": true,
             "name": "job",
-            "query": "label_values({job=~\"integrations/apache-activemq\"}, job)",
+            "query": "label_values({job=\"integrations/gitlab\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -273,7 +257,7 @@
             "label": "Cluster",
             "multi": true,
             "name": "cluster",
-            "query": "label_values({job=~\"integrations/apache-activemq\",job=~\"$job\"}, cluster)",
+            "query": "label_values({job=\"integrations/gitlab\",job=~\"$job\"}, cluster)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -285,10 +269,25 @@
                "uid": "${loki_datasource}"
             },
             "includeAll": true,
-            "label": "ActiveMQ cluster",
+            "label": "Level",
             "multi": true,
-            "name": "activemq_cluster",
-            "query": "label_values({job=~\"integrations/apache-activemq\",job=~\"$job\",cluster=~\"$cluster\"}, activemq_cluster)",
+            "name": "level",
+            "query": "label_values({job=\"integrations/gitlab\",job=~\"$job\",cluster=~\"$cluster\"}, level)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "allValue": ".*",
+            "datasource": {
+               "type": "loki",
+               "uid": "${loki_datasource}"
+            },
+            "includeAll": true,
+            "label": "Severity",
+            "multi": true,
+            "name": "severity",
+            "query": "label_values({job=\"integrations/gitlab\",job=~\"$job\",cluster=~\"$cluster\",level=~\"$level\"}, severity)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -316,7 +315,7 @@
             "label": "Prometheus data source",
             "name": "prometheus_datasource",
             "query": "prometheus",
-            "regex": "",
+            "regex": "(?!grafanacloud-usage|grafanacloud-ml-metrics).+",
             "type": "datasource"
          }
       ]
@@ -326,6 +325,6 @@
       "to": "now"
    },
    "timezone": "default",
-   "title": "Apache ActiveMQ logs",
-   "uid": "apacheactivemq-logs"
+   "title": "GitLab logs",
+   "uid": "gitlab-logs"
 }
