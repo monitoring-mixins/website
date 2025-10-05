@@ -30,7 +30,7 @@ annotations:
 expr: |
   sum(
     django_migrations_unapplied_total{
-      job=~"django"
+      job="django"
     }
   ) by (cluster, namespace, job)
   > 0
@@ -53,7 +53,7 @@ expr: |
   sum (
     increase(
       django_db_errors_total{
-        job=~"django"
+        job="django"
       }[10m]
     )
   ) by (cluster, type, namespace, job)
@@ -76,8 +76,8 @@ expr: |
   sum(
     rate(
       django_http_responses_total_by_status_view_method_total{
-        job=~"django",
-        status=~"^4.*",
+        job="django",
+        status=~"4.*",
         view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
       }[5m]
     )
@@ -86,7 +86,7 @@ expr: |
   sum(
     rate(
       django_http_responses_total_by_status_view_method_total{
-        job=~"django",
+        job="django",
         view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
       }[5m]
     )
@@ -111,8 +111,8 @@ expr: |
   sum(
     rate(
       django_http_responses_total_by_status_view_method_total{
-        job=~"django",
-        status=~"^5.*",
+        job="django",
+        status=~"5.*",
         view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
       }[5m]
     )
@@ -121,7 +121,7 @@ expr: |
   sum(
     rate(
       django_http_responses_total_by_status_view_method_total{
-        job=~"django",
+        job="django",
         view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
       }[5m]
     )

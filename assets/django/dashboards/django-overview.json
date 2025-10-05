@@ -1,8 +1,11 @@
 {
    "__inputs": [ ],
    "__requires": [ ],
-   "description": "A dashboard that monitors Django which focuses on giving a overview for the system (requests, db, cache). It is created using the [Django-mixin](https://github.com/adinhodovic/django-mixin).",
-   "editable": true,
+   "annotations": {
+      "list": [ ]
+   },
+   "description": "A dashboard that monitors Django which focuses on giving a overview for the system (requests, db, cache). The dashboards were generated using [Django-mixin](https://github.com/adinhodovic/django-mixin). Open issues and create feature requests in the repository.",
+   "editable": false,
    "links": [
       {
          "asDropdown": true,
@@ -13,7 +16,7 @@
             "django-mixin"
          ],
          "targetBlank": true,
-         "title": "Django Dashboards",
+         "title": "Django",
          "type": "dashboards"
       }
    ],
@@ -32,11 +35,13 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The number of requests received per second.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
                "thresholds": {
                   "steps": [
                      {
@@ -59,21 +64,14 @@
             "y": 1
          },
          "id": 2,
-         "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
-         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "$datasource"
+                  "uid": "${datasource}"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n      }[$__rate_interval]\n    )\n  ), 0.001\n)\n"
+               "expr": "round(\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n\n      }[$__rate_interval]\n    )\n  ), 0.001\n)\n"
             }
          ],
          "title": "Request Volume",
@@ -81,11 +79,13 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The number of database operations (queries) executed per second.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
                "thresholds": {
                   "steps": [
                      {
@@ -108,21 +108,14 @@
             "y": 1
          },
          "id": 3,
-         "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
-         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "$datasource"
+                  "uid": "${datasource}"
                },
-               "expr": "sum (\n  rate (\n    django_db_execute_total {\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[$__rate_interval]\n  )\n) by (namespace, job)\n"
+               "expr": "sum (\n  rate (\n    django_db_execute_total {\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (namespace, job)\n"
             }
          ],
          "title": "Database Ops",
@@ -130,11 +123,13 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The ratio of cache hits to total cache requests over the last 30 minutes. A higher hit rate indicates better cache performance.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
                "thresholds": {
                   "steps": [
                      {
@@ -157,21 +152,14 @@
             "y": 1
          },
          "id": 4,
-         "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
-         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "$datasource"
+                  "uid": "${datasource}"
                },
-               "expr": "sum (\n  rate (\n    django_cache_get_hits_total {\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[30m]\n  )\n) by (namespace, job)\n/\nsum (\n  rate (\n    django_cache_get_total {\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[30m]\n  )\n) by (namespace, job)\n"
+               "expr": "sum (\n  rate (\n    django_cache_get_hits_total {\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[30m]\n  )\n) by (namespace, job)\n/\nsum (\n  rate (\n    django_cache_get_total {\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[30m]\n  )\n) by (namespace, job)\n"
             }
          ],
          "title": "Cache Hitrate [30m]",
@@ -179,14 +167,15 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The number of HTTP responses sent per second, categorized by status code classes.",
          "fieldConfig": {
             "defaults": {
                "custom": {
                   "fillOpacity": 100,
-                  "spanNulls": false,
+                  "lineWidth": 1,
                   "stacking": {
                      "mode": "percent"
                   }
@@ -266,7 +255,6 @@
          "options": {
             "legend": {
                "calcs": [
-                  "lastNotNull",
                   "mean",
                   "max"
                ],
@@ -288,7 +276,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"2.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\n        status=~\"2.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "2xx"
             },
             {
@@ -296,7 +285,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"3.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\n        status=~\"3.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "3xx"
             },
             {
@@ -304,7 +294,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"4.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\n        status=~\"4.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "4xx"
             },
             {
@@ -312,7 +303,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n        view!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\",\n        status=~\"5.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\n        status=~\"5.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "5xx"
             }
          ],
@@ -333,11 +325,13 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The total number of database migrations that have been applied.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
                "thresholds": {
                   "steps": [
                      {
@@ -351,26 +345,19 @@
          },
          "gridPos": {
             "h": 3,
-            "w": 6,
+            "w": 12,
             "x": 0,
             "y": 12
          },
          "id": 7,
-         "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
-         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "$datasource"
+                  "uid": "${datasource}"
                },
-               "expr": "max (\n  django_migrations_applied_total {\n    cluster=\"$cluster\",\n    namespace=\"$namespace\",\n    job=~\"$job\"\n  }\n) by (namespace, job)\n"
+               "expr": "max (\n  django_migrations_applied_total {\n    cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n  }\n) by (namespace, job)\n"
             }
          ],
          "title": "Migrations Applied",
@@ -378,11 +365,13 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The total number of database migrations that are pending and have not yet been applied.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
                "thresholds": {
                   "steps": [
                      {
@@ -400,16 +389,61 @@
          },
          "gridPos": {
             "h": 3,
-            "w": 6,
-            "x": 6,
+            "w": 12,
+            "x": 12,
             "y": 12
          },
          "id": 8,
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+               },
+               "expr": "max (\n  django_migrations_unapplied_total {\n    cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n  }\n) by (namespace, job)\n"
+            }
+         ],
+         "title": "Migrations Unapplied",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The number of new database connections established, grouped by database vendor. Monitoring connection trends can help identify potential bottlenecks or capacity issues.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 15
+         },
+         "id": 9,
          "options": {
-            "reduceOptions": {
+            "legend": {
                "calcs": [
-                  "lastNotNull"
-               ]
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
             }
          },
          "pluginVersion": "v11.4.0",
@@ -419,32 +453,121 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max (\n  django_migrations_unapplied_total {\n    cluster=\"$cluster\",\n    namespace=\"$namespace\",\n    job=~\"$job\"\n  }\n) by (namespace, job)\n"
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    increase(\n      django_db_new_connections_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, vendor)\n)\n",
+               "legendFormat": "{{ vendor }}"
             }
          ],
-         "title": "Migrations Unapplied",
-         "type": "stat"
+         "title": "Database Connections",
+         "type": "timeseries"
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The latency of database queries at various percentiles, grouped by database vendor. This helps identify performance issues and outliers in database response times.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 15
+         },
+         "id": 10,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.50,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "legendFormat": "50 - {{ vendor }}"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.95,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "legendFormat": "95 - {{ vendor }}"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.99,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "legendFormat": "99 - {{ vendor }}"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.999,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "legendFormat": "99.9 - {{ vendor }}"
+            }
+         ],
+         "title": "Database Latency",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A table displaying the top 10 most frequent database error types over the past week. This helps identify recurring issues that may need attention.",
          "fieldConfig": {
             "defaults": {
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
-            "h": 9,
-            "w": 12,
+            "h": 8,
+            "w": 24,
             "x": 0,
-            "y": 15
+            "y": 20
          },
-         "id": 9,
+         "id": 11,
          "options": {
+            "footer": {
+               "enablePagination": true
+            },
             "sortBy": [
                {
+                  "desc": true,
                   "displayName": "Type"
                }
             ]
@@ -456,7 +579,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  topk(10,\n    sum by (type) (\n      increase(\n        django_db_errors_total{\n          cluster=\"$cluster\",\n          namespace=~\"$namespace\",\n          job=~\"$job\",\n        }[1w]\n      ) > 0\n    )\n  )\n)\n",
+               "expr": "round(\n  topk(10,\n    sum(\n      increase(\n        django_db_errors_total{\n          cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n        }[1w]\n      ) > 0\n    ) by (type)\n  )\n)\n",
                "format": "table",
                "instant": true
             }
@@ -485,142 +608,12 @@
          "type": "table"
       },
       {
-         "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
-         },
-         "fieldConfig": {
-            "defaults": {
-               "custom": {
-                  "fillOpacity": 10,
-                  "spanNulls": false
-               },
-               "unit": "short"
-            }
-         },
-         "gridPos": {
-            "h": 6,
-            "w": 12,
-            "x": 12,
-            "y": 12
-         },
-         "id": 10,
-         "options": {
-            "legend": {
-               "calcs": [
-                  "lastNotNull",
-                  "mean",
-                  "max"
-               ],
-               "displayMode": "table",
-               "placement": "right",
-               "showLegend": true,
-               "sortBy": "Mean",
-               "sortDesc": true
-            },
-            "tooltip": {
-               "mode": "multi",
-               "sort": "desc"
-            }
-         },
-         "pluginVersion": "v11.4.0",
-         "targets": [
-            {
-               "datasource": {
-                  "type": "prometheus",
-                  "uid": "$datasource"
-               },
-               "expr": "round(\n  sum(\n    increase(\n      django_db_new_connections_total{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, vendor)\n)\n",
-               "legendFormat": "{{ vendor }}"
-            }
-         ],
-         "title": "Database Connections",
-         "type": "timeseries"
-      },
-      {
-         "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
-         },
-         "fieldConfig": {
-            "defaults": {
-               "custom": {
-                  "fillOpacity": 10,
-                  "spanNulls": false
-               },
-               "unit": "s"
-            }
-         },
-         "gridPos": {
-            "h": 6,
-            "w": 12,
-            "x": 12,
-            "y": 18
-         },
-         "id": 11,
-         "options": {
-            "legend": {
-               "calcs": [
-                  "lastNotNull",
-                  "mean",
-                  "max"
-               ],
-               "displayMode": "table",
-               "placement": "right",
-               "showLegend": true,
-               "sortBy": "Mean",
-               "sortDesc": true
-            },
-            "tooltip": {
-               "mode": "multi",
-               "sort": "desc"
-            }
-         },
-         "pluginVersion": "v11.4.0",
-         "targets": [
-            {
-               "datasource": {
-                  "type": "prometheus",
-                  "uid": "$datasource"
-               },
-               "expr": "histogram_quantile(0.50,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
-               "legendFormat": "50 - {{ vendor }}"
-            },
-            {
-               "datasource": {
-                  "type": "prometheus",
-                  "uid": "$datasource"
-               },
-               "expr": "histogram_quantile(0.95,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
-               "legendFormat": "95 - {{ vendor }}"
-            },
-            {
-               "datasource": {
-                  "type": "prometheus",
-                  "uid": "$datasource"
-               },
-               "expr": "histogram_quantile(0.99,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
-               "legendFormat": "99 - {{ vendor }}"
-            },
-            {
-               "datasource": {
-                  "type": "prometheus",
-                  "uid": "$datasource"
-               },
-               "expr": "histogram_quantile(0.999,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\n        namespace=~\"$namespace\",\n        job=~\"$job\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
-               "legendFormat": "99.9 - {{ vendor }}"
-            }
-         ],
-         "title": "Database Latency",
-         "type": "timeseries"
-      },
-      {
          "collapsed": false,
          "gridPos": {
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 24
+            "y": 28
          },
          "id": 12,
          "title": "Cache",
@@ -628,32 +621,33 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The number of cache get operations, categorized by hits and misses, grouped by cache backend. This helps assess cache performance and effectiveness.",
          "fieldConfig": {
             "defaults": {
                "custom": {
                   "fillOpacity": 100,
-                  "spanNulls": false,
+                  "lineWidth": 1,
                   "stacking": {
                      "mode": "percent"
                   }
                },
                "unit": "ops"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 25
+            "y": 29
          },
          "id": 13,
          "options": {
             "legend": {
                "calcs": [
-                  "lastNotNull",
                   "mean",
                   "max"
                ],
@@ -675,7 +669,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  rate(\n    django_cache_get_hits_total{\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[$__rate_interval]\n  ) > 0\n) by (namespace, job, backend)\n",
+               "exemplar": false,
+               "expr": "sum(\n  rate(\n    django_cache_get_hits_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  ) > 0\n) by (namespace, job, backend)\n",
                "legendFormat": "Hit - {{ backend }}"
             },
             {
@@ -683,11 +678,12 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  rate(\n    django_cache_get_misses_total{\n      cluster=\"$cluster\",\n      namespace=~\"$namespace\",\n      job=~\"$job\",\n    }[$__rate_interval]\n  ) > 0\n) by (namespace, job, backend)\n",
+               "exemplar": false,
+               "expr": "sum(\n  rate(\n    django_cache_get_misses_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  ) > 0\n) by (namespace, job, backend)\n",
                "legendFormat": "Miss - {{ backend }}"
             }
          ],
-         "title": "Cache Get",
+         "title": "Cache Get Operations",
          "type": "timeseries"
       }
    ],
@@ -745,7 +741,7 @@
             "label": "Job",
             "multi": false,
             "name": "job",
-            "query": "label_values(django_http_responses_total_by_status_view_method_total{cluster=\"$cluster\", namespace=~\"$namespace\"}, job)",
+            "query": "label_values(django_http_responses_total_by_status_view_method_total{cluster=\"$cluster\", namespace=\"$namespace\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
