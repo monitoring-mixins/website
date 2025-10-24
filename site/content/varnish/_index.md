@@ -27,7 +27,7 @@ annotations:
     5 minutes on {{$labels.instance}}, which is below the threshold of 80 percent.
   summary: Cache is not answering a sufficient percentage of read requests.
 expr: |
-  increase(varnish_main_cache_hit[10m]) / (clamp_min((increase(varnish_main_cache_hit[10m]) + increase(varnish_main_cache_miss[10m])), 1)) * 100 < 80 and (increase(varnish_main_cache_hit[10m]) + increase(varnish_main_cache_miss[10m]) > 0)
+  increase(varnish_main_cache_hit{job="integrations/varnish-cache"}[10m]) / (clamp_min((increase(varnish_main_cache_hit{job="integrations/varnish-cache"}[10m]) + increase(varnish_main_cache_miss{job="integrations/varnish-cache"}[10m])), 1)) * 100 < 80 and (increase(varnish_main_cache_hit{job="integrations/varnish-cache"}[10m]) + increase(varnish_main_cache_miss{job="integrations/varnish-cache"}[10m]) > 0)
 for: 10m
 labels:
   severity: warning
@@ -42,7 +42,7 @@ annotations:
     which is above the threshold of 90 percent.
   summary: Varnish Cache is running low on available memory.
 expr: |
-  (varnish_sma_g_bytes{type="s0"} / (varnish_sma_g_bytes{type="s0"} + varnish_sma_g_space{type="s0"})) * 100 > 90
+  (varnish_sma_g_bytes{job="integrations/varnish-cache",type="s0"} / (varnish_sma_g_bytes{job="integrations/varnish-cache",type="s0"} + varnish_sma_g_space{job="integrations/varnish-cache",type="s0"})) * 100 > 90
 for: 5m
 labels:
   severity: warning
@@ -57,7 +57,7 @@ annotations:
     5 minutes on {{$labels.instance}}, which is above the threshold of 0.
   summary: The cache is evicting too many objects.
 expr: |
-  increase(varnish_main_n_lru_nuked[5m]) > 0
+  increase(varnish_main_n_lru_nuked{job="integrations/varnish-cache"}[5m]) > 0
 for: 5m
 labels:
   severity: critical
@@ -73,7 +73,7 @@ annotations:
   summary: There are too many threads in queue, Varnish is saturated and responses
     are slowed.
 expr: |
-  varnish_main_thread_queue_len > 0
+  varnish_main_thread_queue_len{job="integrations/varnish-cache"} > 0
 for: 5m
 labels:
   severity: warning
@@ -88,7 +88,7 @@ annotations:
     last 5 minutes on {{$labels.instance}}, which is above the threshold of 0.
   summary: Incoming requests are being dropped due to a lack of free worker threads.
 expr: |
-  increase(varnish_main_sessions{type="dropped"}[5m]) > 0
+  increase(varnish_main_sessions{job="integrations/varnish-cache",type="dropped"}[5m]) > 0
 for: 5m
 labels:
   severity: critical
@@ -104,7 +104,7 @@ annotations:
     threshold of 0.
   summary: Backend has been marked as unhealthy due to slow 200 responses.
 expr: |
-  increase(varnish_main_backend_unhealthy[5m]) > 0
+  increase(varnish_main_backend_unhealthy{job="integrations/varnish-cache"}[5m]) > 0
 for: 5m
 labels:
   severity: critical
@@ -114,4 +114,5 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
+- [varnish-logs](https://github.com/monitoring-mixins/website/blob/master/assets/varnish/dashboards/varnish-logs.json)
 - [varnish-overview](https://github.com/monitoring-mixins/website/blob/master/assets/varnish/dashboards/varnish-overview.json)

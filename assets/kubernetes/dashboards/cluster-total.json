@@ -703,7 +703,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum by (instance) (\n    rate(node_netstat_Tcp_RetransSegs{cluster=\"$cluster\"}[$__rate_interval]) / rate(node_netstat_Tcp_OutSegs{cluster=\"$cluster\"}[$__rate_interval])\n  * on (cluster,namespace,pod) group_left ()\n    topk by (cluster,namespace,pod) (\n      1,\n      max by (cluster,namespace,pod) (kube_pod_info{host_network=\"false\"})\n    )\n)\n",
+               "expr": "sum by (instance) (\n    rate(node_netstat_Tcp_RetransSegs{cluster=\"$cluster\"}[$__rate_interval]) / rate(node_netstat_Tcp_OutSegs{cluster=\"$cluster\"}[$__rate_interval])\n)\n",
                "legendFormat": "__auto"
             }
          ],
@@ -749,7 +749,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum by (instance) (\n    rate(node_netstat_TcpExt_TCPSynRetrans{cluster=\"$cluster\"}[$__rate_interval]) / rate(node_netstat_Tcp_RetransSegs{cluster=\"$cluster\"}[$__rate_interval])\n  * on (cluster,namespace,pod) group_left ()\n    topk by (cluster,namespace,pod) (\n      1,\n      max by (cluster,namespace,pod) (kube_pod_info{host_network=\"false\"})\n    )\n)\n",
+               "expr": "sum by (instance) (\n    rate(node_netstat_TcpExt_TCPSynRetrans{cluster=\"$cluster\"}[$__rate_interval]) / rate(node_netstat_Tcp_RetransSegs{cluster=\"$cluster\"}[$__rate_interval])\n)\n",
                "legendFormat": "__auto"
             }
          ],
