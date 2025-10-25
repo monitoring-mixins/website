@@ -202,7 +202,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "avg by (job) (\n  jvm_classes_loaded{job=~\"$job\",instance=~\"$instance\"}\n)",
+               "expr": "avg by (job) (\n  jvm_classes_loaded_total{job=~\"$job\",instance=~\"$instance\"}\n)",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{job}}: Classes loaded",
@@ -1533,7 +1533,7 @@
                "expr": "avg by (job, gc) (\n  rate(jvm_gc_collection_seconds_sum{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])\n  /\n  rate(jvm_gc_collection_seconds_count{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])\n)\n",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ job }}: {{ gc }} (avg)",
+               "legendFormat": "{{job}}: {{ gc }} (avg)",
                "refId": "GC time (avg)"
             }
          ],

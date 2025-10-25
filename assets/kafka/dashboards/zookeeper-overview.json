@@ -2139,7 +2139,7 @@
                      "expr": "avg by (job,kafka_cluster, gc) (\n  rate(jvm_gc_collection_seconds_sum{job=~\"integrations/kafka-zookeeper|integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",instance=~\"$instance\"}[$__rate_interval])\n  /\n  rate(jvm_gc_collection_seconds_count{job=~\"integrations/kafka-zookeeper|integrations/kafka\",job=~\"$job\",kafka_cluster=~\"$kafka_cluster\",instance=~\"$instance\"}[$__rate_interval])\n)\n",
                      "format": "time_series",
                      "instant": false,
-                     "legendFormat": "{{ job,kafka_cluster }}: {{ gc }} (avg)",
+                     "legendFormat": "{{kafka_cluster}}: {{ gc }} (avg)",
                      "refId": "GC time (avg)"
                   }
                ],

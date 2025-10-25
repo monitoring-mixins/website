@@ -26,8 +26,8 @@ annotations:
   description: JVM heap memory usage is at {{ printf "%.0f" $value }}% over the last
     5 minutes on {{$labels.instance}}, which is above the threshold of 80%.
   summary: JVM heap memory filling up.
-expr: ((sum without (id) (jvm_memory_used_bytes{area="heap", job!=""}))/(sum without
-  (id) (jvm_memory_max_bytes{area="heap", job!=""} != -1))) * 100 > 80
+expr: ((sum without (id) (jvm_memory_used{area="heap", job!=""}))/(sum without (id)
+  (jvm_memory_max{area="heap", job!=""} != -1))) * 100 > 80
 for: 5m
 keep_firing_for: 5m
 labels:
