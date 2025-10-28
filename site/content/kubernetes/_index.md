@@ -960,7 +960,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapidown
   summary: Target disappeared from Prometheus target discovery.
 expr: |
-  absent(up{job="kube-apiserver"} == 1)
+  absent(up{job="kube-apiserver"})
 for: 15m
 labels:
   severity: critical
@@ -1263,7 +1263,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletdown
   summary: Target disappeared from Prometheus target discovery.
 expr: |
-  absent(up{job="kubelet"} == 1)
+  absent(up{job="kubelet"})
 for: 15m
 labels:
   severity: critical
@@ -1281,7 +1281,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeschedulerdown
   summary: Target disappeared from Prometheus target discovery.
 expr: |
-  absent(up{job="kube-scheduler"} == 1)
+  absent(up{job="kube-scheduler"})
 for: 15m
 labels:
   severity: critical
@@ -1299,7 +1299,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecontrollermanagerdown
   summary: Target disappeared from Prometheus target discovery.
 expr: |
-  absent(up{job="kube-controller-manager"} == 1)
+  absent(up{job="kube-controller-manager"})
 for: 15m
 labels:
   severity: critical
@@ -1317,7 +1317,7 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeproxydown
   summary: Target disappeared from Prometheus target discovery.
 expr: |
-  absent(up{job="kube-proxy"} == 1)
+  absent(up{job="kube-proxy"})
 for: 15m
 labels:
   severity: critical

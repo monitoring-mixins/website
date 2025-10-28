@@ -30,7 +30,7 @@
          "options": {
             "content": "The SLO (service level objective) and other metrics displayed on this dashboard are for informational purposes only."
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "title": "Notice",
          "type": "text"
       },
@@ -54,7 +54,7 @@
          },
          "id": 2,
          "interval": "1m",
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -100,7 +100,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -134,7 +134,7 @@
          },
          "id": 4,
          "interval": "1m",
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -232,7 +232,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -276,7 +276,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -319,7 +319,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -353,7 +353,7 @@
          },
          "id": 8,
          "interval": "1m",
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -451,7 +451,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -495,7 +495,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -538,7 +538,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -581,7 +581,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -624,7 +624,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -670,7 +670,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -712,7 +712,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -755,7 +755,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
@@ -797,7 +797,7 @@
                "mode": "single"
             }
          },
-         "pluginVersion": "v11.4.0",
+         "pluginVersion": "v11.1.0",
          "targets": [
             {
                "datasource": {
