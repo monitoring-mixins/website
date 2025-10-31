@@ -411,7 +411,7 @@
                   "properties": [
                      {
                         "id": "unit",
-                        "value": "Bps"
+                        "value": "bps"
                      }
                   ]
                },
@@ -572,7 +572,7 @@
                   "showPoints": "never",
                   "spanNulls": true
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -623,7 +623,7 @@
                   "showPoints": "never",
                   "spanNulls": true
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -674,7 +674,7 @@
                   "showPoints": "never",
                   "spanNulls": true
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -725,7 +725,7 @@
                   "showPoints": "never",
                   "spanNulls": true
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {

@@ -43,7 +43,7 @@
                      }
                   ]
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -97,7 +97,7 @@
                      }
                   ]
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -132,7 +132,7 @@
                "custom": {
                   "showPoints": "never"
                },
-               "unit": "binBps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -178,7 +178,7 @@
                "custom": {
                   "showPoints": "never"
                },
-               "unit": "binBps"
+               "unit": "bps"
             }
          },
          "gridPos": {

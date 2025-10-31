@@ -25,7 +25,7 @@
                   "fixedColor": "green",
                   "mode": "fixed"
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -65,7 +65,7 @@
                   "fixedColor": "green",
                   "mode": "fixed"
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -105,7 +105,7 @@
                   "fixedColor": "green",
                   "mode": "fixed"
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -145,7 +145,7 @@
                   "fixedColor": "green",
                   "mode": "fixed"
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -186,7 +186,7 @@
                   "showPoints": "never",
                   "spanNulls": true
                },
-               "unit": "binBps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -237,7 +237,7 @@
                   "showPoints": "never",
                   "spanNulls": true
                },
-               "unit": "binBps"
+               "unit": "bps"
             }
          },
          "gridPos": {

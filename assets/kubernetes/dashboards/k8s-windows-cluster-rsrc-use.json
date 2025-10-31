@@ -217,7 +217,7 @@
                   "showPoints": "never",
                   "spanNulls": true
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -268,7 +268,7 @@
                   "showPoints": "never",
                   "spanNulls": true
                },
-               "unit": "Bps"
+               "unit": "bps"
             }
          },
          "gridPos": {

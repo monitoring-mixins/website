@@ -24,7 +24,7 @@
                "custom": {
                   "showPoints": "never"
                },
-               "unit": "binBps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -70,7 +70,7 @@
                "custom": {
                   "showPoints": "never"
                },
-               "unit": "binBps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -121,7 +121,7 @@
                   "properties": [
                      {
                         "id": "unit",
-                        "value": "binBps"
+                        "value": "bps"
                      }
                   ]
                },
@@ -306,7 +306,7 @@
                "custom": {
                   "showPoints": "never"
                },
-               "unit": "binBps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -352,7 +352,7 @@
                "custom": {
                   "showPoints": "never"
                },
-               "unit": "binBps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -398,7 +398,7 @@
                "custom": {
                   "showPoints": "never"
                },
-               "unit": "binBps"
+               "unit": "bps"
             }
          },
          "gridPos": {
@@ -444,7 +444,7 @@
                "custom": {
                   "showPoints": "never"
                },
-               "unit": "binBps"
+               "unit": "bps"
             }
          },
          "gridPos": {
