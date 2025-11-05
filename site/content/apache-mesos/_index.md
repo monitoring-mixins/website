@@ -96,4 +96,5 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
+- [apache-mesos-logs](https://github.com/monitoring-mixins/website/blob/master/assets/apache-mesos/dashboards/apache-mesos-logs.json)
 - [apache-mesos-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-mesos/dashboards/apache-mesos-overview.json)

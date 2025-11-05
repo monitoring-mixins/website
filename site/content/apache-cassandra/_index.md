@@ -28,7 +28,7 @@ annotations:
     of 200ms. '
   summary: There is a high level of read latency within the node.
 expr: |
-  sum(cassandra_table_readlatency_seconds_sum) by (instance) / sum(cassandra_table_readlatency_seconds_count) by (instance) * 1000 > 200
+  sum(cassandra_table_readlatency_seconds_sum{job="integrations/apache-cassandra"}) by (instance) / sum(cassandra_table_readlatency_seconds_count{job="integrations/apache-cassandra"}) by (instance) * 1000 > 200
 for: 5m
 labels:
   severity: critical
@@ -44,7 +44,7 @@ annotations:
     of 200ms. '
   summary: There is a high level of write latency within the node.
 expr: |
-  sum(cassandra_keyspace_writelatency_seconds_sum) by (instance) / sum(cassandra_keyspace_writelatency_seconds_count) by (instance) * 1000 > 200
+  sum(cassandra_keyspace_writelatency_seconds_sum{job="integrations/apache-cassandra"}) by (instance) / sum(cassandra_keyspace_writelatency_seconds_count{job="integrations/apache-cassandra"}) by (instance) * 1000 > 200
 for: 5m
 labels:
   severity: critical
@@ -59,7 +59,7 @@ annotations:
     the last 15 minutes on {{$labels.instance}}, which is above the threshold of 30. '
   summary: Compaction task queue is filling up.
 expr: |
-  cassandra_compaction_pendingtasks > 30
+  cassandra_compaction_pendingtasks{job="integrations/apache-cassandra"} > 30
 for: 15m
 labels:
   severity: warning
@@ -74,7 +74,7 @@ annotations:
     the last 5 minutes on {{$labels.instance}}, which is above the threshold of 1. '
   summary: Compaction task queue is full.
 expr: |
-  cassandra_threadpools_currentlyblockedtasks_count{threadpools="CompactionExecutor", path="internal"} > 1
+  cassandra_threadpools_currentlyblockedtasks_count{threadpools="CompactionExecutor", path="internal", job="integrations/apache-cassandra"} > 1
 for: 5m
 labels:
   severity: critical
@@ -89,7 +89,7 @@ annotations:
     the last minute on {{$labels.instance}}, which is above the threshold of 1. '
   summary: Hints have been recently written to this node.
 expr: |
-  increase(cassandra_storage_totalhints_count[5m]) > 1
+  increase(cassandra_storage_totalhints_count{job="integrations/apache-cassandra"}[5m]) > 1
 for: 1m
 labels:
   severity: warning
@@ -106,7 +106,7 @@ annotations:
   summary: Unavailable exceptions have been encountered while performing writes in
     this cluster.
 expr: |
-  sum(cassandra_clientrequest_unavailables_count{clientrequest="Write"}) by (cassandra_cluster) > 1
+  sum  without (cassandra_cluster) (cassandra_clientrequest_unavailables_count{clientrequest="Write", job="integrations/apache-cassandra"}) > 1
 for: 5m
 labels:
   severity: critical
@@ -121,7 +121,7 @@ annotations:
     minutes on {{$labels.instance}}, which is above the threshold of 80. '
   summary: A node has a CPU usage higher than the configured threshold.
 expr: |
-  jvm_process_cpu_load{job=~"integrations/apache-cassandra"} * 100 > 80
+  jvm_process_cpu_load{job="integrations/apache-cassandra"} * 100 > 80
 for: 5m
 labels:
   severity: critical
@@ -136,7 +136,7 @@ annotations:
     5 minutes on {{$labels.instance}}, which is above the threshold of 80 }}. '
   summary: A node has a higher memory utilization than the configured threshold.
 expr: |
-  sum(jvm_memory_usage_used_bytes{job=~"integrations/apache-cassandra", area="Heap"}) / sum(jvm_physical_memory_size{job=~"integrations/apache-cassandra"}) * 100 > 80
+  sum by (instance) (jvm_memory_usage_used_bytes{job="integrations/apache-cassandra", area="Heap"}) / sum by (instance) (jvm_physical_memory_size{job="integrations/apache-cassandra"}) * 100 > 80
 for: 5m
 labels:
   severity: critical
@@ -146,6 +146,7 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
-- [cassandra-keyspaces](https://github.com/monitoring-mixins/website/blob/master/assets/apache-cassandra/dashboards/cassandra-keyspaces.json)
-- [cassandra-nodes](https://github.com/monitoring-mixins/website/blob/master/assets/apache-cassandra/dashboards/cassandra-nodes.json)
-- [cassandra-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-cassandra/dashboards/cassandra-overview.json)
+- [apache-cassandra-keyspaces](https://github.com/monitoring-mixins/website/blob/master/assets/apache-cassandra/dashboards/apache-cassandra-keyspaces.json)
+- [apache-cassandra-logs](https://github.com/monitoring-mixins/website/blob/master/assets/apache-cassandra/dashboards/apache-cassandra-logs.json)
+- [apache-cassandra-nodes](https://github.com/monitoring-mixins/website/blob/master/assets/apache-cassandra/dashboards/apache-cassandra-nodes.json)
+- [apache-cassandra-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-cassandra/dashboards/apache-cassandra-overview.json)
