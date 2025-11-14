@@ -1,16 +1,22 @@
 {
    "__inputs": [ ],
    "__requires": [ ],
-   "description": "A dashboard that monitors ArgoCD notifications. It is created using the [argo-cd-mixin](https://github.com/adinhodovic/argo-cd-mixin).",
-   "editable": true,
+   "annotations": {
+      "list": [ ]
+   },
+   "description": "A dashboard that monitors ArgoCD with a focus on the notifications. The dashboards were generated using argo-cd-mixin. https://github.com/adinhodovic/argo-cd-mixin. Open issues and create feature requests in the repository.",
+   "editable": false,
    "links": [
       {
+         "asDropdown": true,
+         "includeVars": false,
+         "keepTime": true,
          "tags": [
             "ci/cd",
             "argo-cd"
          ],
          "targetBlank": true,
-         "title": "ArgoCD Dashboards",
+         "title": "ArgoCD",
          "type": "dashboards"
       }
    ],
@@ -29,20 +35,26 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "A timeseries panel showing the count of notification deliveries by exported service and success status.",
          "fieldConfig": {
             "defaults": {
                "custom": {
-                  "fillOpacity": 10
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
                },
                "unit": "short"
             }
          },
          "gridPos": {
             "h": 8,
-            "w": 12,
+            "w": 24,
             "x": 0,
             "y": 1
          },
@@ -50,13 +62,13 @@
          "options": {
             "legend": {
                "calcs": [
-                  "last",
+                  "mean",
                   "max"
                ],
                "displayMode": "table",
                "placement": "right",
                "showLegend": true,
-               "sortBy": "Last",
+               "sortBy": "Mean",
                "sortDesc": true
             },
             "tooltip": {
@@ -71,7 +83,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_notifications_deliveries_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\n\n        exported_service=~\"$exported_service\",\n      }[$__rate_interval]\n    )\n  )\n) by (job, exported_service, succeeded)\n",
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    argocd_notifications_deliveries_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\nexported_service=~\"$exported_service\"\n\n    }[$__rate_interval]\n  )\n) by (exported_service, succeeded)\n",
                "legendFormat": "{{ exported_service }} - Succeeded: {{ succeeded }}"
             }
          ],
@@ -80,34 +93,40 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "A timeseries panel showing the count of trigger evaluations by name and triggered status.",
          "fieldConfig": {
             "defaults": {
                "custom": {
-                  "fillOpacity": 10
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
                },
                "unit": "short"
             }
          },
          "gridPos": {
             "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 1
+            "w": 24,
+            "x": 0,
+            "y": 9
          },
          "id": 3,
          "options": {
             "legend": {
                "calcs": [
-                  "last",
+                  "mean",
                   "max"
                ],
                "displayMode": "table",
                "placement": "right",
                "showLegend": true,
-               "sortBy": "Last",
+               "sortBy": "Mean",
                "sortDesc": true
             },
             "tooltip": {
@@ -122,7 +141,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_notifications_trigger_eval_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, name, triggered)\n",
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    argocd_notifications_trigger_eval_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (name, triggered)\n",
                "legendFormat": "{{ name }} - Triggered: {{ triggered }}"
             }
          ],
@@ -156,7 +176,7 @@
             "hide": 2,
             "label": "Cluster",
             "name": "cluster",
-            "query": "label_values(argocd_notifications_deliveries_total{}, cluster)",
+            "query": "label_values(argocd_app_info{}, cluster)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -166,17 +186,16 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
-            "includeAll": true,
+            "includeAll": false,
             "label": "Namespace",
-            "multi": true,
+            "multi": false,
             "name": "namespace",
-            "query": "label_values(argocd_notifications_deliveries_total{cluster=\"$cluster\"}, namespace)",
+            "query": "label_values(argocd_app_info{cluster=\"$cluster\"}, namespace)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
          },
          {
-            "allValue": ".*",
             "datasource": {
                "type": "prometheus",
                "uid": "${datasource}"
@@ -207,7 +226,7 @@
       ]
    },
    "time": {
-      "from": "now-2d",
+      "from": "now-6h",
       "to": "now"
    },
    "timezone": "utc",

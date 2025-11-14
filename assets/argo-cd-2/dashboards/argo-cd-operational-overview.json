@@ -1,16 +1,22 @@
 {
    "__inputs": [ ],
    "__requires": [ ],
-   "description": "A dashboard that monitors ArgoCD with a focus on the operational. It is created using the [argo-cd-mixin](https://github.com/adinhodovic/argo-cd-mixin).",
-   "editable": true,
+   "annotations": {
+      "list": [ ]
+   },
+   "description": "A dashboard that monitors ArgoCD with a focus on the operational side of ArgoCD. The dashboards were generated using argo-cd-mixin. https://github.com/adinhodovic/argo-cd-mixin. Open issues and create feature requests in the repository.",
+   "editable": false,
    "links": [
       {
+         "asDropdown": true,
+         "includeVars": false,
+         "keepTime": true,
          "tags": [
             "ci/cd",
             "argo-cd"
          ],
          "targetBlank": true,
-         "title": "ArgoCD Dashboards",
+         "title": "ArgoCD",
          "type": "dashboards"
       }
    ],
@@ -29,11 +35,21 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The total number of clusters being managed by ArgoCD.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": 0
+                     }
+                  ]
+               },
                "unit": "short"
             }
          },
@@ -44,14 +60,19 @@
             "y": 1
          },
          "id": 2,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "$datasource"
+                  "uid": "${datasource}"
                },
-               "expr": "sum(\n  argocd_cluster_info{\n    cluster=\"$cluster\",\n    namespace=~'$namespace',\n    job=~'$job'\n  }\n)\n"
+               "expr": "sum(\n  argocd_cluster_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n)\n"
             }
          ],
          "title": "Clusters",
@@ -59,11 +80,21 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The total number of Git repositories being monitored by ArgoCD.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": 0
+                     }
+                  ]
+               },
                "unit": "short"
             }
          },
@@ -74,14 +105,19 @@
             "y": 1
          },
          "id": 3,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "$datasource"
+                  "uid": "${datasource}"
                },
-               "expr": "count(\n  count(\n    argocd_app_info{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job'\n    }\n  )\n  by (repo)\n)\n"
+               "expr": "count(\n  count(\n    argocd_app_info{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }\n  )\n  by (repo)\n)\n"
             }
          ],
          "title": "Repositories",
@@ -89,11 +125,21 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The total number of applications being managed by ArgoCD.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": 0
+                     }
+                  ]
+               },
                "unit": "short"
             }
          },
@@ -104,14 +150,19 @@
             "y": 1
          },
          "id": 4,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "$datasource"
+                  "uid": "${datasource}"
                },
-               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n)\n"
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n  }\n)\n"
             }
          ],
          "title": "Applications",
@@ -119,9 +170,10 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The distribution of application health statuses managed by ArgoCD.",
          "fieldConfig": {
             "defaults": {
                "unit": "short"
@@ -130,7 +182,7 @@
                {
                   "matcher": {
                      "id": "byName",
-                     "options": "Healthy"
+                     "options": "Synced"
                   },
                   "properties": [
                      {
@@ -145,7 +197,7 @@
                {
                   "matcher": {
                      "id": "byName",
-                     "options": "Degraded"
+                     "options": "OutOfSync"
                   },
                   "properties": [
                      {
@@ -160,7 +212,7 @@
                {
                   "matcher": {
                      "id": "byName",
-                     "options": "Progressing"
+                     "options": "Unknown"
                   },
                   "properties": [
                      {
@@ -182,16 +234,20 @@
          },
          "id": 5,
          "options": {
+            "displayLabels": [
+               "percent"
+            ],
             "legend": {
                "displayMode": "table",
                "placement": "right",
                "showLegend": true,
                "values": [
-                  "value"
+                  "percent"
                ]
             },
             "tooltip": {
-               "mode": "multi"
+               "mode": "multi",
+               "sort": "desc"
             }
          },
          "pluginVersion": "v11.4.0",
@@ -201,7 +257,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (health_status)\n",
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n  }\n) by (health_status)\n",
                "instant": true,
                "legendFormat": "{{ health_status }}"
             }
@@ -211,9 +267,10 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The distribution of application sync statuses managed by ArgoCD.",
          "fieldConfig": {
             "defaults": {
                "unit": "short"
@@ -274,16 +331,20 @@
          },
          "id": 6,
          "options": {
+            "displayLabels": [
+               "percent"
+            ],
             "legend": {
                "displayMode": "table",
                "placement": "right",
                "showLegend": true,
                "values": [
-                  "value"
+                  "percent"
                ]
             },
             "tooltip": {
-               "mode": "multi"
+               "mode": "multi",
+               "sort": "desc"
             }
          },
          "pluginVersion": "v11.4.0",
@@ -293,7 +354,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (sync_status)\n",
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n  }\n) by (sync_status)\n",
                "instant": true,
                "legendFormat": "{{ sync_status }}"
             }
@@ -303,11 +364,15 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "A table listing all applications managed by ArgoCD, along with their health and sync statuses.",
          "fieldConfig": {
             "defaults": {
+               "thresholds": {
+                  "steps": [ ]
+               },
                "unit": "short"
             },
             "overrides": [
@@ -324,7 +389,7 @@
                               "targetBlank": true,
                               "title": "Go To Application",
                               "type": "dashboard",
-                              "url": "/d/argo-cd-application-overview-kask/argocd-notifications-overview?&var-project=${__data.fields.Project}&var-application=${__value.raw}"
+                              "url": "/d/argo-cd-application-overview-kask/argo-cd-application-overview?&var-project=${__data.fields.Project}&var-application=${__value.raw}"
                            }
                         ]
                      }
@@ -345,6 +410,7 @@
             },
             "sortBy": [
                {
+                  "desc": false,
                   "displayName": "Application"
                }
             ]
@@ -356,7 +422,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n  }\n) by (job, dest_server, project, name, health_status, sync_status)\n",
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n  }\n) by (job, dest_server, project, name, health_status, sync_status)\n",
                "format": "table",
                "instant": true
             }
@@ -405,13 +471,19 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "A timeseries panel showing sync activity for applications managed by ArgoCD.",
          "fieldConfig": {
             "defaults": {
                "custom": {
-                  "fillOpacity": 10
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
                },
                "unit": "short"
             }
@@ -426,7 +498,6 @@
          "options": {
             "legend": {
                "calcs": [
-                  "lastNotNull",
                   "mean",
                   "max"
                ],
@@ -448,7 +519,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, name)\n",
+               "exemplar": false,
+               "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, name)\n> 0\n",
                "legendFormat": "{{ project }}/{{ name }}"
             }
          ],
@@ -457,13 +529,19 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "A timeseries panel showing sync failures for applications managed by ArgoCD.",
          "fieldConfig": {
             "defaults": {
                "custom": {
-                  "fillOpacity": 10
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
                },
                "unit": "short"
             }
@@ -478,7 +556,6 @@
          "options": {
             "legend": {
                "calcs": [
-                  "lastNotNull",
                   "mean",
                   "max"
                ],
@@ -500,7 +577,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~'$namespace',\njob=~'$job',\ndest_server=~'$kubernetes_cluster',\nproject=~'$project',\n\n        phase=~\"Error|Failed\"\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, name, phase)\n",
+               "exemplar": false,
+               "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n,\n        phase=~\"Error|Failed\"\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, name, phase)\n> 0\n",
                "legendFormat": "{{ project }}/{{ name }} - {{ phase }}"
             }
          ],
@@ -519,13 +597,19 @@
          "panels": [
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
+               "description": "A timeseries panel showing reconciliation activity for applications managed by ArgoCD.",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
-                        "fillOpacity": 10
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
                      },
                      "unit": "short"
                   }
@@ -540,7 +624,6 @@
                "options": {
                   "legend": {
                      "calcs": [
-                        "lastNotNull",
                         "mean",
                         "max"
                      ],
@@ -562,23 +645,20 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  round(\n    increase(\n      argocd_app_reconcile_count{\n        cluster=\"$cluster\",\n        namespace=~'$namespace',\n        job=~'$job',\n        dest_server=~'$kubernetes_cluster'\n      }[$__rate_interval]\n    )\n  )\n) by (namespace, job)\n",
+                     "exemplar": false,
+                     "expr": "sum(\n  round(\n    increase(\n      argocd_app_reconcile_count{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  )\n) by (namespace, job)\n",
                      "legendFormat": "{{ namespace }}/{{ job }}"
                   }
                ],
-               "title": "Recociliation Activity",
+               "title": "Reconciliation Activity",
                "type": "timeseries"
             },
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
-               "fieldConfig": {
-                  "defaults": {
-                     "unit": "short"
-                  }
-               },
+               "description": "A heatmap panel showing reconciliation performance for applications managed by ArgoCD.",
                "gridPos": {
                   "h": 6,
                   "w": 24,
@@ -586,6 +666,12 @@
                   "y": 31
                },
                "id": 13,
+               "options": {
+                  "calculate": true,
+                  "yAxis": {
+                     "unit": "s"
+                  }
+               },
                "pluginVersion": "v11.4.0",
                "targets": [
                   {
@@ -593,8 +679,7 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  increase(\n    argocd_app_reconcile_bucket{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      dest_server=~'$kubernetes_cluster'\n    }[$__rate_interval]\n  )\n) by (le)\n",
-                     "format": "heatmap",
+                     "expr": "sum(\n  increase(\n    argocd_app_reconcile_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
                      "legendFormat": "{{ le }}"
                   }
                ],
@@ -603,13 +688,19 @@
             },
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
+               "description": "A timeseries panel showing Kubernetes API activity for applications managed by ArgoCD.",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
-                        "fillOpacity": 10
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
                      },
                      "unit": "short"
                   }
@@ -624,7 +715,6 @@
                "options": {
                   "legend": {
                      "calcs": [
-                        "lastNotNull",
                         "mean",
                         "max"
                      ],
@@ -646,7 +736,8 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  round(\n    increase(\n      argocd_app_k8s_request_total{\n        cluster=\"$cluster\",\n        namespace=~'$namespace',\n        job=~'$job',\n        project=~'$project'\n      }[$__rate_interval]\n    )\n  )\n) by (job, verb, resource_kind)\n",
+                     "exemplar": false,
+                     "expr": "sum(\n  round(\n    increase(\n      argocd_app_k8s_request_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, verb, resource_kind)\n",
                      "legendFormat": "{{ verb }} {{ resource_kind }}"
                   }
                ],
@@ -655,13 +746,19 @@
             },
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
+               "description": "A timeseries panel showing pending kubectl runs for ArgoCD.",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
-                        "fillOpacity": 10
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
                      },
                      "unit": "short"
                   }
@@ -676,7 +773,6 @@
                "options": {
                   "legend": {
                      "calcs": [
-                        "lastNotNull",
                         "mean",
                         "max"
                      ],
@@ -698,7 +794,8 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  argocd_kubectl_exec_pending{\n    cluster=\"$cluster\",\n    namespace=~'$namespace',\n    job=~'$job'\n  }\n) by (job, command)\n",
+                     "exemplar": false,
+                     "expr": "sum(\n  argocd_kubectl_exec_pending{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n) by (job, command)\n",
                      "legendFormat": "{{ command }}"
                   }
                ],
@@ -721,13 +818,19 @@
          "panels": [
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
+               "description": "A timeseries panel showing the number of resource objects in each cluster managed by ArgoCD.",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
-                        "fillOpacity": 10
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
                      },
                      "unit": "short"
                   }
@@ -742,7 +845,6 @@
                "options": {
                   "legend": {
                      "calcs": [
-                        "lastNotNull",
                         "mean",
                         "max"
                      ],
@@ -764,7 +866,8 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  argocd_cluster_api_resource_objects{\n    cluster=\"$cluster\",\n    namespace=~'$namespace',\n    job=~'$job',\n    server=~'$kubernetes_cluster'\n  }\n) by (namespace, job, server)\n",
+                     "exemplar": false,
+                     "expr": "sum(\n  argocd_cluster_api_resource_objects{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n    server=~\"$kubernetes_cluster\"\n  }\n) by (namespace, job, server)\n",
                      "legendFormat": "{{ server }}"
                   }
                ],
@@ -773,13 +876,19 @@
             },
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
+               "description": "A timeseries panel showing the number of API resources in each cluster managed by ArgoCD.",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
-                        "fillOpacity": 10
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
                      },
                      "unit": "short"
                   }
@@ -794,7 +903,6 @@
                "options": {
                   "legend": {
                      "calcs": [
-                        "lastNotNull",
                         "mean",
                         "max"
                      ],
@@ -816,7 +924,8 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  argocd_cluster_api_resources{\n    cluster=\"$cluster\",\n    namespace=~'$namespace',\n    job=~'$job',\n    server=~'$kubernetes_cluster'\n  }\n) by (namespace, job, server)\n",
+                     "exemplar": false,
+                     "expr": "sum(\n  argocd_cluster_api_resources{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n) by (namespace, job, server)\n",
                      "legendFormat": "{{ server }}"
                   }
                ],
@@ -825,13 +934,19 @@
             },
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
+               "description": "A timeseries panel showing cluster events for clusters managed by ArgoCD.",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
-                        "fillOpacity": 10
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
                      },
                      "unit": "short"
                   }
@@ -846,7 +961,6 @@
                "options": {
                   "legend": {
                      "calcs": [
-                        "lastNotNull",
                         "mean",
                         "max"
                      ],
@@ -868,7 +982,8 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  increase(\n    argocd_cluster_events_total{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      server=~'$kubernetes_cluster'\n    }[$__rate_interval]\n  )\n) by (namespace, job, server)\n",
+                     "exemplar": false,
+                     "expr": "sum(\n  increase(\n    argocd_cluster_events_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, server)\n",
                      "legendFormat": "{{ server }}"
                   }
                ],
@@ -891,13 +1006,19 @@
          "panels": [
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
+               "description": "A timeseries panel showing git ls-remote requests made by ArgoCD.",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
-                        "fillOpacity": 10
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
                      },
                      "unit": "short"
                   }
@@ -912,7 +1033,6 @@
                "options": {
                   "legend": {
                      "calcs": [
-                        "lastNotNull",
                         "mean",
                         "max"
                      ],
@@ -934,7 +1054,8 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  increase(\n    argocd_git_request_total{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
+                     "exemplar": false,
+                     "expr": "sum(\n  increase(\n    argocd_git_request_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
                      "legendFormat": "{{ namespace }} - {{ repo }}"
                   }
                ],
@@ -943,13 +1064,19 @@
             },
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
+               "description": "A timeseries panel showing git checkout requests made by ArgoCD.",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
-                        "fillOpacity": 10
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
                      },
                      "unit": "short"
                   }
@@ -964,7 +1091,6 @@
                "options": {
                   "legend": {
                      "calcs": [
-                        "lastNotNull",
                         "mean",
                         "max"
                      ],
@@ -986,7 +1112,8 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  increase(\n    argocd_git_request_total{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
+                     "exemplar": false,
+                     "expr": "sum(\n  increase(\n    argocd_git_request_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
                      "legendFormat": "{{ namespace }} - {{ repo }}"
                   }
                ],
@@ -995,14 +1122,10 @@
             },
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
-               "fieldConfig": {
-                  "defaults": {
-                     "unit": "short"
-                  }
-               },
+               "description": "A heatmap panel showing git fetch performance for ArgoCD.",
                "gridPos": {
                   "h": 6,
                   "w": 12,
@@ -1010,6 +1133,12 @@
                   "y": 75
                },
                "id": 23,
+               "options": {
+                  "calculate": true,
+                  "yAxis": {
+                     "unit": "s"
+                  }
+               },
                "pluginVersion": "v11.4.0",
                "targets": [
                   {
@@ -1017,8 +1146,7 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  increase(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
-                     "format": "heatmap",
+                     "expr": "sum(\n  increase(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
                      "legendFormat": "{{ le }}"
                   }
                ],
@@ -1027,14 +1155,10 @@
             },
             {
                "datasource": {
-                  "type": "datasource",
-                  "uid": "-- Mixed --"
+                  "type": "prometheus",
+                  "uid": "$datasource"
                },
-               "fieldConfig": {
-                  "defaults": {
-                     "unit": "short"
-                  }
-               },
+               "description": "A heatmap panel showing git ls-remote performance for ArgoCD.",
                "gridPos": {
                   "h": 6,
                   "w": 12,
@@ -1042,6 +1166,12 @@
                   "y": 75
                },
                "id": 24,
+               "options": {
+                  "calculate": true,
+                  "yAxis": {
+                     "unit": "s"
+                  }
+               },
                "pluginVersion": "v11.4.0",
                "targets": [
                   {
@@ -1049,8 +1179,7 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  increase(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\n      namespace=~'$namespace',\n      job=~'$job',\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
-                     "format": "heatmap",
+                     "expr": "sum(\n  increase(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
                      "legendFormat": "{{ le }}"
                   }
                ],
@@ -1098,9 +1227,9 @@
                "type": "prometheus",
                "uid": "${datasource}"
             },
-            "includeAll": true,
+            "includeAll": false,
             "label": "Namespace",
-            "multi": true,
+            "multi": false,
             "name": "namespace",
             "query": "label_values(argocd_app_info{cluster=\"$cluster\"}, namespace)",
             "refresh": 2,
