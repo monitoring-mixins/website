@@ -4,7 +4,7 @@
    "annotations": {
       "list": [ ]
    },
-   "description": "A dashboard that monitors ArgoCD with a focus on the notifications. The dashboards were generated using argo-cd-mixin. https://github.com/adinhodovic/argo-cd-mixin. Open issues and create feature requests in the repository.",
+   "description": "A dashboard that monitors ArgoCD with a focus on the notifications. The dashboards were generated using [argo-cd-mixin](https://github.com/adinhodovic/argo-cd-mixin). Open issues and create feature requests in the repository.",
    "editable": false,
    "links": [
       {

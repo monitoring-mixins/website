@@ -4,7 +4,7 @@
    "annotations": {
       "list": [ ]
    },
-   "description": "A dashboard that monitors ArgoCD with a focus on the operational side of ArgoCD. The dashboards were generated using argo-cd-mixin. https://github.com/adinhodovic/argo-cd-mixin. Open issues and create feature requests in the repository.",
+   "description": "A dashboard that monitors ArgoCD with a focus on the operational side of ArgoCD. The dashboards were generated using [argo-cd-mixin](https://github.com/adinhodovic/argo-cd-mixin). Open issues and create feature requests in the repository.",
    "editable": false,
    "links": [
       {
@@ -370,32 +370,20 @@
          "description": "A table listing all applications managed by ArgoCD, along with their health and sync statuses.",
          "fieldConfig": {
             "defaults": {
+               "links": [
+                  {
+                     "targetBlank": true,
+                     "title": "Go To Application",
+                     "type": "dashboard",
+                     "url": "/d/argo-cd-application-overview-kask/argo-cd-application-overview?&var-project=${__data.fields.Project}&var-application=${__data.fields.Application}"
+                  }
+               ],
                "thresholds": {
                   "steps": [ ]
                },
                "unit": "short"
             },
-            "overrides": [
-               {
-                  "matcher": {
-                     "id": "byName",
-                     "options": "name"
-                  },
-                  "properties": [
-                     {
-                        "id": "links",
-                        "value": [
-                           {
-                              "targetBlank": true,
-                              "title": "Go To Application",
-                              "type": "dashboard",
-                              "url": "/d/argo-cd-application-overview-kask/argo-cd-application-overview?&var-project=${__data.fields.Project}&var-application=${__value.raw}"
-                           }
-                        ]
-                     }
-                  ]
-               }
-            ]
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 10,
