@@ -485,7 +485,7 @@
             "label": "Node Pool",
             "multi": true,
             "name": "nodepool",
-            "query": "label_values(karpenter_nodepools_allowed_disruptions{cluster=\"$cluster\", job=~\"$job\"}, nodepool)",
+            "query": "label_values(karpenter_nodepools_limit{cluster=\"$cluster\", job=~\"$job\"}, nodepool)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

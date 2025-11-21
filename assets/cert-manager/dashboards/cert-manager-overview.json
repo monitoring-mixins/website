@@ -36,7 +36,9 @@
    "_config": {
       "certManagerCertExpiryDays": "21",
       "certManagerJobLabel": "cert-manager",
+      "certManagerRunbookURLEnabled": true,
       "certManagerRunbookURLPattern": "https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#%s",
+      "clusterVariableSelector": "",
       "dashboards": {
          "certmanagerCertificateExpirationTimestampSecondsSelector": "",
          "certmanagerCertificateReadyStatusSelector": "",
@@ -44,23 +46,23 @@
          "certmanagerHttpAcmeClientRequestCountSelector": "",
          "certmanagerHttpAcmeClientRequestDurationSecondsCountSelector": "",
          "certmanagerHttpAcmeClientRequestDurationSecondsSumSelector": "",
-         "clusterVariableSelector": "",
-         "containerCPUUsageSecondsTotalSelector": "container=\"cert-manager\"",
-         "containerCpuCfsPeriodsTotalSelector": "container=\"cert-manager\"",
-         "containerCpuCfsThrottledPeriodsTotalSelector": "container=\"cert-manager\"",
-         "containerMemoryUsageBytesSelector": "container=\"cert-manager\"",
+         "containerCPUUsageSecondsTotalSelector": "container=~\"cert-manager.*\"",
+         "containerCpuCfsPeriodsTotalSelector": "container=~\"cert-manager.*\"",
+         "containerCpuCfsThrottledPeriodsTotalSelector": "container=~\"cert-manager.*\"",
+         "containerMemoryUsageBytesSelector": "container=~\"cert-manager.*\"",
          "containerNetworkReceiveBytesTotalSelector": "namespace=\"cert-manager\"",
          "containerNetworkTransmitBytesTotalSelector": "namespace=\"cert-manager\"",
-         "containerSelector": "container=\"cert-manager\"",
+         "containerSelector": "container=~\"cert-manager.*\"",
          "defaultSelector": "",
-         "enableMultiCluster": false,
-         "kubePodContainerResourceLimitsCpuCoresSelector": "container=\"cert-manager\"",
-         "kubePodContainerResourceLimitsMemoryBytesSelector": "container=\"cert-manager\"",
-         "kubePodContainerResourceRequestsCpuCoresSelector": "container=\"cert-manager\"",
-         "kubePodContainerResourceRequestsMemoryBytesSelector": "container=\"cert-manager\"",
+         "kubePodContainerResourceLimitsCpuCoresSelector": "container=~\"cert-manager.*\"",
+         "kubePodContainerResourceLimitsMemoryBytesSelector": "container=~\"cert-manager.*\"",
+         "kubePodContainerResourceRequestsCpuCoresSelector": "container=~\"cert-manager.*\"",
+         "kubePodContainerResourceRequestsMemoryBytesSelector": "container=~\"cert-manager.*\"",
          "namespaceSelector": "namespace=\"cert-manager\""
       },
-      "grafanaExternalUrl": "https://grafana.example.com"
+      "enableMultiCluster": false,
+      "grafanaExternalUrl": "https://grafana.example.com",
+      "grafanaExternalUrlEnabled": true
    },
    "annotations": {
       "list": [
@@ -940,7 +942,7 @@
                "datasource": {
                   "uid": "$datasource"
                },
-               "expr": "avg by (pod) (rate(container_cpu_usage_seconds_total{container=\"cert-manager\"}[$__rate_interval ]))",
+               "expr": "avg by (pod) (rate(container_cpu_usage_seconds_total{container=~\"cert-manager.*\"}[$__rate_interval ]))",
                "format": "time_series",
                "hide": false,
                "interval": "",
@@ -952,7 +954,7 @@
                "datasource": {
                   "uid": "$datasource"
                },
-               "expr": "avg by (pod) (kube_pod_container_resource_limits_cpu_cores{container=\"cert-manager\"})",
+               "expr": "avg by (pod) (kube_pod_container_resource_limits_cpu_cores{container=~\"cert-manager.*\"})",
                "format": "time_series",
                "hide": true,
                "interval": "",
@@ -964,7 +966,7 @@
                "datasource": {
                   "uid": "$datasource"
                },
-               "expr": "avg by (pod) (kube_pod_container_resource_requests_cpu_cores{container=\"cert-manager\"})",
+               "expr": "avg by (pod) (kube_pod_container_resource_requests_cpu_cores{container=~\"cert-manager.*\"})",
                "format": "time_series",
                "hide": true,
                "interval": "",
@@ -1097,7 +1099,7 @@
                "datasource": {
                   "uid": "$datasource"
                },
-               "expr": "avg by (pod) (\n  rate(container_cpu_cfs_throttled_periods_total{container=\"cert-manager\"}[$__rate_interval ])\n  /\n  rate(container_cpu_cfs_periods_total{container=\"cert-manager\"}[$__rate_interval ])\n)",
+               "expr": "avg by (pod) (\n  rate(container_cpu_cfs_throttled_periods_total{container=~\"cert-manager.*\"}[$__rate_interval ])\n  /\n  rate(container_cpu_cfs_periods_total{container=~\"cert-manager.*\"}[$__rate_interval ])\n)",
                "format": "time_series",
                "hide": false,
                "interval": "",
@@ -1280,7 +1282,7 @@
                "datasource": {
                   "uid": "$datasource"
                },
-               "expr": "avg by (pod) (container_memory_usage_bytes{container=\"cert-manager\"})",
+               "expr": "avg by (pod) (container_memory_usage_bytes{container=~\"cert-manager.*\"})",
                "format": "time_series",
                "hide": false,
                "interval": "",
@@ -1292,7 +1294,7 @@
                "datasource": {
                   "uid": "$datasource"
                },
-               "expr": "avg by (pod) (kube_pod_container_resource_limits_memory_bytes{container=\"cert-manager\"})",
+               "expr": "avg by (pod) (kube_pod_container_resource_limits_memory_bytes{container=~\"cert-manager.*\"})",
                "format": "time_series",
                "interval": "",
                "intervalFactor": 1,
@@ -1303,7 +1305,7 @@
                "datasource": {
                   "uid": "$datasource"
                },
-               "expr": "avg by (pod) (kube_pod_container_resource_requests_memory_bytes{container=\"cert-manager\"})",
+               "expr": "avg by (pod) (kube_pod_container_resource_requests_memory_bytes{container=~\"cert-manager.*\"})",
                "format": "time_series",
                "interval": "",
                "intervalFactor": 1,
@@ -1491,10 +1493,10 @@
             "hide": 2,
             "includeAll": false,
             "multi": false,
-            "name": "cluster",
+            "name": "",
             "options": [ ],
             "query": {
-               "query": "label_values(certmanager_certificate_ready_status{}, cluster)",
+               "query": "label_values(certmanager_certificate_ready_status, )",
                "refId": "Prometheus-cluster-Variable-Query"
             },
             "refresh": 2,

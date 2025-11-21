@@ -99,4 +99,4 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
-- [overview](https://github.com/monitoring-mixins/website/blob/master/assets/cert-manager/dashboards/overview.json)
+- [cert-manager-overview](https://github.com/monitoring-mixins/website/blob/master/assets/cert-manager/dashboards/cert-manager-overview.json)

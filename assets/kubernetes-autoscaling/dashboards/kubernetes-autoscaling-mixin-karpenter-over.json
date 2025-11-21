@@ -206,7 +206,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "count(\n  count(\n    karpenter_nodepools_allowed_disruptions{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n    }\n  ) by (nodepool)\n)\n"
+               "expr": "count(\n  count(\n    karpenter_nodepools_limit{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n    }\n  ) by (nodepool)\n)\n"
             }
          ],
          "title": "Node Pools",
