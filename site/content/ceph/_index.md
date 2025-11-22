@@ -1627,3 +1627,25 @@ labels:
   type: ceph_default
 {{< /code >}}
  
+## Dashboards
+Following dashboards are generated from mixins and hosted on github:
+
+
+- [ceph-cluster-advanced](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/ceph-cluster-advanced.json)
+- [ceph-nvmeof-performance](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/ceph-nvmeof-performance.json)
+- [ceph-nvmeof](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/ceph-nvmeof.json)
+- [cephfsdashboard](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/cephfsdashboard.json)
+- [host-details](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/host-details.json)
+- [hosts-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/hosts-overview.json)
+- [multi-cluster-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/multi-cluster-overview.json)
+- [osd-device-details](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/osd-device-details.json)
+- [osds-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/osds-overview.json)
+- [pool-detail](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/pool-detail.json)
+- [pool-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/pool-overview.json)
+- [radosgw-detail](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/radosgw-detail.json)
+- [radosgw-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/radosgw-overview.json)
+- [radosgw-sync-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/radosgw-sync-overview.json)
+- [rbd-details](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/rbd-details.json)
+- [rbd-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/rbd-overview.json)
+- [rgw-s3-analytics](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/rgw-s3-analytics.json)
+- [smb-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/smb-overview.json)
