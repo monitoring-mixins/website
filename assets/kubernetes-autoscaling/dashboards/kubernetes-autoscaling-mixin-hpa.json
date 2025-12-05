@@ -258,7 +258,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    kube_horizontalpodautoscaler_spec_target_metric{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      namespace=~\"$namespace\",\n      horizontalpodautoscaler=\"$hpa\",\n      metric_name=~\"$metric_name\"\n    }\n  ) by (job, namespace, horizontalpodautoscaler, metric_name, metric_target_type)\n)\n",
+               "expr": "sum(\n  kube_horizontalpodautoscaler_spec_target_metric{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    namespace=~\"$namespace\",\n    horizontalpodautoscaler=\"$hpa\",\n    metric_name=~\"$metric_name\"\n  }\n) by (job, namespace, horizontalpodautoscaler, metric_name, metric_target_type)\n",
                "format": "table",
                "instant": true
             }
@@ -352,7 +352,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    kube_horizontalpodautoscaler_status_target_metric{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      namespace=~\"$namespace\",\n      horizontalpodautoscaler=\"$hpa\",\n      metric_name=~\"$metric_name\",\n      metric_target_type=~\"$metric_target_type\",\n    }\n  ) by (job, namespace, horizontalpodautoscaler, metric_name, metric_target_type)\n)\n",
+               "expr": "sum(\n  kube_horizontalpodautoscaler_status_target_metric{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    namespace=~\"$namespace\",\n    horizontalpodautoscaler=\"$hpa\",\n    metric_name=~\"$metric_name\",\n    metric_target_type=~\"$metric_target_type\",\n  }\n) by (job, namespace, horizontalpodautoscaler, metric_name, metric_target_type)\n",
                "legendFormat": "{{ metric_target_type }} / {{ metric_name }}"
             },
             {
@@ -360,7 +360,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    kube_horizontalpodautoscaler_spec_target_metric{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      namespace=~\"$namespace\",\n      horizontalpodautoscaler=\"$hpa\",\n      metric_name=~\"$metric_name\",\n      metric_target_type=~\"$metric_target_type\",\n    }\n  ) by (job, namespace, horizontalpodautoscaler, metric_name, metric_target_type)\n)\n",
+               "expr": "sum(\n  kube_horizontalpodautoscaler_spec_target_metric{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    namespace=~\"$namespace\",\n    horizontalpodautoscaler=\"$hpa\",\n    metric_name=~\"$metric_name\",\n    metric_target_type=~\"$metric_target_type\",\n  }\n) by (job, namespace, horizontalpodautoscaler, metric_name, metric_target_type)\n",
                "legendFormat": "Threshold / {{ metric_name }}"
             }
          ],
