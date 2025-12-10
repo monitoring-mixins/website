@@ -189,9 +189,9 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      karpenter_cloudprovider_errors_total{\n        cluster=\"$cluster\",\n        job=~\"$job\"\n      }[$__rate_interval]\n    )\n  ) by (job, provider, controller, method)\n)\n",
+               "expr": "round(\n  sum(\n    increase(\n      karpenter_cloudprovider_errors_total{\n        cluster=\"$cluster\",\n        job=~\"$job\"\n      }[$__rate_interval]\n    )\n  ) by (job, provider, controller, method, error)\n)\n",
                "interval": "1m",
-               "legendFormat": "{{ provider }} - {{ controller }} - {{ method }}"
+               "legendFormat": "{{ provider }} - {{ controller }} - {{ method }} - {{ error }}"
             }
          ],
          "title": "Cloud Provider Errors",

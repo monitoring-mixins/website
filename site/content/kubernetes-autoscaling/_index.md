@@ -54,15 +54,19 @@ annotations:
   summary: Karpenter Node Claims Termination Duration is High.
 expr: |
   sum(
-    karpenter_nodeclaims_termination_duration_seconds_sum{
-      job="karpenter"
-    }
+    rate(
+      karpenter_nodeclaims_termination_duration_seconds_sum{
+        job="karpenter"
+      }[5m]
+    )
   ) by (cluster, namespace, job, nodepool)
   /
   sum(
-    karpenter_nodeclaims_termination_duration_seconds_count{
-      job="karpenter"
-    }
+    rate(
+      karpenter_nodeclaims_termination_duration_seconds_count{
+        job="karpenter"
+      }[5m]
+    )
   ) by (cluster, namespace, job, nodepool) > 1200
 for: 15m
 labels:
