@@ -292,7 +292,7 @@
             "label": "Instance",
             "multi": true,
             "name": "instance",
-            "query": "label_values({,job=~\"$job\"}, instance)",
+            "query": "label_values({job=~\"$job\"}, instance)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -307,7 +307,7 @@
             "label": "Channel",
             "multi": true,
             "name": "channel",
-            "query": "label_values({,job=~\"$job\",instance=~\"$instance\"}, channel)",
+            "query": "label_values({job=~\"$job\",instance=~\"$instance\"}, channel)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -322,7 +322,7 @@
             "label": "Source",
             "multi": true,
             "name": "source",
-            "query": "label_values({,job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\"}, source)",
+            "query": "label_values({job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\"}, source)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -337,7 +337,7 @@
             "label": "Keywords",
             "multi": true,
             "name": "keywords",
-            "query": "label_values({,job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\"}, keywords)",
+            "query": "label_values({job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\"}, keywords)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -352,7 +352,7 @@
             "label": "Level",
             "multi": true,
             "name": "level",
-            "query": "label_values({,job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\",keywords=~\"$keywords\"}, level)",
+            "query": "label_values({job=~\"$job\",instance=~\"$instance\",channel=~\"$channel\",source=~\"$source\",keywords=~\"$keywords\"}, level)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

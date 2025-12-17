@@ -1,12 +1,15 @@
 {
    "__inputs": [ ],
    "__requires": [ ],
-   "description": "A dashboard that monitors Kubernetes and focuses on giving a overview for cluster autoscaler. It is created using the [kubernetes-autoscaling-mixin](https://github.com/adinhodovic/kubernetes-autoscaling-mixin).",
+   "annotations": {
+      "list": [ ]
+   },
+   "description": "A dashboard that monitors the Cluster Autoscaler. The dashboards were generated using [kubernetes-autoscaling-mixin](https://github.com/adinhodovic/kubernetes-autoscaling-mixin). Open issues and create feature requests in the repository.",
    "editable": true,
    "links": [
       {
          "asDropdown": true,
-         "includeVars": true,
+         "includeVars": false,
          "keepTime": true,
          "tags": [
             "kubernetes",
@@ -33,39 +36,36 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The total number of nodes in the cluster.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
                "thresholds": {
                   "steps": [
                      {
-                        "color": "red",
-                        "value": 0
-                     },
-                     {
                         "color": "green",
-                        "value": 0.10000000000000001
+                        "value": 0
                      }
                   ]
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
-            "h": 3,
+            "h": 4,
             "w": 3,
             "x": 0,
             "y": 1
          },
          "id": 2,
          "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
          },
          "pluginVersion": "v11.4.0",
          "targets": [
@@ -74,7 +74,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\njob=~\"$job\"\n\n    }\n  )\n)\n",
+               "instant": false
             }
          ],
          "title": "Total Nodes",
@@ -82,39 +83,36 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The maximum number of nodes allowed in the cluster.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
                "thresholds": {
                   "steps": [
                      {
-                        "color": "red",
-                        "value": 0
-                     },
-                     {
                         "color": "green",
-                        "value": 0.10000000000000001
+                        "value": 0
                      }
                   ]
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
-            "h": 3,
+            "h": 4,
             "w": 3,
             "x": 3,
             "y": 1
          },
          "id": 3,
          "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
          },
          "pluginVersion": "v11.4.0",
          "targets": [
@@ -123,7 +121,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_max_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_max_nodes_count{\n      cluster=\"$cluster\",\njob=~\"$job\"\n\n    }\n  )\n)\n",
+               "instant": false
             }
          ],
          "title": "Max Nodes",
@@ -131,39 +130,36 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The number of node groups in the cluster.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
                "thresholds": {
                   "steps": [
                      {
-                        "color": "red",
-                        "value": 0
-                     },
-                     {
                         "color": "green",
-                        "value": 0.10000000000000001
+                        "value": 0
                      }
                   ]
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
-            "h": 3,
+            "h": 4,
             "w": 3,
             "x": 6,
             "y": 1
          },
          "id": 4,
          "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
          },
          "pluginVersion": "v11.4.0",
          "targets": [
@@ -172,7 +168,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_node_groups_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_node_groups_count{\n      cluster=\"$cluster\",\njob=~\"$job\"\n\n    }\n  )\n)\n",
+               "instant": false
             }
          ],
          "title": "Node Groups",
@@ -180,11 +177,14 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The percentage of healthy nodes in the cluster.",
          "fieldConfig": {
             "defaults": {
+               "max": 100,
+               "min": 0,
                "thresholds": {
                   "steps": [
                      {
@@ -192,8 +192,12 @@
                         "value": 0
                      },
                      {
+                        "color": "yellow",
+                        "value": 50
+                     },
+                     {
                         "color": "green",
-                        "value": 0.10000000000000001
+                        "value": 80
                      }
                   ]
                },
@@ -201,19 +205,12 @@
             }
          },
          "gridPos": {
-            "h": 3,
+            "h": 4,
             "w": 3,
             "x": 9,
             "y": 1
          },
          "id": 5,
-         "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
-         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
@@ -221,7 +218,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\",\n      state=\"ready\"\n    }\n  ) /\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  ) * 100\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\n      state=\"ready\"\n    }\n  ) /\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\njob=~\"$job\"\n\n    }\n  ) * 100\n)\n"
             }
          ],
          "title": "Healthy Nodes",
@@ -229,9 +226,10 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "Indicates whether it is safe to scale the cluster.",
          "fieldConfig": {
             "defaults": {
                "mappings": [
@@ -262,21 +260,20 @@
                   ]
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
-            "h": 3,
+            "h": 4,
             "w": 3,
             "x": 12,
             "y": 1
          },
          "id": 6,
          "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
          },
          "pluginVersion": "v11.4.0",
          "targets": [
@@ -285,35 +282,45 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_cluster_safe_to_autoscale{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n"
+               "expr": "sum(\n  cluster_autoscaler_cluster_safe_to_autoscale{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }\n)\n",
+               "instant": false
             }
          ],
-         "title": "Safe To Scale",
+         "title": "Safe to Scale",
          "type": "stat"
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The number of unscheduled pods in the cluster.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": 0
+                     }
+                  ]
+               },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
-            "h": 3,
+            "h": 4,
             "w": 3,
             "x": 15,
             "y": 1
          },
          "id": 7,
          "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
          },
          "pluginVersion": "v11.4.0",
          "targets": [
@@ -322,7 +329,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_unschedulable_pods_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n"
+               "expr": "round(\n  sum(\n    cluster_autoscaler_unschedulable_pods_count{\n      cluster=\"$cluster\",\njob=~\"$job\"\n\n    }\n  )\n)\n",
+               "instant": false
             }
          ],
          "title": "Unscheduled Pods",
@@ -330,11 +338,13 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The timestamp of the last scale down activity.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
                "thresholds": {
                   "steps": [
                      {
@@ -344,21 +354,20 @@
                   ]
                },
                "unit": "s"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
-            "h": 3,
+            "h": 4,
             "w": 3,
             "x": 18,
             "y": 1
          },
          "id": 8,
          "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
          },
          "pluginVersion": "v11.4.0",
          "targets": [
@@ -367,7 +376,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "time() - sum(\n  cluster_autoscaler_last_activity{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    activity=\"scaleDown\"\n  }\n)\n"
+               "expr": "time() - max(\n  cluster_autoscaler_last_activity{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    activity=\"scaleDown\"\n  }\n)\n",
+               "instant": false
             }
          ],
          "title": "Last Scale Down",
@@ -375,11 +385,13 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The timestamp of the last scale up activity.",
          "fieldConfig": {
             "defaults": {
+               "mappings": [ ],
                "thresholds": {
                   "steps": [
                      {
@@ -389,21 +401,20 @@
                   ]
                },
                "unit": "s"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
-            "h": 3,
+            "h": 4,
             "w": 3,
             "x": 21,
             "y": 1
          },
          "id": 9,
          "options": {
-            "reduceOptions": {
-               "calcs": [
-                  "lastNotNull"
-               ]
-            }
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
          },
          "pluginVersion": "v11.4.0",
          "targets": [
@@ -412,42 +423,62 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "time() - sum(\n  cluster_autoscaler_last_activity{\n    cluster=\"$cluster\",\n    job=~\"$job\",\n    activity=\"scaleUp\"\n  }\n)\n"
+               "expr": "time() - max(\n  cluster_autoscaler_last_activity{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    activity=\"scaleUp\"\n  }\n)\n",
+               "instant": false
             }
          ],
          "title": "Last Scale Up",
          "type": "stat"
       },
       {
-         "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 5
          },
+         "id": 10,
+         "title": "Activity",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The activity of pods in the cluster.",
          "fieldConfig": {
             "defaults": {
                "custom": {
-                  "spanNulls": false
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 4
+            "y": 6
          },
-         "id": 10,
+         "id": 11,
          "options": {
             "legend": {
                "calcs": [
-                  "lastNotNull",
+                  "mean",
                   "max"
                ],
                "displayMode": "table",
-               "placement": "bottom",
+               "placement": "right",
                "showLegend": true,
-               "sortBy": "Last *",
+               "sortBy": "Mean",
                "sortDesc": true
             },
             "tooltip": {
@@ -462,7 +493,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_unschedulable_pods_count{\n        cluster=\"$cluster\",\n        job=~\"$job\"\n      }[2m]\n    )\n  ) by (type)\n)\n",
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_unschedulable_pods_count{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (type)\n)\n",
                "legendFormat": "{{ type }}"
             },
             {
@@ -470,8 +502,9 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_evicted_pods_total{\n        cluster=\"$cluster\",\n        job=~\"$job\"\n      }[2m]\n    )\n  )\n)\n",
-               "legendFormat": "Evicted Pods"
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_evicted_pods_total{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (eviction_result)\n)\n",
+               "legendFormat": "Evicted / {{ eviction_result }}"
             }
          ],
          "title": "Pod Activity",
@@ -479,35 +512,41 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The activity of nodes in the cluster.",
          "fieldConfig": {
             "defaults": {
                "custom": {
-                  "spanNulls": false
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 4
+            "y": 6
          },
-         "id": 11,
+         "id": 12,
          "options": {
             "legend": {
                "calcs": [
-                  "lastNotNull",
                   "mean",
                   "max"
                ],
                "displayMode": "table",
                "placement": "right",
                "showLegend": true,
-               "sortBy": "Last *",
+               "sortBy": "Mean",
                "sortDesc": true
             },
             "tooltip": {
@@ -522,7 +561,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  ) by (state)\n)\n",
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\njob=~\"$job\"\n\n    }\n  ) by (state)\n)\n",
                "legendFormat": "{{ state }}"
             }
          ],
@@ -531,35 +571,36 @@
       },
       {
          "datasource": {
-            "type": "datasource",
-            "uid": "-- Mixed --"
+            "type": "prometheus",
+            "uid": "$datasource"
          },
+         "description": "The autoscaling activity in the cluster.",
          "fieldConfig": {
             "defaults": {
                "custom": {
-                  "spanNulls": false
+                  "fillOpacity": 0
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 12
+            "y": 14
          },
-         "id": 12,
+         "id": 13,
          "options": {
             "legend": {
                "calcs": [
-                  "lastNotNull",
                   "mean",
                   "max"
                ],
                "displayMode": "table",
                "placement": "right",
                "showLegend": true,
-               "sortBy": "Last *",
+               "sortBy": "Mean",
                "sortDesc": true
             },
             "tooltip": {
@@ -574,7 +615,8 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n",
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    cluster_autoscaler_nodes_count{\n      cluster=\"$cluster\",\njob=~\"$job\"\n\n    }\n  )\n)\n",
                "legendFormat": "Total Nodes"
             },
             {
@@ -582,24 +624,27 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    cluster_autoscaler_unneeded_nodes_count{\n      cluster=\"$cluster\",\n      job=~\"$job\"\n    }\n  )\n)\n",
-               "legendFormat": "Unneeded Nodes"
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    cluster_autoscaler_unneeded_nodes_count{\n      cluster=\"$cluster\",\njob=~\"$job\"\n\n    }\n  )\n)\n",
+               "legendFormat": "Unneeded"
             },
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_scaled_up_nodes_total{\n        cluster=\"$cluster\",\n        job=~\"$job\"\n      }[2m]\n    )\n  )\n)\n",
-               "legendFormat": "Scaled Up Nodes"
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_scaled_up_nodes_total{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "legendFormat": "Scaled Up"
             },
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_scaled_down_nodes_total{\n        cluster=\"$cluster\",\n        job=~\"$job\"\n      }[2m]\n    )\n  )\n)\n",
-               "legendFormat": "Scaled Down Nodes"
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    increase(\n      cluster_autoscaler_scaled_down_nodes_total{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  )\n)\n",
+               "legendFormat": "Scaled Down"
             }
          ],
          "title": "Autoscaling Activity",
@@ -654,7 +699,7 @@
       ]
    },
    "time": {
-      "from": "now-24h",
+      "from": "now-6h",
       "to": "now"
    },
    "timezone": "utc",
