@@ -29,7 +29,7 @@ annotations:
   summary: At least one of the nodes in a cluster is reporting the cluster as being
     unstable.
 expr: |
-  min by(job, couchdb_cluster) (couchdb_couch_replicator_cluster_is_stable) < 1
+  min by(job, couchdb_cluster) (couchdb_couch_replicator_cluster_is_stable{}) < 1
 for: 5m
 labels:
   severity: critical
@@ -44,7 +44,7 @@ annotations:
     last 5 minutes on {{$labels.instance}}, which is above the threshold of 5.'
   summary: There are a high number of 4xx responses for incoming requests to a node.
 expr: |
-  sum by(job, instance) (increase(couchdb_httpd_status_codes{code=~"4.*"}[5m])) > 5
+  sum by(job, instance) (increase(couchdb_httpd_status_codes{code=~"4.."}[5m])) > 5
 for: 5m
 labels:
   severity: warning
@@ -59,7 +59,7 @@ annotations:
     last 5 minutes on {{$labels.instance}}, which is above the threshold of 0.'
   summary: There are a high number of 5xx responses for incoming requests to a node.
 expr: |
-  sum by(job, instance) (increase(couchdb_httpd_status_codes{code=~"5.*"}[5m])) > 0
+  sum by(job, instance) (increase(couchdb_httpd_status_codes{code=~"5.."}[5m])) > 0
 for: 5m
 labels:
   severity: critical
@@ -75,7 +75,7 @@ annotations:
     of 500ms. '
   summary: There is a moderate level of request latency for a node.
 expr: |
-  sum by(job, instance) (couchdb_request_time_seconds_sum / couchdb_request_time_seconds_count) > 500
+  sum by(job, instance) (rate(couchdb_request_time_seconds_sum{}[5m]) / rate(couchdb_request_time_seconds_count{}[5m])) * 1000 > 500
 for: 5m
 labels:
   severity: warning
@@ -91,7 +91,7 @@ annotations:
     of 1000ms. '
   summary: There is a high level of request latency for a node.
 expr: |
-  sum by(job, instance) (couchdb_request_time_seconds_sum / couchdb_request_time_seconds_count) > 1000
+  sum by(job, instance) (rate(couchdb_request_time_seconds_sum{}[5m]) / rate(couchdb_request_time_seconds_count{}[5m])) * 1000 > 1000
 for: 5m
 labels:
   severity: critical
@@ -106,7 +106,7 @@ annotations:
     which is above the threshold of 10. '
   summary: There is a high number of replicator jobs pending for a node.
 expr: |
-  sum by(job, instance) (couchdb_couch_replicator_jobs_pending) > 10
+  sum by(job, instance) (couchdb_couch_replicator_jobs_pending{}) > 10
 for: 5m
 labels:
   severity: warning
@@ -121,7 +121,7 @@ annotations:
     5 minutes on {{$labels.instance}}, which is above the threshold of 0. '
   summary: There are replicator jobs crashing for a node.
 expr: |
-  sum by(job, instance) (increase(couchdb_couch_replicator_jobs_crashes_total[5m])) > 0
+  sum by(job, instance) (increase(couchdb_couch_replicator_jobs_crashes_total{}[5m])) > 0
 for: 5m
 labels:
   severity: critical
@@ -137,39 +137,39 @@ annotations:
     of 0. '
   summary: There are replicator changes queue process deaths for a node.
 expr: |
-  sum by(job, instance) (increase(couchdb_couch_replicator_changes_queue_deaths_total[5m])) > 0
+  sum by(job, instance) (increase(couchdb_couch_replicator_changes_queue_deaths_total{}[5m])) > 0
 for: 5m
 labels:
   severity: warning
 {{< /code >}}
  
-##### CouchDBReplicatorConnectionOwnersCrashing
+##### CouchDBReplicatorOwnersCrashing
 
 {{< code lang="yaml" >}}
-alert: CouchDBReplicatorConnectionOwnersCrashing
+alert: CouchDBReplicatorOwnersCrashing
 annotations:
   description: '{{ printf "%.0f" $value }} replicator connection owner processes have
     crashed over the last 5 minutes on {{$labels.instance}}, which is above the threshold
     of 0. '
   summary: There are replicator connection owner process crashes for a node.
 expr: |
-  sum by(job, instance) (increase(couchdb_couch_replicator_connection_owner_crashes_total[5m])) > 0
+  sum by(job, instance) (increase(couchdb_couch_replicator_connection_owner_crashes_total{}[5m])) > 0
 for: 5m
 labels:
   severity: warning
 {{< /code >}}
  
-##### CouchDBReplicatorConnectionWorkersCrashing
+##### CouchDBReplicatorWorkersCrashing
 
 {{< code lang="yaml" >}}
-alert: CouchDBReplicatorConnectionWorkersCrashing
+alert: CouchDBReplicatorWorkersCrashing
 annotations:
   description: '{{ printf "%.0f" $value }} replicator connection worker processes
     have crashed over the last 5 minutes on {{$labels.instance}}, which is above the
     threshold of 0. '
   summary: There are replicator connection worker process crashes for a node.
 expr: |
-  sum by(job, instance) (increase(couchdb_couch_replicator_connection_worker_crashes_total[5m])) > 0
+  sum by(job, instance) (increase(couchdb_couch_replicator_connection_worker_crashes_total{}[5m])) > 0
 for: 5m
 labels:
   severity: warning
@@ -179,5 +179,6 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
+- [couchdb-logs](https://github.com/monitoring-mixins/website/blob/master/assets/apache-couchdb/dashboards/couchdb-logs.json)
 - [couchdb-nodes](https://github.com/monitoring-mixins/website/blob/master/assets/apache-couchdb/dashboards/couchdb-nodes.json)
 - [couchdb-overview](https://github.com/monitoring-mixins/website/blob/master/assets/apache-couchdb/dashboards/couchdb-overview.json)

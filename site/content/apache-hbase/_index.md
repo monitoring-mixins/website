@@ -28,7 +28,7 @@ annotations:
     is above the threshold of 80 percent
   summary: There is a limited amount of heap memory available to the JVM.
 expr: |
-  100 * sum without(context, hostname, processname) (jvm_metrics_mem_heap_used_m{job="integrations/apache-hbase"} / clamp_min(jvm_metrics_mem_heap_committed_m{job="integrations/apache-hbase"}, 1))  > 80
+  100 * sum without(context, hostname, processname) (jvm_metrics_mem_heap_used_m{} / clamp_min(jvm_metrics_mem_heap_committed_m{}, 1))  > 80
 for: 5m
 labels:
   severity: warning
@@ -60,7 +60,7 @@ annotations:
     which is above the threshold of 50 percent'
   summary: RegionServers are in transition for longer than expected.
 expr: |
-  100 * assignment_manager_rit_count_over_threshold / clamp_min(assignment_manager_rit_count, 1) > 50
+  100 * assignment_manager_rit_count_over_threshold / clamp_min(assignment_manager_rit_count{}, 1) > 50
 for: 5m
 labels:
   severity: warning
@@ -76,7 +76,7 @@ annotations:
     of 35 percent'
   summary: A high percentage of authentication attempts to the master are failing.
 expr: |
-  100 * rate(master_authentication_failures[5m]) / (clamp_min(rate(master_authentication_successes[5m]), 1) + clamp_min(rate(master_authentication_failures[5m]), 1)) > 35
+  100 * rate(master_authentication_failures[5m]) / (clamp_min(rate(master_authentication_successes{}[5m]), 1) + clamp_min(rate(master_authentication_failures{}[5m]), 1)) > 35
 for: 5m
 labels:
   severity: warning
@@ -92,7 +92,7 @@ annotations:
     which is above the threshold of 35 percent'
   summary: A high percentage of authentication attempts to a RegionServer are failing.
 expr: |
-  100 * rate(region_server_authentication_failures[5m]) / (clamp_min(rate(region_server_authentication_successes[5m]), 1) + clamp_min(rate(region_server_authentication_failures[5m]), 1)) > 35
+  100 * rate(region_server_authentication_failures[5m]) / (clamp_min(rate(region_server_authentication_successes{}[5m]), 1) + clamp_min(rate(region_server_authentication_failures{}[5m]), 1)) > 35
 for: 5m
 labels:
   severity: warning
