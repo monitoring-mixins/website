@@ -35,6 +35,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -59,7 +68,6 @@
             "y": 1
          },
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -95,6 +103,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -119,7 +136,6 @@
             "y": 1
          },
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -152,12 +168,20 @@
          "description": "Outstanding requests to ZooKeeper cluster.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [
@@ -219,6 +243,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -243,7 +276,6 @@
             "y": 5
          },
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -279,6 +311,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -303,7 +344,6 @@
             "y": 5
          },
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -337,7 +377,12 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "mode": "fixed"
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [
@@ -422,12 +467,20 @@
          "description": "Amount of time it takes for the server to respond to a client request.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [
@@ -486,12 +539,20 @@
          "description": "Amount of time it takes for the server to respond to a client request.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [
@@ -550,12 +611,20 @@
          "description": "Amount of time it takes for the server to respond to a client request.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [
@@ -624,12 +693,21 @@
                "fieldConfig": {
                   "defaults": {
                      "color": {
-                        "fixedColor": "text",
+                        "fixedColor": "#5794f2",
                         "mode": "continuous-BlYlRd"
                      },
                      "decimals": 1,
                      "max": 100,
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "#5794f2",
+                              "value": null
+                           }
+                        ]
+                     },
                      "unit": "percent"
                   }
                },
@@ -673,12 +751,21 @@
                "fieldConfig": {
                   "defaults": {
                      "color": {
-                        "fixedColor": "text",
+                        "fixedColor": "#5794f2",
                         "mode": "continuous-BlYlRd"
                      },
                      "decimals": 1,
                      "max": 100,
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "#5794f2",
+                              "value": null
+                           }
+                        ]
+                     },
                      "unit": "percent"
                   }
                },
@@ -722,8 +809,17 @@
                "fieldConfig": {
                   "defaults": {
                      "color": {
-                        "fixedColor": "text",
+                        "fixedColor": "#5794f2",
                         "mode": "fixed"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "#5794f2",
+                              "value": null
+                           }
+                        ]
                      }
                   },
                   "overrides": [
@@ -773,8 +869,17 @@
                "fieldConfig": {
                   "defaults": {
                      "color": {
-                        "fixedColor": "text",
+                        "fixedColor": "#5794f2",
                         "mode": "fixed"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "#5794f2",
+                              "value": null
+                           }
+                        ]
                      }
                   },
                   "overrides": [
@@ -837,7 +942,7 @@
                "fieldConfig": {
                   "defaults": {
                      "color": {
-                        "fixedColor": "text",
+                        "fixedColor": "#5794f2",
                         "mode": "thresholds"
                      },
                      "decimals": 1,
@@ -909,6 +1014,15 @@
                      "color": {
                         "fixedColor": "text",
                         "mode": "fixed"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "#5794f2",
+                              "value": null
+                           }
+                        ]
                      }
                   },
                   "overrides": [
@@ -933,7 +1047,6 @@
                   "y": 32
                },
                "options": {
-                  "colorMode": "fixed",
                   "graphMode": "none",
                   "reduceOptions": {
                      "calcs": [
@@ -966,6 +1079,10 @@
                "description": "Load average: Signal not found.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 0,
                         "gradientMode": "opacity",
@@ -974,6 +1091,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "short"
                   },
                   "overrides": [
@@ -986,7 +1107,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -1039,6 +1160,7 @@
                "fieldConfig": {
                   "defaults": {
                      "color": {
+                        "fixedColor": "#5794f2",
                         "mode": "continuous-BlYlRd"
                      },
                      "custom": {
@@ -1051,6 +1173,10 @@
                      "decimals": 1,
                      "max": 100,
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "percent"
                   },
                   "overrides": [
@@ -1109,6 +1235,10 @@
                "description": "Process resident memory size in bytes.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -1117,6 +1247,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -1141,7 +1275,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -1204,12 +1338,20 @@
                "description": "Process files opened.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -1304,6 +1446,10 @@
                "description": "The used space is the amount of memory that is currently occupied by Java objects.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -1312,6 +1458,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -1336,7 +1486,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -1447,6 +1597,10 @@
                "description": "The amount of memory that is currently in non-heap.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -1455,6 +1609,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -1479,7 +1637,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -1603,6 +1761,10 @@
                "description": "Memory used for G1 Eden Space Collection.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -1611,6 +1773,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -1635,7 +1801,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -1744,6 +1910,10 @@
                "description": "Memory used for Survival collection.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -1752,6 +1922,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -1776,7 +1950,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -1885,6 +2059,10 @@
                "description": "Memory used for Tenured(Old Gen) collection.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -1893,6 +2071,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -1917,7 +2099,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -2026,12 +2208,20 @@
                "description": "Major and minor garbage collections",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -2090,12 +2280,20 @@
                "description": "Major and minor garbage collections",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 0,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -2154,6 +2352,10 @@
                "description": "'Allocated' is the size increase of the young generation memory pool after one GC and before the next. It reflects minor GC.\n'Promoted' is the size increase of the old generation memory pool after GC. It reflects full GC.\n",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -2162,6 +2364,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -2174,7 +2380,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -2262,12 +2468,20 @@
                "description": "The current number of live threads including both daemon and non-daemon threads.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -2316,7 +2530,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -2424,12 +2638,20 @@
                "description": "Threads by current state.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -2501,6 +2723,10 @@
                "description": "Direct buffer is allocated outside the Java heap and represents the OS native memory used by the JVM process. It is generally used for I/O operations. Note that direct buffers aren't freed up by GC.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -2509,6 +2735,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -2545,7 +2775,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -2619,6 +2849,10 @@
                "description": "The mapped buffer pool is used for its FileChannel instances.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -2627,6 +2861,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -2663,7 +2901,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },

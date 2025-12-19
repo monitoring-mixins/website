@@ -35,6 +35,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -59,7 +68,6 @@
             "y": 1
          },
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -95,6 +103,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -119,7 +136,6 @@
             "y": 1
          },
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -153,8 +169,17 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -204,8 +229,17 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -253,6 +287,10 @@
          },
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "axisCenteredZero": false,
                   "axisLabel": "out(-) | in(+)",
@@ -264,6 +302,10 @@
                },
                "decimals": 1,
                "noValue": "No traffic",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "bps"
             },
             "overrides": [
@@ -356,6 +398,10 @@
          },
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
@@ -365,6 +411,10 @@
                },
                "decimals": 1,
                "noValue": "No packets",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "pps"
             },
             "overrides": [
@@ -424,8 +474,17 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -475,8 +534,17 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -526,8 +594,17 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -577,8 +654,17 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -628,7 +714,12 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "mode": "fixed"
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [
@@ -795,6 +886,10 @@
          },
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "axisCenteredZero": false,
                   "axisLabel": "out(-) | in(+)",
@@ -806,6 +901,10 @@
                },
                "decimals": 1,
                "noValue": "No traffic",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "bps"
             },
             "overrides": [
@@ -898,6 +997,10 @@
          },
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
@@ -907,6 +1010,10 @@
                },
                "decimals": 1,
                "noValue": "No packets",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "pps"
             },
             "overrides": [
@@ -977,12 +1084,20 @@
          "description": "Number of partitions that are currently online and available on this broker. This includes\npartitions where this broker is either the leader or a follower replica. The total count\nreflects the broker's share of the topic partitions across the cluster. A sudden drop in\nonline partitions may indicate broker issues, partition reassignments, or cluster rebalancing.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [
@@ -1042,8 +1157,8 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "light-red",
-                  "mode": "fixed"
+                  "fixedColor": "#ff7383",
+                  "mode": "shades"
                },
                "custom": {
                   "drawStyle": "bars",
@@ -1056,7 +1171,11 @@
                      "mode": "normal"
                   }
                },
-               "noValue": "No errors"
+               "noValue": "No errors",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
             },
             "overrides": [
                {
@@ -1116,8 +1235,8 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "light-red",
-                  "mode": "fixed"
+                  "fixedColor": "#ff7383",
+                  "mode": "shades"
                },
                "custom": {
                   "drawStyle": "bars",
@@ -1130,7 +1249,11 @@
                      "mode": "normal"
                   }
                },
-               "noValue": "No errors"
+               "noValue": "No errors",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
             },
             "overrides": [
                {
@@ -1190,8 +1313,8 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "light-red",
-                  "mode": "fixed"
+                  "fixedColor": "#ff7383",
+                  "mode": "shades"
                },
                "custom": {
                   "drawStyle": "bars",
@@ -1204,7 +1327,11 @@
                      "mode": "normal"
                   }
                },
-               "noValue": "No errors"
+               "noValue": "No errors",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
             },
             "overrides": [
                {
@@ -1263,12 +1390,20 @@
          "description": "The number of in-sync replicas (ISRs) for a particular partition should remain fairly static,\nthe only exceptions are when you are expanding your broker cluster or removing partitions.\nIn order to maintain high availability, a healthy Kafka cluster requires a minimum number of ISRs for failover. \n\nA replica could be removed from the ISR pool for a couple of reasons: it is too far behind the leaders offset\n(user-configurable by setting the replica.lag.max.messages configuration parameter),\nor it has not contacted the leader for some time (configurable with the replica.socket.timeout.ms parameter). No matter the reason,\nan increase in IsrShrinksPerSec without a corresponding increase in IsrExpandsPerSec shortly thereafter is cause for concern and requires user intervention.\n\nThe Kafka documentation provides a wealth of information on the user-configurable parameters for brokers.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [
@@ -1327,12 +1462,20 @@
          "description": "The number of in-sync replicas (ISRs) for a particular partition should remain fairly static,\nthe only exceptions are when you are expanding your broker cluster or removing partitions.\nIn order to maintain high availability, a healthy Kafka cluster requires a minimum number of ISRs for failover. \n\nA replica could be removed from the ISR pool for a couple of reasons: it is too far behind the leaders offset\n(user-configurable by setting the replica.lag.max.messages configuration parameter),\nor it has not contacted the leader for some time (configurable with the replica.socket.timeout.ms parameter). No matter the reason,\nan increase in IsrShrinksPerSec without a corresponding increase in IsrExpandsPerSec shortly thereafter is cause for concern and requires user intervention.\n\nThe Kafka documentation provides a wealth of information on the user-configurable parameters for brokers.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [
@@ -1400,6 +1543,10 @@
                "description": "Total time breakdown for producer requests.\nquantile: 0.95\n\n- `Request queue`: Time spent waiting in the request queue.\n- `Local time`: Time spent being processed by leader.\n- `Remote time`: Time spent waiting for follower response (only when 'require acks' is set).\n- `Response queue`: Time spent waiting in the response queue.\n- `Response time`: Time to send the response.\n\n",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "none",
@@ -1409,6 +1556,10 @@
                         "stacking": {
                            "mode": "normal"
                         }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -1561,6 +1712,10 @@
                "description": "Total time breakdown for fetch-follower requests.\nquantile: 0.95\n\n- `Request queue`: Time spent waiting in the request queue.\n- `Local time`: Time spent being processed by leader.\n- `Remote time`: Time spent waiting for follower response (only when 'require acks' is set).\n- `Response queue`: Time spent waiting in the response queue.\n- `Response time`: Time to send the response.\n\n",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "none",
@@ -1570,6 +1725,10 @@
                         "stacking": {
                            "mode": "normal"
                         }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -1722,6 +1881,10 @@
                "description": "Total time breakdown for fetch requests.\nquantile: 0.95\n\n- `Request queue`: Time   spent waiting in the request queue.\n- `Local time`: Time spent being processed by leader.\n- `Remote time`: Time spent waiting for follower response (only when 'require acks' is set).\n- `Response queue`: Time spent waiting in the response queue.\n- `Response time`: Time to send the response.\n\n",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "none",
@@ -1731,6 +1894,10 @@
                         "stacking": {
                            "mode": "normal"
                         }
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -1896,12 +2063,20 @@
                "description": "Rate of producer messages requiring format conversion to match broker's log.message.format.version.  \nConversions add CPU overhead and latency.  \nNon-zero values suggest producer and broker version mismatches requiring alignment.\n",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -1960,12 +2135,20 @@
                "description": "Rate of messages requiring format conversion during consumer fetch to match log.message.format.version.  \nConversions impact broker CPU and consumer latency.  \nIndicates version mismatch between stored messages and consumer expectations.\n",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -2037,12 +2220,20 @@
                "description": "Latency in milliseconds for ZooKeeper requests from broker to ZooKeeper ensemble.  \nHigh latency indicates ZooKeeper performance issues or network problems.  \nCritical for broker operations like leader election and metadata updates.\n",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -2101,12 +2292,20 @@
                "description": "Rate of successful ZooKeeper connections established by broker.  \nFrequent connections may indicate session instability or network issues.  \nShould be stable in healthy clusters with occasional reconnections during maintenance.\n",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -2251,7 +2450,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "thresholds"
                },
                "decimals": 1,
@@ -2323,6 +2522,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             },
             "overrides": [
@@ -2347,7 +2555,6 @@
             "y": 75
          },
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -2380,6 +2587,10 @@
          "description": "Load average: Signal not found.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -2388,6 +2599,10 @@
                   "showPoints": "never"
                },
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "short"
             },
             "overrides": [
@@ -2400,7 +2615,7 @@
                      {
                         "id": "color",
                         "value": {
-                           "fixedColor": "light-orange",
+                           "fixedColor": "#ffb357",
                            "mode": "fixed"
                         }
                      },
@@ -2453,6 +2668,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -2465,6 +2681,10 @@
                "decimals": 1,
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             },
             "overrides": [
@@ -2523,6 +2743,10 @@
          "description": "Process resident memory size in bytes.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
@@ -2531,6 +2755,10 @@
                   "showPoints": "never"
                },
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "bytes"
             },
             "overrides": [
@@ -2555,7 +2783,7 @@
                      {
                         "id": "color",
                         "value": {
-                           "fixedColor": "light-orange",
+                           "fixedColor": "#ffb357",
                            "mode": "fixed"
                         }
                      },
@@ -2618,12 +2846,20 @@
          "description": "Process files opened.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [
@@ -2715,12 +2951,21 @@
                "fieldConfig": {
                   "defaults": {
                      "color": {
-                        "fixedColor": "text",
+                        "fixedColor": "#5794f2",
                         "mode": "continuous-BlYlRd"
                      },
                      "decimals": 1,
                      "max": 100,
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "#5794f2",
+                              "value": null
+                           }
+                        ]
+                     },
                      "unit": "percent"
                   }
                },
@@ -2764,12 +3009,21 @@
                "fieldConfig": {
                   "defaults": {
                      "color": {
-                        "fixedColor": "text",
+                        "fixedColor": "#5794f2",
                         "mode": "continuous-BlYlRd"
                      },
                      "decimals": 1,
                      "max": 100,
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "#5794f2",
+                              "value": null
+                           }
+                        ]
+                     },
                      "unit": "percent"
                   }
                },
@@ -2813,8 +3067,17 @@
                "fieldConfig": {
                   "defaults": {
                      "color": {
-                        "fixedColor": "text",
+                        "fixedColor": "#5794f2",
                         "mode": "fixed"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "#5794f2",
+                              "value": null
+                           }
+                        ]
                      }
                   },
                   "overrides": [
@@ -2864,8 +3127,17 @@
                "fieldConfig": {
                   "defaults": {
                      "color": {
-                        "fixedColor": "text",
+                        "fixedColor": "#5794f2",
                         "mode": "fixed"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                           {
+                              "color": "#5794f2",
+                              "value": null
+                           }
+                        ]
                      }
                   },
                   "overrides": [
@@ -2927,6 +3199,10 @@
                "description": "The used space is the amount of memory that is currently occupied by Java objects.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -2935,6 +3211,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -2959,7 +3239,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -3070,6 +3350,10 @@
                "description": "The amount of memory that is currently in non-heap.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
@@ -3078,6 +3362,10 @@
                         "showPoints": "never"
                      },
                      "min": 0,
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
+                     },
                      "unit": "bytes"
                   },
                   "overrides": [
@@ -3102,7 +3390,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -3226,12 +3514,20 @@
                "description": "The current number of live threads including both daemon and non-daemon threads.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [
@@ -3280,7 +3576,7 @@
                            {
                               "id": "color",
                               "value": {
-                                 "fixedColor": "light-orange",
+                                 "fixedColor": "#ffb357",
                                  "mode": "fixed"
                               }
                            },
@@ -3388,12 +3684,20 @@
                "description": "Threads by current state.",
                "fieldConfig": {
                   "defaults": {
+                     "color": {
+                        "fixedColor": "#5794f2",
+                        "mode": "palette-classic"
+                     },
                      "custom": {
                         "fillOpacity": 30,
                         "gradientMode": "opacity",
                         "lineInterpolation": "smooth",
                         "lineWidth": 2,
                         "showPoints": "never"
+                     },
+                     "thresholds": {
+                        "mode": "absolute",
+                        "steps": [ ]
                      }
                   },
                   "overrides": [

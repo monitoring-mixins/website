@@ -137,6 +137,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -149,6 +150,10 @@
                "decimals": 1,
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             }
          },
@@ -192,6 +197,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -204,6 +210,10 @@
                "decimals": 1,
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             }
          },
@@ -246,6 +256,10 @@
          "description": "Node file system read and write data.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 1,
                   "gradientMode": "opacity",
@@ -253,6 +267,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "stacking": "normal"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "Bps"
             },
@@ -326,6 +344,10 @@
          "description": "Number of open connections for the selected node.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
@@ -333,6 +355,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "stacking": "normal"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": ""
             }
@@ -377,6 +403,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -389,6 +416,10 @@
                "decimals": 1,
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             }
          },
@@ -432,6 +463,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -444,6 +476,10 @@
                "decimals": 1,
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             }
          },
@@ -486,6 +522,10 @@
          "description": "Node network traffic sent and received.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "axisCenteredZero": false,
                   "axisLabel": "out(-) | in(+)",
@@ -497,6 +537,10 @@
                },
                "decimals": 1,
                "noValue": "No traffic",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "bps"
             },
             "overrides": [

@@ -65,6 +65,16 @@
          },
          "description": "All Windows instances' perfomance at a glance.",
          "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
+            },
             "overrides": [
                {
                   "matcher": {
@@ -195,6 +205,7 @@
                      {
                         "id": "color",
                         "value": {
+                           "fixedColor": "#5794f2",
                            "mode": "continuous-BlYlRd"
                         }
                      },
@@ -229,6 +240,13 @@
                      {
                         "id": "min",
                         "value": 0
+                     },
+                     {
+                        "id": "thresholds",
+                        "value": {
+                           "mode": "absolute",
+                           "steps": [ ]
+                        }
                      },
                      {
                         "id": "unit",
@@ -269,6 +287,7 @@
                      {
                         "id": "color",
                         "value": {
+                           "fixedColor": "#5794f2",
                            "mode": "continuous-BlYlRd"
                         }
                      },
@@ -303,6 +322,13 @@
                      {
                         "id": "min",
                         "value": 0
+                     },
+                     {
+                        "id": "thresholds",
+                        "value": {
+                           "mode": "absolute",
+                           "steps": [ ]
+                        }
                      },
                      {
                         "id": "unit",
@@ -347,6 +373,7 @@
                      {
                         "id": "color",
                         "value": {
+                           "fixedColor": "#5794f2",
                            "mode": "continuous-BlYlRd"
                         }
                      },
@@ -381,6 +408,13 @@
                      {
                         "id": "min",
                         "value": 0
+                     },
+                     {
+                        "id": "thresholds",
+                        "value": {
+                           "mode": "absolute",
+                           "steps": [ ]
+                        }
                      },
                      {
                         "id": "unit",
@@ -575,6 +609,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -593,6 +628,10 @@
                ],
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             },
             "overrides": [
@@ -605,7 +644,7 @@
                      {
                         "id": "color",
                         "value": {
-                           "fixedColor": "light-purple",
+                           "fixedColor": "#ffb357",
                            "mode": "fixed"
                         }
                      },
@@ -686,6 +725,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -704,6 +744,10 @@
                ],
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             },
             "overrides": [
@@ -716,7 +760,7 @@
                      {
                         "id": "color",
                         "value": {
-                           "fixedColor": "light-purple",
+                           "fixedColor": "#ffb357",
                            "mode": "fixed"
                         }
                      },
@@ -797,6 +841,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -815,6 +860,10 @@
                ],
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             },
             "overrides": [
@@ -827,7 +876,7 @@
                      {
                         "id": "color",
                         "value": {
-                           "fixedColor": "light-purple",
+                           "fixedColor": "#ffb357",
                            "mode": "fixed"
                         }
                      },
@@ -908,6 +957,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -926,6 +976,10 @@
                ],
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             },
             "overrides": [
@@ -938,7 +992,7 @@
                      {
                         "id": "color",
                         "value": {
-                           "fixedColor": "light-purple",
+                           "fixedColor": "#ffb357",
                            "mode": "fixed"
                         }
                      },
@@ -1018,6 +1072,10 @@
          "description": "Top 25.\n\n**Network errors**:\n\nNetwork errors refer to issues that occur during the transmission of data across a network. \n\nThese errors can result from various factors, including physical issues, jitter, collisions, noise and interference.\n\nMonitoring network errors is essential for diagnosing and resolving issues, as they can indicate problems with network hardware or environmental factors affecting network quality.\n\n**Dropped packets**:\n\nDropped packets occur when data packets traveling through a network are intentionally discarded or lost due to congestion, resource limitations, or network configuration issues. \n\nCommon causes include network congestion, buffer overflows, QoS settings, and network errors, as corrupted or incomplete packets may be discarded by receiving devices.\n\nDropped packets can impact network performance and lead to issues such as degraded voice or video quality in real-time applications.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "drawStyle": "points",
                   "fillOpacity": 30,
@@ -1029,6 +1087,10 @@
                },
                "decimals": 1,
                "noValue": "No errors",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "pps"
             }
          },

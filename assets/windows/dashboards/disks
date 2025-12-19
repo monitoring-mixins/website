@@ -90,6 +90,10 @@
          "description": "Filesystem space utilisation in bytes.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 1,
                   "gradientMode": "opacity",
@@ -98,6 +102,10 @@
                   "showPoints": "never"
                },
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "bytes"
             }
          },
@@ -143,7 +151,12 @@
          "description": "This table provides information about total disk space, used space, available space, and usage percentages for each mounted file system on the system.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "thresholds": {
+                  "mode": "absolute",
                   "steps": [
                      {
                         "color": "light-blue",
@@ -374,12 +387,20 @@
          "description": "Disk read/writes in bytes per second.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 1,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "Bps"
             },
@@ -470,6 +491,10 @@
          "description": "The number of I/O requests per second for the device/volume.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "axisCenteredZero": true,
                   "axisLabel": "write(-) | read(+)",
@@ -478,6 +503,10 @@
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "iops"
             },
@@ -549,6 +578,10 @@
          "description": "The average time for requests issued to the device to be served.\nThis includes the time spent by the requests in queue and the time spent servicing them.'\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "axisCenteredZero": true,
                   "axisLabel": "write(-) | read(+)",
@@ -557,6 +590,10 @@
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "s"
             },
@@ -628,6 +665,10 @@
          "description": "Disk average IO queue.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "axisCenteredZero": true,
                   "axisLabel": "write(-) | read(+)",
@@ -636,6 +677,10 @@
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             },
             "overrides": [

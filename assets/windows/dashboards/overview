@@ -85,7 +85,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "thresholds"
                },
                "decimals": 1,
@@ -149,6 +149,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             }
          },
@@ -160,7 +169,6 @@
          },
          "id": 3,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -197,6 +205,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             }
          },
@@ -208,7 +225,6 @@
          },
          "id": 4,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -245,6 +261,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             }
          },
@@ -256,7 +281,6 @@
          },
          "id": 5,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -294,6 +318,15 @@
                   "fixedColor": "text",
                   "mode": "fixed"
                },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
+               },
                "unit": "none"
             }
          },
@@ -305,7 +338,6 @@
          },
          "id": 6,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -342,6 +374,15 @@
                   "fixedColor": "text",
                   "mode": "fixed"
                },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
+               },
                "unit": "bytes"
             }
          },
@@ -353,7 +394,6 @@
          },
          "id": 7,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -390,6 +430,15 @@
                   "fixedColor": "text",
                   "mode": "fixed"
                },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
+               },
                "unit": "bytes"
             }
          },
@@ -401,7 +450,6 @@
          },
          "id": 8,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -438,6 +486,15 @@
                   "fixedColor": "text",
                   "mode": "fixed"
                },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
+               },
                "unit": "bytes"
             }
          },
@@ -449,7 +506,6 @@
          },
          "id": 9,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -495,12 +551,21 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "decimals": 1,
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
+               },
                "unit": "percent"
             }
          },
@@ -545,6 +610,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -557,6 +623,10 @@
                "decimals": 1,
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             }
          },
@@ -615,12 +685,21 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "decimals": 1,
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
+               },
                "unit": "percent"
             }
          },
@@ -664,6 +743,10 @@
          "description": "RAM (random-access memory) currently in use by the operating system and running applications, in bytes.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
@@ -672,6 +755,10 @@
                   "showPoints": "never"
                },
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "bytes"
             },
             "overrides": [
@@ -684,7 +771,7 @@
                      {
                         "id": "color",
                         "value": {
-                           "fixedColor": "light-orange",
+                           "fixedColor": "#ffb357",
                            "mode": "fixed"
                         }
                      },
@@ -771,12 +858,20 @@
          "description": "Disk read/writes in bytes per second.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 1,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "Bps"
             },
@@ -867,7 +962,12 @@
          "description": "This table provides information about total disk space, used space, available space, and usage percentages for each mounted file system on the system.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "thresholds": {
+                  "mode": "absolute",
                   "steps": [
                      {
                         "color": "light-blue",
@@ -1110,6 +1210,10 @@
          "description": "Network traffic (bits per sec) measures data transmitted and received.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "axisCenteredZero": false,
                   "axisLabel": "out(-) | in(+)",
@@ -1121,6 +1225,10 @@
                },
                "decimals": 1,
                "noValue": "No traffic",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "bps"
             },
             "overrides": [
@@ -1191,6 +1299,10 @@
          "description": "**Network errors**:\n\nNetwork errors refer to issues that occur during the transmission of data across a network. \n\nThese errors can result from various factors, including physical issues, jitter, collisions, noise and interference.\n\nMonitoring network errors is essential for diagnosing and resolving issues, as they can indicate problems with network hardware or environmental factors affecting network quality.\n\n**Dropped packets**:\n\nDropped packets occur when data packets traveling through a network are intentionally discarded or lost due to congestion, resource limitations, or network configuration issues. \n\nCommon causes include network congestion, buffer overflows, QoS settings, and network errors, as corrupted or incomplete packets may be discarded by receiving devices.\n\nDropped packets can impact network performance and lead to issues such as degraded voice or video quality in real-time applications.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "axisCenteredZero": false,
                   "axisLabel": "out(-) | in(+)",
@@ -1202,6 +1314,10 @@
                },
                "decimals": 1,
                "noValue": "No errors",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "pps"
             },
             "overrides": [

@@ -69,6 +69,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             }
          },
@@ -80,7 +89,6 @@
          },
          "id": 1,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -116,6 +124,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             }
          },
@@ -127,7 +144,6 @@
          },
          "id": 2,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -182,6 +198,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             }
          },
@@ -193,7 +218,6 @@
          },
          "id": 4,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -226,12 +250,20 @@
          "description": "The rate at which LDAP bind requests are being made.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "ops"
             }
@@ -278,12 +310,20 @@
          "description": "The rate of LDAP read, search, and write operations.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "ops"
             }
@@ -329,6 +369,16 @@
          },
          "description": "Distribution of different types of operations performed on the Active Directory database.\n",
          "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
+            },
             "overrides": [
                {
                   "matcher": {
@@ -699,6 +749,10 @@
          "description": "Rate of replication traffic between servers within the same site.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
@@ -708,6 +762,10 @@
                },
                "decimals": 1,
                "noValue": "No traffic",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "bps"
             }
          },
@@ -758,6 +816,10 @@
          "description": "Rate of replication traffic between servers across different sites.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
@@ -767,6 +829,10 @@
                },
                "decimals": 1,
                "noValue": "No traffic",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "bps"
             }
          },
@@ -817,12 +883,20 @@
          "description": "The rate of traffic received from other replication partners.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                }
             }
          },
@@ -883,6 +957,16 @@
          },
          "description": "Distribution of different types of operations performed on the Active Directory database.\n",
          "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
+            },
             "overrides": [
                {
                   "matcher": {
@@ -1079,12 +1163,20 @@
          "description": "The rate of database operations.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "ops"
             }

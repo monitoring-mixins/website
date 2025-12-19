@@ -96,6 +96,10 @@
          "description": "Number of sessions.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -103,6 +107,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "short"
             }
@@ -160,6 +168,10 @@
          "description": "Number of processes.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -167,6 +179,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "short"
             }
@@ -239,6 +255,10 @@
          "description": "Application wait time, in seconds, waiting for wait events.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -246,6 +266,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "s"
             }
@@ -293,6 +317,10 @@
          "description": "Commit wait time, in seconds, waiting for wait events.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -300,6 +328,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "s"
             }
@@ -347,6 +379,10 @@
          "description": "Concurrency wait time, in seconds, waiting for wait events.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -354,6 +390,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "s"
             }
@@ -401,6 +441,10 @@
          "description": "Configuration wait time, in seconds, waiting for wait events.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -408,6 +452,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "s"
             }
@@ -455,6 +503,10 @@
          "description": "Network wait time, in seconds, waiting for wait events.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -462,6 +514,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "s"
             }
@@ -509,6 +565,10 @@
          "description": "Scheduler wait time, in seconds, waiting for wait events.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -516,6 +576,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "s"
             }
@@ -563,6 +627,10 @@
          "description": "System I/O wait time, in seconds, waiting for wait events.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -570,6 +638,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "s"
             }
@@ -617,6 +689,10 @@
          "description": "User I/O wait time, in seconds, waiting for wait events.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -624,6 +700,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "s"
             }
@@ -684,6 +764,10 @@
          "description": "Shows the size over time for the tablespace.",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 0,
                   "gradientMode": "opacity",
@@ -691,6 +775,10 @@
                   "lineWidth": 2,
                   "showPoints": "never",
                   "spanNulls": false
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "bytes"
             }

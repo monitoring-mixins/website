@@ -91,12 +91,21 @@
          "fieldConfig": {
             "defaults": {
                "color": {
-                  "fixedColor": "text",
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "decimals": 1,
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
+               },
                "unit": "percent"
             }
          },
@@ -141,6 +150,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "continuous-BlYlRd"
                },
                "custom": {
@@ -153,6 +163,10 @@
                "decimals": 1,
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             }
          },
@@ -198,6 +212,10 @@
          "description": "CPU usage by different modes.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 80,
                   "gradientMode": "opacity",
@@ -210,6 +228,10 @@
                },
                "max": 100,
                "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "percent"
             },
             "overrides": [
@@ -317,12 +339,20 @@
          "description": "The CPU average queue size in Windows, often referred to as the \"Processor Queue Length\" or \"CPU Queue Length,\" is a metric that measures the number of threads or tasks waiting to be processed by the central processing unit (CPU) at a given moment.\nIt is an essential performance indicator that reflects the workload and responsiveness of the CPU.\nWhen the CPU queue length is high, it indicates that there are more tasks in line for processing than the CPU can handle immediately.\n\nThis can lead to system slowdowns, decreased responsiveness, and potential performance issues. High CPU queue lengths are often associated with CPU saturation, where the CPU is struggling to keep up with the demands placed on it.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "short"
             }
@@ -369,12 +399,20 @@
          "description": "Context switches occur when the operating system switches from running one process to another. Interrupts are signals sent to the CPU by external devices to request its attention.\n\nA high number of context switches or interrupts can indicate that the system is overloaded or that there are problems with specific devices or processes.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
                   "showPoints": "never"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
                },
                "unit": "short"
             }
@@ -447,6 +485,15 @@
                "color": {
                   "fixedColor": "text",
                   "mode": "fixed"
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "#5794f2",
+                        "value": null
+                     }
+                  ]
                }
             }
          },
@@ -458,7 +505,6 @@
          },
          "id": 8,
          "options": {
-            "colorMode": "fixed",
             "graphMode": "none",
             "reduceOptions": {
                "calcs": [
@@ -493,6 +539,7 @@
          "fieldConfig": {
             "defaults": {
                "color": {
+                  "fixedColor": "#5794f2",
                   "mode": "fixed"
                },
                "mappings": [
@@ -512,7 +559,11 @@
                      "type": "value"
                   }
                ],
-               "noValue": "No data. Please check that \"time\" collector is enabled."
+               "noValue": "No data. Please check that \"time\" collector is enabled.",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               }
             }
          },
          "gridPos": {
@@ -548,6 +599,10 @@
          "description": "NTP trip delay: Total roundtrip delay experienced by the NTP client in receiving a response from the server for the most recent request,\nin seconds. This is the time elapsed on the NTP client between transmitting a request to the NTP server and receiving a valid response from the server.\n\nTime offset: Absolute time offset between the system clock and the chosen time source, in seconds.\n",
          "fieldConfig": {
             "defaults": {
+               "color": {
+                  "fixedColor": "#5794f2",
+                  "mode": "palette-classic"
+               },
                "custom": {
                   "fillOpacity": 30,
                   "gradientMode": "opacity",
@@ -556,6 +611,10 @@
                   "showPoints": "never"
                },
                "noValue": "No data. Please check that \"time\" collector is enabled.",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [ ]
+               },
                "unit": "s"
             }
          },
