@@ -183,14 +183,36 @@ labels:
 {{< code lang="yaml" >}}
 alert: SNMPInterfaceDown
 annotations:
+  description: "A critical network interface {{$labels.ifName}} ({{$labels.ifAlias}})
+    on {{$labels.instance}} is down. 
+Note that only interfaces with ifAdminStatus
+    = `up` and matching `ifAlias=~\".*(?i:(critical)).*\"` are being checked and considered
+    critical.
+"
+  summary: Critical network interface is down on SNMP device.
+expr: |
+  (ifOperStatus{ifAlias=~".*(?i:(critical)).*"}) == 2
+  # only alert if interface is adminatratively up:
+  and (ifAdminStatus{}) != 2
+for: 5m
+keep_firing_for: 5m
+labels:
+  severity: critical
+{{< /code >}}
+ 
+##### SNMPInterfaceDown
+
+{{< code lang="yaml" >}}
+alert: SNMPInterfaceDown
+annotations:
   description: "Network interface {{$labels.ifName}} ({{$labels.ifAlias}}) on {{$labels.instance}}
     is down. 
-Only interfaces with ifAdminStatus = `up` and matching `ifAlias=~\".*(?i:(uplink|internet|WAN)|ISP).*\"`
+Only interfaces with ifAdminStatus = `up` and matching `ifAlias=~\".*(?i:(uplink|internet|WAN|ISP)).*\"`
     are being checked.
 "
   summary: Network interface is down on SNMP device.
 expr: |
-  (ifOperStatus{ifAlias=~".*(?i:(uplink|internet|WAN)|ISP).*"}) == 2
+  (ifOperStatus{ifAlias=~".*(?i:(uplink|internet|WAN|ISP)).*"}) == 2
   # only alert if interface is adminatratively up:
   and (ifAdminStatus{}) != 2
 for: 5m
@@ -253,7 +275,6 @@ annotations:
   summary: Network interface is flapping.
 expr: |
   changes(ifOperStatus{}[5m]) > 5
-for: "0"
 keep_firing_for: 5m
 labels:
   severity: warning
