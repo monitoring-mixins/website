@@ -1021,7 +1021,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum(irate(container_network_receive_packets_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])) by (pod)",
+               "expr": "sum(rate(container_network_receive_packets_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])) by (pod)",
                "legendFormat": "__auto"
             }
          ],
@@ -1072,7 +1072,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum(irate(container_network_transmit_packets_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])) by (pod)",
+               "expr": "sum(rate(container_network_transmit_packets_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])) by (pod)",
                "legendFormat": "__auto"
             }
          ],
@@ -1123,7 +1123,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum(irate(container_network_receive_packets_dropped_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])) by (pod)",
+               "expr": "sum(rate(container_network_receive_packets_dropped_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])) by (pod)",
                "legendFormat": "__auto"
             }
          ],
@@ -1174,7 +1174,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum(irate(container_network_transmit_packets_dropped_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])) by (pod)",
+               "expr": "sum(rate(container_network_transmit_packets_dropped_total{job=\"cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])) by (pod)",
                "legendFormat": "__auto"
             }
          ],
