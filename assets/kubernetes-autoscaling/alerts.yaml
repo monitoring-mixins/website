@@ -105,6 +105,88 @@ groups:
     for: 15m
     labels:
       severity: warning
+  - alert: ClusterAutoscalerNodeGroupAtCapacity
+    annotations:
+      dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-ca-jkwq/kubernetes-autoscaling-cluster-autoscaler
+      description: Node group {{ $labels.node_group }} is above 95% expected capacity.
+      summary: Cluster Autoscaler Node Group At Capacity
+    expr: |
+      (
+        avg (
+          cluster_autoscaler_node_group_target_count{
+            job="cluster-autoscaler"
+          }
+        ) by (cluster, namespace, job, node_group) /
+        max (
+          cluster_autoscaler_node_group_max_count{
+            job="cluster-autoscaler"
+          }
+        ) by (cluster, namespace, job, node_group)
+        * 100
+      ) >= 95
+    for: 15m
+    labels:
+      severity: warning
+  - alert: ClusterAutoscalerAllNodeGroupsAtCapacity
+    annotations:
+      dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-ca-jkwq/kubernetes-autoscaling-cluster-autoscaler
+      description: All node groups are above 95% expected capacity.
+      summary: All Cluster Autoscaler Node Groups At Capacity
+    expr: |
+      (
+        count (
+          (
+            avg (
+              cluster_autoscaler_node_group_target_count{
+                job="cluster-autoscaler"
+              }
+            ) by (cluster, namespace, job, node_group) /
+            max (
+              cluster_autoscaler_node_group_max_count{
+                job="cluster-autoscaler"
+              }
+            ) by (cluster, namespace, job, node_group)
+            * 100
+          ) < 95
+        ) by (cluster, namespace, job)
+        or
+        count (
+          cluster_autoscaler_node_group_max_count{
+            job="cluster-autoscaler"
+          }
+        ) by (cluster, namespace, job) * 0
+      ) == 0
+    for: 10m
+    labels:
+      severity: critical
+  - alert: ClusterAutoscalerNodeGroupUnhealthy
+    annotations:
+      dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-ca-jkwq/kubernetes-autoscaling-cluster-autoscaler
+      description: Node group {{ $labels.node_group }} is unhealthy.
+      summary: Cluster Autoscaler Node Group Unhealthy
+    expr: |
+      max (
+        cluster_autoscaler_node_group_healthiness{
+          job="cluster-autoscaler"
+        }
+      ) by (cluster, namespace, job, node_group) == 0
+    for: 15m
+    labels:
+      severity: warning
+  - alert: ClusterAutoscalerNoHealthyNodeGroups
+    annotations:
+      dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-ca-jkwq/kubernetes-autoscaling-cluster-autoscaler
+      description: No node groups are healthy.
+      summary: No Healthy Cluster Autoscaler Node Groups
+    expr: |
+      sum (
+        cluster_autoscaler_node_group_healthiness{
+          job="cluster-autoscaler"
+        }
+      ) by (cluster, namespace, job) == 0
+    for: 5m
+    labels:
+      severity: critical
 - name: keda
   rules:
   - alert: KedaScaledJobErrors
