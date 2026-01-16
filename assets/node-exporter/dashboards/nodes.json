@@ -52,7 +52,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "(\n  (1 - sum without (mode) (rate(node_cpu_seconds_total{job=\"node\", mode=~\"idle|iowait|steal\", instance=\"$instance\", cluster=\"$cluster\"}[$__rate_interval])))\n/ ignoring(cpu) group_left\n  count without (cpu, mode) (node_cpu_seconds_total{job=\"node\", mode=\"idle\", instance=\"$instance\", cluster=\"$cluster\"})\n)\n",
+               "expr": "(\n  (1 - sum without (mode) (rate(node_cpu_seconds_total{job=\"node\", mode=~\"idle|iowait|steal\", instance=\"$instance\", cluster=~\"$cluster\"}[$__rate_interval])))\n/ ignoring(cpu) group_left\n  count without (cpu, mode) (node_cpu_seconds_total{job=\"node\", mode=\"idle\", instance=\"$instance\", cluster=~\"$cluster\"})\n)\n",
                "intervalFactor": 5,
                "legendFormat": "{{cpu}}"
             }
@@ -94,7 +94,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "node_load1{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
+               "expr": "node_load1{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}",
                "legendFormat": "1m load average"
             },
             {
@@ -102,7 +102,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "node_load5{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
+               "expr": "node_load5{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}",
                "legendFormat": "5m load average"
             },
             {
@@ -110,7 +110,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "node_load15{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
+               "expr": "node_load15{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}",
                "legendFormat": "15m load average"
             },
             {
@@ -118,7 +118,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "count(node_cpu_seconds_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", mode=\"idle\"})",
+               "expr": "count(node_cpu_seconds_total{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\", mode=\"idle\"})",
                "legendFormat": "logical cores"
             }
          ],
@@ -174,7 +174,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "(\n  node_memory_MemTotal_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}\n-\n  node_memory_MemFree_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}\n-\n  node_memory_Buffers_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}\n-\n  node_memory_Cached_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}\n)\n",
+               "expr": "(\n  node_memory_MemTotal_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}\n-\n  node_memory_MemFree_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}\n-\n  node_memory_Buffers_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}\n-\n  node_memory_Cached_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}\n)\n",
                "legendFormat": "memory used"
             },
             {
@@ -182,7 +182,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "node_memory_Buffers_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
+               "expr": "node_memory_Buffers_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}",
                "legendFormat": "memory buffers"
             },
             {
@@ -190,7 +190,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "node_memory_Cached_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
+               "expr": "node_memory_Cached_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}",
                "legendFormat": "memory cached"
             },
             {
@@ -198,7 +198,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "node_memory_MemFree_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}",
+               "expr": "node_memory_MemFree_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}",
                "legendFormat": "memory free"
             }
          ],
@@ -246,7 +246,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "100 -\n(\n  avg(node_memory_MemAvailable_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"}) /\n  avg(node_memory_MemTotal_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\"})\n* 100\n)\n"
+               "expr": "100 -\n(\n  avg(node_memory_MemAvailable_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"}) /\n  avg(node_memory_MemTotal_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\"})\n* 100\n)\n"
             }
          ],
          "title": "Memory Usage",
@@ -324,7 +324,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "rate(node_disk_read_bytes_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", device!=\"\"}[$__rate_interval])",
+               "expr": "rate(node_disk_read_bytes_total{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\", device!=\"\"}[$__rate_interval])",
                "intervalFactor": 1,
                "legendFormat": "{{device}} read"
             },
@@ -333,7 +333,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "rate(node_disk_written_bytes_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", device!=\"\"}[$__rate_interval])",
+               "expr": "rate(node_disk_written_bytes_total{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\", device!=\"\"}[$__rate_interval])",
                "intervalFactor": 1,
                "legendFormat": "{{device}} written"
             },
@@ -342,7 +342,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "rate(node_disk_io_time_seconds_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", device!=\"\"}[$__rate_interval])",
+               "expr": "rate(node_disk_io_time_seconds_total{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\", device!=\"\"}[$__rate_interval])",
                "intervalFactor": 1,
                "legendFormat": "{{device}} io time"
             }
@@ -465,7 +465,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max by (mountpoint) (node_filesystem_size_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", fstype!=\"\", mountpoint!=\"\"})\n",
+               "expr": "max by (mountpoint) (node_filesystem_size_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\", fstype!=\"\", mountpoint!=\"\"})\n",
                "format": "table",
                "instant": true,
                "legendFormat": ""
@@ -475,7 +475,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "max by (mountpoint) (node_filesystem_avail_bytes{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", fstype!=\"\", mountpoint!=\"\"})\n",
+               "expr": "max by (mountpoint) (node_filesystem_avail_bytes{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\", fstype!=\"\", mountpoint!=\"\"})\n",
                "format": "table",
                "instant": true,
                "legendFormat": ""
@@ -615,7 +615,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "rate(node_network_receive_bytes_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", device!=\"lo\"}[$__rate_interval]) * 8",
+               "expr": "rate(node_network_receive_bytes_total{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\", device!=\"lo\"}[$__rate_interval]) * 8",
                "intervalFactor": 1,
                "legendFormat": "{{device}}"
             }
@@ -657,7 +657,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "rate(node_network_transmit_bytes_total{job=\"node\", instance=\"$instance\", cluster=\"$cluster\", device!=\"lo\"}[$__rate_interval]) * 8",
+               "expr": "rate(node_network_transmit_bytes_total{job=\"node\", instance=\"$instance\", cluster=~\"$cluster\", device!=\"lo\"}[$__rate_interval]) * 8",
                "intervalFactor": 1,
                "legendFormat": "{{device}}"
             }
@@ -679,11 +679,13 @@
             "type": "datasource"
          },
          {
+            "allValue": ".*",
             "datasource": {
                "type": "prometheus",
                "uid": "${datasource}"
             },
             "hide": 2,
+            "includeAll": true,
             "label": "Cluster",
             "name": "cluster",
             "query": "label_values(node_uname_info{job=\"node\", sysname!=\"Darwin\"}, cluster)",
@@ -697,7 +699,7 @@
             },
             "label": "Instance",
             "name": "instance",
-            "query": "label_values(node_uname_info{job=\"node\", cluster=\"$cluster\", sysname!=\"Darwin\"}, instance)",
+            "query": "label_values(node_uname_info{job=\"node\", cluster=~\"$cluster\", sysname!=\"Darwin\"}, instance)",
             "refresh": 2,
             "type": "query"
          }
