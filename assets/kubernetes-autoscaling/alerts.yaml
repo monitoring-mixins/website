@@ -65,6 +65,37 @@ groups:
     for: 15m
     labels:
       severity: warning
+  - alert: KarpenterClusterStateNotSynced
+    annotations:
+      dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-kperf-jkwq/kubernetes-autoscaling-karpenter-performance
+      description: The Karpenter cluster state is not synced. This indicates Karpenter
+        cannot properly track cluster resources and may fail to provision or deprovision
+        nodes correctly.
+      summary: Karpenter Cluster State Not Synced.
+    expr: |
+      sum(
+        karpenter_cluster_state_synced{
+          job="karpenter"
+        }
+      ) by (cluster, namespace, job) == 0
+    for: 15m
+    labels:
+      severity: warning
+  - alert: KarpenterSchedulerQueueDepthHigh
+    annotations:
+      dashboard_url: https://grafana.com/d/kubernetes-autoscaling-mixin-kperf-jkwq/kubernetes-autoscaling-karpenter-performance
+      description: The Karpenter scheduler has {{ $value }} pods waiting to be scheduled.
+        This may indicate provisioning issues or insufficient capacity.
+      summary: Karpenter Scheduler Queue Depth High.
+    expr: |
+      sum(
+        karpenter_scheduler_queue_depth{
+          job="karpenter"
+        }
+      ) by (cluster, namespace, job) > 50
+    for: 15m
+    labels:
+      severity: warning
 - name: cluster-autoscaler
   rules:
   - alert: ClusterAutoscalerNodeCountNearCapacity

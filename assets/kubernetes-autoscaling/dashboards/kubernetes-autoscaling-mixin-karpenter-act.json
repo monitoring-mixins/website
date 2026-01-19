@@ -153,6 +153,220 @@
          "type": "timeseries"
       },
       {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 7
+         },
+         "id": 4,
+         "title": "NodeClaim Activity",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The number of nodeclaims created by node pool.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 8
+         },
+         "id": 5,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    increase(\n      karpenter_nodeclaims_created_total{\n        cluster=\"$cluster\",\njob=~\"$job\"\n,\n        nodepool=~\"$nodepool\"\n      }[$__rate_interval]\n    )\n  ) by (nodepool)\n)\n",
+               "legendFormat": "{{ nodepool }}"
+            }
+         ],
+         "title": "NodeClaims Created by Node Pool",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The number of nodeclaims terminated by node pool.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 8
+         },
+         "id": 6,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    increase(\n      karpenter_nodeclaims_terminated_total{\n        cluster=\"$cluster\",\njob=~\"$job\"\n,\n        nodepool=~\"$nodepool\"\n      }[$__rate_interval]\n    )\n  ) by (nodepool)\n)\n",
+               "legendFormat": "{{ nodepool }}"
+            }
+         ],
+         "title": "NodeClaims Terminated by Node Pool",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The duration to terminate nodeclaims.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 0
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 14
+         },
+         "id": 7,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      karpenter_nodeclaims_termination_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "legendFormat": "P50"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      karpenter_nodeclaims_termination_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "legendFormat": "P95"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      karpenter_nodeclaims_termination_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "legendFormat": "P99"
+            }
+         ],
+         "title": "NodeClaim Termination Duration",
+         "type": "timeseries"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 20
+         },
+         "id": 8,
+         "title": "Disruption Activity",
+         "type": "row"
+      },
+      {
          "datasource": {
             "type": "prometheus",
             "uid": "$datasource"
@@ -176,9 +390,9 @@
             "h": 6,
             "w": 12,
             "x": 0,
-            "y": 7
+            "y": 21
          },
-         "id": 4,
+         "id": 9,
          "options": {
             "legend": {
                "calcs": [
@@ -235,9 +449,9 @@
             "h": 6,
             "w": 12,
             "x": 12,
-            "y": 7
+            "y": 21
          },
-         "id": 5,
+         "id": 10,
          "options": {
             "legend": {
                "calcs": [
@@ -275,6 +489,132 @@
             "type": "prometheus",
             "uid": "$datasource"
          },
+         "description": "The number of failed voluntary disruption attempts.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 27
+         },
+         "id": 11,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    increase(\n      karpenter_voluntary_disruption_queue_failures_total{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job)\n)\n",
+               "legendFormat": "Queue Failures"
+            }
+         ],
+         "title": "Voluntary Disruption Queue Failures",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The duration to evaluate voluntary disruption decisions.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 0
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 27
+         },
+         "id": 12,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      karpenter_voluntary_disruption_decision_evaluation_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "legendFormat": "P50"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      karpenter_voluntary_disruption_decision_evaluation_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "legendFormat": "P95"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      karpenter_voluntary_disruption_decision_evaluation_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "legendFormat": "P99"
+            }
+         ],
+         "title": "Voluntary Disruption Evaluation Duration",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
          "description": "The number of nodes disrupted by node pool, capacity type, and reason.",
          "fieldConfig": {
             "defaults": {
@@ -294,9 +634,9 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 13
+            "y": 33
          },
-         "id": 6,
+         "id": 13,
          "options": {
             "legend": {
                "calcs": [
@@ -335,9 +675,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 19
+            "y": 39
          },
-         "id": 7,
+         "id": 14,
          "title": "Pod Activity",
          "type": "row"
       },
@@ -365,9 +705,9 @@
             "h": 6,
             "w": 12,
             "x": 0,
-            "y": 20
+            "y": 40
          },
-         "id": 8,
+         "id": 15,
          "options": {
             "legend": {
                "calcs": [
@@ -419,9 +759,9 @@
             "h": 6,
             "w": 12,
             "x": 12,
-            "y": 20
+            "y": 40
          },
-         "id": 9,
+         "id": 16,
          "options": {
             "legend": {
                "calcs": [

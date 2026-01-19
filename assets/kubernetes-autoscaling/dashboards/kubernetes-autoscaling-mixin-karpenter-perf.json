@@ -357,6 +357,144 @@
             "y": 13
          },
          "id": 7,
+         "title": "Scheduler",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The number of pending pods waiting to be scheduled.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 14
+         },
+         "id": 8,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  karpenter_scheduler_queue_depth{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }\n) by (job)\n",
+               "legendFormat": "Queue Depth"
+            }
+         ],
+         "title": "Scheduler Queue Depth",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The duration to simulate pod scheduling.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 14
+         },
+         "id": 9,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      karpenter_scheduler_scheduling_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "legendFormat": "P50"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      karpenter_scheduler_scheduling_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "legendFormat": "P95"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      karpenter_scheduler_scheduling_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "legendFormat": "P99"
+            }
+         ],
+         "title": "Scheduler Scheduling Duration",
+         "type": "timeseries"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 20
+         },
+         "id": 10,
          "title": "Interruption Queue",
          "type": "row"
       },
@@ -379,9 +517,9 @@
             "h": 6,
             "w": 8,
             "x": 0,
-            "y": 14
+            "y": 21
          },
-         "id": 8,
+         "id": 11,
          "options": {
             "legend": {
                "calcs": [
@@ -433,9 +571,9 @@
             "h": 6,
             "w": 8,
             "x": 8,
-            "y": 14
+            "y": 21
          },
-         "id": 9,
+         "id": 12,
          "options": {
             "legend": {
                "calcs": [
@@ -487,9 +625,9 @@
             "h": 6,
             "w": 8,
             "x": 16,
-            "y": 14
+            "y": 21
          },
-         "id": 10,
+         "id": 13,
          "options": {
             "legend": {
                "calcs": [
@@ -515,7 +653,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.50,\n  sum(\n    irate(\n      karpenter_interruption_message_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      karpenter_interruption_message_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
                "legendFormat": "P50"
             },
             {
@@ -524,7 +662,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.95,\n  sum(\n    irate(\n      karpenter_interruption_message_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      karpenter_interruption_message_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
                "legendFormat": "P95"
             },
             {
@@ -533,7 +671,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.99,\n  sum(\n    irate(\n      karpenter_interruption_message_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      karpenter_interruption_message_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
                "legendFormat": "P99"
             }
          ],
@@ -546,9 +684,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 20
+            "y": 27
          },
-         "id": 11,
+         "id": 14,
          "title": "Work Queue",
          "type": "row"
       },
@@ -571,9 +709,9 @@
             "h": 6,
             "w": 8,
             "x": 0,
-            "y": 21
+            "y": 28
          },
-         "id": 12,
+         "id": 15,
          "options": {
             "legend": {
                "calcs": [
@@ -625,9 +763,9 @@
             "h": 6,
             "w": 8,
             "x": 8,
-            "y": 21
+            "y": 28
          },
-         "id": 13,
+         "id": 16,
          "options": {
             "legend": {
                "calcs": [
@@ -697,9 +835,9 @@
             "h": 6,
             "w": 8,
             "x": 16,
-            "y": 21
+            "y": 28
          },
-         "id": 14,
+         "id": 17,
          "options": {
             "legend": {
                "calcs": [
@@ -756,9 +894,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 27
+            "y": 34
          },
-         "id": 15,
+         "id": 18,
          "title": "Controller",
          "type": "row"
       },
@@ -786,9 +924,9 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 28
+            "y": 35
          },
-         "id": 16,
+         "id": 19,
          "options": {
             "legend": {
                "calcs": [
@@ -845,9 +983,9 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 36
+            "y": 43
          },
-         "id": 17,
+         "id": 20,
          "options": {
             "legend": {
                "calcs": [
