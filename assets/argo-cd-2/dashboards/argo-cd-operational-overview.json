@@ -51,7 +51,8 @@
                   ]
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 4,
@@ -70,9 +71,10 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_cluster_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n)\n"
+               "expr": "sum(\n  argocd_cluster_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n)\n",
+               "instant": false
             }
          ],
          "title": "Clusters",
@@ -96,7 +98,8 @@
                   ]
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 4,
@@ -115,9 +118,10 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "count(\n  count(\n    argocd_app_info{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }\n  )\n  by (repo)\n)\n"
+               "expr": "count(\n  count(\n    argocd_app_info{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }\n  )\n  by (repo)\n)\n",
+               "instant": false
             }
          ],
          "title": "Repositories",
@@ -141,7 +145,8 @@
                   ]
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 4,
@@ -160,9 +165,10 @@
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n  }\n)\n"
+               "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n  }\n)\n",
+               "instant": false
             }
          ],
          "title": "Applications",
@@ -474,7 +480,8 @@
                   }
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 6,
@@ -532,7 +539,8 @@
                   }
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 6,
@@ -600,7 +608,8 @@
                         }
                      },
                      "unit": "short"
-                  }
+                  },
+                  "overrides": [ ]
                },
                "gridPos": {
                   "h": 6,
@@ -691,7 +700,8 @@
                         }
                      },
                      "unit": "short"
-                  }
+                  },
+                  "overrides": [ ]
                },
                "gridPos": {
                   "h": 6,
@@ -749,7 +759,8 @@
                         }
                      },
                      "unit": "short"
-                  }
+                  },
+                  "overrides": [ ]
                },
                "gridPos": {
                   "h": 6,
@@ -809,6 +820,62 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
+               "description": "A timeseries panel showing the connection status of each cluster managed by ArgoCD. Failed connections indicate cluster connectivity or authentication issues.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMax": 1,
+                        "axisSoftMin": 0,
+                        "fillOpacity": 0
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 24,
+                  "x": 0,
+                  "y": 50
+               },
+               "id": 17,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  argocd_cluster_connection_status{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n    server=~\"$kubernetes_cluster\"\n  }\n) by (namespace, job, server, k8s_version)\n",
+                     "legendFormat": "{{ server }} - {{ k8s_version }}"
+                  }
+               ],
+               "title": "Cluster Connection Status",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
                "description": "A timeseries panel showing the number of resource objects in each cluster managed by ArgoCD.",
                "fieldConfig": {
                   "defaults": {
@@ -821,15 +888,16 @@
                         }
                      },
                      "unit": "short"
-                  }
+                  },
+                  "overrides": [ ]
                },
                "gridPos": {
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 50
+                  "y": 56
                },
-               "id": 17,
+               "id": 18,
                "options": {
                   "legend": {
                      "calcs": [
@@ -879,15 +947,16 @@
                         }
                      },
                      "unit": "short"
-                  }
+                  },
+                  "overrides": [ ]
                },
                "gridPos": {
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 56
+                  "y": 62
                },
-               "id": 18,
+               "id": 19,
                "options": {
                   "legend": {
                      "calcs": [
@@ -937,15 +1006,16 @@
                         }
                      },
                      "unit": "short"
-                  }
+                  },
+                  "overrides": [ ]
                },
                "gridPos": {
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 62
+                  "y": 68
                },
-               "id": 19,
+               "id": 20,
                "options": {
                   "legend": {
                      "calcs": [
@@ -990,8 +1060,126 @@
             "x": 0,
             "y": 68
          },
-         "id": 20,
+         "id": 21,
          "panels": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "A timeseries panel showing pending requests in the ArgoCD repo server queue. High values may indicate the repo server needs scaling.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 0,
+                  "y": 69
+               },
+               "id": 22,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  argocd_repo_pending_request_total{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n) by (namespace, job)\n",
+                     "legendFormat": "{{ namespace }}/{{ job }}"
+                  }
+               ],
+               "title": "Pending Repo Requests",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "A timeseries panel showing git fetch failures for repositories monitored by ArgoCD. High values may indicate git repository connectivity or authentication issues.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 12,
+                  "y": 69
+               },
+               "id": 23,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  increase(\n    argocd_git_fetch_fail_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
+                     "legendFormat": "{{ namespace }} - {{ repo }}"
+                  }
+               ],
+               "title": "Git Fetch Failures",
+               "type": "timeseries"
+            },
             {
                "datasource": {
                   "type": "prometheus",
@@ -1009,15 +1197,16 @@
                         }
                      },
                      "unit": "short"
-                  }
+                  },
+                  "overrides": [ ]
                },
                "gridPos": {
                   "h": 6,
                   "w": 12,
                   "x": 0,
-                  "y": 69
+                  "y": 75
                },
-               "id": 21,
+               "id": 24,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1067,15 +1256,16 @@
                         }
                      },
                      "unit": "short"
-                  }
+                  },
+                  "overrides": [ ]
                },
                "gridPos": {
                   "h": 6,
                   "w": 12,
                   "x": 12,
-                  "y": 69
+                  "y": 75
                },
-               "id": 22,
+               "id": 25,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1118,9 +1308,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 0,
-                  "y": 75
+                  "y": 81
                },
-               "id": 23,
+               "id": 26,
                "options": {
                   "calculate": true,
                   "yAxis": {
@@ -1151,9 +1341,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 12,
-                  "y": 75
+                  "y": 81
                },
-               "id": 24,
+               "id": 27,
                "options": {
                   "calculate": true,
                   "yAxis": {

@@ -148,6 +148,120 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### ArgoCdAppControllerHighReconciliationDuration
+
+{{< code lang="yaml" >}}
+alert: ArgoCdAppControllerHighReconciliationDuration
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
+  description: ArgoCD app controller in {{ $labels.namespace }} is taking more than
+    60s (0.95 percentile) to reconcile applications for the past 10m. This may indicate
+    performance issues or the need to scale up.
+  summary: ArgoCD App Controller has high reconciliation duration.
+expr: |
+  histogram_quantile(0.95,
+    sum(
+      rate(
+        argocd_app_reconcile_bucket{
+          job=~".*"
+        }[10m]
+      )
+    ) by (cluster, namespace, le)
+  ) > 60
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ArgoCdRepoServerPendingRequests
+
+{{< code lang="yaml" >}}
+alert: ArgoCdRepoServerPendingRequests
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
+  description: ArgoCD repo server in {{ $labels.namespace }} has 50 or more pending
+    requests for the past 5m. The repo server may be overloaded and need scaling.
+  summary: ArgoCD Repo Server has pending requests.
+expr: |
+  sum(
+    argocd_repo_pending_request_total{
+      job=~".*"
+    }
+  ) by (cluster, namespace)
+  > 50
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ArgoCdRepoServerHighGitRequestDuration
+
+{{< code lang="yaml" >}}
+alert: ArgoCdRepoServerHighGitRequestDuration
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
+  description: ArgoCD repo server in {{ $labels.namespace }} is experiencing git operations
+    (fetch/clone) taking more than 30s (0.95 percentile) for the past 10m. This may
+    indicate slow git repository access or network issues.
+  summary: ArgoCD Repo Server has high git request duration.
+expr: |
+  histogram_quantile(0.95,
+    sum(
+      rate(
+        argocd_git_request_duration_seconds_bucket{
+          job=~".*"
+        }[10m]
+      )
+    ) by (cluster, namespace, le)
+  ) > 30
+for: 10m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ArgoCdClusterConnectionError
+
+{{< code lang="yaml" >}}
+alert: ArgoCdClusterConnectionError
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
+  description: ArgoCD in {{ $labels.namespace }} cannot connect to cluster {{ $labels.server
+    }} for the past 5m. Check cluster credentials and network connectivity.
+  summary: ArgoCD cannot connect to managed cluster.
+expr: |
+  argocd_cluster_connection_status{
+    job=~".*"
+  } < 1
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ArgoCdGitRequestErrors
+
+{{< code lang="yaml" >}}
+alert: ArgoCdGitRequestErrors
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
+  description: ArgoCD in {{ $labels.namespace }} is experiencing git fetch failures
+    for repository {{ $labels.repo }} for the past 5m. This may indicate repository
+    access issues or network problems.
+  summary: ArgoCD Git requests are failing.
+expr: |
+  sum(
+    round(
+      increase(
+        argocd_git_fetch_fail_total{
+          job=~".*"
+        }[5m]
+      )
+    )
+  ) by (cluster, namespace, repo) > 0
+for: 1m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 
