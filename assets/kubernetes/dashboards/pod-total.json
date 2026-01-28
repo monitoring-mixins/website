@@ -61,11 +61,11 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum(rate(container_network_receive_bytes_total{cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval]))",
+               "expr": "sum((8 * rate(container_network_receive_bytes_total{cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])))",
                "legendFormat": "__auto"
             }
          ],
-         "title": "Current Rate of Bytes Received",
+         "title": "Current Rate of Bits Received",
          "type": "gauge"
       },
       {
@@ -115,11 +115,11 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum(rate(container_network_transmit_bytes_total{cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval]))",
+               "expr": "sum((8 * rate(container_network_transmit_bytes_total{cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])))",
                "legendFormat": "__auto"
             }
          ],
-         "title": "Current Rate of Bytes Transmitted",
+         "title": "Current Rate of Bits Transmitted",
          "type": "gauge"
       },
       {
@@ -161,7 +161,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum(rate(container_network_receive_bytes_total{cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+               "expr": "sum((8 * rate(container_network_receive_bytes_total{cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval]))) by (pod)",
                "legendFormat": "__auto"
             }
          ],
@@ -207,7 +207,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "expr": "sum(rate(container_network_transmit_bytes_total{cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+               "expr": "sum((8 * rate(container_network_transmit_bytes_total{cluster=\"$cluster\",namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval]))) by (pod)",
                "legendFormat": "__auto"
             }
          ],
