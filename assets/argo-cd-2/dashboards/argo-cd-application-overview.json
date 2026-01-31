@@ -297,7 +297,7 @@
                   {
                      "targetBlank": true,
                      "title": "Go To Application",
-                     "url": "https://argocd.com/applications/${__data.fields.Application Namespace}/${__data.fields.Application}"
+                     "url": "https://github.com/adinhodovic/argo-cd-mixin?tab=readme-ov-file#argocd-badges"
                   }
                ],
                "thresholds": {
@@ -401,7 +401,7 @@
                   {
                      "targetBlank": true,
                      "title": "Go To Application",
-                     "url": "https://argocd.com/applications/${__data.fields.Application Namespace}/${__data.fields.Application}"
+                     "url": "https://github.com/adinhodovic/argo-cd-mixin?tab=readme-ov-file#argocd-badges"
                   }
                ],
                "thresholds": {
@@ -505,7 +505,7 @@
                   {
                      "targetBlank": true,
                      "title": "Go To Application",
-                     "url": "https://argocd.com/applications/${__data.fields.Application Namespace}/${__data.fields.Application}"
+                     "url": "https://github.com/adinhodovic/argo-cd-mixin?tab=readme-ov-file#argocd-badges"
                   }
                ],
                "thresholds": {
@@ -609,7 +609,7 @@
                   {
                      "targetBlank": true,
                      "title": "Go To Application",
-                     "url": "https://argocd.com/applications/${__data.fields.Application Namespace}/${__data.fields.Application}"
+                     "url": "https://github.com/adinhodovic/argo-cd-mixin?tab=readme-ov-file#argocd-badges"
                   }
                ],
                "thresholds": {

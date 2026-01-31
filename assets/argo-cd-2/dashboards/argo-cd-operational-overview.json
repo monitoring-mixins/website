@@ -676,7 +676,7 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  increase(\n    argocd_app_reconcile_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
+                     "expr": "sum(\n  rate(\n    argocd_app_reconcile_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
                      "legendFormat": "{{ le }}"
                   }
                ],
@@ -800,6 +800,157 @@
                ],
                "title": "Pending Kubectl Runs",
                "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Total kubectl executions for manifest generation (Helm, Kustomize, plugins). High counts are expected during sync operations.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 24,
+                  "x": 0,
+                  "y": 49
+               },
+               "id": 16,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  round(\n    increase(\n      argocd_kubectl_exec_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  )\n) by (namespace, job, command)\n",
+                     "legendFormat": "{{ command }}"
+                  }
+               ],
+               "title": "Kubectl Exec Total",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Time to process resource events in batches. Controlled by ARGOCD_CLUSTER_CACHE_BATCH_EVENTS_PROCESSING and related settings.",
+               "gridPos": {
+                  "h": 6,
+                  "w": 24,
+                  "x": 0,
+                  "y": 55
+               },
+               "id": 17,
+               "options": {
+                  "calculate": true,
+                  "yAxis": {
+                     "unit": "s"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "sum(\n  rate(\n    argocd_resource_events_processing_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
+                     "legendFormat": "{{ le }}"
+                  }
+               ],
+               "title": "Resource Event Processing Duration",
+               "type": "heatmap"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Number of resource events processed per batch. Batch processing improves performance when managing large numbers of resources.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 24,
+                  "x": 0,
+                  "y": 61
+               },
+               "id": 18,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  argocd_resource_events_processed_in_batch{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n) by (namespace, job)\n",
+                     "legendFormat": "{{ namespace }}/{{ job }}"
+                  }
+               ],
+               "title": "Resource Events Batch Size",
+               "type": "timeseries"
             }
          ],
          "title": "Controller Stats",
@@ -811,9 +962,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 49
+            "y": 25
          },
-         "id": 16,
+         "id": 19,
          "panels": [
             {
                "datasource": {
@@ -836,9 +987,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 50
+                  "y": 26
                },
-               "id": 17,
+               "id": 20,
                "options": {
                   "legend": {
                      "calcs": [
@@ -876,6 +1027,60 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
+               "description": "Age of the cluster cache in seconds. Stale caches (high values) can cause reconciliation delays and performance issues.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "fillOpacity": 0
+                     },
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 24,
+                  "x": 0,
+                  "y": 32
+               },
+               "id": 21,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "argocd_cluster_cache_age_seconds{\n  cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n  server=~\"$kubernetes_cluster\"\n}\n",
+                     "legendFormat": "{{ server }}"
+                  }
+               ],
+               "title": "Cluster Cache Age",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
                "description": "A timeseries panel showing the number of resource objects in each cluster managed by ArgoCD.",
                "fieldConfig": {
                   "defaults": {
@@ -895,9 +1100,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 56
+                  "y": 38
                },
-               "id": 18,
+               "id": 22,
                "options": {
                   "legend": {
                      "calcs": [
@@ -954,9 +1159,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 62
+                  "y": 44
                },
-               "id": 19,
+               "id": 23,
                "options": {
                   "legend": {
                      "calcs": [
@@ -982,7 +1187,7 @@
                         "uid": "$datasource"
                      },
                      "exemplar": false,
-                     "expr": "sum(\n  argocd_cluster_api_resources{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n) by (namespace, job, server)\n",
+                     "expr": "sum(\n  argocd_cluster_api_resources{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n    server=~\"$kubernetes_cluster\"\n  }\n) by (namespace, job, server)\n",
                      "legendFormat": "{{ server }}"
                   }
                ],
@@ -1013,9 +1218,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 68
+                  "y": 50
                },
-               "id": 20,
+               "id": 24,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1041,7 +1246,7 @@
                         "uid": "$datasource"
                      },
                      "exemplar": false,
-                     "expr": "sum(\n  increase(\n    argocd_cluster_events_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, server)\n",
+                     "expr": "sum(\n  increase(\n    argocd_cluster_events_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      server=~\"$kubernetes_cluster\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, server)\n",
                      "legendFormat": "{{ server }}"
                   }
                ],
@@ -1058,9 +1263,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 68
+            "y": 26
          },
-         "id": 21,
+         "id": 25,
          "panels": [
             {
                "datasource": {
@@ -1086,9 +1291,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 0,
-                  "y": 69
+                  "y": 27
                },
-               "id": 22,
+               "id": 26,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1145,9 +1350,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 12,
-                  "y": 69
+                  "y": 27
                },
-               "id": 23,
+               "id": 27,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1204,9 +1409,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 0,
-                  "y": 75
+                  "y": 33
                },
-               "id": 24,
+               "id": 28,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1263,9 +1468,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 12,
-                  "y": 75
+                  "y": 33
                },
-               "id": 25,
+               "id": 29,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1308,9 +1513,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 0,
-                  "y": 81
+                  "y": 39
                },
-               "id": 26,
+               "id": 30,
                "options": {
                   "calculate": true,
                   "yAxis": {
@@ -1324,7 +1529,7 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  increase(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
+                     "expr": "sum(\n  rate(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
                      "legendFormat": "{{ le }}"
                   }
                ],
@@ -1341,9 +1546,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 12,
-                  "y": 81
+                  "y": 39
                },
-               "id": 27,
+               "id": 31,
                "options": {
                   "calculate": true,
                   "yAxis": {
@@ -1357,7 +1562,7 @@
                         "type": "prometheus",
                         "uid": "$datasource"
                      },
-                     "expr": "sum(\n  increase(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
+                     "expr": "sum(\n  rate(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
                      "legendFormat": "{{ le }}"
                   }
                ],
@@ -1366,6 +1571,112 @@
             }
          ],
          "title": "Repo Server Stats",
+         "type": "row"
+      },
+      {
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 27
+         },
+         "id": 32,
+         "panels": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Rate of Redis requests by ArgoCD component. High rates may indicate Redis becoming a bottleneck at scale.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "reqps"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 24,
+                  "x": 0,
+                  "y": 28
+               },
+               "id": 33,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  rate(\n    argocd_redis_request_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, initiator)\n",
+                     "legendFormat": "{{ initiator }}"
+                  }
+               ],
+               "title": "Redis Request Rate",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Redis request latency distribution. High latencies indicate Redis performance issues that can affect controller scalability.",
+               "gridPos": {
+                  "h": 6,
+                  "w": 24,
+                  "x": 0,
+                  "y": 34
+               },
+               "id": 34,
+               "options": {
+                  "calculate": true,
+                  "yAxis": {
+                     "unit": "s"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "sum(\n  rate(\n    argocd_redis_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
+                     "legendFormat": "{{ le }}"
+                  }
+               ],
+               "title": "Redis Request Duration",
+               "type": "heatmap"
+            }
+         ],
+         "title": "Redis Performance",
          "type": "row"
       }
    ],
