@@ -16,7 +16,7 @@ Jsonnet source code is available at [github.com/grafana/jsonnet-libs](https://gi
 Complete list of pregenerated alerts is available [here](https://github.com/monitoring-mixins/website/blob/master/assets/f5-bigip/alerts.yaml).
 {{< /panel >}}
 
-### bigip-alerts
+### f5-bigip-alerts
 
 ##### BigIPLowNodeAvailabilityStatus
 
@@ -28,7 +28,7 @@ annotations:
   summary: Detecting a significant number of unavailable nodes which can causes potential
     downtime or degraded performance.
 expr: |
-  100 * (sum(bigip_node_status_availability_state) / clamp_min(count(bigip_node_status_availability_state), 1)) < 95
+  100 * (sum(bigip_node_status_availability_state{}) / clamp_min(count(bigip_node_status_availability_state{}), 1)) < 95
 for: 5m
 labels:
   severity: critical
@@ -44,7 +44,7 @@ annotations:
   summary: Approaching the connection limit may lead to rejecting new connections,
     impacting availability.
 expr: |
-  max without(instance, job) (100 * bigip_node_serverside_cur_conns / clamp_min(bigip_node_serverside_max_conns, 1)) > 80
+  max without(instance, job) (100 * bigip_node_serverside_cur_conns{} / clamp_min(bigip_node_serverside_max_conns{}, 1)) > 80
 for: 5m
 labels:
   severity: warning
@@ -60,7 +60,7 @@ annotations:
   summary: An unexpected spike in requests might indicate an issue like a DDoS attack
     or unexpected high load.
 expr: |
-  max without(instance, job) (100 * rate(bigip_pool_tot_requests[10m]) / clamp_min(rate(bigip_pool_tot_requests[50m] offset 10m), 1)) > 150
+  max without(instance, job) (100 * rate(bigip_pool_tot_requests{}[10m]) / clamp_min(rate(bigip_pool_tot_requests{}[50m] offset 10m), 1)) > 150
 for: 10m
 labels:
   severity: warning
@@ -76,7 +76,7 @@ annotations:
   summary: A sudden spike or sustained high queue depth may indicate a bottleneck
     in handling incoming connections.
 expr: |
-  max without(instance, job) (100 * rate(bigip_pool_connq_depth[5m])) / clamp_min(rate(bigip_pool_connq_depth[50m] offset 10m), 1) > 75
+  max without(instance, job) (100 * rate(bigip_pool_connq_depth{}[5m])) / clamp_min(rate(bigip_pool_connq_depth{}[50m] offset 10m), 1) > 75
 for: 5m
 labels:
   severity: warning
@@ -87,6 +87,7 @@ Following dashboards are generated from mixins and hosted on github:
 
 
 - [bigip-cluster-overview](https://github.com/monitoring-mixins/website/blob/master/assets/f5-bigip/dashboards/bigip-cluster-overview.json)
+- [bigip-logs](https://github.com/monitoring-mixins/website/blob/master/assets/f5-bigip/dashboards/bigip-logs.json)
 - [bigip-node-overview](https://github.com/monitoring-mixins/website/blob/master/assets/f5-bigip/dashboards/bigip-node-overview.json)
 - [bigip-pool-overview](https://github.com/monitoring-mixins/website/blob/master/assets/f5-bigip/dashboards/bigip-pool-overview.json)
 - [bigip-virtual-server-overview](https://github.com/monitoring-mixins/website/blob/master/assets/f5-bigip/dashboards/bigip-virtual-server-overview.json)

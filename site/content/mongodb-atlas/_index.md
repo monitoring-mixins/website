@@ -18,10 +18,10 @@ Complete list of pregenerated alerts is available [here](https://github.com/moni
 
 ### mongodb-atlas-alerts
 
-##### MongoDBAtlasHighNumberOfCollectionExclusiveDeadlocks
+##### MongoDBAtlasCollExclusiveDeadlocks
 
 {{< code lang="yaml" >}}
-alert: MongoDBAtlasHighNumberOfCollectionExclusiveDeadlocks
+alert: MongoDBAtlasCollExclusiveDeadlocks
 annotations:
   description: The number of collection exclusive-lock deadlocks occurring on node
     {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}}
@@ -34,10 +34,10 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### MongoDBAtlasHighNumberOfCollectionIntentExclusiveDeadlocks
+##### MongoDBAtlasCollIntentExclDeadlocks
 
 {{< code lang="yaml" >}}
-alert: MongoDBAtlasHighNumberOfCollectionIntentExclusiveDeadlocks
+alert: MongoDBAtlasCollIntentExclDeadlocks
 annotations:
   description: The number of collection intent-exclusive-lock deadlocks occurring
     on node {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f"
@@ -50,10 +50,10 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### MongoDBAtlasHighNumberOfCollectionSharedDeadlocks
+##### MongoDBAtlasCollSharedDeadlocks
 
 {{< code lang="yaml" >}}
-alert: MongoDBAtlasHighNumberOfCollectionSharedDeadlocks
+alert: MongoDBAtlasCollSharedDeadlocks
 annotations:
   description: The number of collection shared-lock deadlocks occurring on node {{$labels.instance}}
     in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}} which is above the
@@ -66,10 +66,10 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### MongoDBAtlasHighNumberOfCollectionIntentSharedDeadlocks
+##### MongoDBAtlasCollIntentSharedDeadlocks
 
 {{< code lang="yaml" >}}
-alert: MongoDBAtlasHighNumberOfCollectionIntentSharedDeadlocks
+alert: MongoDBAtlasCollIntentSharedDeadlocks
 annotations:
   description: The number of collection intent-shared-lock deadlocks occurring on
     node {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}}
@@ -82,10 +82,10 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### MongoDBAtlasHighNumberOfDatabaseExclusiveDeadlocks
+##### MongoDBAtlasDBExclusiveDeadlocks
 
 {{< code lang="yaml" >}}
-alert: MongoDBAtlasHighNumberOfDatabaseExclusiveDeadlocks
+alert: MongoDBAtlasDBExclusiveDeadlocks
 annotations:
   description: The number of database exclusive-lock deadlocks occurring on node {{$labels.instance}}
     in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}} which is above the
@@ -98,10 +98,10 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### MongoDBAtlasHighNumberOfDatabaseIntentExclusiveDeadlocks
+##### MongoDBAtlasDBIntentExclDeadlocks
 
 {{< code lang="yaml" >}}
-alert: MongoDBAtlasHighNumberOfDatabaseIntentExclusiveDeadlocks
+alert: MongoDBAtlasDBIntentExclDeadlocks
 annotations:
   description: The number of database intent-exclusive-lock deadlocks occurring on
     node {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}}
@@ -114,10 +114,10 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### MongoDBAtlasHighNumberOfDatabaseSharedDeadlocks
+##### MongoDBAtlasDBSharedDeadlocks
 
 {{< code lang="yaml" >}}
-alert: MongoDBAtlasHighNumberOfDatabaseSharedDeadlocks
+alert: MongoDBAtlasDBSharedDeadlocks
 annotations:
   description: The number of database shared-lock deadlocks occurring on node {{$labels.instance}}
     in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}} which is above the
@@ -130,10 +130,10 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### MongoDBAtlasHighNumberOfDatabaseIntentSharedDeadlocks
+##### MongoDBAtlasDBIntentSharedDeadlocks
 
 {{< code lang="yaml" >}}
-alert: MongoDBAtlasHighNumberOfDatabaseIntentSharedDeadlocks
+alert: MongoDBAtlasDBIntentSharedDeadlocks
 annotations:
   description: The number of database intent-shared-lock deadlocks occurring on node
     {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}}
@@ -146,10 +146,10 @@ labels:
   severity: warning
 {{< /code >}}
  
-##### MongoDBAtlasHighNumberOfSlowNetworkRequests
+##### MongoDBAtlasSlowNetworkRequests
 
 {{< code lang="yaml" >}}
-alert: MongoDBAtlasHighNumberOfSlowNetworkRequests
+alert: MongoDBAtlasSlowNetworkRequests
 annotations:
   description: The number of DNS and SSL operations taking more than 1 second to complete
     on node {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f"
@@ -184,23 +184,23 @@ labels:
 alert: MongoDBAtlasSlowHardwareIO
 annotations:
   description: The latency time for read and write I/Os on node {{$labels.instance}}
-    in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}} seconds which is above
-    the threshold of 3 seconds.
+    in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}} milliseconds which
+    is above the threshold of 3000 milliseconds.
   summary: Read and write I/Os are taking too long to complete.
 expr: |
-  (sum without (disk_name) (increase(hardware_disk_metrics_read_time_milliseconds[5m])) + sum without (disk_name) (increase(hardware_disk_metrics_write_time_milliseconds[5m]))) / 1000 > 3
+  (sum without (disk_name) (increase(hardware_disk_metrics_read_time_milliseconds[5m])) + sum without (disk_name) (increase(hardware_disk_metrics_write_time_milliseconds[5m]))) > 3000
 for: 5m
 labels:
   severity: warning
 {{< /code >}}
  
-##### MongoDBAtlasHighNumberOfTimeoutElections
+##### MongoDBAtlasElectionTimeouts
 
 {{< code lang="yaml" >}}
-alert: MongoDBAtlasHighNumberOfTimeoutElections
+alert: MongoDBAtlasElectionTimeouts
 annotations:
   description: The number of elections being called due to the primary node timing
-    out in replica set {{$labels.rs_m}} in cluster {{$labels.cl_name}} is {{printf
+    out in replica set {{$labels.rs_nm}} in cluster {{$labels.cl_name}} is {{printf
     "%.0f" $value}} which is above the threshold of 10.
   summary: There is a high number of elections being called due to the primary node
     timing out.
@@ -219,3 +219,4 @@ Following dashboards are generated from mixins and hosted on github:
 - [mongodb-atlas-elections-overview](https://github.com/monitoring-mixins/website/blob/master/assets/mongodb-atlas/dashboards/mongodb-atlas-elections-overview.json)
 - [mongodb-atlas-operations-overview](https://github.com/monitoring-mixins/website/blob/master/assets/mongodb-atlas/dashboards/mongodb-atlas-operations-overview.json)
 - [mongodb-atlas-performance-overview](https://github.com/monitoring-mixins/website/blob/master/assets/mongodb-atlas/dashboards/mongodb-atlas-performance-overview.json)
+- [mongodb-atlas-sharding-overview](https://github.com/monitoring-mixins/website/blob/master/assets/mongodb-atlas/dashboards/mongodb-atlas-sharding-overview.json)

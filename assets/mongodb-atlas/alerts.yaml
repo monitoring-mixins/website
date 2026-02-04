@@ -1,7 +1,7 @@
 groups:
 - name: mongodb-atlas-alerts
   rules:
-  - alert: MongoDBAtlasHighNumberOfCollectionExclusiveDeadlocks
+  - alert: MongoDBAtlasCollExclusiveDeadlocks
     annotations:
       description: The number of collection exclusive-lock deadlocks occurring on
         node {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f"
@@ -12,7 +12,7 @@ groups:
     for: 5m
     labels:
       severity: warning
-  - alert: MongoDBAtlasHighNumberOfCollectionIntentExclusiveDeadlocks
+  - alert: MongoDBAtlasCollIntentExclDeadlocks
     annotations:
       description: The number of collection intent-exclusive-lock deadlocks occurring
         on node {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f"
@@ -23,7 +23,7 @@ groups:
     for: 5m
     labels:
       severity: warning
-  - alert: MongoDBAtlasHighNumberOfCollectionSharedDeadlocks
+  - alert: MongoDBAtlasCollSharedDeadlocks
     annotations:
       description: The number of collection shared-lock deadlocks occurring on node
         {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}}
@@ -34,7 +34,7 @@ groups:
     for: 5m
     labels:
       severity: warning
-  - alert: MongoDBAtlasHighNumberOfCollectionIntentSharedDeadlocks
+  - alert: MongoDBAtlasCollIntentSharedDeadlocks
     annotations:
       description: The number of collection intent-shared-lock deadlocks occurring
         on node {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f"
@@ -45,7 +45,7 @@ groups:
     for: 5m
     labels:
       severity: warning
-  - alert: MongoDBAtlasHighNumberOfDatabaseExclusiveDeadlocks
+  - alert: MongoDBAtlasDBExclusiveDeadlocks
     annotations:
       description: The number of database exclusive-lock deadlocks occurring on node
         {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}}
@@ -56,7 +56,7 @@ groups:
     for: 5m
     labels:
       severity: warning
-  - alert: MongoDBAtlasHighNumberOfDatabaseIntentExclusiveDeadlocks
+  - alert: MongoDBAtlasDBIntentExclDeadlocks
     annotations:
       description: The number of database intent-exclusive-lock deadlocks occurring
         on node {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f"
@@ -67,7 +67,7 @@ groups:
     for: 5m
     labels:
       severity: warning
-  - alert: MongoDBAtlasHighNumberOfDatabaseSharedDeadlocks
+  - alert: MongoDBAtlasDBSharedDeadlocks
     annotations:
       description: The number of database shared-lock deadlocks occurring on node
         {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}}
@@ -78,7 +78,7 @@ groups:
     for: 5m
     labels:
       severity: warning
-  - alert: MongoDBAtlasHighNumberOfDatabaseIntentSharedDeadlocks
+  - alert: MongoDBAtlasDBIntentSharedDeadlocks
     annotations:
       description: The number of database intent-shared-lock deadlocks occurring on
         node {{$labels.instance}} in cluster {{$labels.cl_name}} is {{printf "%.0f"
@@ -89,7 +89,7 @@ groups:
     for: 5m
     labels:
       severity: warning
-  - alert: MongoDBAtlasHighNumberOfSlowNetworkRequests
+  - alert: MongoDBAtlasSlowNetworkRequests
     annotations:
       description: The number of DNS and SSL operations taking more than 1 second
         to complete on node {{$labels.instance}} in cluster {{$labels.cl_name}} is
@@ -114,18 +114,18 @@ groups:
   - alert: MongoDBAtlasSlowHardwareIO
     annotations:
       description: The latency time for read and write I/Os on node {{$labels.instance}}
-        in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}} seconds which is
-        above the threshold of 3 seconds.
+        in cluster {{$labels.cl_name}} is {{printf "%.0f" $value}} milliseconds which
+        is above the threshold of 3000 milliseconds.
       summary: Read and write I/Os are taking too long to complete.
     expr: |
-      (sum without (disk_name) (increase(hardware_disk_metrics_read_time_milliseconds[5m])) + sum without (disk_name) (increase(hardware_disk_metrics_write_time_milliseconds[5m]))) / 1000 > 3
+      (sum without (disk_name) (increase(hardware_disk_metrics_read_time_milliseconds[5m])) + sum without (disk_name) (increase(hardware_disk_metrics_write_time_milliseconds[5m]))) > 3000
     for: 5m
     labels:
       severity: warning
-  - alert: MongoDBAtlasHighNumberOfTimeoutElections
+  - alert: MongoDBAtlasElectionTimeouts
     annotations:
       description: The number of elections being called due to the primary node timing
-        out in replica set {{$labels.rs_m}} in cluster {{$labels.cl_name}} is {{printf
+        out in replica set {{$labels.rs_nm}} in cluster {{$labels.cl_name}} is {{printf
         "%.0f" $value}} which is above the threshold of 10.
       summary: There is a high number of elections being called due to the primary
         node timing out.
