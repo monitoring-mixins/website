@@ -27,7 +27,7 @@ annotations:
     is {{ printf "%.0f" $value }} which is greater than the threshold of 3.
   summary: There are detected threats targeting the zone.
 expr: |
-  sum without (instance) (increase(cloudflare_zone_threats_total[5m])) > 3
+  sum without (instance) (increase(cloudflare_zone_threats_total{}[5m])) > 3
 for: 5m
 labels:
   severity: critical
@@ -43,7 +43,7 @@ annotations:
   summary: A high spike in requests is occurring which may indicate an attack or unexpected
     load.
 expr: |
-  sum without (instance) (100 * (rate(cloudflare_zone_requests_total[10m]) / clamp_min(rate(cloudflare_zone_requests_total[50m] offset 10m), 1))) > 150
+  sum without (instance) (100 * (rate(cloudflare_zone_requests_total{}[10m]) / clamp_min(rate(cloudflare_zone_requests_total{}[50m] offset 10m), 1))) > 150
 for: 5m
 labels:
   severity: warning
@@ -74,7 +74,7 @@ annotations:
     down and unhealthy.
   summary: There are unhealthy pools.
 expr: |
-  sum without (instance, load_balancer_name) (cloudflare_zone_pool_health_status) == 0
+  sum without (instance, load_balancer_name) (cloudflare_zone_pool_health_status{}) == 0
 for: 5m
 labels:
   severity: critical
@@ -89,7 +89,7 @@ annotations:
     from instance {{$labels.instance}}.
   summary: Cloudflare metrics are down.
 expr: |
-  up{job="integrations/cloudflare"} == 0
+  up{} == 0
 for: 5m
 labels:
   severity: critical
