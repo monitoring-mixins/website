@@ -59,7 +59,8 @@
                   ]
                },
                "unit": "percentunit"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 4,
@@ -68,14 +69,20 @@
             "y": 1
          },
          "id": 2,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "sum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=\"$view\",\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\nmethod=~\"$method\"\n,\n      status!~\"[4-5].*\"\n    }[1w]\n  )\n) /\nsum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=\"$view\",\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\nmethod=~\"$method\"\n\n    }[1w]\n  )\n)\n"
+               "expr": "sum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=\"$view\",\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\nmethod=~\"$method\"\n,\n      status!~\"[4-5].*\"\n    }[1w]\n  )\n) /\nsum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=\"$view\",\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\nmethod=~\"$method\"\n\n    }[1w]\n  )\n)\n",
+               "instant": false
             }
          ],
          "title": "Success Rate (non 4xx-5xx responses) [1w]",
@@ -107,7 +114,8 @@
                   ]
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 4,
@@ -116,14 +124,20 @@
             "y": 1
          },
          "id": 3,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "sum by (view) (\n  increase(\n    django_http_exceptions_total_by_view_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=\"$view\",\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n\n    }[1w]\n  ) > 0\n)\n"
+               "expr": "sum by (view) (\n  increase(\n    django_http_exceptions_total_by_view_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=\"$view\",\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n\n    }[1w]\n  ) > 0\n)\n",
+               "instant": false
             }
          ],
          "title": "HTTP Exceptions [1w]",
@@ -155,7 +169,8 @@
                   ]
                },
                "unit": "s"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 4,
@@ -164,14 +179,20 @@
             "y": 1
          },
          "id": 4,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.50,\n  sum (\n    rate (\n      django_http_requests_latency_seconds_by_view_method_bucket {\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=\"$view\",\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\nmethod=~\"$method\"\n\n      }[$__range]\n    )\n  ) by (job, le)\n)\n"
+               "expr": "histogram_quantile(0.50,\n  sum (\n    rate (\n      django_http_requests_latency_seconds_by_view_method_bucket {\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=\"$view\",\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\nmethod=~\"$method\"\n\n      }[$__range]\n    )\n  ) by (job, le)\n)\n",
+               "instant": false
             }
          ],
          "title": "Average Request Latency (P50) [1w]",
@@ -203,7 +224,8 @@
                   ]
                },
                "unit": "s"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 4,
@@ -212,14 +234,20 @@
             "y": 1
          },
          "id": 5,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "histogram_quantile(0.95,\n  sum (\n    rate (\n      django_http_requests_latency_seconds_by_view_method_bucket {\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=\"$view\",\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\nmethod=~\"$method\"\n\n      }[$__range]\n    )\n  ) by (job, le)\n)\n"
+               "expr": "histogram_quantile(0.95,\n  sum (\n    rate (\n      django_http_requests_latency_seconds_by_view_method_bucket {\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=\"$view\",\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\nmethod=~\"$method\"\n\n      }[$__range]\n    )\n  ) by (job, le)\n)\n",
+               "instant": false
             }
          ],
          "title": "Average Request Latency (P95) [1w]",

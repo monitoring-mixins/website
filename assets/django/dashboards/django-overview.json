@@ -55,7 +55,8 @@
                   ]
                },
                "unit": "reqps"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 4,
@@ -64,14 +65,20 @@
             "y": 1
          },
          "id": 2,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n\n      }[$__rate_interval]\n    )\n  ), 0.001\n)\n"
+               "expr": "round(\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n\n      }[$__rate_interval]\n    )\n  ), 0.001\n)\n",
+               "instant": false
             }
          ],
          "title": "Request Volume",
@@ -99,7 +106,8 @@
                   ]
                },
                "unit": "ops"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 4,
@@ -108,14 +116,20 @@
             "y": 1
          },
          "id": 3,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "sum (\n  rate (\n    django_db_execute_total {\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (namespace, job)\n"
+               "expr": "sum (\n  rate (\n    django_db_execute_total {\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (namespace, job)\n",
+               "instant": false
             }
          ],
          "title": "Database Ops",
@@ -143,7 +157,8 @@
                   ]
                },
                "unit": "percentunit"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 4,
@@ -152,14 +167,20 @@
             "y": 1
          },
          "id": 4,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "sum (\n  rate (\n    django_cache_get_hits_total {\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[30m]\n  )\n) by (namespace, job)\n/\nsum (\n  rate (\n    django_cache_get_total {\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[30m]\n  )\n) by (namespace, job)\n"
+               "expr": "sum (\n  rate (\n    django_cache_get_hits_total {\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[30m]\n  )\n) by (namespace, job)\n/\nsum (\n  rate (\n    django_cache_get_total {\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[30m]\n  )\n) by (namespace, job)\n",
+               "instant": false
             }
          ],
          "title": "Cache Hitrate [30m]",
@@ -341,7 +362,8 @@
                   ]
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 3,
@@ -350,14 +372,20 @@
             "y": 12
          },
          "id": 7,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "max (\n  django_migrations_applied_total {\n    cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n  }\n) by (namespace, job)\n"
+               "expr": "max (\n  django_migrations_applied_total {\n    cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n  }\n) by (namespace, job)\n",
+               "instant": false
             }
          ],
          "title": "Migrations Applied",
@@ -385,7 +413,8 @@
                   ]
                },
                "unit": "short"
-            }
+            },
+            "overrides": [ ]
          },
          "gridPos": {
             "h": 3,
@@ -394,14 +423,20 @@
             "y": 12
          },
          "id": 8,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
          "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
                   "type": "prometheus",
-                  "uid": "${datasource}"
+                  "uid": "$datasource"
                },
-               "expr": "max (\n  django_migrations_unapplied_total {\n    cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n  }\n) by (namespace, job)\n"
+               "expr": "max (\n  django_migrations_unapplied_total {\n    cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n  }\n) by (namespace, job)\n",
+               "instant": false
             }
          ],
          "title": "Migrations Unapplied",
@@ -550,6 +585,10 @@
          "description": "A table displaying the top 10 most frequent database error types over the past week. This helps identify recurring issues that may need attention.",
          "fieldConfig": {
             "defaults": {
+               "links": [ ],
+               "thresholds": {
+                  "steps": [ ]
+               },
                "unit": "short"
             },
             "overrides": [ ]
