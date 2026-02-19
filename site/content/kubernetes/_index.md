@@ -1280,7 +1280,9 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletdown
   summary: Target disappeared from Prometheus target discovery.
 expr: |
-  absent(up{job="kubelet"})
+  count by (cluster) (kube_node_info{job="kube-state-metrics"})
+  unless on (cluster)
+  count by (cluster) (up{job="kubelet"} == 1)
 for: 15m
 labels:
   severity: critical
