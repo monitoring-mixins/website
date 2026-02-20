@@ -16,7 +16,7 @@ Jsonnet source code is available at [github.com/grafana/jsonnet-libs](https://gi
 Complete list of pregenerated alerts is available [here](https://github.com/monitoring-mixins/website/blob/master/assets/wildfly/alerts.yaml).
 {{< /panel >}}
 
-### wildfly
+### wildfly-alerts
 
 ##### HighPercentageOfErrorResponses
 
@@ -33,13 +33,13 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### HighNumberOfRejectedSessionsForDeployment
+##### HighRejectedSessionsForDeployment
 
 {{< code lang="yaml" >}}
-alert: HighNumberOfRejectedSessionsForDeployment
+alert: HighRejectedSessionsForDeployment
 annotations:
   description: |
-    Deployemnt {{ $labels.deployment }} on {{ $labels.instance }} is exceeding the threshold for rejected sessions {{ printf "%.0f" $value }} is higher than 20.
+    Deployment {{ $labels.deployment }} on {{ $labels.instance }} is exceeding the threshold for rejected sessions {{ printf "%.0f" $value }} is higher than 20.
   summary: Large number of sessions are being rejected for a deployment.
 expr: |
   sum by (deployment, instance, job) (increase(wildfly_undertow_rejected_sessions_total{}[5m])) > 20
@@ -53,4 +53,5 @@ Following dashboards are generated from mixins and hosted on github:
 
 
 - [wildfly-datasource](https://github.com/monitoring-mixins/website/blob/master/assets/wildfly/dashboards/wildfly-datasource.json)
+- [wildfly-logs](https://github.com/monitoring-mixins/website/blob/master/assets/wildfly/dashboards/wildfly-logs.json)
 - [wildfly-overview](https://github.com/monitoring-mixins/website/blob/master/assets/wildfly/dashboards/wildfly-overview.json)
