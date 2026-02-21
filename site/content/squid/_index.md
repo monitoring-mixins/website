@@ -16,12 +16,12 @@ Jsonnet source code is available at [github.com/grafana/jsonnet-libs](https://gi
 Complete list of pregenerated alerts is available [here](https://github.com/monitoring-mixins/website/blob/master/assets/squid/alerts.yaml).
 {{< /panel >}}
 
-### squid
+### squid-alerts
 
-##### SquidHighPercentageOfHTTPServerRequestErrors
+##### SquidHighHTTPServerRequestErrors
 
 {{< code lang="yaml" >}}
-alert: SquidHighPercentageOfHTTPServerRequestErrors
+alert: SquidHighHTTPServerRequestErrors
 annotations:
   description: |
     The percentage of HTTP server request errors is {{ printf "%.0f" $value }} over the last 5m on {{ $labels.instance }} which is above the threshold of 5.
@@ -33,10 +33,10 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### SquidHighPercentageOfFTPServerRequestErrors
+##### SquidHighFTPServerRequestErrors
 
 {{< code lang="yaml" >}}
-alert: SquidHighPercentageOfFTPServerRequestErrors
+alert: SquidHighFTPServerRequestErrors
 annotations:
   description: |
     The percentage of FTP server request errors is {{ printf "%.0f" $value }} over the last 5m on {{ $labels.instance }} which is above the threshold of 5.
@@ -48,10 +48,10 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### SquidHighPercentageOfOtherServerRequestErrors
+##### SquidHighOtherServerRequestErrors
 
 {{< code lang="yaml" >}}
-alert: SquidHighPercentageOfOtherServerRequestErrors
+alert: SquidHighOtherServerRequestErrors
 annotations:
   description: |
     The percentage of other server request errors is {{ printf "%.0f" $value }} over the last 5m on {{ $labels.instance }} which is above the threshold of 5.
@@ -63,10 +63,10 @@ labels:
   severity: critical
 {{< /code >}}
  
-##### SquidHighPercentageOfClientRequestErrors
+##### SquidHighClientRequestErrors
 
 {{< code lang="yaml" >}}
-alert: SquidHighPercentageOfClientRequestErrors
+alert: SquidHighClientRequestErrors
 annotations:
   description: |
     The percentage of HTTP client request errors is {{ printf "%.0f" $value }} over the last 5m on {{ $labels.instance }} which is above the threshold of 5.
@@ -97,4 +97,5 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
+- [squid-logs](https://github.com/monitoring-mixins/website/blob/master/assets/squid/dashboards/squid-logs.json)
 - [squid-overview](https://github.com/monitoring-mixins/website/blob/master/assets/squid/dashboards/squid-overview.json)
