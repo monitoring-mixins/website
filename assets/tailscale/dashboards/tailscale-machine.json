@@ -1,0 +1,1492 @@
+{
+   "__inputs": [ ],
+   "__requires": [ ],
+   "annotations": {
+      "list": [ ]
+   },
+   "description": "A dashboard that gives an overview of Tailscale Machine daemon metrics. The dashboards were generated using [tailscale-mixin](https://github.com/adinhodovic/tailscale-exporter/tree/main/tailscale-mixin). Open issues and create feature requests in the repository.",
+   "editable": false,
+   "links": [
+      {
+         "asDropdown": false,
+         "includeVars": false,
+         "keepTime": true,
+         "tags": [
+            "tailscale",
+            "tailscale-mixin"
+         ],
+         "targetBlank": true,
+         "title": "Tailscale",
+         "type": "dashboards"
+      }
+   ],
+   "panels": [
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 1,
+         "title": "Summary",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A stat panel showing the number of Tailscale machines reporting to the selected Tailscale control plane.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": 0
+                     }
+                  ]
+               },
+               "unit": "short"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 0,
+            "y": 1
+         },
+         "id": 2,
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+               },
+               "expr": "count(\n  tailscaled_health_messages{\n    cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n  }\n)\n"
+            }
+         ],
+         "title": "Tailscale Machines",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A pie chart panel showing the number of advertised and approved routes for the selected Tailscale machines.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "short"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 4,
+            "y": 1
+         },
+         "id": 3,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  tailscaled_advertised_routes{\n    cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n  }\n)\n",
+               "instant": true,
+               "legendFormat": "Advertised"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  tailscaled_approved_routes{\n    cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n  }\n)\n",
+               "instant": true,
+               "legendFormat": "Approved"
+            }
+         ],
+         "title": "Advertised / Approved Routes",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A pie chart panel showing the distribution of outbound paths for the selected Tailscale machines.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "bps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 8,
+            "y": 1
+         },
+         "id": 4,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  increase(\n    tailscaled_inbound_bytes_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[1h]\n  )\n) by (path)\n",
+               "instant": true,
+               "legendFormat": "{{ path }}"
+            }
+         ],
+         "title": "Paths Distribution Inbound [1h]",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A pie chart panel showing the distribution of inbound paths for the selected Tailscale machines.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "bps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 12,
+            "y": 1
+         },
+         "id": 5,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  increase(\n    tailscaled_outbound_bytes_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[1h]\n  )\n) by (path)\n",
+               "instant": true,
+               "legendFormat": "{{ path }}"
+            }
+         ],
+         "title": "Paths Distribution Outbound [1h]",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A pie chart panel showing the distribution of outbound paths for the selected Tailscale machines.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "bps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 16,
+            "y": 1
+         },
+         "id": 6,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  rate(\n    tailscaled_inbound_bytes_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[1h]\n  )\n)\n",
+               "instant": true,
+               "legendFormat": "Inbound"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  rate(\n    tailscaled_outbound_bytes_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[1h]\n  )\n)\n",
+               "instant": true,
+               "legendFormat": "Outbound"
+            }
+         ],
+         "title": "Inbound vs Outbound Traffic [1h]",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A pie chart panel showing the distribution of dropped packets by reason for the selected Tailscale machines.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "pps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 4,
+            "x": 20,
+            "y": 1
+         },
+         "id": 7,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  increase(\n    tailscaled_outbound_dropped_packets_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[1h]\n  )\n) by (reason)\n",
+               "instant": true,
+               "legendFormat": "{{ reason }}"
+            }
+         ],
+         "title": "Dropped Packets by Reason [1h]",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A table panel showing the top 20 Tailscale machines by inbound traffic over the last hour.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "Bps"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 7
+         },
+         "id": 8,
+         "options": {
+            "footer": {
+               "enablePagination": true
+            },
+            "sortBy": [
+               {
+                  "desc": true,
+                  "displayName": "Inbound Traffic (Bps)"
+               }
+            ]
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "topk(\n  20,\n  sum(\n    rate(\n      tailscaled_inbound_bytes_total{\n        cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n      }[1h]\n    )\n  ) by (tailscale_machine)\n)\n",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Top 20 Machines by Inbound Traffic (1h)",
+         "transformations": [
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true,
+                     "job": true
+                  },
+                  "indexByName": {
+                     "Value": 1,
+                     "tailscale_machine": 0
+                  },
+                  "renameByName": {
+                     "Value": "Inbound Traffic (Bps)",
+                     "tailscale_machine": "Tailscale Machine"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A table panel showing the Tailscale machines with unadvertised routes.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 7
+         },
+         "id": 9,
+         "options": {
+            "footer": {
+               "enablePagination": true
+            },
+            "sortBy": [
+               {
+                  "desc": true,
+                  "displayName": "Unapproved Routes"
+               }
+            ]
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  tailscaled_advertised_routes{\n    cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n  }\n) by (tailscale_machine)\n-\nsum(\n  tailscaled_approved_routes{\n    cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n  }\n) by (tailscale_machine)\n> 0\n",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Machines with Unapproved Routes",
+         "transformations": [
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true,
+                     "job": true
+                  },
+                  "indexByName": {
+                     "Value": 1,
+                     "tailscale_machine": 0
+                  },
+                  "renameByName": {
+                     "Value": "Unapproved Routes",
+                     "tailscale_machine": "Tailscale Machine"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A table panel showing the Tailscale machines with dropped packets in the last hour.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "percent"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 7
+         },
+         "id": 10,
+         "options": {
+            "footer": {
+               "enablePagination": true
+            },
+            "sortBy": [
+               {
+                  "desc": true,
+                  "displayName": "Dropped Packets"
+               }
+            ]
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  increase(\n    tailscaled_outbound_dropped_packets_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[1h]\n  )\n) by (tailscale_machine)\n/\nsum(\n  increase(\n    tailscaled_outbound_packets_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[1h]\n  )\n) by (tailscale_machine)\n* 100\n> 0\n",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Machines with Dropped Packets (1h)",
+         "transformations": [
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true,
+                     "job": true
+                  },
+                  "indexByName": {
+                     "Value": 1,
+                     "tailscale_machine": 0
+                  },
+                  "renameByName": {
+                     "Value": "Dropped Packets",
+                     "tailscale_machine": "Tailscale Machine"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 15
+         },
+         "id": 11,
+         "title": "Network Summary",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A bar gauge panel showing the number of health messages by type.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "short"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 16
+         },
+         "id": 12,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  tailscaled_health_messages{\n    cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n  }\n) by (type)\n",
+               "legendFormat": "{{ type }}"
+            }
+         ],
+         "title": "Health Messages by Type",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A timeseries panel showing the outbound dropped packets by reason.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "pps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 16
+         },
+         "id": 13,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    tailscaled_outbound_dropped_packets_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (reason)\n",
+               "legendFormat": "{{ reason }}"
+            }
+         ],
+         "title": "Outbound Dropped Packets by Reason",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A timeseries panel showing the inbound bytes by path.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "bps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 21
+         },
+         "id": 14,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    tailscaled_inbound_bytes_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (path)\n",
+               "legendFormat": "{{ path }}"
+            }
+         ],
+         "title": "Inbound Bytes by Path",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A timeseries panel showing the inbound packets by path.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "pps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 21
+         },
+         "id": 15,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    tailscaled_inbound_packets_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (path)\n",
+               "legendFormat": "{{ path }}"
+            }
+         ],
+         "title": "Inbound Packets by Path",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A timeseries panel showing the outbound bytes by path.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "bps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 26
+         },
+         "id": 16,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    tailscaled_outbound_bytes_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (path)\n",
+               "legendFormat": "{{ path }}"
+            }
+         ],
+         "title": "Outbound Bytes by Path",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A timeseries panel showing the outbound packets by path.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "pps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 26
+         },
+         "id": 17,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    tailscaled_outbound_packets_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (path)\n",
+               "legendFormat": "{{ path }}"
+            }
+         ],
+         "title": "Outbound Packets by Path",
+         "type": "timeseries"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 31
+         },
+         "id": 18,
+         "repeat": "tailscale_machine",
+         "title": "Tailscale Machine $tailscale_machine",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A pie chart panel showing the number of advertised and approved routes for the selected Tailscale machines.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "short"
+            }
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 8,
+            "x": 0,
+            "y": 32
+         },
+         "id": 19,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  tailscaled_advertised_routes{\n    cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n\n  }\n)\n",
+               "instant": true,
+               "legendFormat": "Advertised"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  tailscaled_approved_routes{\n    cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n\n  }\n)\n",
+               "instant": true,
+               "legendFormat": "Approved"
+            }
+         ],
+         "title": "Advertised / Approved Routes",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A pie chart panel showing the DERP vs Non-DERP outbound traffic for the selected Tailscale machine.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "bps"
+            }
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 8,
+            "x": 8,
+            "y": 32
+         },
+         "id": 20,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  rate(\n    tailscaled_outbound_bytes_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n,\n      path=\"derp\"\n    }[1h]\n  )\n)\n",
+               "instant": true,
+               "legendFormat": "DERP"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  rate(\n    tailscaled_outbound_bytes_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n,\n      path!=\"derp\"\n    }[1h]\n  )\n)\n",
+               "instant": true,
+               "legendFormat": "Non-DERP"
+            }
+         ],
+         "title": "DERP vs Non-DERP Outbound Traffic [1h]",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A pie chart panel showing the distribution of dropped packets by reason for the selected Tailscale machines.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "pps"
+            }
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 8,
+            "x": 16,
+            "y": 32
+         },
+         "id": 21,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  increase(\n    tailscaled_outbound_dropped_packets_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n\n    }[1h]\n  )\n) by (reason)\n",
+               "instant": true,
+               "legendFormat": "{{ reason }}"
+            }
+         ],
+         "title": "Dropped Packets by Reason [1h]",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A bar gauge panel showing the number of health messages by type for the selected Tailscale machine.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "short"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 36
+         },
+         "id": 22,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  tailscaled_health_messages{\n    cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n\n  }\n) by (type)\n",
+               "legendFormat": "{{ type }}"
+            }
+         ],
+         "title": "Health Messages by Type",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A timeseries panel showing the outbound dropped packets by reason for the selected Tailscale machine.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "short"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 36
+         },
+         "id": 23,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    tailscaled_outbound_dropped_packets_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n\n    }[$__rate_interval]\n  )\n) by (reason)\n",
+               "legendFormat": "{{ reason }}"
+            }
+         ],
+         "title": "Outbound Dropped Packets by Reason",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A timeseries panel showing the inbound bytes by path for the selected Tailscale machine.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "Bps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 41
+         },
+         "id": 24,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    tailscaled_inbound_bytes_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n\n    }[$__rate_interval]\n  )\n) by (path)\n",
+               "legendFormat": "{{ path }}"
+            }
+         ],
+         "title": "Inbound Bytes by Path",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A timeseries panel showing the inbound packets by path for the selected Tailscale machine.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "pps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 41
+         },
+         "id": 25,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    tailscaled_inbound_packets_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n\n    }[$__rate_interval]\n  )\n) by (path)\n",
+               "legendFormat": "{{ path }}"
+            }
+         ],
+         "title": "Inbound Packets by Path",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A timeseries panel showing the outbound bytes by path for the selected Tailscale machine.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "Bps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 46
+         },
+         "id": 26,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    tailscaled_outbound_bytes_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n\n    }[$__rate_interval]\n  )\n) by (path)\n",
+               "legendFormat": "{{ path }}"
+            }
+         ],
+         "title": "Outbound Bytes by Path",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "A timeseries panel showing the outbound packets by path for the selected Tailscale machine.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "pps"
+            }
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 46
+         },
+         "id": 27,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  increase(\n    tailscaled_outbound_packets_total{\n      cluster=\"$cluster\"\n,\njob=~\"$job\"\n,\ntailscale_machine=\"$tailscale_machine\"\n\n    }[$__rate_interval]\n  )\n) by (path)\n",
+               "legendFormat": "{{ path }}"
+            }
+         ],
+         "title": "Outbound Packets by Path",
+         "type": "timeseries"
+      }
+   ],
+   "schemaVersion": 39,
+   "tags": [
+      "tailscale",
+      "tailscale-mixin"
+   ],
+   "templating": {
+      "list": [
+         {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
+            "label": "Data source",
+            "name": "datasource",
+            "query": "prometheus",
+            "type": "datasource"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "hide": 2,
+            "label": "Cluster",
+            "name": "cluster",
+            "query": "label_values(tailscaled_health_messages, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "job",
+            "multi": true,
+            "name": "job",
+            "query": "label_values(tailscaled_health_messages{cluster=\"$cluster\"}, job)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "label": "Tailscale Machine",
+            "name": "tailscale_machine",
+            "query": "label_values(tailscaled_health_messages{cluster=\"$cluster\", job=~\"$job\"}, tailscale_machine)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         }
+      ]
+   },
+   "time": {
+      "from": "now-24h",
+      "to": "now"
+   },
+   "timezone": "utc",
+   "title": "Tailscale / Machine",
+   "uid": "tailscaled-mixin-over-k12e"
+}

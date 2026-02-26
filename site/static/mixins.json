@@ -37,8 +37,8 @@
         },
         {
             "name": "ceph",
-            "source": "https://github.com/ceph/ceph-mixins",
-            "subdir": "",
+            "source": "https://github.com/ceph/ceph",
+            "subdir": "monitoring/ceph-mixin",
             "description": "A set of Prometheus alerts for Ceph.\n\nThe scope of this project is to provide Ceph specific Prometheus rule files using Prometheus Mixins.\n"
         },
         {
@@ -267,6 +267,11 @@
             "subdir": "envoy-mixin"
         },
         {
+            "name": "envoy-2",
+            "source": "https://github.com/adinhodovic/envoy-mixin",
+            "subdir": ""
+        },
+        {
             "name": "f5-bigip",
             "source": "https://github.com/grafana/jsonnet-libs",
             "subdir": "f5-bigip-mixin"
@@ -434,7 +439,7 @@
         {
             "name": "snmp",
             "source": "https://github.com/grafana/jsonnet-libs",
-            "subdir": "snmp-mixin"
+            "subdir": "snmp-observ-lib"
         },
         {
             "name": "spark",
@@ -450,6 +455,11 @@
             "name": "squid",
             "source": "https://github.com/grafana/jsonnet-libs",
             "subdir": "squid-mixin"
+        },
+        {
+            "name": "syncthing",
+            "source": "https://github.com/adinhodovic/syncthing-mixin",
+            "subdir": ""
         },
         {
             "name": "supabase",
@@ -541,6 +551,11 @@
           "name": "kubernetes-autoscaling",
           "source": "https://github.com/adinhodovic/kubernetes-autoscaling-mixin",
           "subdir": ""
+        },
+        {
+            "name": "tailscale",
+            "source": "https://github.com/adinhodovic/tailscale-exporter",
+            "subdir": "tailscale-mixin"
         }
     ]
 }
