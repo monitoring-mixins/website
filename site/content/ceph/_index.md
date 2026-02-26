@@ -1627,6 +1627,40 @@ labels:
   type: ceph_default
 {{< /code >}}
  
+### certmgr
+
+##### CephCertificateError
+
+{{< code lang="yaml" >}}
+alert: CephCertificateError
+annotations:
+  description: '{{ $labels.message }}. Please check ''ceph health detail'' for more
+    information and take appropriate action to resolve the certificate issue.'
+  summary: Ceph certificate error detected on cluster {{ $labels.cluster }}
+expr: ceph_health_detail{name="CEPHADM_CERT_ERROR"} == 1
+for: 1m
+labels:
+  oid: 1.3.6.1.4.1.50495.1.2.1.15.1
+  severity: critical
+  type: ceph_default
+{{< /code >}}
+ 
+##### CephCertificateWarning
+
+{{< code lang="yaml" >}}
+alert: CephCertificateWarning
+annotations:
+  description: '{{ $labels.message }}. Please check ''ceph health detail'' for more
+    information and take appropriate action to resolve the certificate issue.'
+  summary: Ceph certificate warning detected on cluster {{ $labels.cluster }}
+expr: ceph_health_detail{name="CEPHADM_CERT_WARNING"} == 1
+for: 1m
+labels:
+  oid: 1.3.6.1.4.1.50495.1.2.1.15.2
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 

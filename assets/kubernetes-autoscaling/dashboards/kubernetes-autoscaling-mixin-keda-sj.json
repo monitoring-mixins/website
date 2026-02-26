@@ -279,7 +279,7 @@
                   {
                      "targetBlank": true,
                      "title": "Go to Scaled Job",
-                     "url": "/d/this-needs-to-be-customized/kubernetes-compute-resources-workload?var-namespace=${__data.fields.exported_namespace}&var-type=ScaledJob&var-workload=${__data.fields.scaledObject}"
+                     "url": "/d/this-needs-to-be-customized/kubernetes-compute-resources-workload?var-cluster=${__data.fields.cluster}&var-namespace=${__data.fields.exported_namespace}&var-type=ScaledJob&var-workload=${__data.fields.scaledObject}"
                   }
                ],
                "thresholds": {
@@ -314,7 +314,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  keda_scaler_metrics_value{\n    cluster=\"$cluster\",\njob=~\"$job\",\nnamespace=~\"$operator_namespace\"\n,\nexported_namespace=~\"$resource_namespace\"\n,\n    type=\"scaledjob\"\n  }\n) by (job, exported_namespace, scaledObject, scaler, metric)\n",
+               "expr": "sum(\n  keda_scaler_metrics_value{\n    cluster=\"$cluster\",\njob=~\"$job\",\nnamespace=~\"$operator_namespace\"\n,\nexported_namespace=~\"$resource_namespace\"\n,\n    type=\"scaledjob\"\n  }\n) by (cluster, job, exported_namespace, scaledObject, scaler, metric)\n",
                "format": "table",
                "instant": true
             }

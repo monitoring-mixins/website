@@ -338,7 +338,7 @@
                   {
                      "targetBlank": true,
                      "title": "Go to HPA",
-                     "url": "/d/kubernetes-autoscaling-mixin-hpa-jkwq/kubernetes-autoscaling-horizontal-pod-autoscaler?var-namespace=${__data.fields.namespace}&var-hpa=keda-hpa-${__data.fields.scaledObject}&var-metric_name=${__data.fields.metric}"
+                     "url": "/d/kubernetes-autoscaling-mixin-hpa-jkwq/kubernetes-autoscaling-horizontal-pod-autoscaler?var-cluster=${__data.fields.cluster}&var-namespace=${__data.fields.namespace}&var-hpa=keda-hpa-${__data.fields.scaledObject}&var-metric_name=${__data.fields.metric}"
                   }
                ],
                "thresholds": {
@@ -373,7 +373,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  keda_scaler_metrics_value{\n    cluster=\"$cluster\",\njob=~\"$job\",\nnamespace=~\"$operator_namespace\"\n,\nexported_namespace=~\"$resource_namespace\"\n,\n    type=\"scaledobject\"\n  }\n) by (job, exported_namespace, scaledObject, scaler, metric)\n",
+               "expr": "sum(\n  keda_scaler_metrics_value{\n    cluster=\"$cluster\",\njob=~\"$job\",\nnamespace=~\"$operator_namespace\"\n,\nexported_namespace=~\"$resource_namespace\"\n,\n    type=\"scaledobject\"\n  }\n) by (cluster, job, exported_namespace, scaledObject, scaler, metric)\n",
                "format": "table",
                "instant": true
             }
