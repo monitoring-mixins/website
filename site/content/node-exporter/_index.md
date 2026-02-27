@@ -603,6 +603,46 @@ expr: |
 record: instance:node_network_transmit_drop_excluding_lo:rate5m
 {{< /code >}}
  
+##### instance:node_network_receive_bytes_physical:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum without (device) (
+    rate(node_network_receive_bytes_total{job="node", device!~"lo|veth.+"}[5m])
+  )
+record: instance:node_network_receive_bytes_physical:rate5m
+{{< /code >}}
+ 
+##### instance:node_network_transmit_bytes_physical:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum without (device) (
+    rate(node_network_transmit_bytes_total{job="node", device!~"lo|veth.+"}[5m])
+  )
+record: instance:node_network_transmit_bytes_physical:rate5m
+{{< /code >}}
+ 
+##### instance:node_network_receive_drop_physical:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum without (device) (
+    rate(node_network_receive_drop_total{job="node", device!~"lo|veth.+"}[5m])
+  )
+record: instance:node_network_receive_drop_physical:rate5m
+{{< /code >}}
+ 
+##### instance:node_network_transmit_drop_physical:rate5m
+
+{{< code lang="yaml" >}}
+expr: |
+  sum without (device) (
+    rate(node_network_transmit_drop_total{job="node", device!~"lo|veth.+"}[5m])
+  )
+record: instance:node_network_transmit_drop_physical:rate5m
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 
