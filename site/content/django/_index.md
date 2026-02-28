@@ -136,6 +136,7 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
+- [django-model-overview](https://github.com/monitoring-mixins/website/blob/master/assets/django/dashboards/django-model-overview.json)
 - [django-overview](https://github.com/monitoring-mixins/website/blob/master/assets/django/dashboards/django-overview.json)
 - [django-requests-by-view](https://github.com/monitoring-mixins/website/blob/master/assets/django/dashboards/django-requests-by-view.json)
 - [django-requests-overview](https://github.com/monitoring-mixins/website/blob/master/assets/django/dashboards/django-requests-overview.json)

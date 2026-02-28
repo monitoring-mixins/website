@@ -1,0 +1,671 @@
+{
+   "__inputs": [ ],
+   "__requires": [ ],
+   "annotations": {
+      "list": [ ]
+   },
+   "description": "A dashboard that monitors Django model operations (inserts, updates, deletes) using ExportModelOperationsMixin. The dashboards were generated using [Django-mixin](https://github.com/adinhodovic/django-mixin). Open issues and create feature requests in the repository.",
+   "editable": false,
+   "links": [
+      {
+         "asDropdown": true,
+         "includeVars": true,
+         "keepTime": true,
+         "tags": [
+            "django",
+            "django-mixin"
+         ],
+         "targetBlank": true,
+         "title": "Django",
+         "type": "dashboards"
+      }
+   ],
+   "panels": [
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 1,
+         "title": "Summary",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The total rate of model inserts (creates) across all models per second.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": 0
+                     },
+                     {
+                        "color": "green",
+                        "value": 0.001
+                     }
+                  ]
+               },
+               "unit": "ops"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 8,
+            "x": 0,
+            "y": 1
+         },
+         "id": 2,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "round(\n  sum(\n    rate(\n      django_model_inserts_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (namespace, job), 0.001\n)\n",
+               "instant": false
+            }
+         ],
+         "title": "Total Insert Rate",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The total rate of model updates across all models per second.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": 0
+                     },
+                     {
+                        "color": "green",
+                        "value": 0.001
+                     }
+                  ]
+               },
+               "unit": "ops"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 8,
+            "x": 8,
+            "y": 1
+         },
+         "id": 3,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "round(\n  sum(\n    rate(\n      django_model_updates_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (namespace, job), 0.001\n)\n",
+               "instant": false
+            }
+         ],
+         "title": "Total Update Rate",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The total rate of model deletes across all models per second.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": 0
+                     },
+                     {
+                        "color": "yellow",
+                        "value": 0.001
+                     }
+                  ]
+               },
+               "unit": "ops"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 8,
+            "x": 16,
+            "y": 1
+         },
+         "id": 4,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "round(\n  sum(\n    rate(\n      django_model_deletes_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (namespace, job), 0.001\n)\n",
+               "instant": false
+            }
+         ],
+         "title": "Total Delete Rate",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The rate of inserts (creates) per second, grouped by model.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 5
+         },
+         "id": 5,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    rate(\n      django_model_inserts_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nmodel=~\"$model\"\n\n      }[$__rate_interval]\n    )\n  ) by (namespace, job, model), 0.001\n)\n",
+               "legendFormat": "{{ model }}"
+            }
+         ],
+         "title": "Inserts by Model",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The rate of updates per second, grouped by model.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 13
+         },
+         "id": 6,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    rate(\n      django_model_updates_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nmodel=~\"$model\"\n\n      }[$__rate_interval]\n    )\n  ) by (namespace, job, model), 0.001\n)\n",
+               "legendFormat": "{{ model }}"
+            }
+         ],
+         "title": "Updates by Model",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The rate of deletes per second, grouped by model.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 21
+         },
+         "id": 7,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "round(\n  sum(\n    rate(\n      django_model_deletes_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nmodel=~\"$model\"\n\n      }[$__rate_interval]\n    )\n  ) by (namespace, job, model), 0.001\n)\n",
+               "legendFormat": "{{ model }}"
+            }
+         ],
+         "title": "Deletes by Model",
+         "type": "timeseries"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 29
+         },
+         "id": 8,
+         "title": "Weekly Breakdown",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Top 10 models by number of inserts over the past week.",
+         "fieldConfig": {
+            "defaults": {
+               "links": [ ],
+               "thresholds": {
+                  "steps": [ ]
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 310
+         },
+         "id": 9,
+         "options": {
+            "footer": {
+               "enablePagination": true
+            },
+            "sortBy": [
+               {
+                  "desc": true,
+                  "displayName": "Value"
+               }
+            ]
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "round(\n  topk(10,\n    sum(\n      increase(\n        django_model_inserts_total{\n          cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n        }[1w]\n      ) > 0\n    ) by (namespace, job, model)\n  )\n)\n",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Top Models by Inserts (1w)",
+         "transformations": [
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true
+                  },
+                  "indexByName": {
+                     "job": 1,
+                     "model": 2,
+                     "namespace": 0
+                  },
+                  "renameByName": {
+                     "Value": "Inserts",
+                     "job": "Job",
+                     "model": "Model",
+                     "namespace": "Namespace"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Top 10 models by number of updates over the past week.",
+         "fieldConfig": {
+            "defaults": {
+               "links": [ ],
+               "thresholds": {
+                  "steps": [ ]
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 310
+         },
+         "id": 10,
+         "options": {
+            "footer": {
+               "enablePagination": true
+            },
+            "sortBy": [
+               {
+                  "desc": true,
+                  "displayName": "Value"
+               }
+            ]
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "round(\n  topk(10,\n    sum(\n      increase(\n        django_model_updates_total{\n          cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n        }[1w]\n      ) > 0\n    ) by (namespace, job, model)\n  )\n)\n",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Top Models by Updates (1w)",
+         "transformations": [
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true
+                  },
+                  "indexByName": {
+                     "job": 1,
+                     "model": 2,
+                     "namespace": 0
+                  },
+                  "renameByName": {
+                     "Value": "Updates",
+                     "job": "Job",
+                     "model": "Model",
+                     "namespace": "Namespace"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Top 10 models by number of deletes over the past week.",
+         "fieldConfig": {
+            "defaults": {
+               "links": [ ],
+               "thresholds": {
+                  "steps": [ ]
+               },
+               "unit": "short"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 310
+         },
+         "id": 11,
+         "options": {
+            "footer": {
+               "enablePagination": true
+            },
+            "sortBy": [
+               {
+                  "desc": true,
+                  "displayName": "Value"
+               }
+            ]
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "round(\n  topk(10,\n    sum(\n      increase(\n        django_model_deletes_total{\n          cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n        }[1w]\n      ) > 0\n    ) by (namespace, job, model)\n  )\n)\n",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Top Models by Deletes (1w)",
+         "transformations": [
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true
+                  },
+                  "indexByName": {
+                     "job": 1,
+                     "model": 2,
+                     "namespace": 0
+                  },
+                  "renameByName": {
+                     "Value": "Deletes",
+                     "job": "Job",
+                     "model": "Model",
+                     "namespace": "Namespace"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      }
+   ],
+   "schemaVersion": 39,
+   "tags": [
+      "django",
+      "django-mixin"
+   ],
+   "templating": {
+      "list": [
+         {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
+            "label": "Data source",
+            "name": "datasource",
+            "query": "prometheus",
+            "type": "datasource"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "hide": 2,
+            "label": "Cluster",
+            "name": "cluster",
+            "query": "label_values(django_model_inserts_total{}, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": false,
+            "label": "Namespace",
+            "multi": false,
+            "name": "namespace",
+            "query": "label_values(django_model_inserts_total{cluster=\"$cluster\"}, namespace)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": false,
+            "label": "Job",
+            "multi": false,
+            "name": "job",
+            "query": "label_values(django_model_inserts_total{cluster=\"$cluster\", namespace=\"$namespace\"}, job)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Model",
+            "multi": true,
+            "name": "model",
+            "query": "label_values(django_model_inserts_total{cluster=\"$cluster\", namespace=\"$namespace\", job=~\"$job\"}, model)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         }
+      ]
+   },
+   "time": {
+      "from": "now-6h",
+      "to": "now"
+   },
+   "timezone": "utc",
+   "title": "Django / Models / Overview",
+   "uid": "django-model-overview-jkwq"
+}

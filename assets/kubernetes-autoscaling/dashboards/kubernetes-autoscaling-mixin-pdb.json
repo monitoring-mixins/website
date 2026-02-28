@@ -542,7 +542,6 @@
             },
             "hide": 2,
             "label": "Cluster",
-            "multi": false,
             "name": "cluster",
             "query": "label_values(kube_pod_info{job=~\"kube-state-metrics\"}, cluster)",
             "refresh": 2,
