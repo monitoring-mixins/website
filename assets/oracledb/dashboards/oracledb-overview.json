@@ -78,7 +78,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "oracledb_up{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\"}",
+               "expr": "oracledb_up{job=~\"$job\",instance=~\"$instance\"}",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{instance}}",
@@ -139,7 +139,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "oracledb_resource_current_utilization{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\", resource_name=\"sessions\"}",
+               "expr": "oracledb_resource_current_utilization{job=~\"$job\",instance=~\"$instance\", resource_name=\"sessions\"}",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ instance }} - open",
@@ -150,7 +150,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "oracledb_resource_limit_value{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\", resource_name=\"sessions\"}",
+               "expr": "oracledb_resource_limit_value{job=~\"$job\",instance=~\"$instance\", resource_name=\"sessions\"}",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ instance }} - limit",
@@ -211,7 +211,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "oracledb_resource_current_utilization{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\", resource_name=\"processes\"}",
+               "expr": "oracledb_resource_current_utilization{job=~\"$job\",instance=~\"$instance\", resource_name=\"processes\"}",
                "format": "time_series",
                "instant": false,
                "interval": "1m",
@@ -223,7 +223,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "oracledb_resource_limit_value{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\", resource_name=\"processes\"}",
+               "expr": "oracledb_resource_limit_value{job=~\"$job\",instance=~\"$instance\", resource_name=\"processes\"}",
                "format": "time_series",
                "instant": false,
                "interval": "1m",
@@ -298,7 +298,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(oracledb_wait_time_application{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(oracledb_wait_time_application{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "interval": "1m",
@@ -360,7 +360,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(oracledb_wait_time_commit{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(oracledb_wait_time_commit{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "interval": "1m",
@@ -422,7 +422,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(oracledb_wait_time_concurrency{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(oracledb_wait_time_concurrency{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "interval": "1m",
@@ -484,7 +484,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(oracledb_wait_time_configuration{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(oracledb_wait_time_configuration{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "interval": "1m",
@@ -546,7 +546,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(oracledb_wait_time_network{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(oracledb_wait_time_network{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "interval": "1m",
@@ -608,7 +608,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(oracledb_wait_time_scheduler{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(oracledb_wait_time_scheduler{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "interval": "1m",
@@ -670,7 +670,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(oracledb_wait_time_system_io{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(oracledb_wait_time_system_io{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "interval": "1m",
@@ -732,7 +732,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(oracledb_wait_time_user_io{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
+               "expr": "rate(oracledb_wait_time_user_io{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])",
                "format": "time_series",
                "instant": false,
                "interval": "1m",
@@ -807,7 +807,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "oracledb_tablespace_bytes{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\",tablespace=~\"$tablespace\"}",
+               "expr": "oracledb_tablespace_bytes{job=~\"$job\",instance=~\"$instance\",tablespace=~\"$tablespace\"}",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ instance }} - {{ tablespace }} - used",
@@ -818,7 +818,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "oracledb_tablespace_free{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\",tablespace=~\"$tablespace\"}",
+               "expr": "oracledb_tablespace_free{job=~\"$job\",instance=~\"$instance\",tablespace=~\"$tablespace\"}",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ instance }} - {{ tablespace }} - free",
@@ -829,7 +829,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "oracledb_tablespace_max_bytes{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\",tablespace=~\"$tablespace\"}",
+               "expr": "oracledb_tablespace_max_bytes{job=~\"$job\",instance=~\"$instance\",tablespace=~\"$tablespace\"}",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ instance }} - {{ tablespace }} - max",
@@ -864,7 +864,7 @@
             "label": "Job",
             "multi": true,
             "name": "job",
-            "query": "label_values(oracledb_up{job=~\"integrations/oracledb\"}, job)",
+            "query": "label_values(oracledb_up{}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -879,7 +879,7 @@
             "label": "Instance",
             "multi": true,
             "name": "instance",
-            "query": "label_values(oracledb_up{job=~\"integrations/oracledb\",job=~\"$job\"}, instance)",
+            "query": "label_values(oracledb_up{job=~\"$job\"}, instance)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -894,7 +894,7 @@
             "label": "Tablespace",
             "multi": true,
             "name": "tablespace",
-            "query": "label_values(oracledb_up{job=~\"integrations/oracledb\",job=~\"$job\",instance=~\"$instance\"}, tablespace)",
+            "query": "label_values(oracledb_up{job=~\"$job\",instance=~\"$instance\"}, tablespace)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

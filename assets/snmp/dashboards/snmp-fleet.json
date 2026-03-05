@@ -9,7 +9,7 @@
             "enable": true,
             "expr": "count by (job,instance,alertname) (max_over_time(ALERTS{alertstate=\"firing\", severity=\"critical\", job=~\"$job\",instance=~\"$instance\"}[$__rate_interval]))\n  * on(job,instance) group_left group by (job,instance) (sysUpTime{job=~\"$job\",instance=~\"$instance\"})\n",
             "hide": true,
-            "iconColor": "light-purple",
+            "iconColor": "#ff7383",
             "name": "Critical alert",
             "tagKeys": "job,instance",
             "textFormat": "{{alertname}}",
@@ -23,7 +23,7 @@
             "enable": true,
             "expr": "{job=\"syslog\",job=~\"$job\",instance=~\"$instance\", level=~\"critical|fatal|alert|error\"}\n",
             "hide": true,
-            "iconColor": "light-purple",
+            "iconColor": "#ff7383",
             "name": "Critical event logged",
             "tagKeys": "job,instance,sysname,syslog_app_name,level",
             "titleFormat": "Critical event logged"
