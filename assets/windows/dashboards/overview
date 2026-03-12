@@ -1235,7 +1235,7 @@
                {
                   "matcher": {
                      "id": "byRegexp",
-                     "options": "/transmit|tx|out/"
+                     "options": "/transmit|tx|Tx|out/"
                   },
                   "properties": [
                      {
@@ -1324,7 +1324,7 @@
                {
                   "matcher": {
                      "id": "byRegexp",
-                     "options": "/transmit|tx|out/"
+                     "options": "/transmit|tx|Tx|out/"
                   },
                   "properties": [
                      {
