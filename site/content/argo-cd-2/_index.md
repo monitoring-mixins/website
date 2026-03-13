@@ -35,7 +35,7 @@ expr: |
     round(
       increase(
         argocd_app_sync_total{
-          job=~".*",
+          job=~"(argocd|argo-cd).*",
           phase!="Succeeded"
         }[10m]
       )
@@ -61,7 +61,7 @@ annotations:
 expr: |
   sum(
     argocd_app_info{
-      job=~".*",
+      job=~"(argocd|argo-cd).*",
       health_status!~"Healthy|Progressing",
       name!~""
     }
@@ -87,7 +87,7 @@ annotations:
 expr: |
   sum(
     argocd_app_info{
-      job=~".*",
+      job=~"(argocd|argo-cd).*",
       sync_status!="Synced"
     }
   ) by (cluster, job, dest_server, project, name, sync_status)
@@ -111,7 +111,7 @@ annotations:
 expr: |
   sum(
     argocd_app_info{
-      job=~".*",
+      job=~"(argocd|argo-cd).*",
       autosync_enabled!="true",
       name!~""
     }
@@ -137,7 +137,7 @@ expr: |
     round(
       increase(
         argocd_notifications_deliveries_total{
-          job=~".*",
+          job=~"(argocd|argo-cd).*",
           succeeded!="true"
         }[10m]
       )
@@ -163,12 +163,12 @@ expr: |
     sum(
       rate(
         argocd_app_reconcile_bucket{
-          job=~".*"
-        }[10m]
+          job=~"(argocd|argo-cd).*"
+        }[2m]
       )
     ) by (cluster, namespace, le)
   ) > 60
-for: 5m
+for: 10m
 labels:
   severity: warning
 {{< /code >}}
@@ -180,16 +180,16 @@ alert: ArgoCdRepoServerPendingRequests
 annotations:
   dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
   description: ArgoCD repo server in {{ $labels.namespace }} has 50 or more pending
-    requests for the past 5m. The repo server may be overloaded and need scaling.
+    requests for the past 10m. The repo server may be overloaded and need scaling.
   summary: ArgoCD Repo Server has pending requests.
 expr: |
   sum(
     argocd_repo_pending_request_total{
-      job=~".*"
+      job=~"(argocd|argo-cd).*"
     }
   ) by (cluster, namespace)
   > 50
-for: 5m
+for: 10m
 labels:
   severity: warning
 {{< /code >}}
@@ -209,8 +209,8 @@ expr: |
     sum(
       rate(
         argocd_git_request_duration_seconds_bucket{
-          job=~".*"
-        }[10m]
+          job=~"(argocd|argo-cd).*"
+        }[2m]
       )
     ) by (cluster, namespace, le)
   ) > 30
@@ -230,7 +230,7 @@ annotations:
   summary: ArgoCD cannot connect to managed cluster.
 expr: |
   argocd_cluster_connection_status{
-    job=~".*"
+    job=~"(argocd|argo-cd).*"
   } < 1
 for: 5m
 labels:
@@ -252,12 +252,137 @@ expr: |
     round(
       increase(
         argocd_git_fetch_fail_total{
-          job=~".*"
-        }[5m]
+          job=~"(argocd|argo-cd).*"
+        }[2m]
       )
     )
   ) by (cluster, namespace, repo) > 0
-for: 1m
+for: 5m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ArgoCdHighKubectlRateLimiterDuration
+
+{{< code lang="yaml" >}}
+alert: ArgoCdHighKubectlRateLimiterDuration
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
+  description: ArgoCD in {{ $labels.namespace }} has a P0.95 kubectl rate limiter
+    wait time above 1s for the past 10m. The Kubernetes API server may be throttling
+    ArgoCD requests.
+  summary: ArgoCD kubectl rate limiter duration is high.
+expr: |
+  histogram_quantile(0.95,
+    sum(
+      rate(
+        argocd_kubectl_rate_limiter_duration_seconds_bucket{
+          job=~"(argocd|argo-cd).*"
+        }[2m]
+      )
+    ) by (cluster, namespace, le)
+  ) > 1
+for: 10m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ArgoCdHighKubectlRequestDuration
+
+{{< code lang="yaml" >}}
+alert: ArgoCdHighKubectlRequestDuration
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
+  description: ArgoCD in {{ $labels.namespace }} has a P0.95 kubectl request duration
+    above 5s for the past 10m. This may indicate Kubernetes API server performance
+    issues.
+  summary: ArgoCD kubectl request duration is high.
+expr: |
+  histogram_quantile(0.95,
+    sum(
+      rate(
+        argocd_kubectl_request_duration_seconds_bucket{
+          job=~"(argocd|argo-cd).*"
+        }[2m]
+      )
+    ) by (cluster, namespace, le)
+  ) > 5
+for: 10m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ArgoCdHighKubectlRequestRetryRate
+
+{{< code lang="yaml" >}}
+alert: ArgoCdHighKubectlRequestRetryRate
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
+  description: ArgoCD in {{ $labels.namespace }} has had more than 1 kubectl request
+    retries in the past 10m. This indicates transient Kubernetes API errors or throttling.
+  summary: ArgoCD kubectl request retry rate is high.
+expr: |
+  sum(
+    increase(
+      argocd_kubectl_request_retries_total{
+        job=~"(argocd|argo-cd).*"
+      }[2m]
+    )
+  ) by (cluster, namespace) > 1
+for: 10m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ArgoCdHighGrpcErrorRate
+
+{{< code lang="yaml" >}}
+alert: ArgoCdHighGrpcErrorRate
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
+  description: ArgoCD {{ $labels.job }} in {{ $labels.namespace }} has a gRPC error
+    rate above 0.05 for the past 10m.
+  summary: ArgoCD gRPC error rate is high.
+expr: |
+  sum(
+    rate(
+      grpc_server_handled_total{
+        job=~"(argocd|argo-cd).*",
+        grpc_code!="OK"
+      }[2m]
+    )
+  ) by (cluster, namespace, job)
+  /
+  sum(
+    rate(
+      grpc_server_handled_total{
+        job=~"(argocd|argo-cd).*"
+      }[2m]
+    )
+  ) by (cluster, namespace, job)
+  > 0.05
+for: 10m
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### ArgoCdHighKubectlPendingExec
+
+{{< code lang="yaml" >}}
+alert: ArgoCdHighKubectlPendingExec
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
+  description: ArgoCD in {{ $labels.namespace }} has more than 10 pending kubectl
+    executions for the past 15m. This may indicate resource contention or slow manifest
+    generation.
+  summary: ArgoCD has a high number of pending kubectl executions.
+expr: |
+  sum(
+    argocd_kubectl_exec_pending{
+      job=~"(argocd|argo-cd).*"
+    }
+  ) by (cluster, namespace) > 10
+for: 15m
 labels:
   severity: warning
 {{< /code >}}

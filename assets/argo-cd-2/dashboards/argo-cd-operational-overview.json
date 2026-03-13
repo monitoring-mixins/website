@@ -747,7 +747,40 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "description": "A timeseries panel showing pending kubectl runs for ArgoCD.",
+               "description": "Time to process resource events in batches. Controlled by ARGOCD_CLUSTER_CACHE_BATCH_EVENTS_PROCESSING and related settings.",
+               "gridPos": {
+                  "h": 6,
+                  "w": 24,
+                  "x": 0,
+                  "y": 43
+               },
+               "id": 15,
+               "options": {
+                  "calculate": true,
+                  "yAxis": {
+                     "unit": "s"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "sum(\n  rate(\n    argocd_resource_events_processing_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
+                     "legendFormat": "{{ le }}"
+                  }
+               ],
+               "title": "Resource Event Processing Duration",
+               "type": "heatmap"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Number of resource events processed per batch. Batch processing improves performance when managing large numbers of resources.",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
@@ -766,9 +799,82 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 43
+                  "y": 49
                },
-               "id": 15,
+               "id": 16,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  argocd_resource_events_processed_in_batch{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n) by (namespace, job)\n",
+                     "legendFormat": "{{ namespace }}/{{ job }}"
+                  }
+               ],
+               "title": "Resource Events Batch Size",
+               "type": "timeseries"
+            }
+         ],
+         "title": "Controller Stats",
+         "type": "row"
+      },
+      {
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 25
+         },
+         "id": 17,
+         "panels": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "A timeseries panel showing pending kubectl runs for ArgoCD.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 0,
+                  "y": 26
+               },
+               "id": 18,
                "options": {
                   "legend": {
                      "calcs": [
@@ -823,11 +929,11 @@
                },
                "gridPos": {
                   "h": 6,
-                  "w": 24,
-                  "x": 0,
-                  "y": 49
+                  "w": 12,
+                  "x": 12,
+                  "y": 26
                },
-               "id": 16,
+               "id": 19,
                "options": {
                   "legend": {
                      "calcs": [
@@ -865,40 +971,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "description": "Time to process resource events in batches. Controlled by ARGOCD_CLUSTER_CACHE_BATCH_EVENTS_PROCESSING and related settings.",
-               "gridPos": {
-                  "h": 6,
-                  "w": 24,
-                  "x": 0,
-                  "y": 55
-               },
-               "id": 17,
-               "options": {
-                  "calculate": true,
-                  "yAxis": {
-                     "unit": "s"
-                  }
-               },
-               "pluginVersion": "v11.4.0",
-               "targets": [
-                  {
-                     "datasource": {
-                        "type": "prometheus",
-                        "uid": "$datasource"
-                     },
-                     "expr": "sum(\n  rate(\n    argocd_resource_events_processing_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
-                     "legendFormat": "{{ le }}"
-                  }
-               ],
-               "title": "Resource Event Processing Duration",
-               "type": "heatmap"
-            },
-            {
-               "datasource": {
-                  "type": "prometheus",
-                  "uid": "$datasource"
-               },
-               "description": "Number of resource events processed per batch. Batch processing improves performance when managing large numbers of resources.",
+               "description": "Rate of kubectl requests by container, method, and code.",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
@@ -909,17 +982,17 @@
                            "mode": "normal"
                         }
                      },
-                     "unit": "short"
+                     "unit": "reqps"
                   },
                   "overrides": [ ]
                },
                "gridPos": {
                   "h": 6,
-                  "w": 24,
+                  "w": 12,
                   "x": 0,
-                  "y": 61
+                  "y": 32
                },
-               "id": 18,
+               "id": 20,
                "options": {
                   "legend": {
                      "calcs": [
@@ -945,15 +1018,570 @@
                         "uid": "$datasource"
                      },
                      "exemplar": false,
-                     "expr": "sum(\n  argocd_resource_events_processed_in_batch{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n) by (namespace, job)\n",
+                     "expr": "sum(\n  rate(\n    argocd_kubectl_requests_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (container, method, code)\n",
+                     "legendFormat": "{{ container }} {{ method }} {{ code }}"
+                  }
+               ],
+               "title": "Kubectl Requests Total",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Distribution of kubectl requests by host over the last 6 hours.",
+               "fieldConfig": {
+                  "defaults": {
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 12,
+                  "y": 32
+               },
+               "id": 21,
+               "options": {
+                  "displayLabels": [
+                     "percent"
+                  ],
+                  "legend": {
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "values": [
+                        "percent"
+                     ]
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "topk(20,\n  sum(\n    increase(\n      argocd_kubectl_requests_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[6h]\n    )\n  ) by (host)\n)\n",
+                     "instant": true,
+                     "legendFormat": "{{ host }}"
+                  }
+               ],
+               "title": "Kubectl Requests Total by Host (6h)",
+               "type": "piechart"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "P95 kubectl request duration by container and verb. High values indicate slow kubectl operations against the Kubernetes API.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "fillOpacity": 10
+                     },
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 0,
+                  "y": 38
+               },
+               "id": 22,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "histogram_quantile(\n  0.95,\n  sum(\n    rate(\n      argocd_kubectl_request_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  ) by (le, container, verb)\n)\n",
+                     "legendFormat": "{{ container }} {{ verb }}"
+                  }
+               ],
+               "title": "Kubectl Request Duration by Verb (P95)",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Distribution of kubectl request duration by host over the last 24 hours.",
+               "fieldConfig": {
+                  "defaults": {
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 12,
+                  "y": 38
+               },
+               "id": 23,
+               "options": {
+                  "displayLabels": [
+                     "percent"
+                  ],
+                  "legend": {
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "values": [
+                        "percent"
+                     ]
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "topk(20,\n  histogram_quantile(\n    0.95,\n    sum(\n      increase(\n        argocd_kubectl_request_duration_seconds_bucket{\n          cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n        }[6h]\n      )\n    ) by (le, host)\n  )\n)\n",
+                     "instant": true,
+                     "legendFormat": "{{ host }}"
+                  }
+               ],
+               "title": "Kubectl Request Duration by Host (6h)",
+               "type": "piechart"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Rate of kubectl request retries by container, method, and code. Elevated retry rates indicate transient Kubernetes API errors or throttling.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "reqps"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 0,
+                  "y": 44
+               },
+               "id": 24,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  rate(\n    argocd_kubectl_request_retries_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (container, method, code)\n",
+                     "legendFormat": "{{ container }} {{ method }} {{ code }}"
+                  }
+               ],
+               "title": "Kubectl Request Retries",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Distribution of kubectl request retries by host over the last 24 hours.",
+               "fieldConfig": {
+                  "defaults": {
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 12,
+                  "y": 44
+               },
+               "id": 25,
+               "options": {
+                  "displayLabels": [
+                     "percent"
+                  ],
+                  "legend": {
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "values": [
+                        "percent"
+                     ]
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "topk(20,\n  sum(\n    increase(\n      argocd_kubectl_request_retries_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[6h]\n    )\n  ) by (host)\n)\n",
+                     "instant": true,
+                     "legendFormat": "{{ host }}"
+                  }
+               ],
+               "title": "Kubectl Request Retries by Host (6h)",
+               "type": "piechart"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "P95 time spent waiting in the kubectl client-side rate limiter per host. High values indicate the Kubernetes API server is throttling ArgoCD requests.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "fillOpacity": 0
+                     },
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 0,
+                  "y": 50
+               },
+               "id": 26,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "histogram_quantile(\n  0.95,\n  sum(\n    rate(\n      argocd_kubectl_rate_limiter_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  ) by (le, verb)\n)\n",
+                     "legendFormat": "{{ verb }}"
+                  }
+               ],
+               "title": "Kubectl Rate Limiter Duration (P95)",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Distribution of P95 kubectl rate limiter duration by host over the last 6 hours.",
+               "fieldConfig": {
+                  "defaults": {
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 12,
+                  "y": 50
+               },
+               "id": 27,
+               "options": {
+                  "displayLabels": [
+                     "percent"
+                  ],
+                  "legend": {
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "values": [
+                        "percent"
+                     ]
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "topk(20,\n  histogram_quantile(\n    0.95,\n    sum(\n      increase(\n        argocd_kubectl_rate_limiter_duration_seconds_bucket{\n          cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n        }[6h]\n      )\n    ) by (le, host)\n  )\n)\n",
+                     "instant": true,
+                     "legendFormat": "{{ host }}"
+                  }
+               ],
+               "title": "Kubectl Rate Limiter Duration P95 by Host (6h)",
+               "type": "piechart"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Distribution of kubectl request payload sizes. Large request sizes may impact API server performance.",
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 0,
+                  "y": 56
+               },
+               "id": 28,
+               "options": {
+                  "calculate": true,
+                  "yAxis": {
+                     "unit": "bytes"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "sum(\n  rate(\n    argocd_kubectl_request_size_bytes_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
+                     "legendFormat": "{{ le }}"
+                  }
+               ],
+               "title": "Kubectl Request Size",
+               "type": "heatmap"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Distribution of kubectl response payload sizes. Large response sizes may indicate wide resource fetches and can impact controller memory usage.",
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 12,
+                  "y": 56
+               },
+               "id": 29,
+               "options": {
+                  "calculate": true,
+                  "yAxis": {
+                     "unit": "bytes"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "expr": "sum(\n  rate(\n    argocd_kubectl_response_size_bytes_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
+                     "legendFormat": "{{ le }}"
+                  }
+               ],
+               "title": "Kubectl Response Size",
+               "type": "heatmap"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Total kubectl exec plugin calls by call status and exit code. Failed call statuses or non-zero codes indicate credential plugin authentication issues.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 0,
+                  "y": 62
+               },
+               "id": 30,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  round(\n    increase(\n      argocd_kubectl_exec_plugin_call_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  )\n) by (call_status, code)\n",
+                     "legendFormat": "{{ call_status }} {{ code }}"
+                  }
+               ],
+               "title": "Kubectl Exec Plugin Calls",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Total number of kubectl transport create calls. High values may indicate frequent transport recreation due to credential rotation or connection churn.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "short"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 12,
+                  "y": 62
+               },
+               "id": 31,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  round(\n    increase(\n      argocd_kubectl_transport_create_calls_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  )\n) by (namespace, job)\n",
                      "legendFormat": "{{ namespace }}/{{ job }}"
                   }
                ],
-               "title": "Resource Events Batch Size",
+               "title": "Kubectl Transport Create Calls",
                "type": "timeseries"
             }
          ],
-         "title": "Controller Stats",
+         "title": "Kubectl Stats",
          "type": "row"
       },
       {
@@ -962,9 +1590,249 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 25
+            "y": 26
          },
-         "id": 19,
+         "id": 32,
+         "panels": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Total number of gRPC RPCs completed on the API server by service, method, and response code.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "reqps"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 0,
+                  "y": 27
+               },
+               "id": 33,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  rate(\n    grpc_server_handled_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, grpc_service, grpc_method, grpc_code)\n> 0\n",
+                     "legendFormat": "{{ grpc_service }}/{{ grpc_method }} - {{ grpc_code }}"
+                  }
+               ],
+               "title": "gRPC Requests Handled",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "Total number of gRPC stream messages sent by the API server.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "axisSoftMin": 0,
+                        "fillOpacity": 100,
+                        "lineWidth": 1,
+                        "stacking": {
+                           "mode": "normal"
+                        }
+                     },
+                     "unit": "reqps"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 12,
+                  "y": 27
+               },
+               "id": 34,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "sum(\n  rate(\n    grpc_server_msg_sent_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, grpc_service, grpc_method)\n> 0\n",
+                     "legendFormat": "{{ grpc_service }}/{{ grpc_method }}"
+                  }
+               ],
+               "title": "gRPC Messages Sent",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "P50 server-side gRPC handling duration by service and method.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "fillOpacity": 0
+                     },
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 0,
+                  "y": 33
+               },
+               "id": 35,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "histogram_quantile(\n  0.5,\n  sum(\n    rate(\n      grpc_server_handling_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  ) by (le, grpc_service, grpc_method)\n)\nand\nsum(\n  rate(\n    grpc_server_handling_seconds_count{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (grpc_service, grpc_method) > 0\n",
+                     "legendFormat": "{{ grpc_service }}/{{ grpc_method }}"
+                  }
+               ],
+               "title": "gRPC Server Handling Duration (P50)",
+               "type": "timeseries"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "description": "P95 server-side gRPC handling duration by service and method.",
+               "fieldConfig": {
+                  "defaults": {
+                     "custom": {
+                        "fillOpacity": 0
+                     },
+                     "unit": "s"
+                  },
+                  "overrides": [ ]
+               },
+               "gridPos": {
+                  "h": 6,
+                  "w": 12,
+                  "x": 12,
+                  "y": 33
+               },
+               "id": 36,
+               "options": {
+                  "legend": {
+                     "calcs": [
+                        "mean",
+                        "max"
+                     ],
+                     "displayMode": "table",
+                     "placement": "right",
+                     "showLegend": true,
+                     "sortBy": "Mean",
+                     "sortDesc": true
+                  },
+                  "tooltip": {
+                     "mode": "multi",
+                     "sort": "desc"
+                  }
+               },
+               "pluginVersion": "v11.4.0",
+               "targets": [
+                  {
+                     "datasource": {
+                        "type": "prometheus",
+                        "uid": "$datasource"
+                     },
+                     "exemplar": false,
+                     "expr": "histogram_quantile(\n  0.95,\n  sum(\n    rate(\n      grpc_server_handling_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  ) by (le, grpc_service, grpc_method)\n)\nand\nsum(\n  rate(\n    grpc_server_handling_seconds_count{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (grpc_service, grpc_method) > 0\n",
+                     "legendFormat": "{{ grpc_service }}/{{ grpc_method }}"
+                  }
+               ],
+               "title": "gRPC Server Handling Duration (P95)",
+               "type": "timeseries"
+            }
+         ],
+         "title": "gRPC Stats",
+         "type": "row"
+      },
+      {
+         "collapsed": true,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 27
+         },
+         "id": 37,
          "panels": [
             {
                "datasource": {
@@ -987,9 +1855,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 26
+                  "y": 28
                },
-               "id": 20,
+               "id": 38,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1041,9 +1909,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 32
+                  "y": 34
                },
-               "id": 21,
+               "id": 39,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1100,9 +1968,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 38
+                  "y": 40
                },
-               "id": 22,
+               "id": 40,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1159,9 +2027,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 44
+                  "y": 46
                },
-               "id": 23,
+               "id": 41,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1218,9 +2086,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 50
+                  "y": 52
                },
-               "id": 24,
+               "id": 42,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1263,9 +2131,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 26
+            "y": 28
          },
-         "id": 25,
+         "id": 43,
          "panels": [
             {
                "datasource": {
@@ -1291,9 +2159,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 0,
-                  "y": 27
+                  "y": 29
                },
-               "id": 26,
+               "id": 44,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1350,9 +2218,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 12,
-                  "y": 27
+                  "y": 29
                },
-               "id": 27,
+               "id": 45,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1409,9 +2277,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 0,
-                  "y": 33
+                  "y": 35
                },
-               "id": 28,
+               "id": 46,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1468,9 +2336,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 12,
-                  "y": 33
+                  "y": 35
                },
-               "id": 29,
+               "id": 47,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1513,9 +2381,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 0,
-                  "y": 39
+                  "y": 41
                },
-               "id": 30,
+               "id": 48,
                "options": {
                   "calculate": true,
                   "yAxis": {
@@ -1546,9 +2414,9 @@
                   "h": 6,
                   "w": 12,
                   "x": 12,
-                  "y": 39
+                  "y": 41
                },
-               "id": 31,
+               "id": 49,
                "options": {
                   "calculate": true,
                   "yAxis": {
@@ -1579,9 +2447,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 27
+            "y": 29
          },
-         "id": 32,
+         "id": 50,
          "panels": [
             {
                "datasource": {
@@ -1607,9 +2475,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 28
+                  "y": 30
                },
-               "id": 33,
+               "id": 51,
                "options": {
                   "legend": {
                      "calcs": [
@@ -1652,9 +2520,9 @@
                   "h": 6,
                   "w": 24,
                   "x": 0,
-                  "y": 34
+                  "y": 36
                },
-               "id": 34,
+               "id": 52,
                "options": {
                   "calculate": true,
                   "yAxis": {
