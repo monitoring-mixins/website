@@ -341,7 +341,7 @@ alert: ArgoCdHighGrpcErrorRate
 annotations:
   dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
   description: ArgoCD {{ $labels.job }} in {{ $labels.namespace }} has a gRPC error
-    rate above 0.05 for the past 10m.
+    rate above 5% for the past 10m.
   summary: ArgoCD gRPC error rate is high.
 expr: |
   sum(
