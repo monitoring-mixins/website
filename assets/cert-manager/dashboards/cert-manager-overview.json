@@ -34,8 +34,9 @@
       }
    ],
    "_config": {
-      "certManagerCertExpiryDays": "21",
+      "certManagerCertExpiryRenewalElapsedThreshold": 0.29999999999999999,
       "certManagerJobLabel": "cert-manager",
+      "certManagerReplaceExportedNamespace": false,
       "certManagerRunbookURLEnabled": true,
       "certManagerRunbookURLPattern": "https://github.com/imusmanmalik/cert-manager-mixin/blob/main/RUNBOOK.md#%s",
       "clusterVariableSelector": "",
