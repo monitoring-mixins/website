@@ -521,7 +521,7 @@
                "expr": "windows_logical_disk_size_bytes{volume=\"C:\", job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{volume}}: C:",
+               "legendFormat": "{{instance}}: C: ({{volume}})",
                "refId": "Disk C: total"
             },
             {
@@ -532,7 +532,7 @@
                "expr": "100 - windows_logical_disk_free_bytes{volume=\"C:\", job=~\"$job\",instance=~\"$instance\"}/windows_logical_disk_size_bytes{volume=\"C:\", job=~\"$job\",instance=~\"$instance\"}*100",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{volume}}: C: Used",
+               "legendFormat": "{{instance}}: C: Used ({{volume}})",
                "refId": "Disk C: used"
             },
             {

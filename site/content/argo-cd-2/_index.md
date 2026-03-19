@@ -122,6 +122,31 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### ArgoCdRolloutProgressing
+
+{{< code lang="yaml" >}}
+alert: ArgoCdRolloutProgressing
+annotations:
+  dashboard_url: https://grafana.com/d/argo-cd-application-overview-kask/argocd-application-overview?var-dest_server={{
+    $labels.dest_server }}&var-project={{ $labels.project }}&var-application={{ $labels.name
+    }}
+  description: The application {{ $labels.dest_server }}/{{ $labels.project }}/{{
+    $labels.name }} has been in a Progressing state for more than 1h.
+  summary: An ArgoCD Application Rollout is Progressing for too long.
+expr: |
+  sum(
+    argocd_app_info{
+      job=~"(argocd|argo-cd).*",
+      health_status="Progressing",
+      name!~""
+    }
+  ) by (cluster, job, dest_server, project, name, health_status)
+  > 0
+for: 1h
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### ArgoCdNotificationDeliveryFailed
 
 {{< code lang="yaml" >}}

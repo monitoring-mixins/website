@@ -109,6 +109,7 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
+         "description": "Disk usage (avg): Disk usage percentage for Aerospike namespaces. Supports both legacy (device_free_pct) and modern (data_used_pct) metrics.  \n",
          "fieldConfig": {
             "defaults": {
                "custom": {
@@ -217,7 +218,7 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
-         "description": "Memory utilization in an Aerospike namespace",
+         "description": "Memory usage (avg): Memory usage percentage for Aerospike namespaces.  \n",
          "fieldConfig": {
             "defaults": {
                "custom": {

@@ -94,7 +94,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -163,7 +164,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -452,12 +454,13 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interfaces overview.",
+         "description": "status (sum): Interface operational status(ifOperStatus).\n  \n\nadmin status (sum): The desired state of the interface. \nThe testing(3) state indicates that no operational\npackets can be passed.\n  \n\nSpeed (sum): An estimate of the interface's current bandwidth in units of 1,000,000 bits per second.\nIf this object reports a value of `n' then the speed of the interface is somewhere in the range of `n-500,000' to `n+499,999'.\nFor interfaces which do not vary in bandwidth or for those where no accurate estimation can be made, this object should contain the nominal bandwidth.\nFor a sub-layer which has no concept of bandwidth, this object should be zero.\n  \n\nType (sum): The type of interface, distinguished according to the physical/link protocol(s) immediately `below' the network layer in the protocol stack.\n  \n\npromiscuous mode (sum): This object has a value of false(2) if this interface only accepts packets/frames that are addressed to this station. \nThis object has a value of true(1) when the station accepts all packets/frames transmitted on the media.\nThe value true(1) is only legal on certain types of media. \nIf legal, setting this object to a value of true(1) may require the interface to be reset before becoming effective. \nThe value of ifPromiscuousMode does not affect the reception of broadcast and multicast packets/frames by the interface.\n  \n\nconnector (sum): This object has the value 'true(1)' if the interface sublayer has a physical connector and the value 'false(2)' otherwise.\n  \n\nMTU (sum): Maximum transmission unit (MTU).\n  \n\nLast change (sum): Interface last change.\n  \n\nMAC (sum): MAC.\n",
          "fieldConfig": {
             "defaults": {
                "custom": {
                   "filterable": true
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -832,7 +835,7 @@
                "expr": "sum by (job,instance,ifName,ifAlias,ifDescr) (\n  ifOperStatus{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}\n)",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{ifDescr}}: status",
+               "legendFormat": "{{ifName}}: status ({{ifAlias}} {{ifDescr}})",
                "refId": "Interface operational status"
             },
             {
@@ -843,7 +846,7 @@
                "expr": "sum by (job,instance,ifName,ifAlias,ifDescr) (\n  ifAdminStatus{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}\n)",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{ifDescr}}: admin status",
+               "legendFormat": "{{ifName}}: admin status ({{ifAlias}} {{ifDescr}})",
                "refId": "Interface admin status"
             },
             {
@@ -854,7 +857,7 @@
                "expr": "(\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  ifHighSpeed{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}\n)\n)*1000000",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{ifDescr}}: Speed",
+               "legendFormat": "{{ifName}}: Speed ({{ifAlias}} {{ifDescr}})",
                "refId": "Interface estimated bandwidth"
             },
             {
@@ -865,7 +868,7 @@
                "expr": "sum by (job,instance,ifName,ifAlias,ifDescr,ifType) (\n  ifType_info{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}\n)",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{ifDescr}}: Type",
+               "legendFormat": "{{ifName}}: Type ({{ifAlias}} {{ifDescr}})",
                "refId": "Interface type"
             },
             {
@@ -876,7 +879,7 @@
                "expr": "sum by (job,instance,ifName,ifAlias,ifDescr) (\n  ifPromiscuousMode{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}\n)",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{ifDescr}}: promiscuous mode",
+               "legendFormat": "{{ifName}}: promiscuous mode ({{ifAlias}} {{ifDescr}})",
                "refId": "Interface promiscuous mode"
             },
             {
@@ -887,7 +890,7 @@
                "expr": "sum by (job,instance,ifName,ifAlias,ifDescr) (\n  ifConnectorPresent{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}\n)",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{ifDescr}}: connector",
+               "legendFormat": "{{ifName}}: connector ({{ifAlias}} {{ifDescr}})",
                "refId": "Interface connector present"
             },
             {
@@ -898,7 +901,7 @@
                "expr": "sum by (job,instance,ifName,ifAlias,ifDescr) (\n  ifMtu{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}\n)",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{ifDescr}}: MTU",
+               "legendFormat": "{{ifName}}: MTU ({{ifAlias}} {{ifDescr}})",
                "refId": "Interface MTU"
             },
             {
@@ -909,7 +912,7 @@
                "expr": "# ignore when ifLastCHange == 0 as invalid\nsum by (job,instance,ifName,ifAlias,ifDescr) (\n  (sysUpTime{job=~\"$job\",instance=~\"$instance\"} - on(job,instance) group_right () (ifLastChange{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"})!=0)\n)/100\n",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{ifDescr}}: Last change",
+               "legendFormat": "{{ifName}}: Last change ({{ifAlias}} {{ifDescr}})",
                "refId": "Interface last change"
             },
             {
@@ -920,7 +923,7 @@
                "expr": "sum by (job,instance,ifName,ifAlias,ifDescr,ifPhysAddress) (\n  ifPhysAddress{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}\n)",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{ifDescr}}: MAC",
+               "legendFormat": "{{ifName}}: MAC ({{ifAlias}} {{ifDescr}})",
                "refId": "Interface physical address"
             }
          ],
@@ -981,7 +984,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface traffic out.\n",
+         "description": "transmitted (sum): Network interface traffic out.\n  \n\nreceived (sum): Network interface traffic in.\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -1055,7 +1058,7 @@
                "expr": "topk(25,\n  \n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifHCOutOctets{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"} [$__rate_interval])\n)\n)*8\n\n# set max limit to workaround for TB-PB/sec spikes when counters are overloaded too quickly on very busy interfaces.\n<100*10^9\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: transmitted",
+               "legendFormat": "{{ifName}}: transmitted ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface traffic out"
             },
             {
@@ -1066,7 +1069,7 @@
                "expr": "topk(25,\n  \n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifHCInOctets{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)*8\n\n# set max limit to workaround for TB-PB/sec spikes when counters are overloaded too quickly on very busy interfaces.\n<100*10^9\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: received",
+               "legendFormat": "{{ifName}}: received ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface traffic in"
             }
          ],
@@ -1078,7 +1081,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface errors in.\n",
+         "description": "errors in (sum): Network interface errors in.\n  \n\nerrors out (sum): Network interface errors out.\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -1144,7 +1147,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifInErrors{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: errors in",
+               "legendFormat": "{{ifName}}: errors in ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface errors in"
             },
             {
@@ -1155,7 +1158,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifOutErrors{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: errors out",
+               "legendFormat": "{{ifName}}: errors out ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface errors out"
             }
          ],
@@ -1167,7 +1170,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface discards in.\n",
+         "description": "dropped in (sum): Network interface discards in.\n  \n\ndropped out (sum): Network interface discards out.\n  \n\nunknown dropped in (sum): The number of packets received via the interface\nwhich were discarded because of an unknown or\nunsupported protocol.\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -1233,7 +1236,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifInDiscards{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: dropped in",
+               "legendFormat": "{{ifName}}: dropped in ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface discards in"
             },
             {
@@ -1244,7 +1247,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifOutDiscards{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: dropped out",
+               "legendFormat": "{{ifName}}: dropped out ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface discards out"
             },
             {
@@ -1255,7 +1258,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifInUnknownProtos{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: unknown dropped in",
+               "legendFormat": "{{ifName}}: unknown dropped in ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface unknown protocol in packets dropped"
             }
          ],
@@ -1267,7 +1270,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface unicast packets in.\n",
+         "description": "unicast in (sum): Network interface unicast packets in.\n  \n\nunicast out (sum): Network interface unicast packets out.\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -1333,7 +1336,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifHCInUcastPkts{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: unicast in",
+               "legendFormat": "{{ifName}}: unicast in ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface unicast packets in"
             },
             {
@@ -1344,7 +1347,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifHCOutUcastPkts{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: unicast out",
+               "legendFormat": "{{ifName}}: unicast out ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface unicast packets out"
             }
          ],
@@ -1356,7 +1359,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface broadcast packets in.\n",
+         "description": "broadcast in (sum): Network interface broadcast packets in.\n  \n\nbroadcast out (sum): 'Network interface broadcast packets out.',\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -1422,7 +1425,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifHCInBroadcastPkts{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: broadcast in",
+               "legendFormat": "{{ifName}}: broadcast in ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface broadcast packets in"
             },
             {
@@ -1433,7 +1436,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifHCOutBroadcastPkts{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: broadcast out",
+               "legendFormat": "{{ifName}}: broadcast out ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface broadcast packets out"
             }
          ],
@@ -1445,7 +1448,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface multicast packets in.\n",
+         "description": "multicast in (sum): Network interface multicast packets in.\n  \n\nmulticast out (sum): Network interface multicast packets out.\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -1511,7 +1514,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifHCInMulticastPkts{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: multicast in",
+               "legendFormat": "{{ifName}}: multicast in ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface multicast packets in"
             },
             {
@@ -1522,7 +1525,7 @@
                "expr": "topk(25,\n  (\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(ifHCOutMulticastPkts{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)>0\n)",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{ifDescr}}: multicast out",
+               "legendFormat": "{{ifName}}: multicast out ({{ifAlias}} {{ifDescr}})",
                "refId": "Network interface multicast packets out"
             }
          ],
@@ -1543,12 +1546,13 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "description": "Field replaceable unit status",
+               "description": "FRU status (sum): Field replaceable unit status  \n",
                "fieldConfig": {
                   "defaults": {
                      "custom": {
                         "filterable": false
-                     }
+                     },
+                     "unit": "short"
                   },
                   "overrides": [
                      {
@@ -1605,7 +1609,7 @@
                      "expr": "(\n  sum by (job,instance,entPhysicalName,cefcFRUPowerOperStatus) (\n  cefcFRUPowerOperStatus{job=~\"$job\",instance=~\"$instance\"}\n)\n)!=0",
                      "format": "table",
                      "instant": true,
-                     "legendFormat": "{{entPhysicalName}}: FRU status",
+                     "legendFormat": "{{instance}}: FRU status ({{entPhysicalName}})",
                      "refId": "FRU status"
                   }
                ],
@@ -1668,7 +1672,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "description": "The current value of receive buffer-to-buffer credits for this port.\n",
+               "description": "credit receive (sum): The current value of receive buffer-to-buffer credits for this port.\n  \n\ncredit transmit (sum): The current value of transmit buffer-to-buffer credits for this port.\n",
                "fieldConfig": {
                   "defaults": {
                      "color": {
@@ -1734,7 +1738,7 @@
                      "expr": "topk(25,\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  fcIfCurrRxBbCredit{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}\n)\n)",
                      "format": "time_series",
                      "instant": false,
-                     "legendFormat": "{{ifDescr}}: credit receive",
+                     "legendFormat": "{{ifName}}: credit receive ({{ifAlias}} {{ifDescr}})",
                      "refId": "FC receive credits"
                   },
                   {
@@ -1745,7 +1749,7 @@
                      "expr": "topk(25,\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  fcIfCurrTxBbCredit{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}\n)\n)",
                      "format": "time_series",
                      "instant": false,
-                     "legendFormat": "{{ifDescr}}: credit transmit",
+                     "legendFormat": "{{ifName}}: credit transmit ({{ifAlias}} {{ifDescr}})",
                      "refId": "FC transmit credits"
                   }
                ],
@@ -1757,7 +1761,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "description": "-TxWaitCount: The number of times the FC-port waited due to lack of transmit credits.\n\n-FramesDiscard: The number of frames discarded by the FC-port.\n\n-TxWtAvgBBCreditTransitionToZero: increments if the credit available is zero for 100 ms.\n\n-BBCreditTransistionFromZero: increments if the transmit b2b credit is zero.\n\n-BBCreditTransistionToZero: increments if the receive b2b credit is zero.\n\n-InvalidTxWords: The number of invalid transmission words detected by the FC-Port.\n\n-InvalidCrcs: The number of invalid CRCs detected by the FC-Port.\n",
+               "description": "fcIfTxWaitCount (sum): The number of times the FC-port waited due to lack of transmit credits.\n  \n\nfcIfFramesDiscard (sum): The number of frames discarded by the FC-port.\n  \n\nfcIfTxWtAvgBBCreditTransitionToZero (sum): fcIfTxWtAvgBBCreditTransitionToZero increments if the credit\navailable is zero for 100 ms.\n  \n\nfcHCIfBBCreditTransistionFromZero (sum): fcHCIfBBCreditTransistionFromZero increments if the transmit b2b\ncredit is zero.\n  \n\nfcHCIfBBCreditTransistionToZero (sum): fcHCIfBBCreditTransistionToZero increments if the receive b2b\ncredit is zero.\n  \n\nfcIfInvalidCrcs (sum): The number of invalid CRCs detected by the FC-Port.\n  \n\nfcIfInvalidTxWords (sum): The number of invalid transmission words detected by the FC-Port.\n",
                "fieldConfig": {
                   "defaults": {
                      "color": {
@@ -1823,7 +1827,7 @@
                      "expr": "topk(25,\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(fcIfTxWaitCount{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)",
                      "format": "time_series",
                      "instant": false,
-                     "legendFormat": "{{ifDescr}}: fcIfTxWaitCount",
+                     "legendFormat": "{{ifName}}: fcIfTxWaitCount ({{ifAlias}} {{ifDescr}})",
                      "refId": "FC wait due to lack of transmit credits."
                   },
                   {
@@ -1834,7 +1838,7 @@
                      "expr": "topk(25,\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(fcIfFramesDiscard{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)",
                      "format": "time_series",
                      "instant": false,
-                     "legendFormat": "{{ifDescr}}: fcIfFramesDiscard",
+                     "legendFormat": "{{ifName}}: fcIfFramesDiscard ({{ifAlias}} {{ifDescr}})",
                      "refId": "Frames discarded"
                   },
                   {
@@ -1845,7 +1849,7 @@
                      "expr": "topk(25,\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(fcIfTxWtAvgBBCreditTransitionToZero{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)",
                      "format": "time_series",
                      "instant": false,
-                     "legendFormat": "{{ifDescr}}: fcIfTxWtAvgBBCreditTransitionToZero",
+                     "legendFormat": "{{ifName}}: fcIfTxWtAvgBBCreditTransitionToZero ({{ifAlias}} {{ifDescr}})",
                      "refId": "Zero credit available"
                   },
                   {
@@ -1856,7 +1860,7 @@
                      "expr": "topk(25,\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(fcHCIfBBCreditTransistionFromZero{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)",
                      "format": "time_series",
                      "instant": false,
-                     "legendFormat": "{{ifDescr}}: fcHCIfBBCreditTransistionFromZero",
+                     "legendFormat": "{{ifName}}: fcHCIfBBCreditTransistionFromZero ({{ifAlias}} {{ifDescr}})",
                      "refId": "Zero credit available (transmit)"
                   },
                   {
@@ -1867,7 +1871,7 @@
                      "expr": "topk(25,\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(fcHCIfBBCreditTransistionToZero{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)",
                      "format": "time_series",
                      "instant": false,
-                     "legendFormat": "{{ifDescr}}: fcHCIfBBCreditTransistionToZero",
+                     "legendFormat": "{{ifName}}: fcHCIfBBCreditTransistionToZero ({{ifAlias}} {{ifDescr}})",
                      "refId": "Zero credit available (receive)"
                   },
                   {
@@ -1878,7 +1882,7 @@
                      "expr": "topk(25,\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(fcIfInvalidCrcs{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)",
                      "format": "time_series",
                      "instant": false,
-                     "legendFormat": "{{ifDescr}}: fcIfInvalidCrcs",
+                     "legendFormat": "{{ifName}}: fcIfInvalidCrcs ({{ifAlias}} {{ifDescr}})",
                      "refId": "FC invalid CRCc detected"
                   },
                   {
@@ -1889,7 +1893,7 @@
                      "expr": "topk(25,\n  sum by (job,instance,ifName,ifAlias,ifDescr) (\n  irate(fcIfInvalidTxWords{job=~\"$job\",instance=~\"$instance\",ifName=~\"$ifName\"}[$__rate_interval])\n)\n)",
                      "format": "time_series",
                      "instant": false,
-                     "legendFormat": "{{ifDescr}}: fcIfInvalidTxWords",
+                     "legendFormat": "{{ifName}}: fcIfInvalidTxWords ({{ifAlias}} {{ifDescr}})",
                      "refId": "FC invalid TX words"
                   }
                ],
@@ -2007,7 +2011,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "volt"
                   },
                   "overrides": [
                      {
@@ -2079,7 +2084,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "watt"
                   },
                   "overrides": [
                      {
@@ -2151,7 +2157,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "dBm"
                   },
                   "overrides": [
                      {
@@ -2223,7 +2230,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "rotrpm"
                   },
                   "overrides": [
                      {

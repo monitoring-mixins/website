@@ -523,7 +523,7 @@
                "expr": "windows_logical_disk_size_bytes{volume=\"C:\", job=~\"$job\",instance=~\"$instance\"}",
                "format": "time_series",
                "instant": false,
-               "legendFormat": "{{volume}}: C:",
+               "legendFormat": "{{instance}}: C: ({{volume}})",
                "refId": "C: drive"
             }
          ],
@@ -1081,7 +1081,7 @@
                "expr": "windows_logical_disk_size_bytes{volume!~\"HarddiskVolume.*\", job=~\"$job\",instance=~\"$instance\"}",
                "format": "table",
                "instant": true,
-               "legendFormat": "{{volume}}: Total",
+               "legendFormat": "{{instance}}: Total ({{volume}})",
                "refId": "TOTAL"
             },
             {

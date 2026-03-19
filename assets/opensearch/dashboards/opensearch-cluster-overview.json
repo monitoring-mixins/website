@@ -482,7 +482,7 @@
                "expr": "max by (job,cluster,opensearch_cluster,node,nodeid,role,primary_ip) (\n  last_over_time(opensearch_node_role_bool{job=~\"$job\",cluster=~\"$cluster\",opensearch_cluster=~\"$opensearch_cluster\"}[1d])\n)",
                "format": "time_series",
                "instant": true,
-               "legendFormat": "{{role}}: Node role bool last seen",
+               "legendFormat": "{{opensearch_cluster}}: Node role bool last seen ({{node}} {{nodeid}} {{primary_ip}} {{role}})",
                "refId": "Node role bool last seen"
             }
          ],

@@ -61,12 +61,13 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network devices overview.",
+         "description": "Interfaces (count): Device interface count\n  \n\nSystem name (sum): System name.\n  \n\nVersion (sum): System version.\n  \n\nUptime (sum): The time since the network management portion of the system was last re-initialized.\n  \n\nCPU utilization (avg): CPU usage.  \n\nMemory utilization (avg): Memory utilization.  \n\ntransmitted (sum): Network interface traffic out.\n  \n\nreceived (sum): Network interface traffic in.\n  \n\nerrors and drops (sum):   \n\nWarnings (count): Warning alerts.  \n\nCritical (count): Critical alerts.",
          "fieldConfig": {
             "defaults": {
                "custom": {
                   "filterable": true
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -659,7 +660,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface traffic out.\n",
+         "description": "transmitted (sum): Network interface traffic out.\n  \n\nreceived (sum): Network interface traffic in.\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -762,7 +763,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface errors in.\n",
+         "description": "errors in (sum): Network interface errors in.\n  \n\nerrors out (sum): Network interface errors out.\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -857,7 +858,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface discards in.\n",
+         "description": "dropped in (sum): Network interface discards in.\n  \n\ndropped out (sum): Network interface discards out.\n  \n\nunknown dropped in (sum): The number of packets received via the interface\nwhich were discarded because of an unknown or\nunsupported protocol.\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -963,7 +964,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface unicast packets in.\n",
+         "description": "unicast in (sum): Network interface unicast packets in.\n  \n\nunicast out (sum): Network interface unicast packets out.\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -1058,7 +1059,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface broadcast packets in.\n",
+         "description": "broadcast in (sum): Network interface broadcast packets in.\n  \n\nbroadcast out (sum): 'Network interface broadcast packets out.',\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -1153,7 +1154,7 @@
             "type": "prometheus",
             "uid": "${prometheus_datasource}"
          },
-         "description": "Network interface multicast packets in.\n",
+         "description": "multicast in (sum): Network interface multicast packets in.\n  \n\nmulticast out (sum): Network interface multicast packets out.\n",
          "fieldConfig": {
             "defaults": {
                "color": {

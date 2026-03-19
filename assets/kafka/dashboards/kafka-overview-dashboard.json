@@ -44,7 +44,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -112,7 +113,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -180,7 +182,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -240,7 +243,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -285,6 +289,7 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
+         "description": "Cluster bytes in (sum): Aggregate rate of incoming data in bytes across all brokers from producers.  \nMeasures total network ingress and storage write load.  \n  \n\nCluster bytes out (sum): Aggregate rate of outgoing data in bytes across all brokers to consumers and followers.  \nMeasures total network egress load and consumer throughput.  \n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -306,7 +311,7 @@
                   "mode": "absolute",
                   "steps": [ ]
                },
-               "unit": "bps"
+               "unit": "Bps"
             },
             "overrides": [
                {
@@ -396,6 +401,7 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
+         "description": "Cluster messages in (sum): Aggregate rate of incoming messages across all brokers and topics in the cluster.  \nRepresents total producer throughput and write workload.  \n  \n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -415,7 +421,7 @@
                   "mode": "absolute",
                   "steps": [ ]
                },
-               "unit": "pps"
+               "unit": "mps"
             },
             "overrides": [
                {
@@ -485,7 +491,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -545,7 +552,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -605,7 +613,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -665,7 +674,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -710,7 +720,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
          },
-         "description": "Broker's current controller role: 0 indicates follower, 1 indicates active controller.  \nOnly one broker should have value 1 at any time.  \nUsed to identify which broker is managing cluster metadata and leadership.\nCurrent controller role: 0 - follower, 1 - controller.\n",
+         "description": "Current role (sum): Broker's current controller role: 0 indicates follower, 1 indicates active controller.  \nOnly one broker should have value 1 at any time.  \nUsed to identify which broker is managing cluster metadata and leadership.\nCurrent controller role: 0 - follower, 1 - controller.\n  \n\nCurrent zookeeper role (sum): 0 - zookeeper, 1 - zookeeper(leader).\n  \n\nCurrent role (kraft) (sum): Broker state in KRaft mode (Kafka without ZooKeeper).  \nAny value indicates the broker is running in KRaft mode.  \nUsed to identify KRaft-enabled brokers in the cluster.\n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -720,7 +730,8 @@
                "thresholds": {
                   "mode": "absolute",
                   "steps": [ ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -884,6 +895,7 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
+         "description": "Broker bytes in (sum): Rate of incoming data in bytes published to this broker from producers.  \nMeasures network and storage write load.  \n  \n\nBroker bytes out (sum): Rate of outgoing data in bytes sent from this broker to consumers and followers.  \nMeasures network read load and consumer throughput.  \n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -905,7 +917,7 @@
                   "mode": "absolute",
                   "steps": [ ]
                },
-               "unit": "bps"
+               "unit": "Bps"
             },
             "overrides": [
                {
@@ -995,6 +1007,7 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
+         "description": "Broker messages in (sum): Rate of incoming messages published to this broker across all topics.  \nTracks producer throughput and write workload.  \n  \n",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -1014,7 +1027,7 @@
                   "mode": "absolute",
                   "steps": [ ]
                },
-               "unit": "pps"
+               "unit": "mps"
             },
             "overrides": [
                {
@@ -1098,7 +1111,8 @@
                "thresholds": {
                   "mode": "absolute",
                   "steps": [ ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -1175,7 +1189,8 @@
                "thresholds": {
                   "mode": "absolute",
                   "steps": [ ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -1253,7 +1268,8 @@
                "thresholds": {
                   "mode": "absolute",
                   "steps": [ ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -1331,7 +1347,8 @@
                "thresholds": {
                   "mode": "absolute",
                   "steps": [ ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -1404,7 +1421,8 @@
                "thresholds": {
                   "mode": "absolute",
                   "steps": [ ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -1476,7 +1494,8 @@
                "thresholds": {
                   "mode": "absolute",
                   "steps": [ ]
-               }
+               },
+               "unit": "short"
             },
             "overrides": [
                {
@@ -1540,7 +1559,7 @@
                   "type": "datasource",
                   "uid": "-- Mixed --"
                },
-               "description": "Total time breakdown for producer requests.\nquantile: 0.95\n\n- `Request queue`: Time spent waiting in the request queue.\n- `Local time`: Time spent being processed by leader.\n- `Remote time`: Time spent waiting for follower response (only when 'require acks' is set).\n- `Response queue`: Time spent waiting in the response queue.\n- `Response time`: Time to send the response.\n\n",
+               "description": "Produce follower queue time (avg): Time spent waiting in the request queue.\nHigh values indicate insufficient IO threads, CPU bottlenecks, or undersized request queue.  \nQueue size should match connection count.\n  \n\nProduce follower local time (avg): Time spent being processed by leader.\nHigh values often indicate slow storage or disk bottlenecks.  \nCheck LogFlushRateAndTimeMs for disk performance issues.\n  \n\nProduce follower remote time (avg): Time spent waiting for follower response (only when 'require acks' is set).\nFor fetch requests, high values may indicate caught-up consumers with no new data (normal if near max wait time).  \nConfigure via replica.fetch.wait.max.ms and fetch.max.wait.ms.\n  \n\nProduce follower response queue time (avg): Time spent waiting in the response queue.\nHigh values indicate insufficient network threads or slow network dequeue causing backpressure.\n  \n\nProduce follower response time (avg): Time to send the response.\nHigh values indicate slow zero-copy operations or network saturation.  \nNetwork buffer fullness can cause Kafka to block.\n",
                "fieldConfig": {
                   "defaults": {
                      "color": {
@@ -1560,7 +1579,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "ms"
                   },
                   "overrides": [
                      {
@@ -1709,7 +1729,7 @@
                   "type": "datasource",
                   "uid": "-- Mixed --"
                },
-               "description": "Total time breakdown for fetch-follower requests.\nquantile: 0.95\n\n- `Request queue`: Time spent waiting in the request queue.\n- `Local time`: Time spent being processed by leader.\n- `Remote time`: Time spent waiting for follower response (only when 'require acks' is set).\n- `Response queue`: Time spent waiting in the response queue.\n- `Response time`: Time to send the response.\n\n",
+               "description": "Fetch-follower queue time (avg): Time spent waiting in the request queue.\nHigh values indicate insufficient IO threads, CPU bottlenecks, or undersized request queue.  \nQueue size should match connection count.\n  \n\nFetch-follower local time (avg): Time spent being processed by leader.\nHigh values often indicate slow storage or disk bottlenecks.  \nCheck LogFlushRateAndTimeMs for disk performance issues.\n  \n\nFetch-follower remote time (avg): Time spent waiting for follower response (only when 'require acks' is set).\nFor fetch requests, high values may indicate caught-up consumers with no new data (normal if near max wait time).  \nConfigure via replica.fetch.wait.max.ms and fetch.max.wait.ms.\n  \n\nFetch-follower response queue time (avg): Time spent waiting in the response queue.\nHigh values indicate insufficient network threads or slow network dequeue causing backpressure.\n  \n\nFetch-follower response time (avg): Time to send the response.\nHigh values indicate slow zero-copy operations or network saturation.  \nNetwork buffer fullness can cause Kafka to block.\n",
                "fieldConfig": {
                   "defaults": {
                      "color": {
@@ -1729,7 +1749,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "ms"
                   },
                   "overrides": [
                      {
@@ -1878,7 +1899,7 @@
                   "type": "datasource",
                   "uid": "-- Mixed --"
                },
-               "description": "Total time breakdown for fetch requests.\nquantile: 0.95\n\n- `Request queue`: Time   spent waiting in the request queue.\n- `Local time`: Time spent being processed by leader.\n- `Remote time`: Time spent waiting for follower response (only when 'require acks' is set).\n- `Response queue`: Time spent waiting in the response queue.\n- `Response time`: Time to send the response.\n\n",
+               "description": "Fetch-consumer queue time (avg): Time spent waiting in the request queue.\nHigh values indicate insufficient IO threads, CPU bottlenecks, or undersized request queue.  \nQueue size should match connection count.\n  \n\nFetch-consumer local time (avg): Time spent being processed by leader.\nHigh values often indicate slow storage or disk bottlenecks.  \nCheck LogFlushRateAndTimeMs for disk performance issues.\n  \n\nFetch-consumer remote time (avg): Time spent waiting for follower response (only when 'require acks' is set).\nFor fetch requests, high values may indicate caught-up consumers with no new data (normal if near max wait time).  \nConfigure via replica.fetch.wait.max.ms and fetch.max.wait.ms.\n  \n\nFetch-consumer response queue time (avg): Time spent waiting in the response queue.\nHigh values indicate insufficient network threads or slow network dequeue causing backpressure.\n  \n\nFetch-consumer response time (avg): Time to send the response.\nHigh values indicate slow zero-copy operations or network saturation.  \nNetwork buffer fullness can cause Kafka to block.\n",
                "fieldConfig": {
                   "defaults": {
                      "color": {
@@ -1898,7 +1919,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "ms"
                   },
                   "overrides": [
                      {
@@ -2077,7 +2099,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "mps"
                   },
                   "overrides": [
                      {
@@ -2149,7 +2172,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "mps"
                   },
                   "overrides": [
                      {
@@ -2234,7 +2258,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "ms"
                   },
                   "overrides": [
                      {
@@ -2289,7 +2314,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "description": "Rate of successful ZooKeeper connections established by broker.  \nFrequent connections may indicate session instability or network issues.  \nShould be stable in healthy clusters with occasional reconnections during maintenance.\n",
+               "description": "Zookeeper connections (avg): Rate of successful ZooKeeper connections established by broker.  \nFrequent connections may indicate session instability or network issues.  \nShould be stable in healthy clusters with occasional reconnections during maintenance.\n  \n\nZookeeper expired connections (avg): Rate of ZooKeeper session expirations from broker.  \nExpirations cause broker to lose cluster membership temporarily.  \nIndicates GC pauses, network issues, or ZooKeeper overload requiring investigation.\n  \n\nZookeeper disconnects (avg): Rate of ZooKeeper disconnections from broker.  \nFrequent disconnects indicate unstable ZooKeeper connectivity or network problems.  \nCan lead to ISR changes and performance degradation if persistent.\n  \n\nZookeeper auth failures (avg): Rate of ZooKeeper authentication failures from broker.  \nIndicates incorrect credentials, ACL issues, or security configuration problems.  \nPrevents broker from accessing ZooKeeper data and requires immediate security review.\n",
                "fieldConfig": {
                   "defaults": {
                      "color": {
@@ -2306,7 +2331,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "short"
                   },
                   "overrides": [
                      {
@@ -2531,7 +2557,8 @@
                         "value": null
                      }
                   ]
-               }
+               },
+               "unit": "dateTimeAsIso"
             },
             "overrides": [
                {
@@ -2843,7 +2870,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
          },
-         "description": "Process files opened.",
+         "description": "Process files open (avg): Process files opened.  \n\nProcess files max (avg): Process files opened limit.",
          "fieldConfig": {
             "defaults": {
                "color": {
@@ -2860,7 +2887,8 @@
                "thresholds": {
                   "mode": "absolute",
                   "steps": [ ]
-               }
+               },
+               "unit": ""
             },
             "overrides": [
                {
@@ -3078,7 +3106,8 @@
                               "value": null
                            }
                         ]
-                     }
+                     },
+                     "unit": "short"
                   },
                   "overrides": [
                      {
@@ -3138,7 +3167,8 @@
                               "value": null
                            }
                         ]
-                     }
+                     },
+                     "unit": "short"
                   },
                   "overrides": [
                      {
@@ -3196,7 +3226,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "description": "The used space is the amount of memory that is currently occupied by Java objects.",
+               "description": "JVM memory used(heap) (avg): The used space is the amount of memory that is currently occupied by Java objects.  \n\nJVM memory max(heap) (avg): The max heap size is the size specified via the -Xmx flag.\nReturns -1 if the maximum memory size is undefined.\n\nThis amount of memory is not guaranteed to be available for memory management\nif it is greater than the amount of committed memory.\nThe Java virtual machine may fail to allocate memory even if the amount of used memory does not exceed this maximum size.\n\nSee also: https://docs.oracle.com/javase/10/docs/api/java/lang/management/MemoryUsage.html\n  \n\nJVM memory committed(heap) (avg): The committed size is the amount of memory guaranteed to be available for use by the Java virtual machine.\n",
                "fieldConfig": {
                   "defaults": {
                      "color": {
@@ -3347,7 +3377,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "description": "The amount of memory that is currently in non-heap.",
+               "description": "JVM memory used(nonheap) (avg): The amount of memory that is currently in non-heap.  \n\nJVM memory max(nonheap) (avg): Measure of memory max possible (non-heap). Returns -1 if the maximum memory size is undefined.  \n\nJVM memory committed(nonheap) (avg): The committed size is the amount of memory guaranteed to be available for use by the Java virtual machine(non-heap).\n",
                "fieldConfig": {
                   "defaults": {
                      "color": {
@@ -3511,7 +3541,7 @@
                   "type": "prometheus",
                   "uid": "${datasource}"
                },
-               "description": "The current number of live threads including both daemon and non-daemon threads.",
+               "description": "Threads (avg): The current number of live threads including both daemon and non-daemon threads.  \n\nThreads (daemon) (avg): Daemon thread count of a JVM.  \n\nThreads (peak) (avg): Peak thread count of a JVM.  \n\nThreads (deadlocked) (avg): Cycles of JVM-threads that are in deadlock waiting to acquire object monitors or ownable synchronizers.",
                "fieldConfig": {
                   "defaults": {
                      "color": {
@@ -3528,7 +3558,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "short"
                   },
                   "overrides": [
                      {
@@ -3698,7 +3729,8 @@
                      "thresholds": {
                         "mode": "absolute",
                         "steps": [ ]
-                     }
+                     },
+                     "unit": "short"
                   },
                   "overrides": [
                      {
