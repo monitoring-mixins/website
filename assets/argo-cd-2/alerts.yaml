@@ -258,18 +258,18 @@ groups:
   - alert: ArgoCdHighKubectlRequestRetryRate
     annotations:
       dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
-      description: ArgoCD in {{ $labels.namespace }} has had more than 1 kubectl request
-        retries in the past 10m. This indicates transient Kubernetes API errors or
-        throttling.
+      description: ArgoCD in {{ $labels.namespace }} has had more than 50 kubectl
+        request retries per minute for the past 10m. This indicates transient Kubernetes
+        API errors or throttling.
       summary: ArgoCD kubectl request retry rate is high.
     expr: |
       sum(
         increase(
           argocd_kubectl_request_retries_total{
             job=~"(argocd|argo-cd).*"
-          }[2m]
+          }[1m]
         )
-      ) by (cluster, namespace) > 1
+      ) by (cluster, namespace) > 50
     for: 10m
     labels:
       severity: warning
@@ -295,8 +295,8 @@ groups:
             job=~"(argocd|argo-cd).*"
           }[2m]
         )
-      ) by (cluster, namespace, job)
-      > 0.05
+      ) by (cluster, namespace, job) * 100
+      > 5
     for: 10m
     labels:
       severity: warning
