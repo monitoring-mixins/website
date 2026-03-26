@@ -96,7 +96,7 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -151,7 +151,7 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -225,7 +225,7 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -285,7 +285,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -345,7 +345,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -623,7 +623,7 @@
             "y": 15
          },
          "id": 7,
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -791,7 +791,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -858,7 +858,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -922,7 +922,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -1081,7 +1081,7 @@
             "y": 33
          },
          "id": 11,
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -1203,7 +1203,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {

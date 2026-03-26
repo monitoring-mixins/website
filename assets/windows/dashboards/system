@@ -124,7 +124,7 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -187,7 +187,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -314,7 +314,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -374,7 +374,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -434,7 +434,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -513,7 +513,7 @@
                "fields": "/^timezone$/"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -574,7 +574,7 @@
          },
          "id": 9,
          "maxDataPoints": 50,
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -635,7 +635,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {

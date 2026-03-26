@@ -160,7 +160,7 @@
             },
             "showHeader": true
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -308,7 +308,7 @@
             "y": 1
          },
          "id": 3,
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -364,7 +364,7 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -420,7 +420,7 @@
                ]
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -537,7 +537,7 @@
             "y": 9
          },
          "id": 6,
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -655,7 +655,7 @@
             "y": 9
          },
          "id": 7,
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -723,7 +723,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -839,7 +839,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -943,7 +943,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
@@ -1041,7 +1041,7 @@
                "sort": "desc"
             }
          },
-         "pluginVersion": "v11.0.0",
+         "pluginVersion": "v11.4.0",
          "targets": [
             {
                "datasource": {
