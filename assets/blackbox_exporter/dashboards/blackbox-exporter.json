@@ -428,7 +428,7 @@
                   "uid": "$datasource"
                },
                "expr": "avg_over_time(\n  probe_success{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n,\ninstance=~\"$instance\"\n\n  }[30d]\n)\n",
-               "instant": false
+               "instant": true
             }
          ],
          "title": "Uptime 30d",
