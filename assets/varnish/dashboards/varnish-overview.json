@@ -1083,7 +1083,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,

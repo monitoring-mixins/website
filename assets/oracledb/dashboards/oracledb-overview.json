@@ -101,7 +101,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
@@ -173,7 +173,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
@@ -260,7 +260,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
@@ -322,7 +322,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
@@ -384,7 +384,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
@@ -446,7 +446,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
@@ -508,7 +508,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
@@ -570,7 +570,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
@@ -632,7 +632,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
@@ -694,7 +694,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
@@ -769,7 +769,7 @@
                   "mode": "palette-classic"
                },
                "custom": {
-                  "fillOpacity": 0,
+                  "fillOpacity": 30,
                   "gradientMode": "opacity",
                   "lineInterpolation": "smooth",
                   "lineWidth": 2,
