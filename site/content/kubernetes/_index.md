@@ -990,6 +990,22 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### KubeAPIInstanceUnreachable
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapiinstanceunreachable
+
+{{< code lang="yaml" >}}
+alert: KubeAPIInstanceUnreachable
+annotations:
+  description: A KubeAPI instance has been unreachable for more than 15 minutes.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapiinstanceunreachable
+  summary: KubeAPI instance is unreachable.
+expr: |
+  up{job="kube-apiserver"} == 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### KubeAPITerminatedRequests
 https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapiterminatedrequests
 
@@ -1277,6 +1293,22 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### KubeletInstanceUnreachable
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletinstanceunreachable
+
+{{< code lang="yaml" >}}
+alert: KubeletInstanceUnreachable
+annotations:
+  description: A Kubelet instance has been unreachable for more than 15 minutes.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletinstanceunreachable
+  summary: Kubelet instance is unreachable.
+expr: |
+  up{job="kubelet"} == 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ##### KubeletDown
 https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletdown
 
@@ -1313,6 +1345,22 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### KubeSchedulerInstanceUnreachable
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeschedulerinstanceunreachable
+
+{{< code lang="yaml" >}}
+alert: KubeSchedulerInstanceUnreachable
+annotations:
+  description: A KubeScheduler instance has been unreachable for more than 15 minutes.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeschedulerinstanceunreachable
+  summary: KubeScheduler instance is unreachable.
+expr: |
+  up{job="kube-scheduler"} == 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ### kubernetes-system-controller-manager
 
 ##### KubeControllerManagerDown
@@ -1331,6 +1379,23 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### KubeControllerManagerInstanceUnreachable
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecontrollermanagerinstanceunreachable
+
+{{< code lang="yaml" >}}
+alert: KubeControllerManagerInstanceUnreachable
+annotations:
+  description: A KubeControllerManager instance has been unreachable for more than
+    15 minutes.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecontrollermanagerinstanceunreachable
+  summary: KubeControllerManager instance is unreachable.
+expr: |
+  up{job="kube-controller-manager"} == 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ### kubernetes-system-kube-proxy
 
 ##### KubeProxyDown
@@ -1347,6 +1412,22 @@ expr: |
 for: 15m
 labels:
   severity: critical
+{{< /code >}}
+ 
+##### KubeProxyInstanceUnreachable
+https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeproxyinstanceunreachable
+
+{{< code lang="yaml" >}}
+alert: KubeProxyInstanceUnreachable
+annotations:
+  description: A KubeProxy instance has been unreachable for more than 15 minutes.
+  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeproxyinstanceunreachable
+  summary: KubeProxy instance is unreachable.
+expr: |
+  up{job="kube-proxy"} == 0
+for: 15m
+labels:
+  severity: warning
 {{< /code >}}
  
 ## Recording rules
