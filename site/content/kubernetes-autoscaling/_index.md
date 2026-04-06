@@ -411,6 +411,7 @@ Following dashboards are generated from mixins and hosted on github:
 - [kubernetes-autoscaling-mixin-ca](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-ca.json)
 - [kubernetes-autoscaling-mixin-hpa](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-hpa.json)
 - [kubernetes-autoscaling-mixin-karpenter-act](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-karpenter-act.json)
+- [kubernetes-autoscaling-mixin-karpenter-costs](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-karpenter-costs.json)
 - [kubernetes-autoscaling-mixin-karpenter-over](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-karpenter-over.json)
 - [kubernetes-autoscaling-mixin-karpenter-perf](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-karpenter-perf.json)
 - [kubernetes-autoscaling-mixin-keda-sj](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes-autoscaling/dashboards/kubernetes-autoscaling-mixin-keda-sj.json)

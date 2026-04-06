@@ -1,0 +1,896 @@
+{
+   "__inputs": [ ],
+   "__requires": [ ],
+   "annotations": {
+      "list": [ ]
+   },
+   "description": "A dashboard that monitors current Karpenter node costs and spot savings based on cloud provider offering metrics. These values are estimated instance prices, not billing data. For deeper cost analysis, deploy OpenCost (https://github.com/opencost/opencost) and opencost-mixin (https://github.com/adinhodovic/opencost-mixin/). The dashboards were generated using [kubernetes-autoscaling-mixin](https://github.com/adinhodovic/kubernetes-autoscaling-mixin). Open issues and create feature requests in the repository.",
+   "editable": true,
+   "links": [
+      {
+         "asDropdown": true,
+         "includeVars": false,
+         "keepTime": true,
+         "tags": [
+            "kubernetes",
+            "autoscaling",
+            "kubernetes-autoscaling-mixin"
+         ],
+         "targetBlank": true,
+         "title": "Kubernetes / Autoscaling",
+         "type": "dashboards"
+      }
+   ],
+   "panels": [
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 1,
+         "title": "Cost Breakdown",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Estimated monthly run rate based on current Karpenter nodes and cloud provider price estimates.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": 0
+                     }
+                  ]
+               },
+               "unit": "currencyUSD"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 12,
+            "x": 0,
+            "y": 1
+         },
+         "id": 2,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "(sum(\n  (\n    max by (instance_type, capacity_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\"\n  }\n)\n\n  )\n  * on (instance_type, capacity_type, zone)\n  (\n    count by (region, zone, instance_type, capacity_type) (\n  max by (node_name, region, zone, instance_type, capacity_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n  )\n)\n) * 730",
+               "instant": false
+            }
+         ],
+         "title": "Estimated Monthly Cost",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Estimated monthly run-rate savings if current Karpenter nodes were priced at spot rates instead of on-demand.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": 0
+                     }
+                  ]
+               },
+               "unit": "currencyUSD"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 4,
+            "w": 12,
+            "x": 12,
+            "y": 1
+         },
+         "id": 3,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "((\n  sum(\n    (\n      (max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"on-demand\"\n  }\n)\n) - (max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"spot\"\n  }\n)\n)\n    )\n    * on (instance_type, zone)\n    (\n      count by (region, zone, instance_type) (\n  max by (node_name, region, zone, instance_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\n      arch=~\"$arch\",\n      os=~\"$os\",\n      instance_type=~\"$instance_type\",\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n    )\n  )\n) or on() vector(0)\n) * 730",
+               "instant": false
+            }
+         ],
+         "title": "Estimated Monthly Spot Savings",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Estimated monthly cost split by capacity type.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "currencyUSD"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 5
+         },
+         "id": 4,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "value",
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "(sum by (capacity_type) (\n  (\n    max by (instance_type, capacity_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\"\n  }\n)\n\n  )\n  * on (instance_type, capacity_type, zone)\n  (\n    count by (region, zone, instance_type, capacity_type) (\n  max by (node_name, region, zone, instance_type, capacity_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n  )\n)\n) * 730",
+               "instant": true,
+               "legendFormat": "{{ capacity_type }}"
+            }
+         ],
+         "title": "Estimated Monthly Cost by Capacity Type",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Estimated monthly cost split by architecture.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "currencyUSD"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 5
+         },
+         "id": 5,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "value",
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "(sum by (arch) (\n  (\n    count by (arch, zone, instance_type, capacity_type) (\n  max by (node_name, arch, zone, instance_type, capacity_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n  )\n  * on (instance_type, capacity_type, zone) group_left()\n  (\n    max by (instance_type, capacity_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\"\n  }\n)\n\n  )\n)\n) * 730",
+               "instant": true,
+               "legendFormat": "{{ arch }}"
+            }
+         ],
+         "title": "Estimated Monthly Cost by Architecture",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Estimated monthly cost split by node pool.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "currencyUSD"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 5
+         },
+         "id": 6,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "value",
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "(sum by (nodepool) (\n  (\n    count by (nodepool, region, zone, instance_type, capacity_type) (\n  max by (node_name, nodepool, region, zone, instance_type, capacity_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n  )\n  * on (instance_type, capacity_type, zone) group_left()\n  (\n    max by (instance_type, capacity_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\"\n  }\n)\n\n  )\n)\n) * 730",
+               "instant": true,
+               "legendFormat": "{{ nodepool }}"
+            }
+         ],
+         "title": "Estimated Monthly Cost by Node Pool",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Estimated monthly cost split by instance type.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "currencyUSD"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 5
+         },
+         "id": 7,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "value",
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "(sum by (instance_type, capacity_type) (\n  (\n    max by (instance_type, capacity_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\"\n  }\n)\n\n  )\n  * on (instance_type, capacity_type, zone)\n  (\n    count by (region, zone, instance_type, capacity_type) (\n  max by (node_name, region, zone, instance_type, capacity_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n  )\n)\n) * 730",
+               "instant": true,
+               "legendFormat": "{{ instance_type }}"
+            }
+         ],
+         "title": "Estimated Monthly Cost by Instance Type",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Estimated monthly node cost split by node pool.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "currencyUSD"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 10
+         },
+         "id": 8,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "(sum by (nodepool) (\n  (\n    count by (nodepool, region, zone, instance_type, capacity_type) (\n  max by (node_name, nodepool, region, zone, instance_type, capacity_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n  )\n  * on (instance_type, capacity_type, zone) group_left()\n  (\n    max by (instance_type, capacity_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\"\n  }\n)\n\n  )\n)\n) * 730",
+               "legendFormat": "{{ nodepool }}"
+            }
+         ],
+         "title": "Estimated Monthly Cost by Node Pool",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Estimated monthly cost by instance type and capacity type, including average monthly cost per instance and current instance count.",
+         "fieldConfig": {
+            "defaults": {
+               "links": [ ],
+               "thresholds": {
+                  "steps": [ ]
+               },
+               "unit": "currencyUSD"
+            },
+            "overrides": [
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Monthly Cost per Instance"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "currencyUSD"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Instance Count"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "short"
+                     }
+                  ]
+               }
+            ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 18
+         },
+         "id": 9,
+         "options": {
+            "footer": {
+               "enablePagination": true
+            },
+            "sortBy": [
+               {
+                  "desc": true,
+                  "displayName": "Estimated Monthly Cost"
+               }
+            ]
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "(sum by (instance_type, capacity_type) (\n  (\n    max by (instance_type, capacity_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\"\n  }\n)\n\n  )\n  * on (instance_type, capacity_type, zone)\n  (\n    count by (region, zone, instance_type, capacity_type) (\n  max by (node_name, region, zone, instance_type, capacity_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n  )\n)\n) * 730",
+               "format": "table",
+               "instant": true
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "avg by (instance_type, capacity_type) (\n  max by (instance_type, capacity_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=~\"$capacity_type\"\n  }\n)\n\n) * 730\n",
+               "format": "table",
+               "instant": true
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum by (instance_type, capacity_type) (\n  count by (region, zone, instance_type, capacity_type) (\n  max by (node_name, region, zone, instance_type, capacity_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n)\n",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Estimated Monthly Cost by Instance Type",
+         "transformations": [
+            {
+               "id": "merge"
+            },
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true,
+                     "job": true
+                  },
+                  "indexByName": {
+                     "Value #A": 2,
+                     "Value #B": 3,
+                     "Value #C": 4,
+                     "capacity_type": 1,
+                     "instance_type": 0
+                  },
+                  "renameByName": {
+                     "Value #A": "Estimated Monthly Cost",
+                     "Value #B": "Monthly Cost per Instance",
+                     "Value #C": "Instance Count",
+                     "capacity_type": "Capacity Type",
+                     "instance_type": "Instance Type"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 26
+         },
+         "id": 10,
+         "title": "Spot Instance Savings",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Estimated monthly run-rate savings by node pool if current Karpenter nodes were priced at spot rates instead of on-demand.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "currencyUSD"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 27
+         },
+         "id": 11,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "((\n  0 * sum by (nodepool) (\n    count by (nodepool, region, zone, instance_type, capacity_type) (\n  max by (node_name, nodepool, region, zone, instance_type, capacity_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n  )\n)\n+\n(\n  sum by (nodepool) (\n    (\n      count by (nodepool, region, zone, instance_type) (\n  max by (node_name, nodepool, region, zone, instance_type) (\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\n      arch=~\"$arch\",\n      os=~\"$os\",\n      instance_type=~\"$instance_type\",\n      resource_type=\"cpu\"\n    }\n  )\n)\n\n    )\n    * on (instance_type, zone) group_left()\n    (\n      (max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"on-demand\"\n  }\n)\n) - (max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"spot\"\n  }\n)\n)\n    )\n  )\n)\n) * 730",
+               "legendFormat": "{{ nodepool }}"
+            }
+         ],
+         "title": "Estimated Monthly Spot Savings by Node Pool",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Average monthly on-demand and spot cost estimates per instance type across the selected zones.",
+         "fieldConfig": {
+            "defaults": {
+               "links": [ ],
+               "thresholds": {
+                  "steps": [ ]
+               },
+               "unit": "currencyUSD"
+            },
+            "overrides": [
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "On-Demand Monthly Cost"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "currencyUSD"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Spot Monthly Cost"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "currencyUSD"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Monthly Savings per Instance"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "currencyUSD"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
+                     "options": "Savings %"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "percent"
+                     }
+                  ]
+               }
+            ]
+         },
+         "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 37
+         },
+         "id": 12,
+         "options": {
+            "footer": {
+               "enablePagination": true
+            },
+            "sortBy": [
+               {
+                  "desc": true,
+                  "displayName": "Savings %"
+               }
+            ]
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "avg by (instance_type) (\n  max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"on-demand\"\n  }\n)\n\n) * 730\n",
+               "format": "table",
+               "instant": true
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "avg by (instance_type) (\n  max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"spot\"\n  }\n)\n\n) * 730\n",
+               "format": "table",
+               "instant": true
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "avg by (instance_type) (\n  (max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"on-demand\"\n  }\n)\n) - (max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"spot\"\n  }\n)\n)\n) * 730\n",
+               "format": "table",
+               "instant": true
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "avg by (instance_type) (\n  (((max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"on-demand\"\n  }\n)\n) - (max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"spot\"\n  }\n)\n)) / (max by (instance_type, zone) (\n  karpenter_cloudprovider_instance_type_offering_price_estimate{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\n    zone=~\"$zone\",\n    instance_type=~\"$instance_type\",\n    capacity_type=\"on-demand\"\n  }\n)\n)) * 100\n)\n",
+               "format": "table",
+               "instant": true
+            }
+         ],
+         "title": "Spot versus On-Demand Comparison",
+         "transformations": [
+            {
+               "id": "merge"
+            },
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true,
+                     "job": true,
+                     "zone": true
+                  },
+                  "indexByName": {
+                     "Value #A": 1,
+                     "Value #B": 2,
+                     "Value #C": 3,
+                     "Value #D": 4,
+                     "instance_type": 0
+                  },
+                  "renameByName": {
+                     "Value #A": "On-Demand Monthly Cost",
+                     "Value #B": "Spot Monthly Cost",
+                     "Value #C": "Monthly Savings per Instance",
+                     "Value #D": "Savings %",
+                     "instance_type": "Instance Type"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      }
+   ],
+   "schemaVersion": 39,
+   "tags": [
+      "kubernetes",
+      "autoscaling",
+      "kubernetes-autoscaling-mixin",
+      "karpenter"
+   ],
+   "templating": {
+      "list": [
+         {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
+            "label": "Data source",
+            "name": "datasource",
+            "query": "prometheus",
+            "type": "datasource"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "hide": 2,
+            "label": "Cluster",
+            "name": "cluster",
+            "query": "label_values(kube_pod_info{job=~\"kube-state-metrics\"}, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "label": "Job",
+            "name": "job",
+            "query": "label_values(karpenter_nodes_allocatable{cluster=\"$cluster\"}, job)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Region",
+            "multi": true,
+            "name": "region",
+            "query": "label_values(karpenter_nodes_allocatable{cluster=\"$cluster\", job=~\"$job\"}, region)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Zone",
+            "multi": true,
+            "name": "zone",
+            "query": "label_values(karpenter_nodes_allocatable{cluster=\"$cluster\", job=~\"$job\", region=~\"$region\"}, zone)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Architecture",
+            "multi": true,
+            "name": "arch",
+            "query": "label_values(karpenter_nodes_allocatable{cluster=\"$cluster\", job=~\"$job\", region=~\"$region\", zone=~\"$zone\"}, arch)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Operating System",
+            "multi": true,
+            "name": "os",
+            "query": "label_values(karpenter_nodes_allocatable{cluster=\"$cluster\", job=~\"$job\", region=~\"$region\", zone=~\"$zone\", arch=~\"$arch\"}, os)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Instance Type",
+            "multi": true,
+            "name": "instance_type",
+            "query": "label_values(karpenter_nodes_allocatable{cluster=\"$cluster\", job=~\"$job\", region=~\"$region\", zone=~\"$zone\", arch=~\"$arch\", os=~\"$os\"}, instance_type)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Capacity Type",
+            "multi": true,
+            "name": "capacity_type",
+            "query": "label_values(karpenter_nodes_allocatable{cluster=\"$cluster\", job=~\"$job\", region=~\"$region\", zone=~\"$zone\", arch=~\"$arch\", os=~\"$os\", instance_type=~\"$instance_type\"}, capacity_type)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Node Pool",
+            "multi": true,
+            "name": "nodepool",
+            "query": "label_values(karpenter_nodes_allocatable{cluster=\"$cluster\", job=~\"$job\", region=~\"$region\", zone=~\"$zone\", arch=~\"$arch\", os=~\"$os\", instance_type=~\"$instance_type\", capacity_type=~\"$capacity_type\"}, nodepool)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         }
+      ]
+   },
+   "time": {
+      "from": "now-3h",
+      "to": "now"
+   },
+   "timezone": "utc",
+   "title": "Kubernetes / Autoscaling / Karpenter / Costs",
+   "uid": "kubernetes-autoscaling-mixin-kcost-jkwq"
+}
