@@ -78,7 +78,7 @@ expr: |
       django_http_responses_total_by_status_view_method_total{
         job="django",
         status=~"4.*",
-        view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
+        view!~"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics"
       }[5m]
     )
   )  by (cluster, namespace, job, view)
@@ -87,7 +87,7 @@ expr: |
     rate(
       django_http_responses_total_by_status_view_method_total{
         job="django",
-        view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
+        view!~"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics"
       }[5m]
     )
   )  by (cluster, namespace, job, view)
@@ -113,7 +113,7 @@ expr: |
       django_http_responses_total_by_status_view_method_total{
         job="django",
         status=~"5.*",
-        view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
+        view!~"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics"
       }[5m]
     )
   )  by (cluster, namespace, job, view)
@@ -122,7 +122,7 @@ expr: |
     rate(
       django_http_responses_total_by_status_view_method_total{
         job="django",
-        view!~"<unnamed view>|health_check:health_check_home|prometheus-django-metrics"
+        view!~"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics"
       }[5m]
     )
   )  by (cluster, namespace, job, view)

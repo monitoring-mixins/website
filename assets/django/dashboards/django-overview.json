@@ -77,7 +77,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n\n      }[$__rate_interval]\n    )\n  ), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n\n      }[$__rate_interval]\n    )\n  ), 0.001\n)\n",
                "instant": false
             }
          ],
@@ -298,7 +298,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\n        status=~\"2.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n,\n        status=~\"2.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "2xx"
             },
             {
@@ -307,7 +307,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\n        status=~\"3.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n,\n        status=~\"3.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "3xx"
             },
             {
@@ -316,7 +316,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\n        status=~\"4.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n,\n        status=~\"4.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "4xx"
             },
             {
@@ -325,7 +325,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check:health_check_home|prometheus-django-metrics\"\n,\n        status=~\"5.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n,\n        status=~\"5.*\",\n      }[$__rate_interval]\n    ) > 0\n  ) by (job), 0.001\n)\n",
                "legendFormat": "5xx"
             }
          ],
