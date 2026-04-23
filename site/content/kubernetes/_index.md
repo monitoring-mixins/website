@@ -373,7 +373,7 @@ expr: |
       ==
     kube_horizontalpodautoscaler_spec_max_replicas{job="kube-state-metrics"}
   )
-  and on(namespace, horizontalpodautoscaler) (
+  and on(namespace, horizontalpodautoscaler, cluster) (
     kube_horizontalpodautoscaler_spec_max_replicas{job="kube-state-metrics"}
       !=
     kube_horizontalpodautoscaler_spec_min_replicas{job="kube-state-metrics"}
