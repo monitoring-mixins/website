@@ -4,7 +4,7 @@
    "annotations": {
       "list": [ ]
    },
-   "description": "A dashboard that monitors Django which focuses on giving a overview for the system (requests, db, cache). The dashboards were generated using [Django-mixin](https://github.com/adinhodovic/django-mixin). Open issues and create feature requests in the repository.",
+   "description": "A landing dashboard for Django services with request health, latency, database activity, cache effectiveness, and drill-down links into high-traffic views. Use it to spot application-wide regressions before moving into the request, view, or model dashboards. The dashboards were generated using [Django-mixin](https://github.com/adinhodovic/django-mixin). Open issues and create feature requests in the repository.",
    "editable": false,
    "links": [
       {
@@ -59,8 +59,8 @@
             "overrides": [ ]
          },
          "gridPos": {
-            "h": 4,
-            "w": 8,
+            "h": 3,
+            "w": 4,
             "x": 0,
             "y": 1
          },
@@ -89,6 +89,171 @@
             "type": "prometheus",
             "uid": "$datasource"
          },
+         "description": "Request success rate that treats client-side 4xx responses as successful. Drops usually point to Django, dependency, or infrastructure failures.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": 0.90000000000000002
+                     },
+                     {
+                        "color": "yellow",
+                        "value": 0.94999999999999996
+                     },
+                     {
+                        "color": "green",
+                        "value": 0.98999999999999999
+                     }
+                  ]
+               },
+               "unit": "percentunit"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 3,
+            "w": 4,
+            "x": 4,
+            "y": 1
+         },
+         "id": 3,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n,\n      status!~\"5.*\"\n    }[$__rate_interval]\n  )\n)\n/\nsum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n\n    }[$__rate_interval]\n  )\n)\n",
+               "instant": false
+            }
+         ],
+         "title": "Success Rate (Excluding 4xx)",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Strict request success rate that counts both 4xx and 5xx responses as failures. Use this as an end-user health signal.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": 0.90000000000000002
+                     },
+                     {
+                        "color": "yellow",
+                        "value": 0.94999999999999996
+                     },
+                     {
+                        "color": "green",
+                        "value": 0.98999999999999999
+                     }
+                  ]
+               },
+               "unit": "percentunit"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 3,
+            "w": 4,
+            "x": 8,
+            "y": 1
+         },
+         "id": 4,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n,\n      status!~\"[4-5].*\"\n    }[$__rate_interval]\n  )\n)\n/\nsum(\n  rate(\n    django_http_responses_total_by_status_view_method_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n\n    }[$__rate_interval]\n  )\n)\n",
+               "instant": false
+            }
+         ],
+         "title": "Success Rate (Including 4xx)",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "95th percentile Django request latency across the selected namespace and job.",
+         "fieldConfig": {
+            "defaults": {
+               "mappings": [ ],
+               "thresholds": {
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": 0
+                     },
+                     {
+                        "color": "yellow",
+                        "value": 1
+                     },
+                     {
+                        "color": "red",
+                        "value": 3
+                     }
+                  ]
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 3,
+            "w": 4,
+            "x": 12,
+            "y": 1
+         },
+         "id": 5,
+         "options": {
+            "graphMode": "area",
+            "percentChangeColorMode": "standard",
+            "showPercentChange": false
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n\n      }[$__rate_interval]\n    )\n  ) by (le)\n)\n",
+               "instant": false
+            }
+         ],
+         "title": "Request Latency (P95)",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
          "description": "The number of database operations (queries) executed per second.",
          "fieldConfig": {
             "defaults": {
@@ -110,12 +275,12 @@
             "overrides": [ ]
          },
          "gridPos": {
-            "h": 4,
-            "w": 8,
-            "x": 8,
+            "h": 3,
+            "w": 4,
+            "x": 16,
             "y": 1
          },
-         "id": 3,
+         "id": 6,
          "options": {
             "graphMode": "area",
             "percentChangeColorMode": "standard",
@@ -161,12 +326,12 @@
             "overrides": [ ]
          },
          "gridPos": {
-            "h": 4,
-            "w": 8,
-            "x": 16,
+            "h": 3,
+            "w": 4,
+            "x": 20,
             "y": 1
          },
-         "id": 4,
+         "id": 7,
          "options": {
             "graphMode": "area",
             "percentChangeColorMode": "standard",
@@ -185,6 +350,171 @@
          ],
          "title": "Cache Hitrate [30m]",
          "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Traffic split by HTTP method over the last hour. Unexpected method mix changes can indicate client or routing changes.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "reqps"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 0,
+            "y": 4
+         },
+         "id": 8,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  rate(\n    django_http_requests_total_by_view_transport_method_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n\n    }[1h]\n  )\n) by (method)\n",
+               "instant": true,
+               "legendFormat": "{{ method }}"
+            }
+         ],
+         "title": "Request Distribution by Method [1h]",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Response split by status code class over the last hour. Use this to quickly spot elevated 4xx or 5xx traffic.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "reqps"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 8,
+            "y": 4
+         },
+         "id": 9,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum by (status_class) (\n  label_replace(\n    rate(\n      django_http_responses_total_by_status_view_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n\n      }[1h]\n    ),\n    \"status_class\",\n    \"${1}xx\",\n    \"status\",\n    \"([0-9]).*\"\n  )\n)\n",
+               "instant": true,
+               "legendFormat": "{{ status_class }}"
+            }
+         ],
+         "title": "Response Distribution by Status Class [1h]",
+         "type": "piechart"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Top Django views by request volume over the last hour.",
+         "fieldConfig": {
+            "defaults": {
+               "unit": "reqps"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 16,
+            "y": 4
+         },
+         "id": 10,
+         "options": {
+            "displayLabels": [
+               "percent"
+            ],
+            "legend": {
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "values": [
+                  "percent"
+               ]
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "topk(10,\n  sum(\n    rate(\n      django_http_requests_total_by_view_transport_method_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n\n      }[1h]\n    )\n  ) by (view)\n)\n",
+               "instant": true,
+               "legendFormat": "{{ view }}"
+            }
+         ],
+         "title": "Top View Traffic Share [1h]",
+         "type": "piechart"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 10
+         },
+         "id": 11,
+         "title": "Requests",
+         "type": "row"
       },
       {
          "datasource": {
@@ -267,12 +597,12 @@
             ]
          },
          "gridPos": {
-            "h": 6,
-            "w": 24,
+            "h": 8,
+            "w": 12,
             "x": 0,
-            "y": 5
+            "y": 11
          },
-         "id": 5,
+         "id": 12,
          "options": {
             "legend": {
                "calcs": [
@@ -333,14 +663,86 @@
          "type": "timeseries"
       },
       {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Django request latency percentiles. Watch P95/P99 for slow views or dependency bottlenecks that are hidden by median latency.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 11
+         },
+         "id": 13,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n\n      }[$__rate_interval]\n    )\n  ) by (le)\n)\n",
+               "legendFormat": "P50"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n\n      }[$__rate_interval]\n    )\n  ) by (le)\n)\n",
+               "legendFormat": "P95"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": true,
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      django_http_requests_latency_seconds_by_view_method_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n\n      }[$__rate_interval]\n    )\n  ) by (le)\n)\n",
+               "legendFormat": "P99"
+            }
+         ],
+         "title": "Request Latency",
+         "type": "timeseries"
+      },
+      {
          "collapsed": false,
          "gridPos": {
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 11
+            "y": 19
          },
-         "id": 6,
+         "id": 14,
          "title": "Database",
          "type": "row"
       },
@@ -369,9 +771,9 @@
             "h": 3,
             "w": 12,
             "x": 0,
-            "y": 12
+            "y": 20
          },
-         "id": 7,
+         "id": 15,
          "options": {
             "graphMode": "area",
             "percentChangeColorMode": "standard",
@@ -420,9 +822,9 @@
             "h": 3,
             "w": 12,
             "x": 12,
-            "y": 12
+            "y": 20
          },
-         "id": 8,
+         "id": 16,
          "options": {
             "graphMode": "area",
             "percentChangeColorMode": "standard",
@@ -458,12 +860,12 @@
             "overrides": [ ]
          },
          "gridPos": {
-            "h": 5,
+            "h": 8,
             "w": 12,
             "x": 0,
-            "y": 15
+            "y": 23
          },
-         "id": 9,
+         "id": 17,
          "options": {
             "legend": {
                "calcs": [
@@ -489,7 +891,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "round(\n  sum(\n    increase(\n      django_db_new_connections_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (namespace, job, vendor)\n)\n",
+               "expr": "round(\n  sum(\n    rate(\n      django_db_new_connections_total{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (namespace, job, vendor)\n)\n",
                "legendFormat": "{{ vendor }}"
             }
          ],
@@ -512,12 +914,12 @@
             "overrides": [ ]
          },
          "gridPos": {
-            "h": 5,
+            "h": 8,
             "w": 12,
             "x": 12,
-            "y": 15
+            "y": 23
          },
-         "id": 10,
+         "id": 18,
          "options": {
             "legend": {
                "calcs": [
@@ -543,7 +945,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.50,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (vendor, namespace, job, le)\n)\n",
                "legendFormat": "50 - {{ vendor }}"
             },
             {
@@ -552,7 +954,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.95,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (vendor, namespace, job, le)\n)\n",
                "legendFormat": "95 - {{ vendor }}"
             },
             {
@@ -561,20 +963,129 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.99,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (vendor, namespace, job, le)\n)\n",
                "legendFormat": "99 - {{ vendor }}"
+            }
+         ],
+         "title": "Database Latency",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Database query operation rate by vendor. Use this with latency and connection panels to spot load-driven database regressions.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
             },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 31
+         },
+         "id": 19,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
             {
                "datasource": {
                   "type": "prometheus",
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.999,\n  sum(\n    irate(\n      django_db_query_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (vendor, namespace, job, le)\n)\n",
-               "legendFormat": "99.9 - {{ vendor }}"
+               "expr": "sum(\n  rate(\n    django_db_execute_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, vendor)\n",
+               "legendFormat": "{{ vendor }}"
             }
          ],
-         "title": "Database Latency",
+         "title": "Database Operations",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Rate of failed database connection attempts by vendor. Non-zero values usually indicate database availability, credentials, network, or pool exhaustion issues.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 31
+         },
+         "id": 20,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  rate(\n    django_db_new_connection_errors_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, vendor)\n",
+               "legendFormat": "{{ vendor }}"
+            }
+         ],
+         "title": "Database New Connection Errors",
          "type": "timeseries"
       },
       {
@@ -597,9 +1108,9 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 20
+            "y": 39
          },
-         "id": 11,
+         "id": 21,
          "options": {
             "footer": {
                "enablePagination": true
@@ -618,7 +1129,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "round(\n  topk(10,\n    sum(\n      increase(\n        django_db_errors_total{\n          cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n        }[1w]\n      ) > 0\n    ) by (type)\n  )\n)\n",
+               "expr": "round(\n  topk(10,\n    sum(\n      increase(\n        django_db_errors_total{\n          cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n        }[1w]\n      )\n    ) by (namespace, job, type)\n  )\n)\n",
                "format": "table",
                "instant": true
             }
@@ -652,9 +1163,9 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 28
+            "y": 47
          },
-         "id": 12,
+         "id": 22,
          "title": "Cache",
          "type": "row"
       },
@@ -663,14 +1174,15 @@
             "type": "prometheus",
             "uid": "$datasource"
          },
-         "description": "The number of cache get operations, categorized by hits and misses, grouped by cache backend. This helps assess cache performance and effectiveness.",
+         "description": "Cache get operation rate by backend, split into hits, misses, and failures. Rising misses can explain increased database load; failures indicate cache backend or client errors.",
          "fieldConfig": {
             "defaults": {
                "custom": {
+                  "axisSoftMin": 0,
                   "fillOpacity": 100,
                   "lineWidth": 1,
                   "stacking": {
-                     "mode": "percent"
+                     "mode": "normal"
                   }
                },
                "unit": "ops"
@@ -678,12 +1190,12 @@
             "overrides": [ ]
          },
          "gridPos": {
-            "h": 6,
-            "w": 24,
+            "h": 8,
+            "w": 12,
             "x": 0,
-            "y": 29
+            "y": 48
          },
-         "id": 13,
+         "id": 23,
          "options": {
             "legend": {
                "calcs": [
@@ -709,7 +1221,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "sum(\n  rate(\n    django_cache_get_hits_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  ) > 0\n) by (namespace, job, backend)\n",
+               "expr": "sum(\n  rate(\n    django_cache_get_hits_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, backend)\n",
                "legendFormat": "Hit - {{ backend }}"
             },
             {
@@ -718,11 +1230,76 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "sum(\n  rate(\n    django_cache_get_misses_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  ) > 0\n) by (namespace, job, backend)\n",
+               "expr": "sum(\n  rate(\n    django_cache_get_misses_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, backend)\n",
                "legendFormat": "Miss - {{ backend }}"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  rate(\n    django_cache_get_fail_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, backend)\n",
+               "legendFormat": "Fail - {{ backend }}"
             }
          ],
-         "title": "Cache Get Operations",
+         "title": "Cache Operations",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "Cache hit rate by backend. Lower values mean more cache lookups are falling through to downstream work such as database queries.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMax": 1,
+                  "axisSoftMin": 0,
+                  "fillOpacity": 10
+               },
+               "unit": "percentunit"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 48
+         },
+         "id": 24,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "Mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  rate(\n    django_cache_get_hits_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, backend)\n/\nsum(\n  rate(\n    django_cache_get_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, backend)\n",
+               "legendFormat": "{{ backend }}"
+            }
+         ],
+         "title": "Cache Hit Rate",
          "type": "timeseries"
       }
    ],
