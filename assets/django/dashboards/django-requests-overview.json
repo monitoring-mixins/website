@@ -807,6 +807,18 @@
                {
                   "matcher": {
                      "id": "byName",
+                     "options": "RPS"
+                  },
+                  "properties": [
+                     {
+                        "id": "unit",
+                        "value": "reqps"
+                     }
+                  ]
+               },
+               {
+                  "matcher": {
+                     "id": "byName",
                      "options": "Success Rate (4xx & 5xx)"
                   },
                   "properties": [
@@ -868,12 +880,21 @@
             "sortBy": [
                {
                   "desc": true,
-                  "displayName": "P95 Latency"
+                  "displayName": "RPS"
                }
             ]
          },
          "pluginVersion": "v11.4.0",
          "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "sum(\n  rate(\n    django_http_requests_total_by_view_transport_method_total{\n      cluster=\"$cluster\",\nnamespace=\"$namespace\",\njob=~\"$job\"\n,\nview=~\"$view\",\nview!~\"<unnamed view>|health_check.views.HealthCheckView|prometheus-django-metrics\"\n,\nmethod=~\"$method\"\n,\n      view!~\"admin.*\"\n    }[1h]\n  )\n) by (namespace, job, view)\n",
+               "format": "table",
+               "instant": true
+            },
             {
                "datasource": {
                   "type": "prometheus",
@@ -934,6 +955,7 @@
                      "Value #C": true,
                      "Value #D": true,
                      "Value #E": true,
+                     "Value #F": true,
                      "view": true
                   },
                   "indexByName": {
@@ -942,14 +964,16 @@
                      "Value #C": 3,
                      "Value #D": 4,
                      "Value #E": 5,
+                     "Value #F": 6,
                      "view": 0
                   },
                   "renameByName": {
-                     "Value #A": "Success Rate (5xx)",
-                     "Value #B": "Success Rate (4xx & 5xx)",
-                     "Value #C": "Exceptions",
-                     "Value #D": "P50 Latency",
-                     "Value #E": "P95 Latency",
+                     "Value #A": "RPS",
+                     "Value #B": "Success Rate (5xx)",
+                     "Value #C": "Success Rate (4xx & 5xx)",
+                     "Value #D": "Exceptions",
+                     "Value #E": "P50 Latency",
+                     "Value #F": "P95 Latency",
                      "view": "View"
                   }
                }
