@@ -2603,6 +2603,7 @@ Following dashboards are generated from mixins and hosted on github:
 - [k8s-resources-cluster](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/k8s-resources-cluster.json)
 - [k8s-resources-namespace](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/k8s-resources-namespace.json)
 - [k8s-resources-node](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/k8s-resources-node.json)
+- [k8s-resources-nodes-overview](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/k8s-resources-nodes-overview.json)
 - [k8s-resources-pod](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/k8s-resources-pod.json)
 - [k8s-resources-windows-cluster](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/k8s-resources-windows-cluster.json)
 - [k8s-resources-windows-namespace](https://github.com/monitoring-mixins/website/blob/master/assets/kubernetes/dashboards/k8s-resources-windows-namespace.json)
