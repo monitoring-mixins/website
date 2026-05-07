@@ -49,7 +49,7 @@ expr: |
   sum by (namespace, pod, job, cluster) (
     max by(namespace, pod, job, cluster) (
       kube_pod_status_phase{job="kube-state-metrics", phase=~"Pending|Unknown"}
-    ) * on(namespace, pod, cluster) group_left(owner_kind) topk by(namespace, pod, cluster) (
+    ) * on(namespace, pod, cluster) group_left() topk by(namespace, pod, cluster) (
       1, max by(namespace, pod, owner_kind, cluster) (kube_pod_owner{owner_kind!="Job"})
     )
   ) > 0
