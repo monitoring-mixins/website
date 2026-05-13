@@ -543,11 +543,13 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotaalmostfull
   summary: Namespace quota is going to be full.
 expr: |
-  max without (instance, job, type) (
-    kube_resourcequota{job="kube-state-metrics", type="used"}
+  topk by (cluster, namespace, resource, resourcequota) (1,
+    max without (instance, job, type) (
+      kube_resourcequota{job="kube-state-metrics", type="used"}
+    )
   )
   / on (cluster, namespace, resource, resourcequota) group_left()
-  (
+  topk by (cluster, namespace, resource, resourcequota) (1,
     max without (instance, job, type) (
       kube_resourcequota{job="kube-state-metrics", type="hard"}
     ) > 0
@@ -569,11 +571,13 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotafullyused
   summary: Namespace quota is fully used.
 expr: |
-  max without (instance, job, type) (
-    kube_resourcequota{job="kube-state-metrics", type="used"}
+  topk by (cluster, namespace, resource, resourcequota) (1,
+    max without (instance, job, type) (
+      kube_resourcequota{job="kube-state-metrics", type="used"}
+    )
   )
   / on (cluster, namespace, resource, resourcequota) group_left()
-  (
+  topk by (cluster, namespace, resource, resourcequota) (1,
     max without (instance, job, type) (
       kube_resourcequota{job="kube-state-metrics", type="hard"}
     ) > 0
@@ -595,11 +599,13 @@ annotations:
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotaexceeded
   summary: Namespace quota has exceeded the limits.
 expr: |
-  max without (instance, job, type) (
-    kube_resourcequota{job="kube-state-metrics", type="used"}
+  topk by (cluster, namespace, resource, resourcequota) (1,
+    max without (instance, job, type) (
+      kube_resourcequota{job="kube-state-metrics", type="used"}
+    )
   )
   / on (cluster, namespace, resource, resourcequota) group_left()
-  (
+  topk by (cluster, namespace, resource, resourcequota) (1,
     max without (instance, job, type) (
       kube_resourcequota{job="kube-state-metrics", type="hard"}
     ) > 0
