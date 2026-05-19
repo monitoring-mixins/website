@@ -404,8 +404,8 @@
       },
       {
          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheus_datasource}"
+            "type": "datasource",
+            "uid": "-- Mixed --"
          },
          "description": "OpenSearch node roles.",
          "fieldConfig": {
@@ -673,8 +673,8 @@
       },
       {
          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheus_datasource}"
+            "type": "datasource",
+            "uid": "-- Mixed --"
          },
          "description": "Top nodes by OS CPU usage across the OpenSearch cluster.",
          "fieldConfig": {
@@ -734,8 +734,8 @@
       },
       {
          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheus_datasource}"
+            "type": "datasource",
+            "uid": "-- Mixed --"
          },
          "description": "The total count of circuit breakers tripped across the OpenSearch cluster.",
          "fieldConfig": {
@@ -794,8 +794,8 @@
       },
       {
          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheus_datasource}"
+            "type": "datasource",
+            "uid": "-- Mixed --"
          },
          "description": "Shard status counts across the OpenSearch cluster.",
          "fieldConfig": {
@@ -866,8 +866,8 @@
       },
       {
          "datasource": {
-            "type": "prometheus",
-            "uid": "${prometheus_datasource}"
+            "type": "datasource",
+            "uid": "-- Mixed --"
          },
          "description": "Top nodes by disk usage across the OpenSearch cluster.",
          "fieldConfig": {
