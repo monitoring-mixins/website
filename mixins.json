@@ -267,6 +267,11 @@
             "subdir": "envoy-mixin"
         },
         {
+            "name": "envoy-2",
+            "source": "https://github.com/adinhodovic/envoy-mixin",
+            "subdir": ""
+        },
+        {
             "name": "f5-bigip",
             "source": "https://github.com/grafana/jsonnet-libs",
             "subdir": "f5-bigip-mixin"
@@ -452,6 +457,11 @@
             "subdir": "squid-mixin"
         },
         {
+            "name": "syncthing",
+            "source": "https://github.com/adinhodovic/syncthing-mixin",
+            "subdir": ""
+        },
+        {
             "name": "supabase",
             "source": "https://github.com/grafana/jsonnet-libs",
             "subdir": "supabase-mixin"
@@ -541,6 +551,11 @@
           "name": "kubernetes-autoscaling",
           "source": "https://github.com/adinhodovic/kubernetes-autoscaling-mixin",
           "subdir": ""
+        },
+        {
+            "name": "tailscale",
+            "source": "https://github.com/adinhodovic/tailscale-exporter",
+            "subdir": "tailscale-mixin"
         }
     ]
 }

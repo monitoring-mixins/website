@@ -1,0 +1,538 @@
+{
+   "__inputs": [ ],
+   "__requires": [ ],
+   "annotations": {
+      "list": [ ]
+   },
+   "description": "A dashboard that monitors Envoy Gateway with a focus on Kubernetes objects and XDS updates. The dashboards were generated using [envoy-mixin](https://github.com/adinhodovic/envoy-mixin). Open issues and create feature requests in the repository.",
+   "editable": false,
+   "links": [
+      {
+         "asDropdown": true,
+         "includeVars": false,
+         "keepTime": true,
+         "tags": [
+            "envoy",
+            "envoy-mixin",
+            "gateway"
+         ],
+         "targetBlank": true,
+         "title": "Envoy",
+         "type": "dashboards"
+      }
+   ],
+   "panels": [
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+         },
+         "id": 1,
+         "title": "Envoy XDS",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The rate of XDS snapshot updates by status and node ID.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 1
+         },
+         "id": 2,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  rate(\n    xds_snapshot_update_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (status, nodeID)\n",
+               "legendFormat": "{{ status }}/{{ nodeID }}"
+            }
+         ],
+         "title": "XDS Snapshot Update Rate by Status/NodeID",
+         "type": "timeseries"
+      },
+      {
+         "collapsed": false,
+         "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 9
+         },
+         "id": 3,
+         "title": "Kubernetes",
+         "type": "row"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The rate of resource apply operations by status and kind.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 10
+         },
+         "id": 4,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  rate(\n    resource_apply_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (status, kind)\n",
+               "legendFormat": "{{ status }}/{{ kind }}"
+            }
+         ],
+         "title": "Resource Apply Rate by Status/Kind",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The duration of resource apply operations (P50 and P95).",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10
+               },
+               "unit": "s"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 10
+         },
+         "id": 5,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(\n  0.5,\n  sum(\n    rate(\n      resource_apply_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (le)\n)\n",
+               "legendFormat": "P50"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(\n  0.95,\n  sum(\n    rate(\n      resource_apply_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (le)\n)\n",
+               "legendFormat": "P95"
+            }
+         ],
+         "title": "Resource Apply Duration",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The rate of resource delete operations by status and kind.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 18
+         },
+         "id": 6,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  rate(\n    resource_delete_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (status, kind)\n",
+               "legendFormat": "{{ status }}/{{ kind }}"
+            }
+         ],
+         "title": "Resource Delete Rate by Status/Kind",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The duration of resource delete operations (P50 and P95).",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10
+               },
+               "unit": "s"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 18
+         },
+         "id": 7,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(\n  0.5,\n  sum(\n    rate(\n      resource_delete_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (le)\n)\n",
+               "legendFormat": "P50"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(\n  0.95,\n  sum(\n    rate(\n      resource_delete_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (le)\n)\n",
+               "legendFormat": "P95"
+            }
+         ],
+         "title": "Resource Delete Duration",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The rate of status update operations by kind and status.",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "axisSoftMin": 0,
+                  "fillOpacity": 100,
+                  "lineWidth": 1,
+                  "stacking": {
+                     "mode": "normal"
+                  }
+               },
+               "unit": "ops"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 26
+         },
+         "id": 8,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "sum(\n  rate(\n    status_update_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n    }[$__rate_interval]\n  )\n) by (kind, status)\n",
+               "legendFormat": "{{ kind }}/{{ status }}"
+            }
+         ],
+         "title": "Status Update Rate by Kind/Status",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+         },
+         "description": "The duration of status update operations (P50 and P95).",
+         "fieldConfig": {
+            "defaults": {
+               "custom": {
+                  "fillOpacity": 10
+               },
+               "unit": "s"
+            }
+         },
+         "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 26
+         },
+         "id": 9,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "mean",
+                  "max"
+               ],
+               "displayMode": "table",
+               "placement": "right",
+               "showLegend": true,
+               "sortBy": "mean",
+               "sortDesc": true
+            },
+            "tooltip": {
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "v11.4.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(\n  0.5,\n  sum(\n    rate(\n      status_update_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (le)\n)\n",
+               "legendFormat": "P50"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "exemplar": false,
+               "expr": "histogram_quantile(\n  0.95,\n  sum(\n    rate(\n      status_update_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (le)\n)\n",
+               "legendFormat": "P95"
+            }
+         ],
+         "title": "Status Update Duration",
+         "type": "timeseries"
+      }
+   ],
+   "schemaVersion": 39,
+   "tags": [
+      "envoy",
+      "envoy-mixin",
+      "gateway"
+   ],
+   "templating": {
+      "list": [
+         {
+            "current": {
+               "selected": true,
+               "text": "default",
+               "value": "default"
+            },
+            "label": "Data source",
+            "name": "datasource",
+            "query": "prometheus",
+            "type": "datasource"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Cluster",
+            "multi": true,
+            "name": "cluster",
+            "query": "label_values(xds_snapshot_update_total{}, cluster)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Namespace",
+            "multi": true,
+            "name": "namespace",
+            "query": "label_values(xds_snapshot_update_total{cluster=\"$cluster\"}, namespace)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         },
+         {
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${datasource}"
+            },
+            "includeAll": true,
+            "label": "Job",
+            "multi": true,
+            "name": "job",
+            "query": "label_values(xds_snapshot_update_total{cluster=\"$cluster\", namespace=~\"$namespace\"}, job)",
+            "refresh": 2,
+            "sort": 1,
+            "type": "query"
+         }
+      ]
+   },
+   "time": {
+      "from": "now-6h",
+      "to": "now"
+   },
+   "timezone": "utc",
+   "title": "Envoy Gateway / Overview",
+   "uid": "envoy-gateway-overview-skj2"
+}
