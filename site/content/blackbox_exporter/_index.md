@@ -63,6 +63,25 @@ annotations:
   summary: SSL certificate will expire soon.
 expr: |
   probe_ssl_earliest_cert_expiry{job="blackbox-exporter"} - time() < 21 * 24 * 3600
+  and
+  probe_ssl_earliest_cert_expiry{job="blackbox-exporter"} - time() > 0
+labels:
+  severity: warning
+{{< /code >}}
+ 
+##### BlackboxSslCertificateExpired
+
+{{< code lang="yaml" >}}
+alert: BlackboxSslCertificateExpired
+annotations:
+  dashboard_url: https://grafana.com/d/blackbox-exporter-j4da/blackbox-exporter?var-instance={{
+    $labels.instance }}
+  description: |
+    The SSL certificate of the instance {{ $labels.instance }} has expired.
+    Actual time left: {{ $value | humanizeDuration }}.
+  summary: SSL certificate has expired.
+expr: |
+  probe_ssl_earliest_cert_expiry{job="blackbox-exporter"} - time() < 0
 labels:
   severity: warning
 {{< /code >}}
