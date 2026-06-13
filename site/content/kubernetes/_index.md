@@ -838,9 +838,9 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeAPIErrorBudgetBurn
 annotations:
-  description: The API server is burning too much error budget.
+  description: The Kube API server is burning too much error budget.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorbudgetburn
-  summary: The API server is burning too much error budget.
+  summary: The Kube API server is burning too much error budget.
 expr: |
   sum by(cluster) (apiserver_request:burnrate1h) > (14.40 * 0.01000)
   and on(cluster)
@@ -858,9 +858,9 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeAPIErrorBudgetBurn
 annotations:
-  description: The API server is burning too much error budget.
+  description: The Kube API server is burning too much error budget.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorbudgetburn
-  summary: The API server is burning too much error budget.
+  summary: The Kube API server is burning too much error budget.
 expr: |
   sum by(cluster) (apiserver_request:burnrate6h) > (6.00 * 0.01000)
   and on(cluster)
@@ -878,9 +878,9 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeAPIErrorBudgetBurn
 annotations:
-  description: The API server is burning too much error budget.
+  description: The Kube API server is burning too much error budget.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorbudgetburn
-  summary: The API server is burning too much error budget.
+  summary: The Kube API server is burning too much error budget.
 expr: |
   sum by(cluster) (apiserver_request:burnrate1d) > (3.00 * 0.01000)
   and on(cluster)
@@ -898,9 +898,9 @@ https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md
 {{< code lang="yaml" >}}
 alert: KubeAPIErrorBudgetBurn
 annotations:
-  description: The API server is burning too much error budget.
+  description: The Kube API server is burning too much error budget.
   runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorbudgetburn
-  summary: The API server is burning too much error budget.
+  summary: The Kube API server is burning too much error budget.
 expr: |
   sum by(cluster) (apiserver_request:burnrate3d) > (1.00 * 0.01000)
   and on(cluster)
