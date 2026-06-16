@@ -25,7 +25,7 @@ alert: SealedSecretsUnsealErrorHigh
 annotations:
   description: High number of errors during unsealing Sealed Secrets in {{ $labels.namespace
     }} namespace.
-  runbook_url: https://github.com/bitnami-labs/sealed-secrets
+  runbook_url: https://github.com/bitnami/sealed-secrets
   summary: Sealed Secrets Unseal Error High
 expr: |
   sum by (reason, namespace) (rate(sealed_secrets_controller_unseal_errors_total{}[5m])) > 0
