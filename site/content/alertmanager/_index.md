@@ -185,6 +185,23 @@ labels:
   severity: critical
 {{< /code >}}
  
+##### AlertmanagerClusterFailedPeers
+
+{{< code lang="yaml" >}}
+alert: AlertmanagerClusterFailedPeers
+annotations:
+  description: Alertmanager {{$labels.instance}} has {{ $value }} failed peers in
+    the {{$labels.job}} cluster.
+  summary: An Alertmanager instance has failed peers in the cluster.
+expr: |
+  # Without max_over_time, failed scrapes could create false negatives, see
+  # https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.
+  max_over_time(alertmanager_cluster_failed_peers{job="alertmanager"}[5m]) > 0
+for: 15m
+labels:
+  severity: warning
+{{< /code >}}
+ 
 ## Dashboards
 Following dashboards are generated from mixins and hosted on github:
 
