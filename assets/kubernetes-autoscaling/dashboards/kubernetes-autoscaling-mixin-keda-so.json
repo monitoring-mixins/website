@@ -338,7 +338,7 @@
                   {
                      "targetBlank": true,
                      "title": "Go to HPA",
-                     "url": "/d/kubernetes-autoscaling-mixin-hpa-jkwq/kubernetes-autoscaling-horizontal-pod-autoscaler?var-cluster=${__data.fields.cluster}&var-namespace=${__data.fields.namespace}&var-hpa=keda-hpa-${__data.fields.scaledObject}&var-metric_name=${__data.fields.metric}"
+                     "url": "/d/kubernetes-autoscaling-mixin-hpa-jkwq/kubernetes-autoscaling-horizontal-pod-autoscaler?var-cluster=${__data.fields.cluster}&var-namespace=${__data.fields.exported_namespace}&var-hpa=keda-hpa-${__data.fields.scaledObject}&var-metric_name=${__data.fields.metric}"
                   }
                ],
                "thresholds": {
