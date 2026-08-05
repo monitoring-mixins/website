@@ -392,6 +392,12 @@
             "subdir": "oracledb-mixin"
         },
         {
+            "name": "outagedeck",
+            "source": "https://github.com/outagedeck/prometheus-exporter",
+            "subdir": "mixin",
+            "description": "Configurable Prometheus alerts and a Grafana dashboard for cloud and SaaS provider status exported by OutageDeck."
+        },
+        {
             "name": "pgbouncer",
             "source": "https://github.com/grafana/jsonnet-libs",
             "subdir": "pgbouncer-mixin"
