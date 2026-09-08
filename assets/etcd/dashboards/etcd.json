@@ -131,6 +131,7 @@
             "type": "datasource",
             "uid": "-- Mixed --"
          },
+         "description": "- `DB size` is the total allocated backend size on disk (etcd_mvcc_db_total_size_in_bytes).\n- `DB size in use` is the space actually used by live data (etcd_mvcc_db_total_size_in_use_in_bytes).\nA large gap between them indicates fragmentation; consider running etcd defrag when the in-use ratio is low.\n",
          "fieldConfig": {
             "defaults": {
                "custom": {
@@ -158,6 +159,14 @@
                },
                "expr": "etcd_mvcc_db_total_size_in_bytes{job=~\".*etcd.*\", job=\"$cluster\"}",
                "legendFormat": "{{instance}} DB size"
+            },
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "$datasource"
+               },
+               "expr": "etcd_mvcc_db_total_size_in_use_in_bytes{job=~\".*etcd.*\", job=\"$cluster\"}",
+               "legendFormat": "{{instance}} DB size in use"
             }
          ],
          "title": "DB size",
