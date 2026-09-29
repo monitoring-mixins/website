@@ -16,7 +16,7 @@ Jsonnet source code is available at [github.com/grafana/jsonnet-libs](https://gi
 Complete list of pregenerated alerts is available [here](https://github.com/monitoring-mixins/website/blob/master/assets/apache-solr/alerts.yaml).
 {{< /panel >}}
 
-### apache-solr
+### apache-solr-alerts
 
 ##### ApacheSolrZookeeperChangeInEnsembleSize
 
@@ -28,7 +28,7 @@ annotations:
   summary: Changes in the ZooKeeper ensemble size can affect the stability and performance
     of the cluster.
 expr: |
-  changes(solr_zookeeper_ensemble_size[5m]) > 0
+  changes(solr_zookeeper_ensemble_size{}[5m]) > 0
 for: 5m
 labels:
   severity: warning
@@ -39,13 +39,13 @@ labels:
 {{< code lang="yaml" >}}
 alert: ApacheSolrHighCPUUsageCritical
 annotations:
-  description: '{{$labels.instance}} on cluster {{$labels.solr_cluster}} has had a
+  description: '{{$labels.base_url}} on cluster {{$labels.solr_cluster}} has had a
     system CPU load of {{ printf "%.0f" $value }}%, which is above the threshold of
     85.'
   summary: High CPU load can indicate that Solr nodes are under heavy load, potentially
     impacting performance.
 expr: |
-  100 * sum without (base_url, item) (avg_over_time(solr_metrics_jvm_os_cpu_load{item="systemCpuLoad"}[5m])) > 85
+  100 * sum without (item) (avg_over_time(solr_metrics_jvm_os_cpu_load{item="systemCpuLoad", }[5m])) > 85
 for: 5m
 labels:
   severity: critical
@@ -56,13 +56,13 @@ labels:
 {{< code lang="yaml" >}}
 alert: ApacheSolrHighCPUUsageWarning
 annotations:
-  description: '{{$labels.instance}} on cluster {{$labels.solr_cluster}} has had a
+  description: '{{$labels.base_url}} on cluster {{$labels.solr_cluster}} has had a
     system CPU load of {{ printf "%.0f" $value }}%, which is above the threshold of
     75.'
   summary: High CPU load can indicate that Solr nodes are under heavy load, potentially
     impacting performance.
 expr: |
-  100 * sum without (base_url, item) (avg_over_time(solr_metrics_jvm_os_cpu_load{item="systemCpuLoad"}[5m])) > 75
+  100 * sum without (item) (avg_over_time(solr_metrics_jvm_os_cpu_load{item="systemCpuLoad", }[5m])) > 75
 for: 5m
 labels:
   severity: warning
@@ -74,11 +74,11 @@ labels:
 alert: ApacheSolrHighHeapMemoryUsageCritical
 annotations:
   description: |
-    {{$labels.instance}} on cluster {{$labels.solr_cluster}} has had high memory usage of {{ printf "%.0f" $value }}%, which is above the thresold of 75.
+    {{$labels.base_url}} on cluster {{$labels.solr_cluster}} has had high memory usage of {{ printf "%.0f" $value }}%, which is above the thresold of 85.
   summary: High heap memory usage can lead to garbage collection issues, out-of-memory
     errors, and overall system instability.
 expr: |
-  100 * sum without(item, base_url)(solr_metrics_jvm_memory_heap_bytes{item="used"}) / clamp_min(sum without(item, base_url)(solr_metrics_jvm_memory_heap_bytes{item="max"}), 1) > 75
+  100 * sum without(item)(solr_metrics_jvm_memory_heap_bytes{item="used", }) / clamp_min(sum without(item)(solr_metrics_jvm_memory_heap_bytes{item="max", }), 1) > 85
 for: 5m
 labels:
   severity: critical
@@ -90,11 +90,11 @@ labels:
 alert: ApacheSolrHighHeapMemoryUsageWarning
 annotations:
   description: |
-    {{$labels.instance}} on cluster {{$labels.solr_cluster}} has had high memory usage of {{ printf "%.0f" $value }}%, which is above the thresold of 85.
+    {{$labels.base_url}} on cluster {{$labels.solr_cluster}} has had high memory usage of {{ printf "%.0f" $value }}%, which is above the thresold of 75.
   summary: High heap memory usage can lead to garbage collection issues, out-of-memory
     errors, and overall system instability.
 expr: |
-  100 * sum without(item, base_url)(solr_metrics_jvm_memory_heap_bytes{item="used"}) / clamp_min(sum without(item, base_url)(solr_metrics_jvm_memory_heap_bytes{item="max"}), 1) > 85
+  100 * sum without(item)(solr_metrics_jvm_memory_heap_bytes{item="used", }) / clamp_min(sum without(item)(solr_metrics_jvm_memory_heap_bytes{item="max", }), 1) > 75
 for: 5m
 labels:
   severity: warning
@@ -110,7 +110,7 @@ annotations:
   summary: Low cache hit ratios can lead to increased disk I/O and slower query response
     times.
 expr: |
-  100 * sum without(base_url, category, collection, item, replica, shard) (solr_metrics_core_searcher_cache_ratio{item="hitratio", type=~"documentCache|filterCache|queryResultCache"}) < 75
+  100 * sum without(base_url, category, collection, item, replica, shard) (solr_metrics_core_searcher_cache_ratio{item="hitratio", type=~"documentCache|filterCache|queryResultCache", }) < 75
 for: 10m
 labels:
   severity: warning
@@ -126,7 +126,7 @@ annotations:
   summary: A spike in core errors can indicate serious issues at the core level, affecting
     data integrity and availability.
 expr: |
-  100 * sum without(base_url, category, collection, handler, replica, shard) (increase(solr_metrics_core_errors_total[10m]) / clamp_min(avg_over_time(solr_metrics_core_errors_total[10m]), 1)) > 15
+  100 * sum without(base_url, category, collection, handler, replica, shard) (increase(solr_metrics_core_errors_total{}[10m]) / clamp_min(avg_over_time(solr_metrics_core_errors_total{}[10m]), 1)) > 15
 for: 10m
 labels:
   severity: warning
@@ -142,7 +142,7 @@ annotations:
   summary: A sudden spike in document indexing could indicate unintended or malicious
     bulk updates.
 expr: |
-  100 * sum without(base_url, category, collection, handler, replica, shard) (increase(solr_metrics_core_update_handler_adds_total[15m]) / clamp_min(avg_over_time(solr_metrics_core_update_handler_adds_total[15m]), 1)) > 30
+  100 * sum without(base_url, category, collection, handler, replica, shard) (increase(solr_metrics_core_update_handler_adds_total{}[15m]) / clamp_min(avg_over_time(solr_metrics_core_update_handler_adds_total{}[15m]), 1)) > 30
 for: 15m
 labels:
   severity: warning

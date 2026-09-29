@@ -16,7 +16,7 @@ Jsonnet source code is available at [github.com/grafana/jsonnet-libs](https://gi
 Complete list of pregenerated alerts is available [here](https://github.com/monitoring-mixins/website/blob/master/assets/istio/alerts.yaml).
 {{< /panel >}}
 
-### istio-alerts-istio
+### istio-alerts
 
 ##### IstioHighRequestLatencyWarning
 
@@ -28,9 +28,9 @@ annotations:
   summary: High request latency between pods can indicate that there are performance
     issues within the k8s environment.
 expr: |
-  sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_request_duration_milliseconds_sum{reporter="source"}[5m]))
+  sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_request_duration_milliseconds_sum{reporter="source", }[5m]))
   /
-  clamp_min(sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_request_duration_milliseconds_count{reporter="source"}[5m])), 1) > 4000
+  clamp_min(sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_request_duration_milliseconds_count{reporter="source", }[5m])), 1) > 4000
 for: 5m
 labels:
   severity: warning
@@ -45,7 +45,7 @@ annotations:
     {{$labels.pod}} on cluster {{$labels.cluster}} has had {{ printf "%.0f" $value }} Galley validation failures, which is above the thresold of 0.
   summary: Istio Galley is reporting failures for a number of configurations.
 expr: |
-  sum by (job, cluster, pod) (increase(galley_validation_failed{pod=~"istiod.*"}[5m])) > 0
+  sum by (job, cluster, pod) (increase(galley_validation_failed{pod=~"istiod.*", }[5m])) > 0
 for: 1m
 labels:
   severity: warning
@@ -61,7 +61,7 @@ annotations:
   summary: Istio Pilot is seeing a number of inbound and or outbound listener conflicts
     by envoy proxies.
 expr: |
-  sum by (job, cluster, pod) (increase(pilot_conflict_inbound_listener{pod=~"istiod.*"}[5m])) + sum by (job, cluster, pod) (increase(pilot_conflict_outbound_listener_tcp_over_current_tcp{pod=~"istiod.*"}[5m])) > 0
+  sum by (job, cluster, pod) (increase(pilot_conflict_inbound_listener{pod=~"istiod.*", }[5m])) + sum by (job, cluster, pod) (increase(pilot_conflict_outbound_listener_tcp_over_current_tcp{pod=~"istiod.*", }[5m])) > 0
 for: 1m
 labels:
   severity: critical
@@ -76,7 +76,7 @@ annotations:
     {{$labels.pod}} on cluster {{$labels.cluster}} has had {{ printf "%.0f" $value }} xDS rejections from envoy proxies, which is above the threshold of 0.
   summary: Istio Pilot is seeing a number of xDS rejections from envoy proxies.
 expr: |
-  sum by (job, cluster, pod) (increase(pilot_total_xds_rejects{pod=~"istiod.*"}[5m])) > 0
+  sum by (job, cluster, pod) (increase(pilot_total_xds_rejects{pod=~"istiod.*", }[5m])) > 0
 for: 1m
 labels:
   severity: warning
@@ -91,9 +91,9 @@ annotations:
     HTTP requests from Istio service {{$labels.source_canonical_service}} to service {{$labels.destination_canonical_service}} on cluster {{$labels.cluster}} have an error rate above {{ printf "%.0f" $value }}%, which is above the threshold of 5%.
   summary: There are a high number of HTTP request errors in the Istio system.
 expr: |
-  100 * sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_requests_total{reporter="source", request_protocol="http", response_code=~"[45].+"}[5m]))
+  100 * sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_requests_total{reporter="source", request_protocol="http", response_code=~"[45].+", }[5m]))
   /
-  clamp_min(sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_requests_total{reporter="source", request_protocol="http"}[5m])), 1) > 5
+  clamp_min(sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_requests_total{reporter="source", request_protocol="http", }[5m])), 1) > 5
 for: 5m
 labels:
   severity: critical
@@ -108,9 +108,9 @@ annotations:
     GRPC requests from Istio service {{$labels.source_canonical_service}} to service {{$labels.destination_canonical_service}} on cluster {{$labels.cluster}} have an error rate above {{ printf "%.0f" $value }}%, which is above the threshold of 5%.
   summary: There are a high number of GRPC request errors in the Istio system.
 expr: |
-  100 * sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_requests_total{reporter="source", grpc_response_status=~"[1-9]\d*"}[5m]))
+  100 * sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_requests_total{reporter="source", grpc_response_status=~"[1-9]\d*", }[5m]))
   /
-  clamp_min(sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_requests_total{reporter="source", grpc_response_status=~"[0-9]\d*"}[5m])), 1) > 5
+  clamp_min(sum by (job, cluster, source_canonical_service, destination_canonical_service) (increase(istio_requests_total{reporter="source", grpc_response_status=~"[0-9]\d*", }[5m])), 1) > 5
 for: 5m
 labels:
   severity: critical
@@ -135,4 +135,7 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
-- [*](https://github.com/monitoring-mixins/website/blob/master/assets/istio/dashboards/*.json)
+- [istio-logs](https://github.com/monitoring-mixins/website/blob/master/assets/istio/dashboards/istio-logs.json)
+- [istio-overview](https://github.com/monitoring-mixins/website/blob/master/assets/istio/dashboards/istio-overview.json)
+- [istio-services-overview](https://github.com/monitoring-mixins/website/blob/master/assets/istio/dashboards/istio-services-overview.json)
+- [istio-workloads-overview](https://github.com/monitoring-mixins/website/blob/master/assets/istio/dashboards/istio-workloads-overview.json)

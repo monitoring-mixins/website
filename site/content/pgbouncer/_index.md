@@ -16,7 +16,7 @@ Jsonnet source code is available at [github.com/grafana/jsonnet-libs](https://gi
 Complete list of pregenerated alerts is available [here](https://github.com/monitoring-mixins/website/blob/master/assets/pgbouncer/alerts.yaml).
 {{< /panel >}}
 
-### pgbouncer
+### pgbouncer-alerts
 
 ##### PGBouncerHighNumberWaitingConnections
 
@@ -84,4 +84,6 @@ labels:
 Following dashboards are generated from mixins and hosted on github:
 
 
-- [*](https://github.com/monitoring-mixins/website/blob/master/assets/pgbouncer/dashboards/*.json)
+- [pgbouncer-cluster-overview](https://github.com/monitoring-mixins/website/blob/master/assets/pgbouncer/dashboards/pgbouncer-cluster-overview.json)
+- [pgbouncer-logs](https://github.com/monitoring-mixins/website/blob/master/assets/pgbouncer/dashboards/pgbouncer-logs.json)
+- [pgbouncer-overview](https://github.com/monitoring-mixins/website/blob/master/assets/pgbouncer/dashboards/pgbouncer-overview.json)
