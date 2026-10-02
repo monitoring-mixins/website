@@ -178,8 +178,8 @@ alert: ArgoCdAppControllerHighReconciliationDuration
 annotations:
   dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
   description: The P0.95 application reconciliation duration in namespace {{ $labels.namespace
-    }} has been above 60s for 10m. The application controller may be overloaded or
-    blocked on Kubernetes API calls.
+    }} has been at or above 16s for 10m. The application controller may be overloaded
+    or blocked on Kubernetes API calls.
   summary: ArgoCD application reconciliation is slow.
 expr: |
   histogram_quantile(0.95,
@@ -190,7 +190,7 @@ expr: |
         }[2m]
       )
     ) by (cluster, namespace, le)
-  ) > 60
+  ) >= 16
 for: 10m
 labels:
   severity: warning
@@ -225,8 +225,8 @@ alert: ArgoCdRepoServerHighGitRequestDuration
 annotations:
   dashboard_url: https://grafana.com/d/argo-cd-operational-overview-kask/argocd-operational-overview
   description: The P0.95 Git request duration in namespace {{ $labels.namespace }}
-    has been above 30s for 10m. Repository access, network latency, or repo server
-    load may be degraded.
+    has been at or above 20s for 10m. Repository access, network latency, or repo
+    server load may be degraded.
   summary: ArgoCD repo server Git requests are slow.
 expr: |
   histogram_quantile(0.95,
@@ -237,7 +237,7 @@ expr: |
         }[2m]
       )
     ) by (cluster, namespace, le)
-  ) > 30
+  ) >= 20
 for: 10m
 labels:
   severity: warning
