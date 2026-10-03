@@ -1,0 +1,999 @@
+{
+   "__inputs": [
+      {
+         "description": "Prometheus datasource containing OutageDeck exporter metrics",
+         "label": "Prometheus",
+         "name": "DS_PROMETHEUS",
+         "pluginId": "prometheus",
+         "pluginName": "Prometheus",
+         "type": "datasource"
+      }
+   ],
+   "__requires": [
+      {
+         "id": "grafana",
+         "name": "Grafana",
+         "type": "grafana",
+         "version": "11.0.0"
+      },
+      {
+         "id": "prometheus",
+         "name": "Prometheus",
+         "type": "datasource",
+         "version": "1.0.0"
+      },
+      {
+         "id": "stat",
+         "name": "Stat",
+         "type": "panel",
+         "version": ""
+      },
+      {
+         "id": "table",
+         "name": "Table",
+         "type": "panel",
+         "version": ""
+      },
+      {
+         "id": "timeseries",
+         "name": "Time series",
+         "type": "panel",
+         "version": ""
+      }
+   ],
+   "annotations": {
+      "list": [
+         {
+            "builtIn": 1,
+            "datasource": {
+               "type": "grafana",
+               "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+         }
+      ]
+   },
+   "description": "Live cloud and SaaS provider status, incidents, freshness, and exporter health from OutageDeck.",
+   "editable": true,
+   "fiscalYearStartMonth": 0,
+   "graphTooltip": 1,
+   "id": null,
+   "links": [
+      {
+         "asDropdown": false,
+         "icon": "external link",
+         "includeVars": false,
+         "keepTime": false,
+         "tags": [ ],
+         "targetBlank": true,
+         "title": "OutageDeck provider catalog",
+         "tooltip": "Browse all supported providers",
+         "type": "link",
+         "url": "https://outagedeck.com/providers?utm_source=grafana&utm_medium=dashboard&utm_campaign=prometheus_exporter"
+      }
+   ],
+   "liveNow": false,
+   "panels": [
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+         },
+         "description": "Normalized provider status: operational, maintenance, degraded, partial outage, major outage, or unknown.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "dark-gray",
+                           "index": 0,
+                           "text": "Unknown"
+                        },
+                        "1": {
+                           "color": "green",
+                           "index": 1,
+                           "text": "Operational"
+                        },
+                        "2": {
+                           "color": "blue",
+                           "index": 2,
+                           "text": "Maintenance"
+                        },
+                        "3": {
+                           "color": "orange",
+                           "index": 3,
+                           "text": "Degraded"
+                        },
+                        "4": {
+                           "color": "semi-dark-orange",
+                           "index": 4,
+                           "text": "Partial outage"
+                        },
+                        "5": {
+                           "color": "red",
+                           "index": 5,
+                           "text": "Major outage"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "noValue": "No data",
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "dark-gray",
+                        "value": null
+                     },
+                     {
+                        "color": "green",
+                        "value": 1
+                     },
+                     {
+                        "color": "blue",
+                        "value": 2
+                     },
+                     {
+                        "color": "orange",
+                        "value": 3
+                     },
+                     {
+                        "color": "semi-dark-orange",
+                        "value": 4
+                     },
+                     {
+                        "color": "red",
+                        "value": 5
+                     }
+                  ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 0
+         },
+         "id": 1,
+         "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+         },
+         "pluginVersion": "11.0.0",
+         "targets": [
+            {
+               "datasource": {
+                  "type": "prometheus",
+                  "uid": "${DS_PROMETHEUS}"
+               },
+               "editorMode": "code",
+               "expr": "max by (provider, name) (outagedeck_provider_status_code{provider=~\"$provider\"})",
+               "instant": true,
+               "legendFormat": "{{name}}",
+               "range": false,
+               "refId": "A"
+            }
+         ],
+         "title": "Provider health",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+         },
+         "description": "Total active incidents across the selected providers.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "decimals": 0,
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     },
+                     {
+                        "color": "orange",
+                        "value": 1
+                     },
+                     {
+                        "color": "red",
+                        "value": 3
+                     }
+                  ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 4,
+            "x": 12,
+            "y": 0
+         },
+         "id": 2,
+         "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+         },
+         "pluginVersion": "11.0.0",
+         "targets": [
+            {
+               "editorMode": "code",
+               "expr": "sum(outagedeck_provider_active_incidents{provider=~\"$provider\"})",
+               "instant": true,
+               "legendFormat": "Incidents",
+               "range": false,
+               "refId": "A"
+            }
+         ],
+         "title": "Active incidents",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+         },
+         "description": "Worst latest refresh result across the selected providers.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "red",
+                           "index": 0,
+                           "text": "Refresh failing"
+                        },
+                        "1": {
+                           "color": "green",
+                           "index": 1,
+                           "text": "Healthy"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": null
+                     },
+                     {
+                        "color": "green",
+                        "value": 1
+                     }
+                  ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 4,
+            "x": 16,
+            "y": 0
+         },
+         "id": 3,
+         "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+         },
+         "pluginVersion": "11.0.0",
+         "targets": [
+            {
+               "editorMode": "code",
+               "expr": "min(outagedeck_scrape_success{provider=~\"$provider\"})",
+               "instant": true,
+               "legendFormat": "Refresh",
+               "range": false,
+               "refId": "A"
+            }
+         ],
+         "title": "Exporter refresh",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+         },
+         "description": "Oldest official-source observation among the selected providers.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "mappings": [ ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     },
+                     {
+                        "color": "orange",
+                        "value": 900
+                     },
+                     {
+                        "color": "red",
+                        "value": 1800
+                     }
+                  ]
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 6,
+            "w": 4,
+            "x": 20,
+            "y": 0
+         },
+         "id": 4,
+         "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "fields": "",
+               "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+         },
+         "pluginVersion": "11.0.0",
+         "targets": [
+            {
+               "editorMode": "code",
+               "expr": "max(outagedeck_provider_source_age_seconds{provider=~\"$provider\"})",
+               "instant": true,
+               "legendFormat": "Oldest source",
+               "range": false,
+               "refId": "A"
+            }
+         ],
+         "title": "Oldest source",
+         "type": "stat"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+         },
+         "description": "Current status of every service exposed by the selected providers.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "thresholds"
+               },
+               "custom": {
+                  "align": "auto",
+                  "cellOptions": {
+                     "type": "color-background"
+                  },
+                  "inspect": false
+               },
+               "mappings": [
+                  {
+                     "options": {
+                        "0": {
+                           "color": "dark-gray",
+                           "index": 0,
+                           "text": "Unknown"
+                        },
+                        "1": {
+                           "color": "green",
+                           "index": 1,
+                           "text": "Operational"
+                        },
+                        "2": {
+                           "color": "blue",
+                           "index": 2,
+                           "text": "Maintenance"
+                        },
+                        "3": {
+                           "color": "orange",
+                           "index": 3,
+                           "text": "Degraded"
+                        },
+                        "4": {
+                           "color": "semi-dark-orange",
+                           "index": 4,
+                           "text": "Partial outage"
+                        },
+                        "5": {
+                           "color": "red",
+                           "index": 5,
+                           "text": "Major outage"
+                        }
+                     },
+                     "type": "value"
+                  }
+               ],
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "dark-gray",
+                        "value": null
+                     },
+                     {
+                        "color": "green",
+                        "value": 1
+                     },
+                     {
+                        "color": "blue",
+                        "value": 2
+                     },
+                     {
+                        "color": "orange",
+                        "value": 3
+                     },
+                     {
+                        "color": "semi-dark-orange",
+                        "value": 4
+                     },
+                     {
+                        "color": "red",
+                        "value": 5
+                     }
+                  ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 9,
+            "w": 24,
+            "x": 0,
+            "y": 6
+         },
+         "id": 5,
+         "options": {
+            "cellHeight": "sm",
+            "footer": {
+               "countRows": false,
+               "fields": "",
+               "reducer": [
+                  "sum"
+               ],
+               "show": false
+            },
+            "showHeader": true
+         },
+         "pluginVersion": "11.0.0",
+         "targets": [
+            {
+               "editorMode": "code",
+               "expr": "outagedeck_service_status_code{provider=~\"$provider\"}",
+               "format": "table",
+               "instant": true,
+               "legendFormat": "{{provider}} / {{name}}",
+               "range": false,
+               "refId": "A"
+            }
+         ],
+         "title": "Service status",
+         "transformations": [
+            {
+               "id": "organize",
+               "options": {
+                  "excludeByName": {
+                     "Time": true,
+                     "__name__": true,
+                     "instance": true,
+                     "job": true,
+                     "service": true
+                  },
+                  "indexByName": {
+                     "Value": 2,
+                     "name": 1,
+                     "provider": 0
+                  },
+                  "renameByName": {
+                     "Value": "Status",
+                     "name": "Service",
+                     "provider": "Provider"
+                  }
+               }
+            }
+         ],
+         "type": "table"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+         },
+         "description": "Normalized provider status over time. Values: 0 unknown, 1 operational, 2 maintenance, 3 degraded, 4 partial outage, 5 major outage.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "Status code",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 15,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "stepAfter",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "decimals": 0,
+               "max": 5,
+               "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     }
+                  ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 9,
+            "w": 16,
+            "x": 0,
+            "y": 15
+         },
+         "id": 6,
+         "options": {
+            "legend": {
+               "calcs": [ ],
+               "displayMode": "table",
+               "placement": "bottom",
+               "showLegend": true
+            },
+            "tooltip": {
+               "hideZeros": false,
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "11.0.0",
+         "targets": [
+            {
+               "editorMode": "code",
+               "expr": "outagedeck_provider_status_code{provider=~\"$provider\"}",
+               "legendFormat": "{{name}}",
+               "range": true,
+               "refId": "A"
+            }
+         ],
+         "title": "Provider status history",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+         },
+         "description": "Age of the latest official-source observation. Sustained growth can indicate stale upstream data.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 15,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "linear",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "area"
+                  }
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     },
+                     {
+                        "color": "orange",
+                        "value": 900
+                     },
+                     {
+                        "color": "red",
+                        "value": 1800
+                     }
+                  ]
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 16,
+            "y": 15
+         },
+         "id": 7,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "displayMode": "table",
+               "placement": "bottom",
+               "showLegend": true
+            },
+            "tooltip": {
+               "hideZeros": false,
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "11.0.0",
+         "targets": [
+            {
+               "editorMode": "code",
+               "expr": "outagedeck_provider_source_age_seconds{provider=~\"$provider\"}",
+               "legendFormat": "{{name}}",
+               "range": true,
+               "refId": "A"
+            }
+         ],
+         "title": "Official-source age",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+         },
+         "description": "Latest OutageDeck API request duration per provider.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 10,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "linear",
+                  "lineWidth": 1,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "green",
+                        "value": null
+                     }
+                  ]
+               },
+               "unit": "s"
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 24
+         },
+         "id": 8,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "displayMode": "table",
+               "placement": "bottom",
+               "showLegend": true
+            },
+            "tooltip": {
+               "hideZeros": false,
+               "mode": "multi",
+               "sort": "desc"
+            }
+         },
+         "pluginVersion": "11.0.0",
+         "targets": [
+            {
+               "editorMode": "code",
+               "expr": "outagedeck_scrape_duration_seconds{provider=~\"$provider\"}",
+               "legendFormat": "{{provider}}",
+               "range": true,
+               "refId": "A"
+            }
+         ],
+         "title": "Refresh duration",
+         "type": "timeseries"
+      },
+      {
+         "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+         },
+         "description": "Latest refresh result per provider. Zero means the refresh failed and cached status may be stale.",
+         "fieldConfig": {
+            "defaults": {
+               "color": {
+                  "mode": "palette-classic"
+               },
+               "custom": {
+                  "axisCenteredZero": false,
+                  "axisColorMode": "text",
+                  "axisLabel": "",
+                  "axisPlacement": "auto",
+                  "barAlignment": 0,
+                  "drawStyle": "line",
+                  "fillOpacity": 10,
+                  "gradientMode": "none",
+                  "hideFrom": {
+                     "legend": false,
+                     "tooltip": false,
+                     "viz": false
+                  },
+                  "insertNulls": false,
+                  "lineInterpolation": "stepAfter",
+                  "lineWidth": 2,
+                  "pointSize": 4,
+                  "scaleDistribution": {
+                     "type": "linear"
+                  },
+                  "showPoints": "never",
+                  "spanNulls": false,
+                  "stacking": {
+                     "group": "A",
+                     "mode": "none"
+                  },
+                  "thresholdsStyle": {
+                     "mode": "off"
+                  }
+               },
+               "decimals": 0,
+               "max": 1,
+               "min": 0,
+               "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                     {
+                        "color": "red",
+                        "value": null
+                     },
+                     {
+                        "color": "green",
+                        "value": 1
+                     }
+                  ]
+               }
+            },
+            "overrides": [ ]
+         },
+         "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 24
+         },
+         "id": 9,
+         "options": {
+            "legend": {
+               "calcs": [
+                  "lastNotNull"
+               ],
+               "displayMode": "table",
+               "placement": "bottom",
+               "showLegend": true
+            },
+            "tooltip": {
+               "hideZeros": false,
+               "mode": "multi",
+               "sort": "asc"
+            }
+         },
+         "pluginVersion": "11.0.0",
+         "targets": [
+            {
+               "editorMode": "code",
+               "expr": "outagedeck_scrape_success{provider=~\"$provider\"}",
+               "legendFormat": "{{provider}}",
+               "range": true,
+               "refId": "A"
+            }
+         ],
+         "title": "Refresh health history",
+         "type": "timeseries"
+      }
+   ],
+   "refresh": "30s",
+   "schemaVersion": 39,
+   "tags": [
+      "outagedeck",
+      "prometheus",
+      "sre",
+      "cloud-status",
+      "saas-status"
+   ],
+   "templating": {
+      "list": [
+         {
+            "allValue": ".*",
+            "current": {
+               "selected": true,
+               "text": "All",
+               "value": "$__all"
+            },
+            "datasource": {
+               "type": "prometheus",
+               "uid": "${DS_PROMETHEUS}"
+            },
+            "definition": "label_values(outagedeck_provider_status_code, provider)",
+            "hide": 0,
+            "includeAll": true,
+            "label": "Provider",
+            "multi": true,
+            "name": "provider",
+            "options": [ ],
+            "query": {
+               "query": "label_values(outagedeck_provider_status_code, provider)",
+               "refId": "PrometheusVariableQueryEditor-VariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 1,
+            "type": "query"
+         }
+      ]
+   },
+   "time": {
+      "from": "now-6h",
+      "to": "now"
+   },
+   "timepicker": { },
+   "timezone": "browser",
+   "title": "OutageDeck Provider Status",
+   "uid": "outagedeck-provider-status",
+   "version": 1,
+   "weekStart": ""
+}
