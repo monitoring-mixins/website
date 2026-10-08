@@ -541,6 +541,12 @@
           "name": "kubernetes-autoscaling",
           "source": "https://github.com/adinhodovic/kubernetes-autoscaling-mixin",
           "subdir": ""
+        },
+        {
+          "name": "betterdb-monitor",
+          "source": "https://github.com/BetterDB-inc/valkey-mixin",
+          "subdir": "",
+          "description": "Dashboards and alerts for Valkey, Redis, and Dragonfly instances monitored by BetterDB Monitor, built on its betterdb_ Prometheus metrics."
         }
     ]
 }
