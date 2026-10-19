@@ -388,6 +388,11 @@ expr: |
       !=
     kube_horizontalpodautoscaler_spec_min_replicas{job="kube-state-metrics"}
   )
+  and on(namespace, horizontalpodautoscaler, cluster) (
+    kube_horizontalpodautoscaler_status_condition{condition="ScalingLimited", status="true", job="kube-state-metrics"}
+      ==
+    1
+  )
 for: 15m
 labels:
   severity: warning
