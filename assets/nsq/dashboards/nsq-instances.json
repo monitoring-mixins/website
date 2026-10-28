@@ -1301,7 +1301,7 @@
          "30d"
       ]
    },
-   "timezone": "default",
+   "timezone": "",
    "title": "NSQ Instances",
    "uid": "nsq-instances",
    "version": 0

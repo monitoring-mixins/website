@@ -910,7 +910,7 @@
          "30d"
       ]
    },
-   "timezone": "default",
+   "timezone": "",
    "title": "NSQ Topics",
    "uid": "nsq-topics",
    "version": 0

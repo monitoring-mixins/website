@@ -60,7 +60,7 @@ annotations:
   summary: Store memory usage is high, which may result in producers unable to send
     messages.
 expr: |
-  activemq_store_usage_ratio > 70
+  100 * activemq_store_usage_ratio > 70
 for: 5m
 labels:
   severity: warning
@@ -76,7 +76,7 @@ annotations:
   summary: Temporary memory usage is high, which may result in saturation of messaging
     throughput.
 expr: |
-  activemq_temp_usage_ratio > 70
+  100 * activemq_temp_usage_ratio > 70
 for: 5m
 labels:
   severity: warning

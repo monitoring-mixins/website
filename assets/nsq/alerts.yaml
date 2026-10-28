@@ -14,7 +14,7 @@ groups:
   - alert: NsqChannelDepthIncreasing
     annotations:
       description: |
-        Channel {{ $labels.channel }} depth in topic {{ $labels.topic }} is higher than 100. The current queue is {{ $value }}.
+        Channel depth in topic {{ $labels.topic }} is higher than 100. The current queue is {{ $value }}.
       summary: Topic channel depth is increasing.
     expr: |
       sum by (topic) (nsq_topic_channel_backend_depth) > 100
