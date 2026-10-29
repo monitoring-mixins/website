@@ -423,6 +423,23 @@ labels:
   type: ceph_default
 {{< /code >}}
  
+##### CephOSDFreeSpaceFragmentation
+
+{{< code lang="yaml" >}}
+alert: CephOSDFreeSpaceFragmentation
+annotations:
+  description: '{{ $labels.message }}. High free-space fragmentation can degrade write
+    performance.'
+  documentation: https://docs.ceph.com/en/latest/rados/operations/health-checks#bluestore-fragmentation
+  summary: BlueStore free space fragmentation is high on cluster {{ $labels.cluster
+    }}
+expr: ceph_health_detail{name="BLUESTORE_FREE_FRAGMENTATION"} == 1
+for: 1m
+labels:
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
 ##### CephPGImbalance
 
 {{< code lang="yaml" >}}

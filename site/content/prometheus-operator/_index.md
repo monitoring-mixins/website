@@ -137,6 +137,70 @@ labels:
   severity: warning
 {{< /code >}}
  
+##### PrometheusOperatorResourceError
+
+{{< code lang="yaml" >}}
+alert: PrometheusOperatorResourceError
+annotations:
+  description: '{{ $labels.resource }} resource {{ $labels.namespace }}/{{ $labels.name
+    }} has an unexpected {{ $labels.condition }}={{ $labels.status }} status condition.'
+  summary: Prometheus resource with status condition error
+expr: |
+  max by(name,namespace,condition,status) (last_over_time(prometheus_operator_prometheus_status_condition{status!="True",job="prometheus-operator"}[5m]) == 1)
+for: 5m
+labels:
+  resource: Prometheus
+  severity: warning
+{{< /code >}}
+ 
+##### PrometheusOperatorResourceError
+
+{{< code lang="yaml" >}}
+alert: PrometheusOperatorResourceError
+annotations:
+  description: '{{ $labels.resource }} resource {{ $labels.namespace }}/{{ $labels.name
+    }} has an unexpected {{ $labels.condition }}={{ $labels.status }} status condition.'
+  summary: ThanosRuler resource with status condition error
+expr: |
+  max by(name,namespace,condition,status) (last_over_time(prometheus_operator_thanos_ruler_status_condition{status!="True",job="prometheus-operator"}[5m]) == 1)
+for: 5m
+labels:
+  resource: ThanosRuler
+  severity: warning
+{{< /code >}}
+ 
+##### PrometheusOperatorResourceError
+
+{{< code lang="yaml" >}}
+alert: PrometheusOperatorResourceError
+annotations:
+  description: '{{ $labels.resource }} resource {{ $labels.namespace }}/{{ $labels.name
+    }} has an unexpected {{ $labels.condition }}={{ $labels.status }} status condition.'
+  summary: Alertmanager resource with status condition error
+expr: |
+  max by(name,namespace,condition,status) (last_over_time(prometheus_operator_alertmanager_status_condition{status!="True",job="prometheus-operator"}[5m]) == 1)
+for: 5m
+labels:
+  resource: Alertmanager
+  severity: warning
+{{< /code >}}
+ 
+##### PrometheusOperatorResourceError
+
+{{< code lang="yaml" >}}
+alert: PrometheusOperatorResourceError
+annotations:
+  description: '{{ $labels.resource }} resource {{ $labels.namespace }}/{{ $labels.name
+    }} has an unexpected {{ $labels.condition }}={{ $labels.status }} status condition.'
+  summary: PrometheusAgent resource with status condition error
+expr: |
+  max by(name,namespace,condition,status) (last_over_time(prometheus_operator_prometheus_agent_status_condition{status!="True",job="prometheus-operator"}[5m]) == 1)
+for: 5m
+labels:
+  resource: PrometheusAgent
+  severity: warning
+{{< /code >}}
+ 
 ### config-reloaders
 
 ##### ConfigReloaderSidecarErrors
