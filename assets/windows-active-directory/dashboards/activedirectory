@@ -798,7 +798,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_replication_data_intrasite_bytes_total{job=~\"$job\",instance=~\"$instance\"} * 8[$__rate_interval])",
+               "expr": "\n  rate(windows_ad_replication_data_intrasite_bytes_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])\n * 8",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ instance }} - {{ direction }}",
@@ -865,7 +865,7 @@
                   "type": "prometheus",
                   "uid": "${prometheus_datasource}"
                },
-               "expr": "rate(windows_ad_replication_data_intersite_bytes_total{job=~\"$job\",instance=~\"$instance\"} * 8[$__rate_interval])",
+               "expr": "\n  rate(windows_ad_replication_data_intersite_bytes_total{job=~\"$job\",instance=~\"$instance\"}[$__rate_interval])\n * 8",
                "format": "time_series",
                "instant": false,
                "legendFormat": "{{ instance }} - {{ direction }}",
