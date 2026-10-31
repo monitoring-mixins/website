@@ -1097,7 +1097,7 @@ annotations:
     }}.
   summary: Power supply {{ $labels.component }} degraded on {{ $labels.hostname }}
     on cluster {{ $labels.cluster }}
-expr: ceph_hardware_health{category="power"} == 1
+expr: ceph_hardware_status{category="power"} == 1
 for: 1m
 labels:
   severity: warning
@@ -1113,7 +1113,7 @@ annotations:
     }} has failed.
   summary: Power supply {{ $labels.component }} failed on {{ $labels.hostname }} on
     cluster {{ $labels.cluster }}
-expr: ceph_hardware_health{category="power"} == 2
+expr: ceph_hardware_status{category="power"} == 2
 for: 1m
 labels:
   oid: 1.3.6.1.4.1.50495.1.2.1.13.5
@@ -1130,7 +1130,7 @@ annotations:
     }}.
   summary: Fan {{ $labels.component }} degraded on {{ $labels.hostname }} on cluster
     {{ $labels.cluster }}
-expr: ceph_hardware_health{category="fans"} == 1
+expr: ceph_hardware_status{category="fans"} == 1
 for: 1m
 labels:
   severity: warning
@@ -1146,7 +1146,7 @@ annotations:
     FAN within the enclosure has failed.
   summary: Fan {{ $labels.component }} failed on {{ $labels.hostname }} on cluster
     {{ $labels.cluster }}
-expr: ceph_hardware_health{category="fans"} == 2
+expr: ceph_hardware_status{category="fans"} == 2
 for: 1m
 labels:
   oid: 1.3.6.1.4.1.50495.1.2.1.13.6
@@ -1163,7 +1163,7 @@ annotations:
     $labels.hostname }}.
   summary: Storage device {{ $labels.component }} degraded on {{ $labels.hostname
     }} on cluster {{ $labels.cluster }}
-expr: ceph_hardware_health{category="storage"} == 1
+expr: ceph_hardware_status{category="storage"} == 1
 for: 1m
 labels:
   severity: warning
@@ -1179,7 +1179,7 @@ annotations:
     device {{ $labels.component }} has failed.
   summary: Storage device {{ $labels.component }} failed on {{ $labels.hostname }}
     on cluster {{ $labels.cluster }}
-expr: ceph_hardware_health{category="storage"} == 2
+expr: ceph_hardware_status{category="storage"} == 2
 for: 1m
 labels:
   oid: 1.3.6.1.4.1.50495.1.2.1.13.1
@@ -1196,7 +1196,7 @@ annotations:
     $labels.hostname }}.
   summary: Memory module {{ $labels.component }} degraded on {{ $labels.hostname }}
     on cluster {{ $labels.cluster }}
-expr: ceph_hardware_health{category="memory"} == 1
+expr: ceph_hardware_status{category="memory"} == 1
 for: 1m
 labels:
   severity: warning
@@ -1212,7 +1212,7 @@ annotations:
     module {{ $labels.component }} has failed.
   summary: Memory module {{ $labels.component }} failed on {{ $labels.hostname }}
     on cluster {{ $labels.cluster }}
-expr: ceph_hardware_health{category="memory"} == 2
+expr: ceph_hardware_status{category="memory"} == 2
 for: 1m
 labels:
   oid: 1.3.6.1.4.1.50495.1.2.1.13.2
@@ -1229,7 +1229,7 @@ annotations:
     }}.
   summary: Processor {{ $labels.component }} degraded on {{ $labels.hostname }} on
     cluster {{ $labels.cluster }}
-expr: ceph_hardware_health{category="processors"} == 1
+expr: ceph_hardware_status{category="processors"} == 1
 for: 1m
 labels:
   severity: warning
@@ -1245,7 +1245,7 @@ annotations:
     {{ $labels.component }} has failed.
   summary: Processor {{ $labels.component }} failed on {{ $labels.hostname }} on cluster
     {{ $labels.cluster }}
-expr: ceph_hardware_health{category="processors"} == 2
+expr: ceph_hardware_status{category="processors"} == 2
 for: 1m
 labels:
   oid: 1.3.6.1.4.1.50495.1.2.1.13.3
@@ -1262,7 +1262,7 @@ annotations:
     {{ $labels.hostname }}.
   summary: Network interface {{ $labels.component }} degraded on {{ $labels.hostname
     }} on cluster {{ $labels.cluster }}
-expr: ceph_hardware_health{category="network"} == 1
+expr: ceph_hardware_status{category="network"} == 1
 for: 1m
 labels:
   severity: warning
@@ -1278,11 +1278,137 @@ annotations:
     interface {{ $labels.component }} has failed.
   summary: Network interface {{ $labels.component }} failed on {{ $labels.hostname
     }} on cluster {{ $labels.cluster }}
-expr: ceph_hardware_health{category="network"} == 2
+expr: ceph_hardware_status{category="network"} == 2
 for: 1m
 labels:
   oid: 1.3.6.1.4.1.50495.1.2.1.13.4
   severity: critical
+  type: ceph_default
+{{< /code >}}
+ 
+##### PowerSupplyNotEnabled
+
+{{< code lang="yaml" >}}
+alert: PowerSupplyNotEnabled
+annotations:
+  description: '{{ $value }} power supply component(s) on {{ $labels.hostname }} are
+    in {{ $labels.state }} state.'
+  summary: '{{ $value }} power supply component(s) are in {{ $labels.state }} state
+    on {{ $labels.hostname }} on cluster {{ $labels.cluster }}'
+expr: count by (cluster,hostname, state) (ceph_hardware_status{category="power", state!="Enabled"})
+  > 0
+for: 15m
+labels:
+  oid: 1.3.6.1.4.1.50495.1.2.1.13.7
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
+##### CoolingNotEnabled
+
+{{< code lang="yaml" >}}
+alert: CoolingNotEnabled
+annotations:
+  description: '{{ $value }} fan component(s) on {{ $labels.hostname }} are in {{
+    $labels.state }} state.'
+  summary: '{{ $value }} fan component(s) are in {{ $labels.state }} state on {{ $labels.hostname
+    }} on cluster {{ $labels.cluster }}'
+expr: count by (cluster,hostname, state) (ceph_hardware_status{category="fans", state!="Enabled"})
+  > 0
+for: 15m
+labels:
+  oid: 1.3.6.1.4.1.50495.1.2.1.13.8
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
+##### NVMeDriveNotEnabled
+
+{{< code lang="yaml" >}}
+alert: NVMeDriveNotEnabled
+annotations:
+  description: '{{ $value }} storage device component(s) on {{ $labels.hostname }}
+    are in {{ $labels.state }} state.'
+  summary: '{{ $value }} storage device component(s) are in {{ $labels.state }} state
+    on {{ $labels.hostname }} on cluster {{ $labels.cluster }}'
+expr: count by (cluster,hostname, state) (ceph_hardware_status{category="storage",
+  state!="Enabled"}) > 0
+for: 15m
+labels:
+  oid: 1.3.6.1.4.1.50495.1.2.1.13.9
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
+##### MemoryNotEnabled
+
+{{< code lang="yaml" >}}
+alert: MemoryNotEnabled
+annotations:
+  description: '{{ $value }} memory module component(s) on {{ $labels.hostname }}
+    are in {{ $labels.state }} state.'
+  summary: '{{ $value }} memory module component(s) are in {{ $labels.state }} state
+    on {{ $labels.hostname }} on cluster {{ $labels.cluster }}'
+expr: count by (cluster,hostname, state) (ceph_hardware_status{category="memory",
+  state!="Enabled"}) > 0
+for: 15m
+labels:
+  oid: 1.3.6.1.4.1.50495.1.2.1.13.10
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
+##### ProcessorNotEnabled
+
+{{< code lang="yaml" >}}
+alert: ProcessorNotEnabled
+annotations:
+  description: '{{ $value }} processor component(s) on {{ $labels.hostname }} are
+    in {{ $labels.state }} state.'
+  summary: '{{ $value }} processor component(s) are in {{ $labels.state }} state on
+    {{ $labels.hostname }} on cluster {{ $labels.cluster }}'
+expr: count by (cluster,hostname, state) (ceph_hardware_status{category="processors",
+  state!="Enabled"}) > 0
+for: 15m
+labels:
+  oid: 1.3.6.1.4.1.50495.1.2.1.13.11
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
+##### NetworkNotEnabled
+
+{{< code lang="yaml" >}}
+alert: NetworkNotEnabled
+annotations:
+  description: '{{ $value }} network interface component(s) on {{ $labels.hostname
+    }} are in {{ $labels.state }} state.'
+  summary: '{{ $value }} network interface component(s) are in {{ $labels.state }}
+    state on {{ $labels.hostname }} on cluster {{ $labels.cluster }}'
+expr: count by (cluster,hostname, state) (ceph_hardware_status{category="network",
+  state!="Enabled"}) > 0
+for: 15m
+labels:
+  oid: 1.3.6.1.4.1.50495.1.2.1.13.12
+  severity: warning
+  type: ceph_default
+{{< /code >}}
+ 
+##### TemperatureSensorNotEnabled
+
+{{< code lang="yaml" >}}
+alert: TemperatureSensorNotEnabled
+annotations:
+  description: '{{ $value }} temperature sensor component(s) on {{ $labels.hostname
+    }} are in {{ $labels.state }} state.'
+  summary: '{{ $value }} temperature sensor component(s) are in {{ $labels.state }}
+    state on {{ $labels.hostname }} on cluster {{ $labels.cluster }}'
+expr: count by (cluster,hostname, state) (ceph_hardware_status{category="temperatures",
+  state!="Enabled"}) > 0
+for: 15m
+labels:
+  oid: 1.3.6.1.4.1.50495.1.2.1.13.13
+  severity: warning
   type: ceph_default
 {{< /code >}}
  
