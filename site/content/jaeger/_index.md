@@ -72,9 +72,12 @@ annotations:
   description: |
     agent {{ $labels.job }} {{ $labels.instance }} is dropping {{ printf "%.2f" $value }}% spans.
   summary: Jaeger agent is dropping spans.
-expr: 100 * sum(rate(jaeger_agent_reporter_batches_failures_total[1m])) by (instance,
-  job, namespace) / sum(rate(jaeger_agent_reporter_batches_submitted_total[1m])) by
-  (instance, job, namespace)> 1
+expr: |
+  100 * sum by (instance, job, namespace) (rate(jaeger_agent_reporter_spans_failures_total[1m]))
+  / (
+    sum by (instance, job, namespace) (rate(jaeger_agent_reporter_spans_failures_total[1m]))
+    + sum by (instance, job, namespace) (rate(jaeger_agent_reporter_spans_submitted_total[1m]))
+  ) > 1
 for: 15m
 labels:
   severity: warning
@@ -163,7 +166,7 @@ labels:
 alert: JaegerQueryReqsFailing
 annotations:
   description: |
-    {{ $labels.job }} {{ $labels.instance }} is seeing {{ printf "%.2f" $value }}% query errors on {{ $labels.operation }}.
+    {{ $labels.job }} {{ $labels.instance }} is seeing {{ printf "%.2f" $value }}% query errors.
   summary: Jaeger queries are failing.
 expr: 100 * sum(rate(jaeger_query_requests_total{result="err"}[1m])) by (instance,
   job, namespace) / sum(rate(jaeger_query_requests_total[1m])) by (instance, job,
@@ -179,7 +182,7 @@ labels:
 alert: JaegerCassandraWritesFailing
 annotations:
   description: |
-    {{ $labels.job }} {{ $labels.instance }} is seeing {{ printf "%.2f" $value }}% query errors on {{ $labels.operation }}.
+    {{ $labels.job }} {{ $labels.instance }} is seeing {{ printf "%.2f" $value }}% query errors.
   summary: Jaeger writes to Cassandra are failing.
 expr: 100 * sum(rate(jaeger_cassandra_errors_total[1m])) by (instance, job, namespace)
   / sum(rate(jaeger_cassandra_attempts_total[1m])) by (instance, job, namespace)>
@@ -195,7 +198,7 @@ labels:
 alert: JaegerCassandraReadsFailing
 annotations:
   description: |
-    {{ $labels.job }} {{ $labels.instance }} is seeing {{ printf "%.2f" $value }}% query errors on {{ $labels.operation }}.
+    {{ $labels.job }} {{ $labels.instance }} is seeing {{ printf "%.2f" $value }}% query errors.
   summary: Jaeger reads from Cassandra are failing.
 expr: 100 * sum(rate(jaeger_cassandra_read_errors_total[1m])) by (instance, job, namespace)
   / sum(rate(jaeger_cassandra_read_attempts_total[1m])) by (instance, job, namespace)>
