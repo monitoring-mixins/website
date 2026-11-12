@@ -157,8 +157,9 @@
          "type": "timeseries"
       },
       {
-         "columns": [ ],
-         "datasource": "${datasource}",
+         "datasource": {
+            "uid": "${datasource}"
+         },
          "fieldConfig": {
             "defaults": {
                "custom": {
@@ -241,7 +242,6 @@
             "y": 0
          },
          "id": 3,
-         "links": [ ],
          "options": {
             "footer": {
                "countRows": false,
@@ -256,7 +256,6 @@
             "showHeader": true
          },
          "pluginVersion": "10.4.0",
-         "styles": [ ],
          "targets": [
             {
                "expr": "topk(10,\n  (sort(\n    (\n      rate(ceph_osd_op_r_latency_sum{cluster=~\"$cluster|\", }[$__rate_interval]) /\n        on (ceph_daemon) rate(ceph_osd_op_r_latency_count{cluster=~\"$cluster|\", }[$__rate_interval]) *\n        1000\n    )\n  ))\n)\n",
@@ -267,8 +266,6 @@
                "refId": "A"
             }
          ],
-         "timeFrom": null,
-         "timeShift": null,
          "title": "Highest READ Latencies",
          "transformations": [
             {
@@ -387,8 +384,9 @@
          "type": "timeseries"
       },
       {
-         "columns": [ ],
-         "datasource": "${datasource}",
+         "datasource": {
+            "uid": "${datasource}"
+         },
          "description": "This table shows the osd's that are delivering the 10 highest write latencies within the cluster",
          "fieldConfig": {
             "defaults": {
@@ -506,7 +504,6 @@
             "y": 0
          },
          "id": 5,
-         "links": [ ],
          "options": {
             "footer": {
                "countRows": false,
@@ -521,7 +518,6 @@
             "showHeader": true
          },
          "pluginVersion": "10.4.0",
-         "styles": [ ],
          "targets": [
             {
                "expr": "topk(10,\n  (sort(\n    (rate(ceph_osd_op_w_latency_sum{cluster=~\"$cluster|\", }[$__rate_interval]) /\n      on (ceph_daemon) rate(ceph_osd_op_w_latency_count{cluster=~\"$cluster|\", }[$__rate_interval]) *\n      1000)\n  ))\n)\n",
@@ -532,8 +528,6 @@
                "refId": "A"
             }
          ],
-         "timeFrom": null,
-         "timeShift": null,
          "title": "Highest WRITE Latencies",
          "transformations": [
             {
@@ -1081,8 +1075,9 @@
          "type": "timeseries"
       },
       {
-         "columns": [ ],
-         "datasource": "${datasource}",
+         "datasource": {
+            "uid": "${datasource}"
+         },
          "description": "This table shows the 10 OSDs with the highest number of slow ops",
          "fieldConfig": {
             "defaults": {
@@ -1166,7 +1161,6 @@
             "y": 25
          },
          "id": 13,
-         "links": [ ],
          "options": {
             "footer": {
                "countRows": false,
@@ -1181,7 +1175,6 @@
             "showHeader": true
          },
          "pluginVersion": "10.4.0",
-         "styles": [ ],
          "targets": [
             {
                "expr": "topk(10,\n  (ceph_daemon_health_metrics{type=\"SLOW_OPS\", ceph_daemon=~\"osd.*\"})\n)\n",
@@ -1192,8 +1185,6 @@
                "refId": "A"
             }
          ],
-         "timeFrom": null,
-         "timeShift": null,
          "title": "Top Slow Ops",
          "transformations": [
             {

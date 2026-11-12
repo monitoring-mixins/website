@@ -205,8 +205,9 @@
          "type": "stat"
       },
       {
-         "columns": [ ],
-         "datasource": "$datasource",
+         "datasource": {
+            "uid": "$datasource"
+         },
          "fieldConfig": {
             "defaults": {
                "custom": {
@@ -321,7 +322,6 @@
             "y": 2
          },
          "id": 4,
-         "links": [ ],
          "options": {
             "footer": {
                "countRows": false,
@@ -336,7 +336,6 @@
             "showHeader": true
          },
          "pluginVersion": "9.4.7",
-         "styles": [ ],
          "targets": [
             {
                "datasource": {
@@ -403,8 +402,6 @@
                "refId": "D"
             }
          ],
-         "timeFrom": null,
-         "timeShift": null,
          "title": "Details",
          "transformations": [
             {
@@ -1535,8 +1532,9 @@
                "type": "stat"
             },
             {
-               "columns": [ ],
-               "datasource": "$datasource",
+               "datasource": {
+                  "uid": "$datasource"
+               },
                "fieldConfig": {
                   "defaults": {
                      "custom": {
@@ -1569,7 +1567,6 @@
                   "y": 19
                },
                "id": 21,
-               "links": [ ],
                "options": {
                   "footer": {
                      "countRows": false,
@@ -1590,7 +1587,6 @@
                   ]
                },
                "pluginVersion": "9.4.7",
-               "styles": [ ],
                "targets": [
                   {
                      "datasource": {
@@ -1609,8 +1605,6 @@
                      "refId": "A"
                   }
                ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Alerts",
                "transformations": [
                   {

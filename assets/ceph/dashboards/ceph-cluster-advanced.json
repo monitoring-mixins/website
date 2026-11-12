@@ -3606,8 +3606,9 @@
          "type": "row"
       },
       {
-         "columns": [ ],
-         "datasource": "$datasource",
+         "datasource": {
+            "uid": "$datasource"
+         },
          "fieldConfig": {
             "defaults": {
                "custom": {
@@ -3649,7 +3650,6 @@
             "y": 46
          },
          "id": 38,
-         "links": [ ],
          "options": {
             "footer": {
                "countRows": false,
@@ -3664,7 +3664,6 @@
             "showHeader": true
          },
          "pluginVersion": "9.4.7",
-         "styles": [ ],
          "targets": [
             {
                "datasource": "$datasource",
@@ -3731,8 +3730,6 @@
                "refId": "E"
             }
          ],
-         "timeFrom": null,
-         "timeShift": null,
          "title": "Ceph Versions",
          "transformations": [
             {

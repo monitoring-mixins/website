@@ -1439,8 +1439,9 @@
                "type": "stat"
             },
             {
-               "columns": [ ],
-               "datasource": "$datasource",
+               "datasource": {
+                  "uid": "$datasource"
+               },
                "fieldConfig": {
                   "defaults": {
                      "custom": {
@@ -1470,15 +1471,13 @@
                   "y": 6
                },
                "id": 24,
-               "links": [ ],
                "options": {
                   "footer": {
                      "show": false
                   },
                   "showHeader": true
                },
-               "pluginVersion": "9.1.3",
-               "styles": [ ],
+               "pluginVersion": "12.3.1",
                "targets": [
                   {
                      "expr": "ceph_hardware_storage_capacity_bytes{hostname=~\"$hostname\"}",
@@ -1489,8 +1488,6 @@
                      "refId": "A"
                   }
                ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Device List",
                "transformations": [
                   {
@@ -1516,8 +1513,9 @@
                "type": "table"
             },
             {
-               "columns": [ ],
-               "datasource": "$datasource",
+               "datasource": {
+                  "uid": "$datasource"
+               },
                "fieldConfig": {
                   "defaults": {
                      "custom": {
@@ -1547,15 +1545,13 @@
                   "y": 6
                },
                "id": 25,
-               "links": [ ],
                "options": {
                   "footer": {
                      "show": false
                   },
                   "showHeader": true
                },
-               "pluginVersion": "9.1.3",
-               "styles": [ ],
+               "pluginVersion": "12.3.1",
                "targets": [
                   {
                      "expr": "ceph_hardware_firmware_info{hostname=~\"$hostname\"}",
@@ -1566,8 +1562,6 @@
                      "refId": "A"
                   }
                ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Platform Firmware",
                "transformations": [
                   {
@@ -1592,8 +1586,9 @@
                "type": "table"
             },
             {
-               "columns": [ ],
-               "datasource": "$datasource",
+               "datasource": {
+                  "uid": "$datasource"
+               },
                "description": "Hardware components whose Redfish state is not Enabled (for example Disabled or UnavailableOffline). Their health cannot be read, so they are not included in the health panels. Empty when all components are enabled.",
                "fieldConfig": {
                   "defaults": {
@@ -1624,15 +1619,13 @@
                   "y": 14
                },
                "id": 26,
-               "links": [ ],
                "options": {
                   "footer": {
                      "show": false
                   },
                   "showHeader": true
                },
-               "pluginVersion": "9.1.3",
-               "styles": [ ],
+               "pluginVersion": "12.3.1",
                "targets": [
                   {
                      "expr": "ceph_hardware_status{hostname=~\"$hostname\",state!=\"Enabled\"}",
@@ -1643,8 +1636,6 @@
                      "refId": "A"
                   }
                ],
-               "timeFrom": null,
-               "timeShift": null,
                "title": "Not Enabled Components",
                "transformations": [
                   {

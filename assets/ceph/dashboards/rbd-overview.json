@@ -369,8 +369,9 @@
          ]
       },
       {
-         "columns": [ ],
-         "datasource": "${datasource}",
+         "datasource": {
+            "uid": "${datasource}"
+         },
          "description": "RBD per-image IO statistics are disabled by default.\n\nPlease refer to https://docs.ceph.com/en/latest/mgr/prometheus/#rbd-io-statistics for information about how to enable those optionally.",
          "fieldConfig": {
             "defaults": {
@@ -478,7 +479,6 @@
             "y": 7
          },
          "id": 5,
-         "links": [ ],
          "options": {
             "footer": {
                "countRows": false,
@@ -493,7 +493,6 @@
             "showHeader": true
          },
          "pluginVersion": "10.4.0",
-         "styles": [ ],
          "targets": [
             {
                "expr": "topk(10,\n  (\n    sort((\n      rate(ceph_rbd_write_ops{cluster=~\"$cluster|\", }[$__rate_interval]) +\n        on (image, pool, namespace) rate(ceph_rbd_read_ops{cluster=~\"$cluster|\", }[$__rate_interval])\n    ))\n  )\n)\n",
@@ -504,8 +503,6 @@
                "refId": "A"
             }
          ],
-         "timeFrom": null,
-         "timeShift": null,
          "title": "Highest IOPS",
          "transformations": [
             {
@@ -518,8 +515,9 @@
          "type": "table"
       },
       {
-         "columns": [ ],
-         "datasource": "${datasource}",
+         "datasource": {
+            "uid": "${datasource}"
+         },
          "description": "RBD per-image IO statistics are disabled by default.\n\nPlease refer to https://docs.ceph.com/en/latest/mgr/prometheus/#rbd-io-statistics for information about how to enable those optionally.",
          "fieldConfig": {
             "defaults": {
@@ -627,7 +625,6 @@
             "y": 7
          },
          "id": 6,
-         "links": [ ],
          "options": {
             "footer": {
                "countRows": false,
@@ -642,7 +639,6 @@
             "showHeader": true
          },
          "pluginVersion": "10.4.0",
-         "styles": [ ],
          "targets": [
             {
                "expr": "topk(10,\n  sort(\n    sum(\n      rate(ceph_rbd_read_bytes{cluster=~\"$cluster|\", }[$__rate_interval]) +\n        rate(ceph_rbd_write_bytes{cluster=~\"$cluster|\", }[$__rate_interval])\n    ) by (pool, image, namespace)\n  )\n)\n",
@@ -653,8 +649,6 @@
                "refId": "A"
             }
          ],
-         "timeFrom": null,
-         "timeShift": null,
          "title": "Highest Throughput",
          "transformations": [
             {
@@ -667,8 +661,9 @@
          "type": "table"
       },
       {
-         "columns": [ ],
-         "datasource": "${datasource}",
+         "datasource": {
+            "uid": "${datasource}"
+         },
          "description": "RBD per-image IO statistics are disabled by default.\n\nPlease refer to https://docs.ceph.com/en/latest/mgr/prometheus/#rbd-io-statistics for information about how to enable those optionally.",
          "fieldConfig": {
             "defaults": {
@@ -776,7 +771,6 @@
             "y": 7
          },
          "id": 7,
-         "links": [ ],
          "options": {
             "footer": {
                "countRows": false,
@@ -791,7 +785,6 @@
             "showHeader": true
          },
          "pluginVersion": "10.4.0",
-         "styles": [ ],
          "targets": [
             {
                "expr": "topk(10,\n  sum(\n    rate(ceph_rbd_write_latency_sum{cluster=~\"$cluster|\", }[$__rate_interval]) /\n      clamp_min(rate(ceph_rbd_write_latency_count{cluster=~\"$cluster|\", }[$__rate_interval]), 1) +\n      rate(ceph_rbd_read_latency_sum{cluster=~\"$cluster|\", }[$__rate_interval]) /\n      clamp_min(rate(ceph_rbd_read_latency_count{cluster=~\"$cluster|\", }[$__rate_interval]), 1)\n  ) by (pool, image, namespace)\n)\n",
@@ -802,8 +795,6 @@
                "refId": "A"
             }
          ],
-         "timeFrom": null,
-         "timeShift": null,
          "title": "Highest Latency",
          "transformations": [
             {

@@ -1067,8 +1067,9 @@
          "type": "timeseries"
       },
       {
-         "columns": [ ],
-         "datasource": "${datasource}",
+         "datasource": {
+            "uid": "${datasource}"
+         },
          "fieldConfig": {
             "defaults": {
                "custom": {
@@ -1151,7 +1152,6 @@
             "y": 30
          },
          "id": 15,
-         "links": [ ],
          "options": {
             "footer": {
                "countRows": false,
@@ -1166,7 +1166,6 @@
             "showHeader": true
          },
          "pluginVersion": "10.4.0",
-         "styles": [ ],
          "targets": [
             {
                "expr": "topk(10,\n  (sum by (instance)(ceph_daemon_health_metrics{type=\"SLOW_OPS\", ceph_daemon=~\"osd.*\", cluster=~\"$cluster|\", }))\n)\n",
@@ -1177,8 +1176,6 @@
                "refId": "A"
             }
          ],
-         "timeFrom": null,
-         "timeShift": null,
          "title": "Top Slow Ops per Host",
          "transformations": [
             {

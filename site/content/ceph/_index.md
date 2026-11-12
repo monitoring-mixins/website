@@ -2000,5 +2000,6 @@ Following dashboards are generated from mixins and hosted on github:
 - [radosgw-sync-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/radosgw-sync-overview.json)
 - [rbd-details](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/rbd-details.json)
 - [rbd-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/rbd-overview.json)
+- [rgw-s3-analytics-users-buckets](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/rgw-s3-analytics-users-buckets.json)
 - [rgw-s3-analytics](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/rgw-s3-analytics.json)
 - [smb-overview](https://github.com/monitoring-mixins/website/blob/master/assets/ceph/dashboards/smb-overview.json)
