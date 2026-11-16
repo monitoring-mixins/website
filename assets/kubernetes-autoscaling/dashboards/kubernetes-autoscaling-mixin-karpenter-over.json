@@ -90,7 +90,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "sum(\n  karpenter_nodes_total_pod_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"cpu\"\n  }\n) +\nsum(\n  karpenter_nodes_total_daemon_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"cpu\"\n  }\n)\n",
+               "expr": "sum(\n  karpenter_nodes_total_pod_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"cpu\"\n  }\n)\n",
                "legendFormat": "Requested"
             }
          ],
@@ -153,7 +153,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "sum(\n  karpenter_nodes_total_pod_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"memory\"\n  }\n) +\nsum(\n  karpenter_nodes_total_daemon_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"memory\"\n  }\n)\n",
+               "expr": "sum(\n  karpenter_nodes_total_pod_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"memory\"\n  }\n)\n",
                "legendFormat": "Requested"
             }
          ],
@@ -924,7 +924,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  karpenter_nodes_total_pod_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"cpu\"\n  }\n) +\nsum(\n  karpenter_nodes_total_daemon_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"cpu\"\n  }\n)\n",
+               "expr": "sum(\n  karpenter_nodes_total_pod_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"cpu\"\n  }\n)\n",
                "instant": false
             }
          ],
@@ -971,7 +971,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  karpenter_nodes_total_pod_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"memory\"\n  }\n) +\nsum(\n  karpenter_nodes_total_daemon_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"memory\"\n  }\n)\n",
+               "expr": "sum(\n  karpenter_nodes_total_pod_requests{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"memory\"\n  }\n)\n",
                "instant": false
             }
          ],
@@ -1018,7 +1018,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  karpenter_nodes_total_pod_limits{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"cpu\"\n  }\n) +\nsum(\n  karpenter_nodes_total_daemon_limits{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"cpu\"\n  }\n)\n",
+               "expr": "sum(\n  karpenter_nodes_total_pod_limits{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"cpu\"\n  }\n)\n",
                "instant": false
             }
          ],
@@ -1065,7 +1065,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "sum(\n  karpenter_nodes_total_pod_limits{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"memory\"\n  }\n) +\nsum(\n  karpenter_nodes_total_daemon_limits{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"memory\"\n  }\n)\n",
+               "expr": "sum(\n  karpenter_nodes_total_pod_limits{\n    cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n    resource_type=\"memory\"\n  }\n)\n",
                "instant": false
             }
          ],
@@ -1653,7 +1653,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "(\n  (\n    sum(\n      karpenter_nodes_total_pod_requests{\n        cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n        resource_type=\"cpu\"\n      }\n    ) by (node_name, nodepool, instance_type, instance_memory, instance_cpu, instance_network_bandwidth, region, zone, os, capacity_type, arch)\n    +\n    sum(\n      karpenter_nodes_total_daemon_requests{\n        cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n        resource_type=\"cpu\"\n      }\n    ) by (node_name, nodepool, instance_type, instance_memory, instance_cpu, instance_network_bandwidth, region, zone, os, capacity_type, arch)\n  ) /\n  sum(\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  ) by (node_name, nodepool, instance_type, instance_memory, instance_cpu, instance_network_bandwidth, region, zone, os, capacity_type, arch)\n) * 100\n",
+               "expr": "(\n  sum(\n    karpenter_nodes_total_pod_requests{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  ) by (node_name, nodepool, instance_type, instance_memory, instance_cpu, instance_network_bandwidth, region, zone, os, capacity_type, arch)\n  /\n  sum(\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"cpu\"\n    }\n  ) by (node_name, nodepool, instance_type, instance_memory, instance_cpu, instance_network_bandwidth, region, zone, os, capacity_type, arch)\n) * 100\n",
                "format": "table",
                "instant": true
             },
@@ -1662,7 +1662,7 @@
                   "type": "prometheus",
                   "uid": "$datasource"
                },
-               "expr": "(\n  (\n    sum(\n      karpenter_nodes_total_pod_requests{\n        cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n        resource_type=\"memory\"\n      }\n    ) by (node_name, nodepool, instance_type, instance_memory, instance_cpu, instance_network_bandwidth, region, zone, os, capacity_type, arch)\n    +\n    sum(\n      karpenter_nodes_total_daemon_requests{\n        cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n        resource_type=\"memory\"\n      }\n    ) by (node_name, nodepool, instance_type, instance_memory, instance_cpu, instance_network_bandwidth, region, zone, os, capacity_type, arch)\n  ) /\n  sum(\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"memory\"\n    }\n  ) by (node_name, nodepool, instance_type, instance_memory, instance_cpu, instance_network_bandwidth, region, zone, os, capacity_type, arch)\n) * 100\n",
+               "expr": "(\n  sum(\n    karpenter_nodes_total_pod_requests{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"memory\"\n    }\n  ) by (node_name, nodepool, instance_type, instance_memory, instance_cpu, instance_network_bandwidth, region, zone, os, capacity_type, arch)\n  /\n  sum(\n    karpenter_nodes_allocatable{\n      cluster=\"$cluster\",\njob=~\"$job\"\n,\nnodepool=~\"$nodepool\"\n,\nregion=~\"$region\",\nzone=~\"$zone\"\n,\narch=~\"$arch\",\nos=~\"$os\",\ninstance_type=~\"$instance_type\",\ncapacity_type=~\"$capacity_type\"\n,\n      resource_type=\"memory\"\n    }\n  ) by (node_name, nodepool, instance_type, instance_memory, instance_cpu, instance_network_bandwidth, region, zone, os, capacity_type, arch)\n) * 100\n",
                "format": "table",
                "instant": true
             }

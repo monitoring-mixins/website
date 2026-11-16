@@ -737,7 +737,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "sum(\n  karpenter_workqueue_depth{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }\n) by (job)\n",
+               "expr": "sum(\n  workqueue_depth{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }\n) by (job)\n",
                "legendFormat": "Queue Depth"
             }
          ],
@@ -791,7 +791,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.50,\n  sum(\n    irate(\n      karpenter_workqueue_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    irate(\n      workqueue_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
                "legendFormat": "P50"
             },
             {
@@ -800,7 +800,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.95,\n  sum(\n    irate(\n      karpenter_workqueue_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    irate(\n      workqueue_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
                "legendFormat": "P95"
             },
             {
@@ -809,7 +809,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.99,\n  sum(\n    irate(\n      karpenter_workqueue_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    irate(\n      workqueue_queue_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
                "legendFormat": "P99"
             }
          ],
@@ -863,7 +863,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.50,\n  sum(\n    irate(\n      karpenter_workqueue_work_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    irate(\n      workqueue_work_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
                "legendFormat": "P50"
             },
             {
@@ -872,7 +872,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.95,\n  sum(\n    irate(\n      karpenter_workqueue_work_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    irate(\n      workqueue_work_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
                "legendFormat": "P95"
             },
             {
@@ -881,7 +881,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.99,\n  sum(\n    irate(\n      karpenter_workqueue_work_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    irate(\n      workqueue_work_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    ) > 0\n  ) by (job, le)\n)\n",
                "legendFormat": "P99"
             }
          ],
