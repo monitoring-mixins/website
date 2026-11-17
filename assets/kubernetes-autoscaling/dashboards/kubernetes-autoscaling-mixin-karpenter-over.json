@@ -1739,7 +1739,7 @@
             "hide": 2,
             "label": "Cluster",
             "name": "cluster",
-            "query": "label_values(kube_pod_info{job=~\"kube-state-metrics\"}, cluster)",
+            "query": "label_values(karpenter_build_info, cluster)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -1751,7 +1751,7 @@
             },
             "label": "Job",
             "name": "job",
-            "query": "label_values(karpenter_nodes_allocatable{cluster=\"$cluster\"}, job)",
+            "query": "label_values(karpenter_build_info{cluster=\"$cluster\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"

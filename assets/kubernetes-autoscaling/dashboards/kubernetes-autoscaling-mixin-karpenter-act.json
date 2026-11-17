@@ -329,7 +329,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      karpenter_nodeclaims_termination_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n  karpenter_nodeclaims_termination_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n  ) by (job)\n  or\n  (\n    sum(\n      rate(\n  karpenter_nodeclaims_termination_duration_seconds_bucket{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job, le)\n    unless on (job)\n    sum(\n      rate(\n  karpenter_nodeclaims_termination_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job)\n  )\n)\n",
                "legendFormat": "P50"
             },
             {
@@ -338,7 +338,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      karpenter_nodeclaims_termination_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n  karpenter_nodeclaims_termination_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n  ) by (job)\n  or\n  (\n    sum(\n      rate(\n  karpenter_nodeclaims_termination_duration_seconds_bucket{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job, le)\n    unless on (job)\n    sum(\n      rate(\n  karpenter_nodeclaims_termination_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job)\n  )\n)\n",
                "legendFormat": "P95"
             },
             {
@@ -347,7 +347,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      karpenter_nodeclaims_termination_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n  karpenter_nodeclaims_termination_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n  ) by (job)\n  or\n  (\n    sum(\n      rate(\n  karpenter_nodeclaims_termination_duration_seconds_bucket{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job, le)\n    unless on (job)\n    sum(\n      rate(\n  karpenter_nodeclaims_termination_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job)\n  )\n)\n",
                "legendFormat": "P99"
             }
          ],
@@ -585,7 +585,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n      karpenter_voluntary_disruption_decision_evaluation_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.50,\n  sum(\n    rate(\n  karpenter_voluntary_disruption_decision_evaluation_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n  ) by (job)\n  or\n  (\n    sum(\n      rate(\n  karpenter_voluntary_disruption_decision_evaluation_duration_seconds_bucket{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job, le)\n    unless on (job)\n    sum(\n      rate(\n  karpenter_voluntary_disruption_decision_evaluation_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job)\n  )\n)\n",
                "legendFormat": "P50"
             },
             {
@@ -594,7 +594,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n      karpenter_voluntary_disruption_decision_evaluation_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.95,\n  sum(\n    rate(\n  karpenter_voluntary_disruption_decision_evaluation_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n  ) by (job)\n  or\n  (\n    sum(\n      rate(\n  karpenter_voluntary_disruption_decision_evaluation_duration_seconds_bucket{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job, le)\n    unless on (job)\n    sum(\n      rate(\n  karpenter_voluntary_disruption_decision_evaluation_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job)\n  )\n)\n",
                "legendFormat": "P95"
             },
             {
@@ -603,7 +603,7 @@
                   "uid": "$datasource"
                },
                "exemplar": false,
-               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n      karpenter_voluntary_disruption_decision_evaluation_duration_seconds_bucket{\n        cluster=\"$cluster\",\njob=~\"$job\"\n\n      }[$__rate_interval]\n    )\n  ) by (job, le)\n)\n",
+               "expr": "histogram_quantile(0.99,\n  sum(\n    rate(\n  karpenter_voluntary_disruption_decision_evaluation_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n  ) by (job)\n  or\n  (\n    sum(\n      rate(\n  karpenter_voluntary_disruption_decision_evaluation_duration_seconds_bucket{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job, le)\n    unless on (job)\n    sum(\n      rate(\n  karpenter_voluntary_disruption_decision_evaluation_duration_seconds{\n    cluster=\"$cluster\",\njob=~\"$job\"\n\n  }[$__rate_interval]\n)\n\n    ) by (job)\n  )\n)\n",
                "legendFormat": "P99"
             }
          ],
@@ -841,7 +841,7 @@
             "hide": 2,
             "label": "Cluster",
             "name": "cluster",
-            "query": "label_values(kube_pod_info{job=~\"kube-state-metrics\"}, cluster)",
+            "query": "label_values(karpenter_build_info, cluster)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
@@ -853,7 +853,7 @@
             },
             "label": "Job",
             "name": "job",
-            "query": "label_values(karpenter_nodes_allocatable{cluster=\"$cluster\"}, job)",
+            "query": "label_values(karpenter_build_info{cluster=\"$cluster\"}, job)",
             "refresh": 2,
             "sort": 1,
             "type": "query"
