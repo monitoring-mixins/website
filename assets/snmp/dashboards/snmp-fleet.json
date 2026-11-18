@@ -89,44 +89,12 @@
                {
                   "matcher": {
                      "id": "byName",
-                     "options": "System name"
-                  },
-                  "properties": [
-                     {
-                        "id": "custom.hidden",
-                        "value": true
-                     },
-                     {
-                        "id": "unit",
-                        "value": "short"
-                     }
-                  ]
-               },
-               {
-                  "matcher": {
-                     "id": "byName",
                      "options": "sysName"
                   },
                   "properties": [
                      {
                         "id": "displayName",
                         "value": "System name"
-                     }
-                  ]
-               },
-               {
-                  "matcher": {
-                     "id": "byName",
-                     "options": "Version"
-                  },
-                  "properties": [
-                     {
-                        "id": "custom.hidden",
-                        "value": true
-                     },
-                     {
-                        "id": "unit",
-                        "value": "short"
                      }
                   ]
                },
@@ -649,6 +617,26 @@
                      "Value": "Network devices",
                      "instance": "Instance",
                      "job": "Job"
+                  }
+               }
+            },
+            {
+               "id": "filterFieldsByName",
+               "options": {
+                  "exclude": {
+                     "names": [
+                        "System name"
+                     ]
+                  }
+               }
+            },
+            {
+               "id": "filterFieldsByName",
+               "options": {
+                  "exclude": {
+                     "names": [
+                        "Version"
+                     ]
                   }
                }
             }

@@ -596,22 +596,6 @@
                {
                   "matcher": {
                      "id": "byName",
-                     "options": "Interface type"
-                  },
-                  "properties": [
-                     {
-                        "id": "custom.hidden",
-                        "value": true
-                     },
-                     {
-                        "id": "unit",
-                        "value": "short"
-                     }
-                  ]
-               },
-               {
-                  "matcher": {
-                     "id": "byName",
                      "options": "ifType"
                   },
                   "properties": [
@@ -734,22 +718,6 @@
                      {
                         "id": "unit",
                         "value": "dtdurations"
-                     }
-                  ]
-               },
-               {
-                  "matcher": {
-                     "id": "byName",
-                     "options": "Interface physical address"
-                  },
-                  "properties": [
-                     {
-                        "id": "custom.hidden",
-                        "value": true
-                     },
-                     {
-                        "id": "unit",
-                        "value": "short"
                      }
                   ]
                },
@@ -964,6 +932,26 @@
                      "ifName": "IfName",
                      "instance": "Instance",
                      "job": "Job"
+                  }
+               }
+            },
+            {
+               "id": "filterFieldsByName",
+               "options": {
+                  "exclude": {
+                     "names": [
+                        "Interface type"
+                     ]
+                  }
+               }
+            },
+            {
+               "id": "filterFieldsByName",
+               "options": {
+                  "exclude": {
+                     "names": [
+                        "Interface physical address"
+                     ]
                   }
                }
             },
@@ -1558,22 +1546,6 @@
                      {
                         "matcher": {
                            "id": "byName",
-                           "options": "FRU status"
-                        },
-                        "properties": [
-                           {
-                              "id": "custom.hidden",
-                              "value": true
-                           },
-                           {
-                              "id": "unit",
-                              "value": "short"
-                           }
-                        ]
-                     },
-                     {
-                        "matcher": {
-                           "id": "byName",
                            "options": "cefcFRUPowerOperStatus"
                         },
                         "properties": [
@@ -1636,6 +1608,10 @@
                   {
                      "id": "organize",
                      "options": {
+                        "excludeByName": {
+                           "FRU status": true,
+                           "Value": true
+                        },
                         "indexByName": {
                            "cefcFRUPowerOperStatus": 3,
                            "entPhysicalName": 2,
