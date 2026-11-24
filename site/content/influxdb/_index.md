@@ -60,7 +60,7 @@ annotations:
     the threshold of 80 percent.
   summary: There is a high percentage of busy workers.
 expr: |
-  task_executor_workers_busy{} >= 80
+  100 * task_executor_workers_busy{} >= 80
 for: 5m
 labels:
   severity: critical
