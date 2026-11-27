@@ -106,6 +106,7 @@ expr: |
   > 60 * 60 * 3
 for: 1h
 labels:
+  reason: since-last-compaction
   severity: critical
 {{< /code >}}
  
@@ -132,6 +133,7 @@ expr: |
   == 0
 for: 1h
 labels:
+  reason: since-startup
   severity: critical
 {{< /code >}}
  
